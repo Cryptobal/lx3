@@ -1,0 +1,179 @@
+{
+  "metadata": {
+    "title": "AI Factory | Software de IA a medida para empresas",
+    "description": "Disenamos y construimos software de inteligencia artificial a medida para empresas medianas y grandes. No consultorias. No agencias. Una fabrica de IA que entrega sistemas en produccion."
+  },
+  "nav": {
+    "home": "Inicio",
+    "howWeWork": "Como trabajamos",
+    "capabilities": "Capacidades",
+    "diagnostic": "Diagnostico",
+    "insights": "Perspectivas",
+    "about": "Nosotros",
+    "contact": "Contacto",
+    "cta": "Agendar diagnostico"
+  },
+  "hero": {
+    "headline": "Tu empresa genera datos que nadie esta convirtiendo en decisiones",
+    "subheadline": "Construimos software de IA a medida que convierte la complejidad operativa de tu empresa en ventaja competitiva. No slides. No prototipos abandonados. Sistemas en produccion.",
+    "ctaPrimary": "Diagnosticar mi operacion",
+    "ctaSecondary": "Ver como trabajamos"
+  },
+  "problem": {
+    "title": "El problema real no es tecnologico",
+    "subtitle": "La mayoria de las iniciativas de IA fallan antes de escribir una sola linea de codigo. Estos son los patrones que vemos una y otra vez.",
+    "pain1Title": "Pilotos que nunca escalan",
+    "pain1Desc": "Tu equipo hizo una prueba de concepto hace 8 meses. Funciono en demo. Nunca llego a produccion. El vendor ya paso a otro cliente.",
+    "pain2Title": "Datos valiosos atrapados en silos",
+    "pain2Desc": "Tienes 15 sistemas que no se hablan entre si. La informacion existe, pero extraer un insight requiere tres personas y dos semanas.",
+    "pain3Title": "Costo de oportunidad invisible",
+    "pain3Desc": "Cada trimestre que pasa sin automatizar decisiones criticas, tus competidores estan construyendo ventajas que se acumulan exponencialmente.",
+    "pivot": "Estos problemas no se resuelven con mas consultoria. Se resuelven construyendo."
+  },
+  "factory": {
+    "title": "Por que una fabrica, no una agencia ni una consultora",
+    "subtitle": "El modelo importa. La estructura de quien te ayuda determina lo que pueden entregar.",
+    "agencyTitle": "Agencia de IA",
+    "agencyDesc": "Te vende un equipo por horas. Rota gente. El conocimiento se pierde entre proyectos. El incentivo es extender el contrato, no terminar el sistema.",
+    "consultancyTitle": "Consultora de IA",
+    "consultancyDesc": "Te entrega un documento de 200 paginas con recomendaciones. Tu equipo debe ejecutar. La brecha entre estrategia y codigo es donde mueren los proyectos.",
+    "factoryTitle": "AI Factory",
+    "factoryDesc": "Diagnostica, disena, construye y entrega. Un equipo integrado con metodologia repetible que produce sistemas de IA en produccion. El entregable no es un reporte. Es software funcionando."
+  },
+  "methodology": {
+    "title": "Del problema al sistema en produccion",
+    "subtitle": "Cuatro fases. Cada una con entregables concretos. Sin sorpresas.",
+    "phase1Title": "Diagnostico",
+    "phase1Desc": "Mapeamos tus procesos, datos y sistemas actuales. Identificamos donde la IA genera impacto medible, no donde suena interesante.",
+    "phase2Title": "Diseno",
+    "phase2Desc": "Arquitectura tecnica, modelo de datos y plan de ejecucion. Defines el alcance antes de comprometer presupuesto de construccion.",
+    "phase3Title": "Construccion",
+    "phase3Desc": "Sprints de dos semanas con demos funcionales. Ves progreso real, no reportes de estatus. Integracion continua con tus sistemas existentes.",
+    "phase4Title": "Operacion",
+    "phase4Desc": "Monitoreo, reentrenamiento de modelos y soporte en produccion. El sistema mejora con cada dato nuevo que procesa.",
+    "cta": "Iniciar con diagnostico"
+  },
+  "capabilities": {
+    "title": "Lo que construimos",
+    "subtitle": "No hacemos todo. Hacemos cuatro cosas excepcionalmente bien.",
+    "cap1Title": "Sistemas de decision automatizada",
+    "cap1Problem": "Tu equipo toma 200 decisiones operativas al dia usando Excel y experiencia. El 60% son repetitivas y predecibles.",
+    "cap1Approach": "Modelos de ML entrenados con tu data historica que toman o recomiendan decisiones con reglas de negocio integradas.",
+    "cap1Impact": "Reduccion del 70% en tiempo de decision. Consistencia del 95% en criterios aplicados. Auditoria completa de cada decision.",
+    "cap2Title": "Procesamiento inteligente de documentos",
+    "cap2Problem": "Tu operacion procesa miles de documentos al mes. Cada uno requiere lectura humana, extraccion manual y captura en sistema.",
+    "cap2Approach": "Pipelines de NLP y vision por computadora que extraen, clasifican y estructuran informacion de cualquier formato de documento.",
+    "cap2Impact": "Procesamiento 20x mas rapido. Tasa de error menor al 2%. Personal reasignado a tareas de mayor valor.",
+    "cap3Title": "Plataformas de inteligencia operativa",
+    "cap3Problem": "Los datos de tu operacion estan distribuidos en 12 sistemas. Armar un reporte requiere trabajo manual y siempre llega tarde.",
+    "cap3Approach": "Capa de datos unificada con modelos predictivos que anticipan problemas y sugieren acciones antes de que revises un dashboard.",
+    "cap3Impact": "Visibilidad en tiempo real de la operacion completa. Alertas predictivas 48 horas antes del problema.",
+    "cap4Title": "Interfaces conversacionales especializadas",
+    "cap4Problem": "Tu equipo pasa horas buscando informacion en manuales, politicas y bases de conocimiento internas. Los clientes esperan respuestas inmediatas.",
+    "cap4Approach": "Agentes de IA entrenados con tu conocimiento institucional que responden preguntas complejas con precision y contexto.",
+    "cap4Impact": "Respuesta inmediata a consultas internas y externas. Reduccion del 80% en tiempo de busqueda de informacion."
+  },
+  "diagnosticCta": {
+    "title": "No sabes lo que no sabes",
+    "subtitle": "En 30 minutos mapeamos las 3 oportunidades de mayor impacto en tu operacion. Sin compromiso. Sin pitch de ventas.",
+    "cta": "Reservar diagnostico gratuito"
+  },
+  "depth": {
+    "title": "Donde otros ven complejidad, nosotros vemos patrones",
+    "pattern1Title": "Integracion profunda, no superficial",
+    "pattern1Desc": "No construimos islas. Cada sistema que entregamos se conecta con tu ERP, CRM y herramientas existentes via APIs robustas y bidireccionales.",
+    "pattern2Title": "Modelos entrenados con tus datos, no genericos",
+    "pattern2Desc": "Los modelos genericos resuelven el 60% del problema. El valor esta en el 40% restante, que requiere entrenamiento especifico con tu data.",
+    "pattern3Title": "Propiedad intelectual del cliente",
+    "pattern3Desc": "El codigo, los modelos y los datos son tuyos. Sin dependencia. Sin licencias recurrentes sobre lo que construimos para ti."
+  },
+  "insightsPreview": {
+    "title": "Perspectivas",
+    "subtitle": "Analisis tecnicos y operativos de nuestro equipo. Sin marketing. Sin clickbait.",
+    "cta": "Ver todas las perspectivas"
+  },
+  "footerCta": {
+    "title": "Tu proxima ventaja competitiva ya esta en tus datos",
+    "cta": "Iniciar conversacion",
+    "email": "hola@aifactory.com"
+  },
+  "footer": {
+    "tagline": "Disenamos y construimos software de IA a medida para empresas que compiten en serio.",
+    "legal": "Todos los derechos reservados",
+    "privacy": "Politica de privacidad",
+    "terms": "Terminos de servicio"
+  },
+  "howWeWork": {
+    "title": "Como trabajamos",
+    "subtitle": "Un proceso disenado para eliminar riesgo y entregar resultados, no para extender contratos.",
+    "intro": "Cada proyecto sigue cuatro fases con entregables concretos, plazos definidos y criterios de exito medibles. Sabes exactamente que vas a obtener y cuando.",
+    "phase1Title": "Fase 1: Diagnostico",
+    "phase1What": "Analisis completo de tus procesos, datos y stack tecnologico. Identificamos 3-5 oportunidades de alto impacto con estimacion de ROI.",
+    "phase1Who": "Arquitecto de soluciones senior + Cientifico de datos. Entrevistas con tu equipo operativo y tecnico.",
+    "phase1Deliverable": "Reporte de diagnostico con mapa de oportunidades, arquitectura preliminar y hoja de ruta priorizada por impacto.",
+    "phase1Timeline": "2-3 semanas",
+    "phase2Title": "Fase 2: Diseno",
+    "phase2What": "Arquitectura tecnica detallada, modelo de datos, especificacion de integraciones y plan de ejecucion sprint por sprint.",
+    "phase2Who": "Equipo completo: arquitecto, ingeniero de ML, ingeniero de datos. Sesiones de co-diseno con tu equipo tecnico.",
+    "phase2Deliverable": "Documento de arquitectura, contratos de API, esquema de datos y cronograma de construccion con milestones.",
+    "phase2Timeline": "2-4 semanas",
+    "phase3Title": "Fase 3: Construccion",
+    "phase3What": "Desarrollo iterativo en sprints de 2 semanas. Demo funcional al final de cada sprint. Integracion continua con tus sistemas.",
+    "phase3Who": "Squad dedicado: lider tecnico, ingenieros de ML, desarrolladores backend/frontend, QA.",
+    "phase3Deliverable": "Sistema funcionando en ambiente de staging, integrado con tus datos reales y listo para pruebas de aceptacion.",
+    "phase3Timeline": "8-16 semanas segun alcance",
+    "phase4Title": "Fase 4: Operacion",
+    "phase4What": "Despliegue a produccion, monitoreo de performance, reentrenamiento de modelos y soporte continuo.",
+    "phase4Who": "Equipo de operaciones de ML. Un punto de contacto dedicado para tu equipo.",
+    "phase4Deliverable": "Sistema en produccion con SLAs definidos, dashboards de monitoreo y plan de mejora continua.",
+    "phase4Timeline": "Continuo",
+    "cta": "Empezar con la Fase 1",
+    "labelWho": "Quién participa",
+    "labelDeliverable": "Entregable",
+    "labelTimeline": "Tiempo"
+  },
+  "capabilitiesPage": {
+    "title": "Capacidades",
+    "subtitle": "Cuatro disciplinas tecnicas. Cada una ejecutada con profundidad de especialista, no amplitud de generalista.",
+    "showTechnical": "Ver enfoque tecnico y resultado esperado",
+    "labelApproach": "Enfoque",
+    "labelImpact": "Impacto esperado",
+    "ctaCard": "Diagnostica si esto aplica a tu caso"
+  },
+  "aboutPage": {
+    "title": "Nosotros",
+    "thesis1": "Fundamos AI Factory porque vimos el mismo patron demasiadas veces: empresas con datos valiosos, presupuesto aprobado y proyectos de IA que nunca llegaban a produccion. El problema no era la tecnologia. Era el modelo de ejecucion.",
+    "thesis2": "Construimos una fabrica porque fabricar es diferente a asesorar. Nuestro equipo combina experiencia en ingenieria de ML, arquitectura de sistemas empresariales y operacion de software en produccion. No hacemos estrategia sin construccion, ni construccion sin estrategia.",
+    "teamTitle": "El equipo",
+    "principlesTitle": "Principios que guian cada proyecto",
+    "p1Title": "El codigo es el entregable",
+    "p1Desc": "No vendemos ideas. Vendemos sistemas funcionando. Si no esta en produccion, no esta terminado.",
+    "p2Title": "Complejidad honesta",
+    "p2Desc": "Decimos lo que es dificil, lo que es riesgoso y lo que no sabemos. Prefierimos perder un proyecto que prometer lo que no podemos entregar.",
+    "p3Title": "Propiedad del cliente",
+    "p3Desc": "Todo lo que construimos es tuyo. Codigo fuente, modelos entrenados, documentacion. Si quieres operar internamente manana, puedes hacerlo."
+  },
+  "contactPage": {
+    "title": "Hablemos de tu operacion",
+    "subtitle": "Cuentanos que problema estas tratando de resolver. Respondemos en menos de 24 horas con una evaluacion inicial honesta.",
+    "formName": "Nombre completo",
+    "formEmail": "Email corporativo",
+    "formCompany": "Empresa",
+    "formProblem": "Describe el problema que quieres resolver. Se especifico: que proceso, que volumen, que resultado esperas.",
+    "formSubmit": "Enviar para evaluacion",
+    "calendlyTitle": "O agenda directamente con nuestro equipo tecnico"
+  },
+  "diagnosticPage": {
+    "title": "Diagnostico de IA",
+    "subtitle": "Responde 8 preguntas sobre tu operacion. Nuestro sistema identifica donde la IA puede generar impacto medible en tu empresa especifica. Resultado en 3 minutos.",
+    "startCta": "Iniciar diagnostico"
+  },
+  "chatbot": {
+    "greeting": "Soy el asistente tecnico de AI Factory. Puedo responder preguntas sobre nuestras capacidades, metodologia o ayudarte a evaluar si tu problema es un buen caso de uso para IA. Pregunta lo que necesites.",
+    "placeholder": "Describe tu situacion o pregunta...",
+    "sending": "Analizando...",
+    "scheduleCallCta": "Agendar llamada con el equipo tecnico",
+    "emailSummaryCta": "Enviar resumen por email",
+    "summaryTitle": "Resumen de la conversacion"
+  }
+}

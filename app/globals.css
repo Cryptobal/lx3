@@ -1,26 +1,136 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+/* ============================================
+   AI Factory - Global Design System
+   Premium, restrained, enterprise-grade
+   ============================================ */
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* --- Custom Properties --- */
+
+:root {
+  --background: #FAFAFA;
+  --foreground: #0A0F1C;
+  --accent: #2563EB;
+  --accent-hover: #1D4ED8;
+  --muted: #6B7280;
+  --muted-foreground: #9CA3AF;
+  --surface: #FFFFFF;
+  --surface-elevated: #F3F4F6;
+  --border: #E5E7EB;
+  --ring: #2563EB;
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  :root:not(.light) {
+    --background: #0A0F1C;
+    --foreground: #FAFAFA;
+    --accent: #3B82F6;
+    --accent-hover: #60A5FA;
+    --muted: #9CA3AF;
+    --muted-foreground: #6B7280;
+    --surface: #111827;
+    --surface-elevated: #1F2937;
+    --border: #1F2937;
+    --ring: #3B82F6;
   }
 }
 
+.dark {
+  --background: #0A0F1C;
+  --foreground: #FAFAFA;
+  --accent: #3B82F6;
+  --accent-hover: #60A5FA;
+  --muted: #9CA3AF;
+  --muted-foreground: #6B7280;
+  --surface: #111827;
+  --surface-elevated: #1F2937;
+  --border: #1F2937;
+  --ring: #3B82F6;
+}
+
+/* --- Tailwind v4 Theme Extension --- */
+
+@theme inline {
+  /* Colors */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-primary: #0A0F1C;
+  --color-primary-foreground: #FAFAFA;
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-surface: var(--surface);
+  --color-surface-elevated: var(--surface-elevated);
+  --color-border: var(--border);
+  --color-ring: var(--ring);
+
+  /* Typography */
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+
+  /* Animation durations */
+  --animate-duration-fast: 150ms;
+  --animate-duration-base: 250ms;
+  --animate-duration-slow: 400ms;
+  --animate-duration-slower: 700ms;
+}
+
+/* --- Base Styles --- */
+
+html {
+  scroll-behavior: smooth;
+}
+
 body {
-  background: var(--background);
+  background-color: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-geist-sans), system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* --- Selection --- */
+
+::selection {
+  background-color: var(--accent);
+  color: #FFFFFF;
+}
+
+/* --- Focus Accessibility --- */
+
+:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* --- Scrollbar --- */
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--border);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: var(--muted);
 }

@@ -1,0 +1,179 @@
+{
+  "metadata": {
+    "title": "AI Factory | Custom AI Software for Enterprise",
+    "description": "We design and build custom AI software for mid-market and enterprise companies. Not a consultancy. Not an agency. An AI factory that delivers production systems."
+  },
+  "nav": {
+    "home": "Home",
+    "howWeWork": "How we work",
+    "capabilities": "Capabilities",
+    "diagnostic": "Diagnostic",
+    "insights": "Insights",
+    "about": "About",
+    "contact": "Contact",
+    "cta": "Book a diagnostic"
+  },
+  "hero": {
+    "headline": "Your company generates data that nobody is turning into decisions",
+    "subheadline": "We build custom AI software that turns your operational complexity into competitive advantage. No slides. No abandoned prototypes. Production systems.",
+    "ctaPrimary": "Diagnose my operation",
+    "ctaSecondary": "See how we work"
+  },
+  "problem": {
+    "title": "The real problem isn't technology",
+    "subtitle": "Most AI initiatives fail before a single line of code is written. These are the patterns we see over and over.",
+    "pain1Title": "Pilots that never scale",
+    "pain1Desc": "Your team ran a proof of concept 8 months ago. It worked in demo. It never reached production. The vendor already moved on to another client.",
+    "pain2Title": "Valuable data trapped in silos",
+    "pain2Desc": "You have 15 systems that don't talk to each other. The information exists, but extracting a single insight takes three people and two weeks.",
+    "pain3Title": "Invisible opportunity cost",
+    "pain3Desc": "Every quarter that passes without automating critical decisions, your competitors are building advantages that compound exponentially.",
+    "pivot": "These problems aren't solved with more consulting. They're solved by building."
+  },
+  "factory": {
+    "title": "Why a factory, not an agency or a consultancy",
+    "subtitle": "The model matters. The structure of who helps you determines what they can deliver.",
+    "agencyTitle": "AI Agency",
+    "agencyDesc": "Sells you a team by the hour. Rotates people. Knowledge is lost between projects. The incentive is to extend the contract, not finish the system.",
+    "consultancyTitle": "AI Consultancy",
+    "consultancyDesc": "Delivers a 200-page document with recommendations. Your team has to execute. The gap between strategy and code is where projects go to die.",
+    "factoryTitle": "AI Factory",
+    "factoryDesc": "Diagnoses, designs, builds, and delivers. An integrated team with a repeatable methodology that produces AI systems in production. The deliverable isn't a report. It's working software."
+  },
+  "methodology": {
+    "title": "From problem to production system",
+    "subtitle": "Four phases. Each with concrete deliverables. No surprises.",
+    "phase1Title": "Diagnostic",
+    "phase1Desc": "We map your processes, data, and current systems. We identify where AI generates measurable impact, not where it sounds interesting.",
+    "phase2Title": "Design",
+    "phase2Desc": "Technical architecture, data model, and execution plan. You define scope before committing build budget.",
+    "phase3Title": "Build",
+    "phase3Desc": "Two-week sprints with functional demos. You see real progress, not status reports. Continuous integration with your existing systems.",
+    "phase4Title": "Operate",
+    "phase4Desc": "Monitoring, model retraining, and production support. The system improves with every new data point it processes.",
+    "cta": "Start with a diagnostic"
+  },
+  "capabilities": {
+    "title": "What we build",
+    "subtitle": "We don't do everything. We do four things exceptionally well.",
+    "cap1Title": "Automated decision systems",
+    "cap1Problem": "Your team makes 200 operational decisions a day using Excel and experience. 60% are repetitive and predictable.",
+    "cap1Approach": "ML models trained on your historical data that make or recommend decisions with integrated business rules.",
+    "cap1Impact": "70% reduction in decision time. 95% consistency in applied criteria. Full audit trail for every decision.",
+    "cap2Title": "Intelligent document processing",
+    "cap2Problem": "Your operation processes thousands of documents per month. Each one requires human reading, manual extraction, and system entry.",
+    "cap2Approach": "NLP and computer vision pipelines that extract, classify, and structure information from any document format.",
+    "cap2Impact": "20x faster processing. Error rate below 2%. Staff reassigned to higher-value tasks.",
+    "cap3Title": "Operational intelligence platforms",
+    "cap3Problem": "Your operational data is spread across 12 systems. Building a report requires manual work and always arrives late.",
+    "cap3Approach": "Unified data layer with predictive models that anticipate problems and suggest actions before you check a dashboard.",
+    "cap3Impact": "Real-time visibility across the full operation. Predictive alerts 48 hours before the problem.",
+    "cap4Title": "Specialized conversational interfaces",
+    "cap4Problem": "Your team spends hours searching for information in manuals, policies, and internal knowledge bases. Customers expect immediate answers.",
+    "cap4Approach": "AI agents trained on your institutional knowledge that answer complex questions with precision and context.",
+    "cap4Impact": "Immediate response to internal and external queries. 80% reduction in information search time."
+  },
+  "diagnosticCta": {
+    "title": "You don't know what you don't know",
+    "subtitle": "In 30 minutes we map the 3 highest-impact opportunities in your operation. No commitment. No sales pitch.",
+    "cta": "Book a free diagnostic"
+  },
+  "depth": {
+    "title": "Where others see complexity, we see patterns",
+    "pattern1Title": "Deep integration, not surface-level",
+    "pattern1Desc": "We don't build islands. Every system we deliver connects to your ERP, CRM, and existing tools through robust, bidirectional APIs.",
+    "pattern2Title": "Models trained on your data, not generic ones",
+    "pattern2Desc": "Generic models solve 60% of the problem. The value is in the remaining 40%, which requires specific training on your data.",
+    "pattern3Title": "Client owns the IP",
+    "pattern3Desc": "The code, the models, and the data are yours. No lock-in. No recurring licenses on what we built for you."
+  },
+  "insightsPreview": {
+    "title": "Insights",
+    "subtitle": "Technical and operational analysis from our team. No marketing. No clickbait.",
+    "cta": "View all insights"
+  },
+  "footerCta": {
+    "title": "Your next competitive advantage is already in your data",
+    "cta": "Start a conversation",
+    "email": "hello@aifactory.com"
+  },
+  "footer": {
+    "tagline": "We design and build custom AI software for companies that compete seriously.",
+    "legal": "All rights reserved",
+    "privacy": "Privacy policy",
+    "terms": "Terms of service"
+  },
+  "howWeWork": {
+    "title": "How we work",
+    "subtitle": "A process designed to eliminate risk and deliver results, not to extend contracts.",
+    "intro": "Every project follows four phases with concrete deliverables, defined timelines, and measurable success criteria. You know exactly what you're getting and when.",
+    "phase1Title": "Phase 1: Diagnostic",
+    "phase1What": "Complete analysis of your processes, data, and tech stack. We identify 3-5 high-impact opportunities with ROI estimates.",
+    "phase1Who": "Senior solutions architect + Data scientist. Interviews with your operational and technical teams.",
+    "phase1Deliverable": "Diagnostic report with opportunity map, preliminary architecture, and roadmap prioritized by impact.",
+    "phase1Timeline": "2-3 weeks",
+    "phase2Title": "Phase 2: Design",
+    "phase2What": "Detailed technical architecture, data model, integration specifications, and sprint-by-sprint execution plan.",
+    "phase2Who": "Full team: architect, ML engineer, data engineer. Co-design sessions with your technical team.",
+    "phase2Deliverable": "Architecture document, API contracts, data schema, and build timeline with milestones.",
+    "phase2Timeline": "2-4 weeks",
+    "phase3Title": "Phase 3: Build",
+    "phase3What": "Iterative development in 2-week sprints. Functional demo at the end of every sprint. Continuous integration with your systems.",
+    "phase3Who": "Dedicated squad: tech lead, ML engineers, backend/frontend developers, QA.",
+    "phase3Deliverable": "Working system in staging environment, integrated with your real data and ready for acceptance testing.",
+    "phase3Timeline": "8-16 weeks depending on scope",
+    "phase4Title": "Phase 4: Operate",
+    "phase4What": "Production deployment, performance monitoring, model retraining, and ongoing support.",
+    "phase4Who": "ML operations team. One dedicated point of contact for your team.",
+    "phase4Deliverable": "Production system with defined SLAs, monitoring dashboards, and continuous improvement plan.",
+    "phase4Timeline": "Ongoing",
+    "cta": "Start with Phase 1",
+    "labelWho": "Who participates",
+    "labelDeliverable": "Deliverable",
+    "labelTimeline": "Timeline"
+  },
+  "capabilitiesPage": {
+    "title": "Capabilities",
+    "subtitle": "Four technical disciplines. Each executed with specialist depth, not generalist breadth.",
+    "showTechnical": "See technical approach and expected outcome",
+    "labelApproach": "Approach",
+    "labelImpact": "Expected impact",
+    "ctaCard": "Diagnose if this applies to your case"
+  },
+  "aboutPage": {
+    "title": "About",
+    "thesis1": "We founded AI Factory because we saw the same pattern too many times: companies with valuable data, approved budget, and AI projects that never made it to production. The problem wasn't the technology. It was the execution model.",
+    "thesis2": "We built a factory because manufacturing is different from advising. Our team combines experience in ML engineering, enterprise systems architecture, and production software operations. We don't do strategy without building, or building without strategy.",
+    "teamTitle": "The team",
+    "principlesTitle": "Principles that guide every project",
+    "p1Title": "Code is the deliverable",
+    "p1Desc": "We don't sell ideas. We sell working systems. If it's not in production, it's not finished.",
+    "p2Title": "Honest complexity",
+    "p2Desc": "We say what's hard, what's risky, and what we don't know. We'd rather lose a project than promise what we can't deliver.",
+    "p3Title": "Client ownership",
+    "p3Desc": "Everything we build is yours. Source code, trained models, documentation. If you want to operate internally tomorrow, you can."
+  },
+  "contactPage": {
+    "title": "Let's talk about your operation",
+    "subtitle": "Tell us what problem you're trying to solve. We respond within 24 hours with an honest initial assessment.",
+    "formName": "Full name",
+    "formEmail": "Corporate email",
+    "formCompany": "Company",
+    "formProblem": "Describe the problem you want to solve. Be specific: which process, what volume, what outcome you expect.",
+    "formSubmit": "Submit for assessment",
+    "calendlyTitle": "Or book directly with our technical team"
+  },
+  "diagnosticPage": {
+    "title": "AI Diagnostic",
+    "subtitle": "Answer 8 questions about your operation. Our system identifies where AI can generate measurable impact in your specific company. Results in 3 minutes.",
+    "startCta": "Start diagnostic"
+  },
+  "chatbot": {
+    "greeting": "I'm AI Factory's technical assistant. I can answer questions about our capabilities, methodology, or help you evaluate whether your problem is a good use case for AI. Ask me anything.",
+    "placeholder": "Describe your situation or question...",
+    "sending": "Analyzing...",
+    "scheduleCallCta": "Schedule a call with the technical team",
+    "emailSummaryCta": "Email conversation summary",
+    "summaryTitle": "Conversation summary"
+  }
+}

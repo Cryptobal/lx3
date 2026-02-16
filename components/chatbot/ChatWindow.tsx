@@ -4,7 +4,7 @@ import { useRef, useEffect, useState, useCallback } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { ChatMessage } from "./ChatMessage";
 import { ChatInput } from "./ChatInput";
-import { Loader2 } from "lucide-react";
+import { Loader2, Sparkles } from "lucide-react";
 
 interface Message {
   role: "user" | "assistant";
@@ -189,7 +189,7 @@ export function ChatWindow() {
           role: "assistant",
           content:
             locale === "es"
-              ? "Disculpa, hubo un error. ¿Podrías intentar de nuevo?"
+              ? "Disculpa, hubo un error. Podrias intentar de nuevo?"
               : "Sorry, there was an error. Could you try again?",
         },
       ]);
@@ -199,26 +199,48 @@ export function ChatWindow() {
   }
 
   return (
-    <div className="flex h-[600px] flex-col rounded-2xl border border-foreground/5 bg-background shadow-sm dark:border-white/5 dark:bg-primary/30">
+    <div className="flex h-[600px] flex-col overflow-hidden rounded-2xl border border-border bg-surface shadow-xl dark:border-white/10 dark:bg-surface">
+      {/* Header */}
+      <div className="flex items-center gap-3 border-b border-border bg-surface-elevated px-5 py-3.5 dark:border-white/10 dark:bg-surface-elevated">
+        <div className="flex h-9 w-9 items-center justify-center rounded-full bg-accent/10 dark:bg-accent/20">
+          <Sparkles className="h-4 w-4 text-accent" />
+        </div>
+        <div className="flex-1">
+          <p className="text-sm font-semibold text-foreground dark:text-white">AI Factory</p>
+          <p className="text-xs text-muted dark:text-muted-foreground">
+            {locale === "es" ? "Diagnostico inteligente" : "Smart diagnostic"}
+          </p>
+        </div>
+        <div className="flex items-center gap-1.5">
+          <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
+          <span className="text-xs text-muted dark:text-muted-foreground">Online</span>
+        </div>
+      </div>
+
       {/* Messages area */}
       <div
         ref={scrollRef}
-        className="flex-1 space-y-4 overflow-y-auto p-6"
+        className="flex-1 space-y-4 overflow-y-auto bg-surface-elevated/50 px-5 py-5 dark:bg-black/20"
       >
         {messages.map((message, i) => (
           <ChatMessage key={i} role={message.role} content={message.content} />
         ))}
 
         {isLoading && messages[messages.length - 1]?.role !== "assistant" && (
-          <div className="flex items-center gap-2 text-sm text-foreground/40 dark:text-white/40">
-            <Loader2 className="h-4 w-4 animate-spin" />
-            <span>{t("sending")}</span>
+          <div className="flex items-center gap-3">
+            <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-accent/10 dark:bg-accent/20">
+              <Sparkles className="h-3.5 w-3.5 text-accent" />
+            </div>
+            <div className="flex items-center gap-2 rounded-2xl rounded-tl-md bg-surface px-4 py-3 shadow-sm dark:bg-surface-elevated">
+              <Loader2 className="h-4 w-4 animate-spin text-accent" />
+              <span className="text-sm text-muted dark:text-muted-foreground">{t("sending")}</span>
+            </div>
           </div>
         )}
       </div>
 
       {/* Input */}
-      <div className="border-t border-foreground/5 p-4 dark:border-white/5">
+      <div className="border-t border-border bg-surface px-4 py-3 dark:border-white/10 dark:bg-surface">
         <ChatInput
           value={input}
           onChange={setInput}

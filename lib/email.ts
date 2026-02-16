@@ -5,6 +5,7 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 const LEAD_RECIPIENT = 'carlos.irigoyen@gmail.com';
 
 interface LeadEmailData {
+  name?: string;
   company?: string;
   industry?: string;
   size?: string;
@@ -13,6 +14,7 @@ interface LeadEmailData {
   previousAttempts?: string;
   decisionMakers?: string;
   email?: string;
+  phone?: string;
   score?: number;
   tier?: string;
   language?: string;
@@ -27,11 +29,13 @@ function buildLeadEmailHtml(data: LeadEmailData): string {
     data.tier === 'hot' ? '🔥 HOT' : data.tier === 'warm' ? '🟡 WARM' : '🔵 COLD';
 
   const fields = [
+    { label: 'Nombre', value: data.name },
+    { label: 'Email', value: data.email },
+    { label: 'Telefono', value: data.phone },
     { label: 'Empresa', value: data.company },
     { label: 'Industria', value: data.industry },
     { label: 'Tamano', value: data.size },
     { label: 'Rol', value: data.role },
-    { label: 'Email del prospecto', value: data.email },
     { label: 'Pain point', value: data.painPoint },
     { label: 'Intentos previos', value: data.previousAttempts },
     { label: 'Decision makers', value: data.decisionMakers },
@@ -124,7 +128,7 @@ export async function sendLeadNotification(data: LeadEmailData) {
     const result = await resend.emails.send({
       from: 'LX3 AI Factory <leads@lx3.ai>',
       to: LEAD_RECIPIENT,
-      subject: `${tierLabel} Lead: ${data.company || 'Sin empresa'} — Score ${data.score ?? 0}/100`,
+      subject: `${tierLabel} Lead: ${data.name || 'Sin nombre'} — ${data.company || 'Sin empresa'} — Score ${data.score ?? 0}/100`,
       html: buildLeadEmailHtml(data),
     });
 

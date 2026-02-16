@@ -19,6 +19,7 @@ export function ChatWindow() {
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [phase, setPhase] = useState("greeting");
+  const [conversationState, setConversationState] = useState<Record<string, unknown>>({ phase: "greeting", leadData: {}, language: "es" });
   const [started, setStarted] = useState(false);
   const [leadSent, setLeadSent] = useState(false);
 
@@ -104,7 +105,7 @@ export function ChatWindow() {
             role: m.role,
             content: m.content,
           })),
-          conversationState: { phase, language: locale },
+          conversationState: { ...conversationState, phase, language: locale },
         }),
       });
 
@@ -154,6 +155,9 @@ export function ChatWindow() {
               try {
                 const data = JSON.parse(line.slice(2));
                 streamMetadata = data;
+                if (data.conversationState) {
+                  setConversationState(data.conversationState as Record<string, unknown>);
+                }
                 if (data.phase) {
                   newPhase = data.phase;
                   setPhase(data.phase);
@@ -166,9 +170,10 @@ export function ChatWindow() {
         }
       }
 
-      // After streaming is complete, check if we should send lead data
+      // Send lead data when conversation progresses enough
+      // Send at qualification+ to capture leads who leave before summary
       if (
-        (newPhase === "summary" || newPhase === "conversion") &&
+        (newPhase === "qualification" || newPhase === "summary" || newPhase === "conversion") &&
         !leadSent
       ) {
         const allMessages = [

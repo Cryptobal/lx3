@@ -14,6 +14,7 @@ export interface ChatMessage {
 }
 
 export interface LeadData {
+  name: string;
   company: string;
   industry: string;
   size: string;
@@ -22,6 +23,7 @@ export interface LeadData {
   previousAttempts: string;
   decisionMakers: string;
   email: string;
+  phone: string;
   score: number;
 }
 

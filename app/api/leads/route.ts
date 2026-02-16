@@ -31,6 +31,7 @@ export async function POST(request: NextRequest) {
     }
 
     const result = await sendLeadNotification({
+      name: leadData?.name as string,
       company: leadData?.company as string,
       industry: leadData?.industry as string,
       size: leadData?.size as string,
@@ -39,6 +40,7 @@ export async function POST(request: NextRequest) {
       previousAttempts: leadData?.previousAttempts as string,
       decisionMakers: leadData?.decisionMakers as string,
       email: leadData?.email as string,
+      phone: leadData?.phone as string,
       score: score ?? (leadData?.score as number),
       tier: tier ?? 'cold',
       language: language ?? 'es',

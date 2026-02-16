@@ -72,31 +72,96 @@ function extractLeadData(
 ): Partial<LeadData> {
   const data: Partial<LeadData> = { ...existingData };
 
-  const userMessages = messages
+  const userText = messages
     .filter((m) => m.role === 'user')
     .map((m) => m.content)
     .join(' ');
 
-  const emailMatch = userMessages.match(
-    /\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b/
-  );
-  if (emailMatch && !data.email) {
-    data.email = emailMatch[0];
+  // Email
+  if (!data.email) {
+    const m = userText.match(/\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}\b/);
+    if (m) data.email = m[0];
   }
 
-  const sizePatterns = [
-    /(\d{1,5})\s*(employees|empleados|people|personas|team members|colaboradores)/i,
-    /\b(small|medium|large|enterprise|startup|pequena|mediana|grande)\b.*\b(company|empresa|organization|organizacion)\b/i,
-    /\b(company|empresa|organization|organizacion)\b.*\b(small|medium|large|enterprise|startup|pequena|mediana|grande)\b/i,
-  ];
+  // Phone (7+ digits)
+  if (!data.phone) {
+    const m = userText.match(/(?:\+?\d{1,3}[-.\s]?)?\(?\d{1,4}\)?[-.\s]?\d{1,4}[-.\s]?\d{2,4}/);
+    if (m && m[0].replace(/\D/g, '').length >= 7) data.phone = m[0].trim();
+  }
 
+  // Name: "soy Carlos", "me llamo X", "my name is X"
+  if (!data.name) {
+    const patterns = [
+      /\b(?:soy|me llamo|mi nombre es|habla)\s+([A-ZÁÉÍÓÚÑ][a-záéíóúñ]+(?:\s+[A-ZÁÉÍÓÚÑ][a-záéíóúñ]+)?)/,
+      /\b(?:my name is|i'm|i am|this is)\s+([A-Z][a-z]+(?:\s+[A-Z][a-z]+)?)/,
+    ];
+    for (const p of patterns) {
+      const m = userText.match(p);
+      if (m) { data.name = m[1].trim(); break; }
+    }
+  }
+
+  // Company: "de TechCorp", "from X", "empresa X"
+  if (!data.company) {
+    const patterns = [
+      /\b(?:de|from|en|at|trabajo en)\s+([A-ZÁÉÍÓÚÑ][A-Za-záéíóúñ0-9]+(?:\s+[A-ZÁÉÍÓÚÑ][A-Za-záéíóúñ0-9]+){0,3})/,
+      /(?:empresa|company|compania)\s+(?:se llama\s+)?([A-ZÁÉÍÓÚÑ][A-Za-záéíóúñ0-9]+(?:\s+[A-Za-záéíóúñ0-9]+){0,3})/i,
+    ];
+    const skip = new Set(['una','un','la','el','los','las','mi','tu','su','the','my','our','Chile','Peru','Mexico','Colombia','Argentina']);
+    for (const p of patterns) {
+      const m = userText.match(p);
+      if (m && !skip.has(m[1].trim())) { data.company = m[1].trim(); break; }
+    }
+  }
+
+  // Size
   if (!data.size) {
-    for (const pattern of sizePatterns) {
-      const match = userMessages.match(pattern);
-      if (match) {
-        data.size = match[0];
-        break;
-      }
+    const patterns = [
+      /(\d{1,5})\s*(?:employees|empleados|people|personas|colaboradores|trabajadores)/i,
+      /(?:somos|tenemos|we have|we are)\s+(\d{1,5})\b/i,
+    ];
+    for (const p of patterns) {
+      const m = userText.match(p);
+      if (m) { data.size = m[0]; break; }
+    }
+  }
+
+  // Role
+  if (!data.role) {
+    const m = userText.match(/\b(?:soy el|soy la|soy|i'm the|i am the|my role is|mi rol es|mi cargo es)\s+((?:CEO|CTO|CFO|COO|CIO|VP|director|directora|gerente|jefe|jefa|head|manager|lead|founder|fundador|socio|partner|ingeniero|engineer|analista|consultant|consultor)[a-záéíóúñ\s]*)/i);
+    if (m) data.role = m[1].trim();
+  }
+
+  // Industry
+  if (!data.industry) {
+    const map: Record<string, string> = {
+      'logistic': 'Logistica', 'logistica': 'Logistica', 'transporte': 'Transporte', 'envio': 'Logistica',
+      'retail': 'Retail', 'comercio': 'Comercio', 'ecommerce': 'E-commerce', 'tienda': 'Retail',
+      'fintech': 'Fintech', 'financier': 'Finanzas', 'banco': 'Banca', 'bank': 'Banca', 'seguro': 'Seguros',
+      'salud': 'Salud', 'health': 'Salud', 'clinic': 'Salud', 'hospital': 'Salud', 'farmac': 'Farmaceutica',
+      'manufactur': 'Manufactura', 'fabric': 'Manufactura', 'industrial': 'Industrial',
+      'mining': 'Mineria', 'miner': 'Mineria', 'agri': 'Agricultura', 'agro': 'Agricultura',
+      'construc': 'Construccion', 'inmobiliar': 'Inmobiliaria', 'real estate': 'Inmobiliaria',
+      'educa': 'Educacion', 'universid': 'Educacion', 'software': 'Tech', 'tech': 'Tech', 'saas': 'SaaS',
+      'consult': 'Consultoria', 'legal': 'Legal', 'marketing': 'Marketing', 'telecom': 'Telecomunicaciones',
+      'energia': 'Energia', 'energy': 'Energia', 'alimento': 'Alimentos', 'food': 'Alimentos',
+    };
+    const lower = userText.toLowerCase();
+    for (const [kw, ind] of Object.entries(map)) {
+      if (lower.includes(kw)) { data.industry = ind; break; }
+    }
+  }
+
+  // Pain point
+  if (!data.painPoint) {
+    const patterns = [
+      /(?:problema|problem|challenge|desafio|reto|dificultad)\s+(?:es|is|con|with|de|que)?\s*(.{10,100})/i,
+      /(?:necesitamos|necesito|we need|queremos|buscamos)\s+(.{10,100})/i,
+      /(?:automatizar|automate|mejorar|improve|reducir|reduce|optimizar)\s+(.{10,80})/i,
+    ];
+    for (const p of patterns) {
+      const m = userText.match(p);
+      if (m) { data.painPoint = m[1].trim().replace(/[.!?]$/, ''); break; }
     }
   }
 
@@ -234,7 +299,7 @@ export async function POST(request: NextRequest) {
         model: getAnthropicClient()('claude-3-haiku-20240307'),
         system: systemPrompt,
         messages: coreMessages,
-        maxOutputTokens: nextPhase === ConversationPhase.SUMMARY ? 2000 : 500,
+        maxOutputTokens: nextPhase === ConversationPhase.SUMMARY ? 1500 : 200,
         temperature: 0.7,
       });
       aiText = await result.text;

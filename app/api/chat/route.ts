@@ -52,17 +52,9 @@ function detectLanguage(messages: ChatMessage[]): string {
 
   const lastUserMessage = userMessages[userMessages.length - 1].content;
 
-  const spanishIndicators = [
-    /[a-z]cion\b/i,
-    /\b(hola|buenos|buenas|gracias|por favor|nosotros|nuestra|empresa|quiero|necesito|tenemos|estamos|somos|tiene|como|que|donde|cuando|porque)\b/i,
-    /[aeiou]mente\b/i,
-    /\b(el|la|los|las|un|una|unos|unas|del|al)\b/i,
-  ];
-
-  const spanishScore = spanishIndicators.reduce(
-    (score, pattern) => score + (pattern.test(lastUserMessage) ? 1 : 0),
-    0
-  );
+  const spanishWords = /\b(hola|buenos|buenas|gracias|por|favor|nosotros|nuestra|nuestro|empresa|quiero|necesito|tenemos|estamos|somos|tiene|como|que|donde|cuando|porque|soy|de|en|con|para|pero|hay|ser|esta|este|estos|estas|eso|ese|muy|mas|mi|tu|su|nos|les|ya|si|tambien|trabajo|trabajamos|problema|proceso|equipo|datos|cliente|clientes|negocio|operacion|automatizar|mejorar|reducir|implementar|area|tiempo|costo|ayuda|puedo|puede|quiere|hacemos|hacen|busco|buscamos|necesitamos)\b/ig;
+  const matches = lastUserMessage.match(spanishWords);
+  const spanishScore = matches ? matches.length : 0;
 
   return spanishScore >= 2 ? 'es' : 'en';
 }
@@ -220,20 +212,6 @@ export async function POST(request: NextRequest) {
 
     const coreMessages = convertToMessages(messages);
 
-    const result = streamText({
-      model: anthropic('claude-haiku-4-5-20250929'),
-      system: systemPrompt,
-      messages: coreMessages,
-      maxOutputTokens: nextPhase === ConversationPhase.SUMMARY ? 2000 : 500,
-      temperature: 0.7,
-      onFinish: async ({ text }) => {
-        const sanitizedText = sanitizeOutput(text);
-        if (sanitizedText !== text) {
-          console.warn('[Guardrails] Output was sanitized. Original contained restricted content.');
-        }
-      },
-    });
-
     const updatedState: ConversationState = {
       phase: nextPhase,
       messages,
@@ -241,15 +219,40 @@ export async function POST(request: NextRequest) {
       language,
     };
 
-    const textStream = result.textStream;
     const encoder = new TextEncoder();
 
+    let aiText: string;
+    try {
+      const result = await streamText({
+        model: anthropic('claude-3-5-haiku-20241022'),
+        system: systemPrompt,
+        messages: coreMessages,
+        maxOutputTokens: nextPhase === ConversationPhase.SUMMARY ? 2000 : 500,
+        temperature: 0.7,
+      });
+      aiText = await result.text;
+      const sanitizedText = sanitizeOutput(aiText);
+      if (sanitizedText !== aiText) {
+        console.warn('[Guardrails] Output was sanitized.');
+        aiText = sanitizedText;
+      }
+    } catch (aiError) {
+      console.error('[AI API Error]', aiError);
+      const errorMsg = aiError instanceof Error ? aiError.message : '';
+      const isCredits = errorMsg.includes('credit') || errorMsg.includes('balance');
+      aiText = isCredits
+        ? (language === 'es'
+          ? 'El servicio de AI no esta disponible temporalmente. Por favor, agenda una llamada directa con nuestro equipo en la pagina de contacto para recibir tu diagnostico personalizado.'
+          : 'The AI service is temporarily unavailable. Please schedule a direct call with our team on the contact page to receive your personalized diagnostic.')
+        : (language === 'es'
+          ? 'Hubo un error al procesar tu mensaje. Por favor intenta de nuevo en unos momentos.'
+          : 'There was an error processing your message. Please try again in a moment.');
+    }
+
     const responseStream = new ReadableStream({
-      async start(controller) {
-        for await (const chunk of textStream) {
-          const encoded = `0:${JSON.stringify(chunk)}\n`;
-          controller.enqueue(encoder.encode(encoded));
-        }
+      start(controller) {
+        const textChunk = `0:${JSON.stringify(aiText)}\n`;
+        controller.enqueue(encoder.encode(textChunk));
 
         const statePayload = `d:${JSON.stringify({
           phase: nextPhase,

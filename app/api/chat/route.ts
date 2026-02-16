@@ -1,5 +1,5 @@
 import { streamText } from 'ai';
-import { anthropic } from '@ai-sdk/anthropic';
+import { createAnthropic } from '@ai-sdk/anthropic';
 import { type NextRequest } from 'next/server';
 
 import {
@@ -14,7 +14,14 @@ import { calculateLeadScore, getLeadTier } from '@/lib/chatbot/scoring';
 import { getRedirectMessage, sanitizeOutput, getOffTopicCategory } from '@/lib/chatbot/guardrails';
 import { generateSummaryPrompt } from '@/lib/chatbot/summary';
 
-export const runtime = 'edge';
+export const runtime = 'nodejs';
+
+function getAnthropicClient() {
+  return createAnthropic({
+    apiKey: process.env.LX3_ANTHROPIC_API_KEY,
+    baseURL: 'https://api.anthropic.com/v1',
+  });
+}
 
 const MAX_MESSAGES_PER_SESSION = 20;
 
@@ -224,7 +231,7 @@ export async function POST(request: NextRequest) {
     let aiText: string;
     try {
       const result = await streamText({
-        model: anthropic('claude-3-5-haiku-20241022'),
+        model: getAnthropicClient()('claude-3-haiku-20240307'),
         system: systemPrompt,
         messages: coreMessages,
         maxOutputTokens: nextPhase === ConversationPhase.SUMMARY ? 2000 : 500,

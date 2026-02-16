@@ -41,6 +41,8 @@ export async function POST(request: NextRequest) {
       decisionMakers: leadData?.decisionMakers as string,
       email: leadData?.email as string,
       phone: leadData?.phone as string,
+      website: leadData?.website as string,
+      service: leadData?.service as string,
       score: score ?? (leadData?.score as number),
       tier: tier ?? 'cold',
       language: language ?? 'es',

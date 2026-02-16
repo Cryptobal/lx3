@@ -152,6 +152,32 @@ function extractLeadData(
     }
   }
 
+  // Website (URLs)
+  if (!data.website) {
+    const m = userText.match(/\b(?:https?:\/\/)?(?:www\.)?([a-zA-Z0-9-]+(?:\.[a-zA-Z]{2,})+)(?:\/\S*)?/);
+    if (m) {
+      const domain = m[0].trim();
+      // Skip common non-company domains
+      const skipDomains = ['gmail.com', 'hotmail.com', 'yahoo.com', 'outlook.com', 'icloud.com', 'lx3.ai'];
+      if (!skipDomains.some(d => domain.includes(d))) {
+        data.website = domain;
+      }
+    }
+  }
+
+  // Service wanted
+  if (!data.service) {
+    const patterns = [
+      /(?:necesitamos|necesito|queremos|buscamos|interesa|quiero)\s+(.{5,120})/i,
+      /(?:servicio de|service for|implementar|automatizar|mejorar|optimizar)\s+(.{5,100})/i,
+      /(?:me interesa|nos interesa|interested in)\s+(.{5,100})/i,
+    ];
+    for (const p of patterns) {
+      const m = userText.match(p);
+      if (m) { data.service = m[1].trim().replace(/[.!?]$/, ''); break; }
+    }
+  }
+
   // Pain point
   if (!data.painPoint) {
     const patterns = [

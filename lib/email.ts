@@ -7,9 +7,11 @@ const LEAD_RECIPIENT = 'carlos.irigoyen@gmail.com';
 interface LeadEmailData {
   name?: string;
   company?: string;
+  website?: string;
   industry?: string;
   size?: string;
   role?: string;
+  service?: string;
   painPoint?: string;
   previousAttempts?: string;
   decisionMakers?: string;
@@ -33,9 +35,11 @@ function buildLeadEmailHtml(data: LeadEmailData): string {
     { label: 'Email', value: data.email },
     { label: 'Telefono', value: data.phone },
     { label: 'Empresa', value: data.company },
+    { label: 'Pagina Web', value: data.website },
     { label: 'Industria', value: data.industry },
     { label: 'Tamano', value: data.size },
     { label: 'Rol', value: data.role },
+    { label: 'Servicio Solicitado', value: data.service },
     { label: 'Pain point', value: data.painPoint },
     { label: 'Intentos previos', value: data.previousAttempts },
     { label: 'Decision makers', value: data.decisionMakers },

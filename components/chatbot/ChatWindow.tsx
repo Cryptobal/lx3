@@ -170,10 +170,9 @@ export function ChatWindow() {
         }
       }
 
-      // Send lead data when conversation progresses enough
-      // Send at qualification+ to capture leads who leave before summary
+      // Send lead data only when summary is delivered
       if (
-        (newPhase === "qualification" || newPhase === "summary" || newPhase === "conversion") &&
+        (newPhase === "summary" || newPhase === "conversion") &&
         !leadSent
       ) {
         const allMessages = [

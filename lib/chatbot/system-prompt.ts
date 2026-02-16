@@ -42,20 +42,24 @@ function buildPhaseManagementLayer(phase: ConversationPhase, context: Partial<Le
   const phaseInstructions: Record<ConversationPhase, string> = {
     [ConversationPhase.GREETING]: `CURRENT PHASE: GREETING
 Welcome them warmly. Say you're from AI Factory and you do a quick diagnostic to find AI opportunities.
-Ask their name and what company they're from. One question only.
+Ask their name and what company they're from (including their website if they can share it). One question only.
 Keep it to 2 sentences max.`,
 
     [ConversationPhase.BUSINESS_CONTEXT]: `CURRENT PHASE: BUSINESS CONTEXT
 ${context.company ? `You already know they work at ${context.company}.` : ''}
+${context.website ? `Website: ${context.website}.` : ''}
 ${context.industry ? `Their industry is ${context.industry}.` : ''}
 ${context.role ? `Their role is ${context.role}.` : ''}
-Understand their business: role, industry, company size, what brought them to AI.
+Understand their business: role, industry, company size, what service they're looking for.
+If you don't know their website yet, ask for it naturally (e.g. "cual es su pagina web?").
 Ask ONE question per message about what you don't know yet. Acknowledge what they said first in one sentence.`,
 
     [ConversationPhase.DIAGNOSTIC_DEPTH]: `CURRENT PHASE: DIAGNOSTIC DEPTH
 ${context.painPoint ? `They mentioned this challenge: "${context.painPoint}".` : ''}
+${context.service ? `Service interest: "${context.service}".` : ''}
 ${context.previousAttempts ? `Previous attempts: "${context.previousAttempts}".` : ''}
-Dig into their specific challenge. Ask about business impact, previous solutions tried, who else is affected.
+Dig into their specific challenge. Ask about business impact, what service/solution they're looking for, previous solutions tried.
+${!context.service ? 'If you haven\'t learned what specific service they want, ask now.' : ''}
 ONE question per message. React to what they said first. Be curious, not interrogative.`,
 
     [ConversationPhase.QUALIFICATION]: `CURRENT PHASE: QUALIFICATION
@@ -73,10 +77,11 @@ Your goal is to deliver a concise diagnostic summary that demonstrates value.
 
     [ConversationPhase.CONVERSION]: `CURRENT PHASE: CONVERSION
 Your goal is to get their contact info for follow-up.
-Ask for their email and phone number to send the diagnostic summary and coordinate a call.
-Say something like: "Para enviarte el resumen y coordinar la llamada, me pasas tu email y telefono?"
-If they only give email, that's fine. Be natural about it, not pushy.
-If they provide contact info, confirm next steps: summary by email + 30-min call with senior strategist.`,
+You MUST collect: email, celular/telefono, nombre de empresa (y web si no la tienes).
+Say something like: "Para enviarte el resumen y coordinar una llamada, me pasas tu mail y celular?"
+If they already gave some info, ask ONLY for what's missing.
+If they provide contact info, confirm next steps: summary by email + 30-min call with senior strategist.
+Be natural, not pushy. If they resist giving phone, don't insist — email is enough.`,
   };
 
   return phaseInstructions[phase];
@@ -134,7 +139,7 @@ function buildGuardrailsLayer(): string {
 5. TIMELINES: Never commit to specific project timelines or delivery dates. Reference "typical engagement phases" without specific durations.
 6. GUARANTEES: Never guarantee results, outcomes, or success. Use language like "based on our experience" or "clients in similar situations have seen".
 7. SCOPE: Stay focused on AI and digital transformation topics. Redirect off-topic conversations gracefully.
-8. DATA COLLECTION: Only ask for email at the conversion phase. Do not request sensitive business data, financial information, or proprietary details.`;
+8. DATA COLLECTION: Only ask for email and phone at the conversion phase. Do not request sensitive business data, financial information, or proprietary details. You CAN ask for company website at any phase — it's public info.`;
 }
 
 export function buildSystemPrompt(

@@ -24,6 +24,8 @@ export interface LeadData {
   decisionMakers: string;
   email: string;
   phone: string;
+  website: string;
+  service: string;
   score: number;
 }
 

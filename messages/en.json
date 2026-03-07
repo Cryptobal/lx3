@@ -234,11 +234,13 @@
     "shareTitle": "Share this article"
   },
   "chatbot": {
-    "greeting": "Hi, I'm the LX3 assistant. I can answer questions about our services, process, or help you figure out if we are the right fit for your project. Ask me anything.",
+    "greeting": "Hi, I'm the LX3 assistant. Ask me anything about our services, success stories, tech stack, or how we can help with your project.",
     "placeholder": "Describe your project or question...",
     "sending": "Thinking...",
-    "scheduleCallCta": "Schedule a call",
-    "emailSummaryCta": "Email this summary",
-    "summaryTitle": "Conversation summary"
+    "tooltip": "Have a project in mind? Ask me anything",
+    "quickReply1": "What services do you offer?",
+    "quickReply2": "Show me a success story",
+    "quickReply3": "Get a project estimate",
+    "quickReply4": "How does your process work?"
   }
 }

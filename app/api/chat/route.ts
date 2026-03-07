@@ -2,17 +2,10 @@ import { streamText } from 'ai';
 import { createAnthropic } from '@ai-sdk/anthropic';
 import { type NextRequest } from 'next/server';
 
-import {
-  ConversationPhase,
-  type ChatMessage,
-  type ConversationState,
-  type LeadData,
-} from '@/lib/chatbot/types';
+import { type ChatMessage, type ConversationState, type LeadData } from '@/lib/chatbot/types';
 import { buildSystemPrompt } from '@/lib/chatbot/system-prompt';
-import { determineNextPhase } from '@/lib/chatbot/phases';
 import { calculateLeadScore, getLeadTier } from '@/lib/chatbot/scoring';
-import { getRedirectMessage, sanitizeOutput, getOffTopicCategory } from '@/lib/chatbot/guardrails';
-import { generateSummaryPrompt } from '@/lib/chatbot/summary';
+import { isOffTopic, getRedirectMessage } from '@/lib/chatbot/guardrails';
 
 export const runtime = 'nodejs';
 
@@ -23,25 +16,25 @@ function getAnthropicClient() {
   });
 }
 
-const MAX_MESSAGES_PER_SESSION = 20;
+// --- Rate Limiting (in-memory, per-instance) ---
 
-const sessionMessageCounts = new Map<string, { count: number; lastReset: number }>();
-
+const MAX_MESSAGES_PER_SESSION = 30;
 const SESSION_WINDOW_MS = 30 * 60 * 1000;
+const sessionCounts = new Map<string, { count: number; lastReset: number }>();
 
 function getSessionId(request: NextRequest): string {
   const forwarded = request.headers.get('x-forwarded-for');
   const ip = forwarded?.split(',')[0]?.trim() ?? 'unknown';
-  const userAgent = request.headers.get('user-agent') ?? 'unknown';
-  return `${ip}-${userAgent.slice(0, 50)}`;
+  const ua = request.headers.get('user-agent') ?? 'unknown';
+  return `${ip}-${ua.slice(0, 50)}`;
 }
 
 function checkRateLimit(sessionId: string): { allowed: boolean; remaining: number } {
   const now = Date.now();
-  const session = sessionMessageCounts.get(sessionId);
+  const session = sessionCounts.get(sessionId);
 
   if (!session || now - session.lastReset > SESSION_WINDOW_MS) {
-    sessionMessageCounts.set(sessionId, { count: 1, lastReset: now });
+    sessionCounts.set(sessionId, { count: 1, lastReset: now });
     return { allowed: true, remaining: MAX_MESSAGES_PER_SESSION - 1 };
   }
 
@@ -53,18 +46,19 @@ function checkRateLimit(sessionId: string): { allowed: boolean; remaining: numbe
   return { allowed: true, remaining: MAX_MESSAGES_PER_SESSION - session.count };
 }
 
+// --- Language Detection ---
+
 function detectLanguage(messages: ChatMessage[]): string {
   const userMessages = messages.filter((m) => m.role === 'user');
-  if (userMessages.length === 0) return 'en';
+  if (userMessages.length === 0) return 'es';
 
   const lastUserMessage = userMessages[userMessages.length - 1].content;
-
-  const spanishWords = /\b(hola|buenos|buenas|gracias|por|favor|nosotros|nuestra|nuestro|empresa|quiero|necesito|tenemos|estamos|somos|tiene|como|que|donde|cuando|porque|soy|de|en|con|para|pero|hay|ser|esta|este|estos|estas|eso|ese|muy|mas|mi|tu|su|nos|les|ya|si|tambien|trabajo|trabajamos|problema|proceso|equipo|datos|cliente|clientes|negocio|operacion|automatizar|mejorar|reducir|implementar|area|tiempo|costo|ayuda|puedo|puede|quiere|hacemos|hacen|busco|buscamos|necesitamos)\b/ig;
+  const spanishWords = /\b(hola|buenos|buenas|gracias|por|favor|nosotros|nuestra|nuestro|empresa|quiero|necesito|tenemos|estamos|somos|tiene|como|que|donde|cuando|porque|soy|de|en|con|para|pero|hay|ser|esta|este|estos|estas|eso|ese|muy|mas|mi|tu|su|nos|les|ya|si|tambien|trabajo|trabajamos|problema|proceso|equipo|datos|cliente|clientes|negocio|operacion|automatizar|mejorar|reducir|implementar|area|tiempo|costo|ayuda|puedo|puede|quiere|hacemos|hacen|busco|buscamos|necesitamos|harto|sistema|gestion)\b/ig;
   const matches = lastUserMessage.match(spanishWords);
-  const spanishScore = matches ? matches.length : 0;
-
-  return spanishScore >= 2 ? 'es' : 'en';
+  return (matches ? matches.length : 0) >= 2 ? 'es' : 'en';
 }
+
+// --- Lead Data Extraction ---
 
 function extractLeadData(
   messages: ChatMessage[],
@@ -77,19 +71,16 @@ function extractLeadData(
     .map((m) => m.content)
     .join(' ');
 
-  // Email
   if (!data.email) {
     const m = userText.match(/\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}\b/);
     if (m) data.email = m[0];
   }
 
-  // Phone (7+ digits)
   if (!data.phone) {
     const m = userText.match(/(?:\+?\d{1,3}[-.\s]?)?\(?\d{1,4}\)?[-.\s]?\d{1,4}[-.\s]?\d{2,4}/);
     if (m && m[0].replace(/\D/g, '').length >= 7) data.phone = m[0].trim();
   }
 
-  // Name: "soy Carlos", "me llamo X", "my name is X"
   if (!data.name) {
     const patterns = [
       /\b(?:soy|me llamo|mi nombre es|habla)\s+([A-ZÁÉÍÓÚÑ][a-záéíóúñ]+(?:\s+[A-ZÁÉÍÓÚÑ][a-záéíóúñ]+)?)/,
@@ -101,20 +92,18 @@ function extractLeadData(
     }
   }
 
-  // Company: "de TechCorp", "from X", "empresa X"
   if (!data.company) {
     const patterns = [
       /\b(?:de|from|en|at|trabajo en)\s+([A-ZÁÉÍÓÚÑ][A-Za-záéíóúñ0-9]+(?:\s+[A-ZÁÉÍÓÚÑ][A-Za-záéíóúñ0-9]+){0,3})/,
       /(?:empresa|company|compania)\s+(?:se llama\s+)?([A-ZÁÉÍÓÚÑ][A-Za-záéíóúñ0-9]+(?:\s+[A-Za-záéíóúñ0-9]+){0,3})/i,
     ];
-    const skip = new Set(['una','un','la','el','los','las','mi','tu','su','the','my','our','Chile','Peru','Mexico','Colombia','Argentina']);
+    const skip = new Set(['una', 'un', 'la', 'el', 'los', 'las', 'mi', 'tu', 'su', 'the', 'my', 'our', 'Chile', 'Peru', 'Mexico', 'Colombia', 'Argentina']);
     for (const p of patterns) {
       const m = userText.match(p);
       if (m && !skip.has(m[1].trim())) { data.company = m[1].trim(); break; }
     }
   }
 
-  // Size
   if (!data.size) {
     const patterns = [
       /(\d{1,5})\s*(?:employees|empleados|people|personas|colaboradores|trabajadores)/i,
@@ -126,13 +115,11 @@ function extractLeadData(
     }
   }
 
-  // Role
   if (!data.role) {
     const m = userText.match(/\b(?:soy el|soy la|soy|i'm the|i am the|my role is|mi rol es|mi cargo es)\s+((?:CEO|CTO|CFO|COO|CIO|VP|director|directora|gerente|jefe|jefa|head|manager|lead|founder|fundador|socio|partner|ingeniero|engineer|analista|consultant|consultor)[a-záéíóúñ\s]*)/i);
     if (m) data.role = m[1].trim();
   }
 
-  // Industry
   if (!data.industry) {
     const map: Record<string, string> = {
       'logistic': 'Logistica', 'logistica': 'Logistica', 'transporte': 'Transporte', 'envio': 'Logistica',
@@ -145,6 +132,7 @@ function extractLeadData(
       'educa': 'Educacion', 'universid': 'Educacion', 'software': 'Tech', 'tech': 'Tech', 'saas': 'SaaS',
       'consult': 'Consultoria', 'legal': 'Legal', 'marketing': 'Marketing', 'telecom': 'Telecomunicaciones',
       'energia': 'Energia', 'energy': 'Energia', 'alimento': 'Alimentos', 'food': 'Alimentos',
+      'seguridad': 'Seguridad', 'security': 'Seguridad', 'servicios': 'Servicios',
     };
     const lower = userText.toLowerCase();
     for (const [kw, ind] of Object.entries(map)) {
@@ -152,12 +140,10 @@ function extractLeadData(
     }
   }
 
-  // Website (URLs)
   if (!data.website) {
     const m = userText.match(/\b(?:https?:\/\/)?(?:www\.)?([a-zA-Z0-9-]+(?:\.[a-zA-Z]{2,})+)(?:\/\S*)?/);
     if (m) {
       const domain = m[0].trim();
-      // Skip common non-company domains
       const skipDomains = ['gmail.com', 'hotmail.com', 'yahoo.com', 'outlook.com', 'icloud.com', 'lx3.ai'];
       if (!skipDomains.some(d => domain.includes(d))) {
         data.website = domain;
@@ -165,7 +151,6 @@ function extractLeadData(
     }
   }
 
-  // Service wanted
   if (!data.service) {
     const patterns = [
       /(?:necesitamos|necesito|queremos|buscamos|interesa|quiero)\s+(.{5,120})/i,
@@ -178,11 +163,10 @@ function extractLeadData(
     }
   }
 
-  // Pain point
   if (!data.painPoint) {
     const patterns = [
       /(?:problema|problem|challenge|desafio|reto|dificultad)\s+(?:es|is|con|with|de|que)?\s*(.{10,100})/i,
-      /(?:necesitamos|necesito|we need|queremos|buscamos)\s+(.{10,100})/i,
+      /(?:harto|tired|cansado|frustrado|frustrated)\s+(?:de|of|con|with)\s*(.{5,100})/i,
       /(?:automatizar|automate|mejorar|improve|reducir|reduce|optimizar)\s+(.{10,80})/i,
     ];
     for (const p of patterns) {
@@ -194,14 +178,7 @@ function extractLeadData(
   return data;
 }
 
-function convertToMessages(messages: ChatMessage[]) {
-  return messages
-    .filter((m) => m.role === 'user' || m.role === 'assistant')
-    .map((m) => ({
-      role: m.role as 'user' | 'assistant',
-      content: m.content,
-    }));
-}
+// --- Main Handler ---
 
 export async function POST(request: NextRequest) {
   try {
@@ -211,154 +188,116 @@ export async function POST(request: NextRequest) {
     if (!allowed) {
       return new Response(
         JSON.stringify({
-          error: 'Rate limit exceeded. Please try again later or schedule a call with our team.',
+          error: 'Has alcanzado el limite de mensajes. Puedes escribirnos directamente por WhatsApp al +56 9 8230 7771 para continuar la conversacion.',
           code: 'RATE_LIMIT',
         }),
-        {
-          status: 429,
-          headers: {
-            'Content-Type': 'application/json',
-            'X-RateLimit-Remaining': '0',
-          },
-        }
+        { status: 429, headers: { 'Content-Type': 'application/json' } }
       );
     }
 
     const body = await request.json();
     const { messages, conversationState } = body as {
       messages: ChatMessage[];
-      conversationState: ConversationState;
+      conversationState?: ConversationState;
     };
 
     if (!messages || !Array.isArray(messages) || messages.length === 0) {
       return new Response(
-        JSON.stringify({ error: 'Messages array is required and must not be empty.' }),
+        JSON.stringify({ error: 'Messages array is required.' }),
         { status: 400, headers: { 'Content-Type': 'application/json' } }
       );
     }
 
     const state: ConversationState = conversationState ?? {
-      phase: ConversationPhase.GREETING,
-      messages: [],
       leadData: {},
-      language: 'en',
+      language: 'es',
     };
 
     const language = detectLanguage(messages);
     state.language = language;
 
+    // Check for off-topic messages (only truly off-topic: crypto, politics, etc.)
     const latestUserMessage = messages[messages.length - 1];
+    if (latestUserMessage?.role === 'user' && isOffTopic(latestUserMessage.content)) {
+      const redirectMessage = getRedirectMessage(language);
+      const updatedLeadData = extractLeadData(messages, state.leadData);
+      const score = calculateLeadScore(updatedLeadData);
 
-    if (latestUserMessage && latestUserMessage.role === 'user') {
-      const offTopicCategory = getOffTopicCategory(latestUserMessage.content);
+      const updatedState: ConversationState = {
+        leadData: { ...updatedLeadData, score },
+        language,
+      };
 
-      if (offTopicCategory) {
-        const redirectMessage = getRedirectMessage(latestUserMessage.content, language);
+      const encoder = new TextEncoder();
+      const stream = new ReadableStream({
+        start(controller) {
+          controller.enqueue(encoder.encode(`0:${JSON.stringify(redirectMessage)}\n`));
+          controller.enqueue(encoder.encode(`d:${JSON.stringify({
+            conversationState: updatedState,
+            leadScore: score,
+            leadTier: getLeadTier(score),
+          })}\n`));
+          controller.close();
+        },
+      });
 
-        const updatedLeadData = extractLeadData(messages, state.leadData);
-        const score = calculateLeadScore(updatedLeadData);
-
-        const updatedState: ConversationState = {
-          ...state,
-          messages,
-          leadData: { ...updatedLeadData, score },
-          language,
-        };
-
-        const encoder = new TextEncoder();
-        const stream = new ReadableStream({
-          start(controller) {
-            const textChunk = `0:${JSON.stringify(redirectMessage)}\n`;
-            controller.enqueue(encoder.encode(textChunk));
-
-            const dataChunk = `d:${JSON.stringify({
-              conversationState: updatedState,
-              leadScore: score,
-              leadTier: getLeadTier(score),
-            })}\n`;
-            controller.enqueue(encoder.encode(dataChunk));
-
-            controller.close();
-          },
-        });
-
-        return new Response(stream, {
-          headers: {
-            'Content-Type': 'text/plain; charset=utf-8',
-            'X-RateLimit-Remaining': String(remaining),
-            'X-Conversation-Phase': state.phase,
-          },
-        });
-      }
+      return new Response(stream, {
+        headers: {
+          'Content-Type': 'text/plain; charset=utf-8',
+          'X-RateLimit-Remaining': String(remaining),
+        },
+      });
     }
 
+    // Extract lead data and calculate score
     const updatedLeadData = extractLeadData(messages, state.leadData);
-    const userMessageCount = messages.filter((m) => m.role === 'user').length;
-    const nextPhase = determineNextPhase(state.phase, userMessageCount, updatedLeadData);
-    state.phase = nextPhase;
-
     const score = calculateLeadScore(updatedLeadData);
     updatedLeadData.score = score;
     state.leadData = updatedLeadData;
 
-    let systemPrompt = buildSystemPrompt(nextPhase, language, updatedLeadData);
+    const systemPrompt = buildSystemPrompt(language, updatedLeadData);
 
-    if (nextPhase === ConversationPhase.SUMMARY) {
-      const summaryInstructions = generateSummaryPrompt(updatedLeadData, language);
-      systemPrompt += `\n\n---\n\nSUMMARY GENERATION INSTRUCTIONS:\n${summaryInstructions}`;
-    }
-
-    const coreMessages = convertToMessages(messages);
+    const coreMessages = messages
+      .filter((m) => m.role === 'user' || m.role === 'assistant')
+      .slice(-20)
+      .map((m) => ({ role: m.role as 'user' | 'assistant', content: m.content }));
 
     const updatedState: ConversationState = {
-      phase: nextPhase,
-      messages,
       leadData: updatedLeadData,
       language,
     };
 
+    // Real streaming response
     const encoder = new TextEncoder();
 
-    let aiText: string;
-    try {
-      const result = await streamText({
-        model: getAnthropicClient()('claude-3-haiku-20240307'),
-        system: systemPrompt,
-        messages: coreMessages,
-        maxOutputTokens: nextPhase === ConversationPhase.SUMMARY ? 1500 : 200,
-        temperature: 0.7,
-      });
-      aiText = await result.text;
-      const sanitizedText = sanitizeOutput(aiText);
-      if (sanitizedText !== aiText) {
-        console.warn('[Guardrails] Output was sanitized.');
-        aiText = sanitizedText;
-      }
-    } catch (aiError) {
-      console.error('[AI API Error]', aiError);
-      const errorMsg = aiError instanceof Error ? aiError.message : '';
-      const isCredits = errorMsg.includes('credit') || errorMsg.includes('balance');
-      aiText = isCredits
-        ? (language === 'es'
-          ? 'El servicio de AI no esta disponible temporalmente. Por favor, agenda una llamada directa con nuestro equipo en la pagina de contacto para recibir tu diagnostico personalizado.'
-          : 'The AI service is temporarily unavailable. Please schedule a direct call with our team on the contact page to receive your personalized diagnostic.')
-        : (language === 'es'
-          ? 'Hubo un error al procesar tu mensaje. Por favor intenta de nuevo en unos momentos.'
-          : 'There was an error processing your message. Please try again in a moment.');
-    }
-
     const responseStream = new ReadableStream({
-      start(controller) {
-        const textChunk = `0:${JSON.stringify(aiText)}\n`;
-        controller.enqueue(encoder.encode(textChunk));
+      async start(controller) {
+        try {
+          const result = streamText({
+            model: getAnthropicClient()('claude-sonnet-4-20250514'),
+            system: systemPrompt,
+            messages: coreMessages,
+            maxOutputTokens: 400,
+            temperature: 0.4,
+          });
 
-        const statePayload = `d:${JSON.stringify({
-          phase: nextPhase,
+          for await (const chunk of result.textStream) {
+            controller.enqueue(encoder.encode(`0:${JSON.stringify(chunk)}\n`));
+          }
+        } catch (aiError) {
+          console.error('[AI API Error]', aiError);
+          const errorMsg = language === 'es'
+            ? 'Hubo un error al procesar tu mensaje. Puedes intentar de nuevo o escribirnos directo por WhatsApp al +56 9 8230 7771.'
+            : 'There was an error processing your message. You can try again or reach us directly on WhatsApp at +56 9 8230 7771.';
+          controller.enqueue(encoder.encode(`0:${JSON.stringify(errorMsg)}\n`));
+        }
+
+        // Send metadata after text completes
+        controller.enqueue(encoder.encode(`d:${JSON.stringify({
           conversationState: updatedState,
           leadScore: score,
           leadTier: getLeadTier(score),
-        })}\n`;
-        controller.enqueue(encoder.encode(statePayload));
+        })}\n`));
 
         controller.close();
       },
@@ -368,7 +307,6 @@ export async function POST(request: NextRequest) {
       headers: {
         'Content-Type': 'text/plain; charset=utf-8',
         'X-RateLimit-Remaining': String(remaining),
-        'X-Conversation-Phase': nextPhase,
         'X-Lead-Score': String(score),
         'X-Lead-Tier': getLeadTier(score),
       },

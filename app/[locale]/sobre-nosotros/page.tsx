@@ -37,7 +37,7 @@ const organizationSchema = {
   },
   contactPoint: {
     "@type": "ContactPoint",
-    email: "hola@lx3.ai",
+    email: "contacto@lx3.ai",
     contactType: "sales",
   },
 };

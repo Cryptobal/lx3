@@ -197,7 +197,7 @@
     "formSuccess": "Mensaje enviado. Te contactamos en menos de 24 horas.",
     "alternatives": "También puedes:",
     "whatsapp": "Escribirnos por WhatsApp",
-    "email": "Enviarnos un email a hola@lx3.ai",
+    "email": "Enviarnos un email a contacto@lx3.ai",
     "calendly": "Agendar directamente"
   },
   "blogPage": {
@@ -210,11 +210,13 @@
     "shareTitle": "Compartir"
   },
   "chatbot": {
-    "greeting": "Hola, soy el asistente de LX3. Puedo responder preguntas sobre nuestros servicios, proceso de trabajo, o ayudarte a evaluar si podemos resolver tu problema. ¿En qué te puedo ayudar?",
+    "greeting": "Hola, soy el asistente de LX3. Preguntame lo que quieras sobre nuestros servicios, casos de exito, tecnologia, o como podemos ayudarte con tu proyecto.",
     "placeholder": "Escribe tu mensaje...",
     "sending": "Pensando...",
-    "scheduleCallCta": "Agendar llamada con el equipo",
-    "emailSummaryCta": "Enviar resumen por email",
-    "summaryTitle": "Resumen de la conversación"
+    "tooltip": "Tienes un proyecto en mente? Preguntame lo que quieras",
+    "quickReply1": "Que servicios ofrecen?",
+    "quickReply2": "Ver un caso de exito",
+    "quickReply3": "Cotizar un proyecto",
+    "quickReply4": "Como es el proceso de trabajo?"
   }
 }

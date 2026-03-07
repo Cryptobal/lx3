@@ -25,7 +25,7 @@ const contactPointSchema = {
   "@context": "https://schema.org",
   "@type": "ContactPoint",
   contactType: "sales",
-  email: "hola@lx3.ai",
+  email: "contacto@lx3.ai",
   telephone: "+56982307771",
   url: "https://lx3.ai/contacto",
   availableLanguage: ["Spanish", "English"],
@@ -119,7 +119,7 @@ function ContactContent() {
 
               {/* Email */}
               <a
-                href="mailto:hola@lx3.ai"
+                href="mailto:contacto@lx3.ai"
                 className="flex items-center gap-4 rounded-xl border border-white/5 bg-white/[0.03] p-5 transition-colors hover:border-white/10 hover:bg-white/[0.05]"
               >
                 <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-blue-500/10">
@@ -139,7 +139,7 @@ function ContactContent() {
                 </div>
                 <div>
                   <p className="font-medium text-white">{t("email")}</p>
-                  <p className="text-sm text-white/40">hola@lx3.ai</p>
+                  <p className="text-sm text-white/40">contacto@lx3.ai</p>
                 </div>
                 <svg
                   className="ml-auto h-5 w-5 text-white/20"
@@ -156,28 +156,6 @@ function ContactContent() {
                 </svg>
               </a>
 
-              {/* Calendly */}
-              <div className="flex items-center gap-4 rounded-xl border border-white/5 bg-white/[0.03] p-5">
-                <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-purple-500/10">
-                  <svg
-                    className="h-6 w-6 text-purple-400"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth={1.5}
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5"
-                    />
-                  </svg>
-                </div>
-                <div>
-                  <p className="font-medium text-white">{t("calendly")}</p>
-                  <p className="text-sm text-white/40">Calendly (pronto)</p>
-                </div>
-              </div>
             </div>
           </AnimateOnScroll>
         </div>

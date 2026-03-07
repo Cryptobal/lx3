@@ -48,7 +48,7 @@
     "metric3Label": "Time to deploy",
     "metric3Value": "12 weeks",
     "cta": "See the full case study",
-    "techStack": "Next.js, TypeScript, PostgreSQL, OpenAI, Vercel"
+    "techStack": "Next.js, TypeScript, PostgreSQL, Claude AI, Vercel"
   },
   "process": {
     "title": "How we work",

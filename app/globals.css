@@ -2,20 +2,20 @@
 
 /* ============================================
    LX3 Software Studio - Design System
-   Dark-first, premium, world-class
+   Deep blue, premium, world-class
    ============================================ */
 
 :root {
-  --background: #050505;
-  --foreground: #FAFAFA;
+  --background: #0B1120;
+  --foreground: #F0F4FC;
   --accent: #06B6D4;
   --accent-hover: #22D3EE;
   --accent-secondary: #3B82F6;
-  --muted: #71717A;
-  --muted-foreground: #A1A1AA;
-  --surface: #0A0A0A;
-  --surface-elevated: #141414;
-  --border: #1E1E1E;
+  --muted: #7B8BA5;
+  --muted-foreground: #A3B3CC;
+  --surface: #0F1729;
+  --surface-elevated: #162036;
+  --border: #1E2D4A;
   --ring: #06B6D4;
 }
 
@@ -121,9 +121,9 @@ body {
 
 .mesh-gradient {
   background:
-    radial-gradient(ellipse at 20% 50%, rgba(6, 182, 212, 0.08) 0%, transparent 50%),
-    radial-gradient(ellipse at 80% 20%, rgba(59, 130, 246, 0.06) 0%, transparent 50%),
-    radial-gradient(ellipse at 50% 80%, rgba(6, 182, 212, 0.04) 0%, transparent 50%);
+    radial-gradient(ellipse at 20% 50%, rgba(6, 182, 212, 0.12) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 20%, rgba(59, 130, 246, 0.10) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 80%, rgba(6, 182, 212, 0.06) 0%, transparent 50%);
 }
 
 .glow-accent {

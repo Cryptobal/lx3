@@ -46,7 +46,7 @@ export function Header() {
       className={cn(
         "fixed top-0 z-50 w-full transition-all duration-300",
         scrolled
-          ? "border-b border-white/5 bg-black/80 backdrop-blur-lg"
+          ? "border-b border-white/5 bg-[#0B1120]/90 backdrop-blur-lg"
           : "bg-transparent"
       )}
     >
@@ -103,7 +103,7 @@ export function Header() {
       {/* ---- Mobile Slide-Down Panel ---- */}
       <div
         className={cn(
-          "fixed inset-x-0 top-0 z-40 overflow-hidden bg-[#050505]/98 backdrop-blur-xl transition-all duration-500 ease-out md:hidden",
+          "fixed inset-x-0 top-0 z-40 overflow-hidden bg-[#0B1120]/98 backdrop-blur-xl transition-all duration-500 ease-out md:hidden",
           mobileOpen
             ? "pointer-events-auto max-h-screen opacity-100"
             : "pointer-events-none max-h-0 opacity-0"

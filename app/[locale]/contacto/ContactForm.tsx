@@ -184,19 +184,19 @@ export function ContactForm() {
           className="w-full rounded-lg border border-white/10 bg-white/[0.03] px-4 py-3 text-white outline-none transition-colors focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400"
           defaultValue=""
         >
-          <option value="" disabled className="bg-[#0a0a0a] text-white/50">
+          <option value="" disabled className="bg-[#0F1729] text-white/50">
             --
           </option>
-          <option value="google" className="bg-[#0a0a0a]">
+          <option value="google" className="bg-[#0F1729]">
             {t("formHowOptions.google")}
           </option>
-          <option value="linkedin" className="bg-[#0a0a0a]">
+          <option value="linkedin" className="bg-[#0F1729]">
             {t("formHowOptions.linkedin")}
           </option>
-          <option value="referral" className="bg-[#0a0a0a]">
+          <option value="referral" className="bg-[#0F1729]">
             {t("formHowOptions.referral")}
           </option>
-          <option value="other" className="bg-[#0a0a0a]">
+          <option value="other" className="bg-[#0F1729]">
             {t("formHowOptions.other")}
           </option>
         </select>

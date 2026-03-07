@@ -19,6 +19,8 @@ interface ConversationState {
 const STORAGE_KEY = "lx3-chat";
 const LEAD_SCORE_THRESHOLD = 30;
 const MIN_MESSAGES_FOR_LEAD = 3;
+const STREAM_FLUSH_MS = 40;
+const STREAM_FLUSH_THRESHOLD = 24;
 
 interface ChatWindowProps {
   onClose?: () => void;
@@ -150,9 +152,76 @@ export function ChatWindow({ onClose }: ChatWindowProps) {
       const decoder = new TextDecoder();
       let assistantContent = "";
       let streamMetadata: Record<string, unknown> = {};
+      let pendingContent = "";
+      let flushTimeout: ReturnType<typeof setTimeout> | null = null;
 
       // Add empty assistant message for streaming
       setMessages((prev) => [...prev, { role: "assistant", content: "" }]);
+
+      const updateAssistantMessage = (content: string) => {
+        setMessages((prev) => {
+          const updated = [...prev];
+
+          if (updated[updated.length - 1]?.role === "assistant") {
+            updated[updated.length - 1] = { role: "assistant", content };
+          } else {
+            updated.push({ role: "assistant", content });
+          }
+
+          return updated;
+        });
+      };
+
+      const flushPendingContent = () => {
+        if (!pendingContent) {
+          flushTimeout = null;
+          return;
+        }
+
+        assistantContent += pendingContent;
+        pendingContent = "";
+        flushTimeout = null;
+        updateAssistantMessage(assistantContent);
+      };
+
+      const scheduleFlush = () => {
+        if (flushTimeout) return;
+        flushTimeout = setTimeout(flushPendingContent, STREAM_FLUSH_MS);
+      };
+
+      const processStreamLine = (line: string) => {
+        if (line.startsWith("0:")) {
+          try {
+            const text = JSON.parse(line.slice(2));
+            pendingContent += text;
+
+            if (
+              pendingContent.length >= STREAM_FLUSH_THRESHOLD ||
+              /[.!?\n]\s*$/.test(pendingContent)
+            ) {
+              if (flushTimeout) {
+                clearTimeout(flushTimeout);
+                flushTimeout = null;
+              }
+              flushPendingContent();
+            } else {
+              scheduleFlush();
+            }
+          } catch {
+            // skip unparseable chunks
+          }
+        } else if (line.startsWith("d:")) {
+          try {
+            const data = JSON.parse(line.slice(2));
+            streamMetadata = data;
+            if (data.conversationState) {
+              setConversationState(data.conversationState);
+            }
+          } catch {
+            // skip
+          }
+        }
+      };
 
       if (reader) {
         let buffer = "";
@@ -165,35 +234,20 @@ export function ChatWindow({ onClose }: ChatWindowProps) {
           buffer = lines.pop() || "";
 
           for (const line of lines) {
-            if (line.startsWith("0:")) {
-              try {
-                const text = JSON.parse(line.slice(2));
-                assistantContent += text;
-                setMessages((prev) => {
-                  const updated = [...prev];
-                  updated[updated.length - 1] = {
-                    role: "assistant",
-                    content: assistantContent,
-                  };
-                  return updated;
-                });
-              } catch {
-                // skip unparseable chunks
-              }
-            } else if (line.startsWith("d:")) {
-              try {
-                const data = JSON.parse(line.slice(2));
-                streamMetadata = data;
-                if (data.conversationState) {
-                  setConversationState(data.conversationState);
-                }
-              } catch {
-                // skip
-              }
-            }
+            processStreamLine(line);
           }
         }
+
+        const remainingLine = buffer.trim();
+        if (remainingLine) {
+          processStreamLine(remainingLine);
+        }
       }
+
+      if (flushTimeout) {
+        clearTimeout(flushTimeout);
+      }
+      flushPendingContent();
 
       // Send lead email when score crosses threshold
       const userMessageCount = allMessages.filter((m) => m.role === "user").length;

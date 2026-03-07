@@ -16,14 +16,13 @@ export function FloatingChatButton() {
 
   // Show proactive tooltip after 8 seconds
   useEffect(() => {
-    if (isDiagnosticPage || open) {
-      setShowTooltip(false);
+    if (isDiagnosticPage || open || showTooltip) {
       return;
     }
 
     const timer = setTimeout(() => setShowTooltip(true), 8000);
     return () => clearTimeout(timer);
-  }, [open, isDiagnosticPage]);
+  }, [open, isDiagnosticPage, showTooltip]);
 
   // Dismiss tooltip on scroll
   useEffect(() => {

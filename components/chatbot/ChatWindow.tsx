@@ -206,9 +206,9 @@ export function ChatWindow() {
           <Sparkles className="h-4 w-4 text-accent" />
         </div>
         <div className="flex-1">
-          <p className="text-sm font-semibold text-foreground dark:text-white">AI Factory</p>
+          <p className="text-sm font-semibold text-foreground dark:text-white">LX3</p>
           <p className="text-xs text-muted dark:text-muted-foreground">
-            {locale === "es" ? "Diagnostico inteligente" : "Smart diagnostic"}
+            {locale === "es" ? "Asistente virtual" : "Virtual assistant"}
           </p>
         </div>
         <div className="flex items-center gap-1.5">

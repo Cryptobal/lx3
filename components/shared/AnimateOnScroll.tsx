@@ -1,62 +1,41 @@
 "use client";
 
-import { useEffect, useRef, useState, type ReactNode } from "react";
-import { cn } from "@/lib/utils/cn";
+import { motion } from "framer-motion";
 
 interface AnimateOnScrollProps {
-  children: ReactNode;
+  children: React.ReactNode;
   className?: string;
   delay?: number;
+  direction?: "up" | "left" | "right";
 }
 
 export function AnimateOnScroll({
   children,
   className,
   delay = 0,
+  direction = "up",
 }: AnimateOnScrollProps) {
-  const ref = useRef<HTMLDivElement>(null);
-  const [visible, setVisible] = useState(false);
+  const initialOffset =
+    direction === "up"
+      ? { opacity: 0, y: 30 }
+      : direction === "left"
+        ? { opacity: 0, x: -30 }
+        : { opacity: 0, x: 30 };
 
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-
-    // Respect reduced motion preference
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      setVisible(true);
-      return;
-    }
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          if (delay > 0) {
-            setTimeout(() => setVisible(true), delay);
-          } else {
-            setVisible(true);
-          }
-          observer.unobserve(el);
-        }
-      },
-      { threshold: 0.15, rootMargin: "0px 0px -40px 0px" }
-    );
-
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, [delay]);
+  const animateTo =
+    direction === "up"
+      ? { opacity: 1, y: 0 }
+      : { opacity: 1, x: 0 };
 
   return (
-    <div
-      ref={ref}
-      className={cn(
-        "transition-all duration-700 ease-out",
-        visible
-          ? "translate-y-0 opacity-100"
-          : "translate-y-6 opacity-0",
-        className
-      )}
+    <motion.div
+      initial={initialOffset}
+      whileInView={animateTo}
+      viewport={{ once: true, margin: "-100px" }}
+      transition={{ duration: 0.6, ease: "easeOut", delay }}
+      className={className}
     >
       {children}
-    </div>
+    </motion.div>
   );
 }

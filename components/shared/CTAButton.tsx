@@ -2,40 +2,50 @@
 
 import { cn } from "@/lib/utils/cn";
 import { Link } from "@/lib/i18n/routing";
+import { cva, type VariantProps } from "class-variance-authority";
 
-type Variant = "primary" | "secondary" | "ghost";
+const buttonVariants = cva(
+  "inline-flex items-center justify-center gap-2 rounded-lg font-medium transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
+  {
+    variants: {
+      variant: {
+        primary:
+          "bg-gradient-to-r from-[#06B6D4] to-[#3B82F6] text-white shadow-lg shadow-cyan-500/25 hover:shadow-xl hover:shadow-cyan-500/30 hover:brightness-110",
+        secondary:
+          "border border-white/10 bg-white/5 text-white hover:bg-white/10",
+        ghost: "text-white/70 hover:text-accent",
+      },
+      size: {
+        sm: "px-4 py-2 text-sm",
+        md: "px-6 py-3 text-sm",
+        lg: "px-8 py-4 text-base",
+      },
+    },
+    defaultVariants: {
+      variant: "primary",
+      size: "md",
+    },
+  }
+);
 
-interface CTAButtonProps {
+interface CTAButtonProps extends VariantProps<typeof buttonVariants> {
   children: React.ReactNode;
-  variant?: Variant;
   href?: string;
   onClick?: () => void;
   className?: string;
   external?: boolean;
 }
 
-const variants: Record<Variant, string> = {
-  primary:
-    "bg-accent text-white hover:bg-accent/90 shadow-sm shadow-accent/20",
-  secondary:
-    "border border-foreground/10 text-foreground hover:bg-foreground/5 dark:border-white/10 dark:hover:bg-white/5",
-  ghost:
-    "text-foreground/70 hover:text-foreground underline-offset-4 hover:underline",
-};
-
 export function CTAButton({
   children,
-  variant = "primary",
+  variant,
+  size,
   href,
   onClick,
   className,
   external,
 }: CTAButtonProps) {
-  const classes = cn(
-    "inline-flex items-center justify-center gap-2 rounded-lg px-6 py-3 text-sm font-medium transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
-    variants[variant],
-    className
-  );
+  const classes = cn(buttonVariants({ variant, size }), className);
 
   if (href && external) {
     return (

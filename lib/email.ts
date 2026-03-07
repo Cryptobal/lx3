@@ -62,7 +62,7 @@ function buildLeadEmailHtml(data: LeadEmailData): string {
         .map(
           (m) => `
         <div style="margin-bottom: 12px;">
-          <strong style="color: ${m.role === 'user' ? '#2b6cb0' : '#718096'};">${m.role === 'user' ? '👤 Prospecto' : '🤖 AI Factory'}:</strong>
+          <strong style="color: ${m.role === 'user' ? '#2b6cb0' : '#718096'};">${m.role === 'user' ? '👤 Prospecto' : '🤖 LX3'}:</strong>
           <p style="margin: 4px 0 0 0; color: #4a5568; line-height: 1.5;">${m.content.replace(/\n/g, '<br/>')}</p>
         </div>`
         )
@@ -78,7 +78,7 @@ function buildLeadEmailHtml(data: LeadEmailData): string {
   <div style="background: white; border-radius: 12px; padding: 32px; border: 1px solid #e2e8f0;">
 
     <div style="text-align: center; margin-bottom: 24px;">
-      <h1 style="margin: 0; font-size: 22px; color: #1a202c;">Nuevo Lead — AI Factory</h1>
+      <h1 style="margin: 0; font-size: 22px; color: #1a202c;">Nuevo Lead — LX3</h1>
       <div style="margin-top: 8px;">
         <span style="display: inline-block; padding: 4px 16px; border-radius: 20px; font-size: 14px; font-weight: 700; color: white; background-color: ${tierColor};">
           ${tierLabel} — Score: ${data.score ?? 0}/100
@@ -117,7 +117,7 @@ function buildLeadEmailHtml(data: LeadEmailData): string {
   </div>
 
   <p style="text-align: center; color: #a0aec0; font-size: 12px; margin-top: 16px;">
-    Enviado automaticamente por LX3 AI Factory Diagnostic System
+    Enviado automaticamente por LX3 Lead System
   </p>
 
 </body>
@@ -130,7 +130,7 @@ export async function sendLeadNotification(data: LeadEmailData) {
 
   try {
     const result = await resend.emails.send({
-      from: 'LX3 AI Factory <leads@lx3.ai>',
+      from: 'LX3 <leads@lx3.ai>',
       to: LEAD_RECIPIENT,
       subject: `${tierLabel} Lead: ${data.name || 'Sin nombre'} — ${data.company || 'Sin empresa'} — Score ${data.score ?? 0}/100`,
       html: buildLeadEmailHtml(data),

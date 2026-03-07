@@ -1,22 +1,31 @@
 import type { Metadata } from "next";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages, setRequestLocale } from "next-intl/server";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Space_Grotesk, Plus_Jakarta_Sans, Geist_Mono } from "next/font/google";
 import { notFound } from "next/navigation";
 import { routing } from "@/lib/i18n/routing";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
-import { ThemeProvider } from "@/components/layout/ThemeProvider";
 import { FloatingChatButton } from "@/components/chatbot/FloatingChatButton";
+import WhatsAppButton from "@/components/shared/WhatsAppButton";
+import { Analytics } from "@vercel/analytics/next";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const spaceGrotesk = Space_Grotesk({
+  variable: "--font-space-grotesk",
   subsets: ["latin"],
+  display: "swap",
+});
+
+const jakarta = Plus_Jakarta_Sans({
+  variable: "--font-jakarta",
+  subsets: ["latin"],
+  display: "swap",
 });
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+  display: "swap",
 });
 
 export function generateStaticParams() {
@@ -31,13 +40,13 @@ export async function generateMetadata({
   const { locale } = await params;
 
   const titles: Record<string, string> = {
-    es: "LX3 — AI Factory para empresas",
-    en: "LX3 — AI Factory for enterprises",
+    es: "LX3 — Software Studio | Aplicaciones inteligentes para empresas",
+    en: "LX3 — Software Studio | Intelligent apps for businesses",
   };
 
   const descriptions: Record<string, string> = {
-    es: "Diseñamos y construimos software a medida con IA que resuelve los problemas más caros de tu operación.",
-    en: "We design and build custom AI software that solves your most expensive operational problems.",
+    es: "Diseñamos y construimos software inteligente para empresas que quieren crecer. Aplicaciones a medida, automatización con IA, sitios web y consultoría tecnológica.",
+    en: "We design and build intelligent software for growing businesses. Custom applications, AI automation, websites, and technology consulting.",
   };
 
   return {
@@ -48,8 +57,12 @@ export async function generateMetadata({
     description: descriptions[locale] || descriptions.es,
     openGraph: {
       type: "website",
-      locale: locale === "en" ? "en_US" : "es_MX",
+      locale: locale === "en" ? "en_US" : "es_CL",
       siteName: "LX3",
+      images: [{ url: "/og-default.jpg", width: 1200, height: 630 }],
+    },
+    twitter: {
+      card: "summary_large_image",
     },
     alternates: {
       languages: {
@@ -78,24 +91,17 @@ export default async function LocaleLayout({
 
   return (
     <html lang={locale} className="scroll-smooth" suppressHydrationWarning>
-      <head>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `(function(){try{var t=localStorage.getItem('theme');if(t==='dark'||(!t&&matchMedia('(prefers-color-scheme:dark)').matches)){document.documentElement.classList.add('dark')}}catch(e){}})()`,
-          }}
-        />
-      </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} min-h-screen bg-background font-sans text-foreground antialiased`}
+        className={`${spaceGrotesk.variable} ${jakarta.variable} ${geistMono.variable} grain-overlay min-h-screen bg-background font-sans text-foreground antialiased`}
       >
         <NextIntlClientProvider messages={messages}>
-          <ThemeProvider>
-            <Header />
-            <main className="pt-16">{children}</main>
-            <Footer />
-            <FloatingChatButton />
-          </ThemeProvider>
+          <Header />
+          <main>{children}</main>
+          <Footer />
+          <FloatingChatButton />
+          <WhatsAppButton />
         </NextIntlClientProvider>
+        <Analytics />
       </body>
     </html>
   );

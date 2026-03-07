@@ -7,10 +7,10 @@ import { cn } from "@/lib/utils/cn";
 import { Menu, X } from "lucide-react";
 
 const navItems = [
-  { href: "/como-trabajamos" as const, key: "howWeWork" },
-  { href: "/capacidades" as const, key: "capabilities" },
-  { href: "/perspectivas" as const, key: "insights" },
-  { href: "/nosotros" as const, key: "about" },
+  { href: "/servicios" as const, key: "services" },
+  { href: "/casos" as const, key: "cases" },
+  { href: "/blog" as const, key: "blog" },
+  { href: "/sobre-nosotros" as const, key: "about" },
 ] as const;
 
 export function Navigation() {
@@ -25,7 +25,7 @@ export function Navigation() {
           <Link
             key={item.key}
             href={item.href}
-            className="text-sm text-foreground/60 transition-colors hover:text-foreground dark:text-white/60 dark:hover:text-white"
+            className="text-sm text-white/60 transition-colors hover:text-white"
           >
             {t(item.key)}
           </Link>
@@ -39,16 +39,16 @@ export function Navigation() {
         aria-label="Toggle menu"
       >
         {mobileOpen ? (
-          <X className="h-5 w-5 text-foreground dark:text-white" />
+          <X className="h-5 w-5 text-white" />
         ) : (
-          <Menu className="h-5 w-5 text-foreground dark:text-white" />
+          <Menu className="h-5 w-5 text-white" />
         )}
       </button>
 
       {/* Mobile Menu */}
       <div
         className={cn(
-          "fixed inset-0 z-40 bg-background/95 backdrop-blur-sm transition-all duration-300 md:hidden dark:bg-primary/95",
+          "fixed inset-0 z-40 bg-background/95 backdrop-blur-sm transition-all duration-300 md:hidden",
           mobileOpen
             ? "pointer-events-auto opacity-100"
             : "pointer-events-none opacity-0"
@@ -60,15 +60,15 @@ export function Navigation() {
               key={item.key}
               href={item.href}
               onClick={() => setMobileOpen(false)}
-              className="text-lg font-medium text-foreground transition-colors hover:text-accent dark:text-white"
+              className="text-lg font-medium text-white transition-colors hover:text-accent"
             >
               {t(item.key)}
             </Link>
           ))}
           <Link
-            href="/diagnostico"
+            href="/contacto"
             onClick={() => setMobileOpen(false)}
-            className="mt-4 rounded-lg bg-accent px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-accent/90"
+            className="mt-4 rounded-lg bg-gradient-to-r from-accent to-accent-secondary px-6 py-3 text-sm font-medium text-white transition-colors hover:brightness-110"
           >
             {t("cta")}
           </Link>

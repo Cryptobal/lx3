@@ -74,7 +74,7 @@ export function getPhaseGuidance(phase: ConversationPhase): PhaseGuidance {
       transitionSignals: [
         'User provides name or company',
         'User states a reason for visiting',
-        'User asks what AI Factory does',
+        'User asks what LX3 does',
       ],
     },
 

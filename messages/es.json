@@ -1,179 +1,220 @@
 {
   "metadata": {
-    "title": "AI Factory | Software de IA a medida para empresas",
-    "description": "Disenamos y construimos software de inteligencia artificial a medida para empresas medianas y grandes. No consultorias. No agencias. Una fabrica de IA que entrega sistemas en produccion."
+    "title": "LX3 | Software Studio — Software inteligente para empresas",
+    "description": "Diseñamos y construimos software inteligente para empresas que quieren crecer. Aplicaciones a medida, automatización con IA, sitios web y consultoría tecnológica."
   },
   "nav": {
     "home": "Inicio",
-    "howWeWork": "Como trabajamos",
-    "capabilities": "Capacidades",
-    "diagnostic": "Diagnostico",
-    "insights": "Perspectivas",
+    "services": "Servicios",
+    "cases": "Casos",
+    "blog": "Blog",
     "about": "Nosotros",
     "contact": "Contacto",
-    "cta": "Agendar diagnostico"
+    "cta": "Agenda una conversación"
   },
   "hero": {
-    "headline": "Tu empresa genera datos que nadie esta convirtiendo en decisiones",
-    "subheadline": "Construimos software de IA a medida que convierte la complejidad operativa de tu empresa en ventaja competitiva. No slides. No prototipos abandonados. Sistemas en produccion.",
-    "ctaPrimary": "Diagnosticar mi operacion",
-    "ctaSecondary": "Ver como trabajamos"
+    "tag": "SOFTWARE STUDIO",
+    "headline": "Construimos el software que tu empresa necesita.",
+    "headlineAccent": "Con IA.",
+    "subheadline": "Somos el equipo de tecnología que las empresas medianas no necesitan contratar. Aplicaciones inteligentes, listas en semanas.",
+    "ctaPrimary": "Agenda una conversación",
+    "ctaSecondary": "Ver nuestro trabajo"
   },
-  "problem": {
-    "title": "El problema real no es tecnologico",
-    "subtitle": "La mayoria de las iniciativas de IA fallan antes de escribir una sola linea de codigo. Estos son los patrones que vemos una y otra vez.",
-    "pain1Title": "Pilotos que nunca escalan",
-    "pain1Desc": "Tu equipo hizo una prueba de concepto hace 8 meses. Funciono en demo. Nunca llego a produccion. El vendor ya paso a otro cliente.",
-    "pain2Title": "Datos valiosos atrapados en silos",
-    "pain2Desc": "Tienes 15 sistemas que no se hablan entre si. La informacion existe, pero extraer un insight requiere tres personas y dos semanas.",
-    "pain3Title": "Costo de oportunidad invisible",
-    "pain3Desc": "Cada trimestre que pasa sin automatizar decisiones criticas, tus competidores estan construyendo ventajas que se acumulan exponencialmente.",
-    "pivot": "Estos problemas no se resuelven con mas consultoria. Se resuelven construyendo."
+  "socialProof": {
+    "metric1": "2+ años construyendo software",
+    "metric2": "20+ módulos en producción",
+    "metric3": "MVP en 30 días"
   },
-  "factory": {
-    "title": "Por que una fabrica, no una agencia ni una consultora",
-    "subtitle": "El modelo importa. La estructura de quien te ayuda determina lo que pueden entregar.",
-    "agencyTitle": "Agencia de IA",
-    "agencyDesc": "Te vende un equipo por horas. Rota gente. El conocimiento se pierde entre proyectos. El incentivo es extender el contrato, no terminar el sistema.",
-    "consultancyTitle": "Consultora de IA",
-    "consultancyDesc": "Te entrega un documento de 200 paginas con recomendaciones. Tu equipo debe ejecutar. La brecha entre estrategia y codigo es donde mueren los proyectos.",
-    "factoryTitle": "AI Factory",
-    "factoryDesc": "Diagnostica, disena, construye y entrega. Un equipo integrado con metodologia repetible que produce sistemas de IA en produccion. El entregable no es un reporte. Es software funcionando."
+  "services": {
+    "title": "Lo que hacemos",
+    "subtitle": "No hacemos de todo. Hacemos cuatro cosas excepcionalmente bien.",
+    "s1Title": "Aplicaciones internas",
+    "s1Desc": "Apps a medida que reemplazan tus Excel, formularios y procesos manuales. ERPs, CRMs, dashboards, portales internos.",
+    "s2Title": "Automatización con IA",
+    "s2Desc": "Integramos inteligencia artificial donde realmente importa: procesamiento de documentos, decisiones automáticas, chatbots especializados.",
+    "s3Title": "Sitios web",
+    "s3Desc": "Sitios rápidos, modernos y optimizados para SEO. Diseño que convierte visitantes en clientes.",
+    "s4Title": "Consultoría tecnológica",
+    "s4Desc": "Te ayudamos a decidir qué construir, con qué tecnología, y en qué orden. Sin PowerPoints — con prototipos."
   },
-  "methodology": {
-    "title": "Del problema al sistema en produccion",
+  "showcase": {
+    "title": "Caso de éxito",
+    "subtitle": "OPAI — ERP inteligente para Gard Security",
+    "description": "Diseñamos y construimos un sistema ERP completo con IA para Gard Security, una empresa de seguridad privada con +500 guardias. El sistema gestiona contratos, turnos, recursos humanos, facturación y reportes — todo en una sola plataforma.",
+    "metric1Label": "Módulos en producción",
+    "metric1Value": "20+",
+    "metric2Label": "Guardias gestionados",
+    "metric2Value": "500+",
+    "metric3Label": "Tiempo de desarrollo",
+    "metric3Value": "MVP en 30 días",
+    "cta": "Ver caso completo",
+    "techStack": "Next.js · React · TypeScript · PostgreSQL · Claude AI · Vercel"
+  },
+  "process": {
+    "title": "Cómo trabajamos",
     "subtitle": "Cuatro fases. Cada una con entregables concretos. Sin sorpresas.",
-    "phase1Title": "Diagnostico",
-    "phase1Desc": "Mapeamos tus procesos, datos y sistemas actuales. Identificamos donde la IA genera impacto medible, no donde suena interesante.",
-    "phase2Title": "Diseno",
-    "phase2Desc": "Arquitectura tecnica, modelo de datos y plan de ejecucion. Defines el alcance antes de comprometer presupuesto de construccion.",
-    "phase3Title": "Construccion",
-    "phase3Desc": "Sprints de dos semanas con demos funcionales. Ves progreso real, no reportes de estatus. Integracion continua con tus sistemas existentes.",
-    "phase4Title": "Operacion",
-    "phase4Desc": "Monitoreo, reentrenamiento de modelos y soporte en produccion. El sistema mejora con cada dato nuevo que procesa.",
-    "cta": "Iniciar con diagnostico"
+    "step1Title": "Discovery",
+    "step1Desc": "Entendemos tu negocio, procesos y dolor. Definimos qué construir y por qué.",
+    "step1Time": "1-2 semanas",
+    "step2Title": "Diseño",
+    "step2Desc": "Prototipos funcionales y arquitectura técnica. Ves el producto antes de construirlo.",
+    "step2Time": "1-2 semanas",
+    "step3Title": "Desarrollo",
+    "step3Desc": "Sprints de 2 semanas con demos funcionales. Integración continua con tus sistemas.",
+    "step3Time": "4-12 semanas",
+    "step4Title": "Evolución",
+    "step4Desc": "Monitoreo, mejoras continuas y soporte. El software mejora con cada iteración.",
+    "step4Time": "Continuo"
   },
-  "capabilities": {
-    "title": "Lo que construimos",
-    "subtitle": "No hacemos todo. Hacemos cuatro cosas excepcionalmente bien.",
-    "cap1Title": "Sistemas de decision automatizada",
-    "cap1Problem": "Tu equipo toma 200 decisiones operativas al dia usando Excel y experiencia. El 60% son repetitivas y predecibles.",
-    "cap1Approach": "Modelos de ML entrenados con tu data historica que toman o recomiendan decisiones con reglas de negocio integradas.",
-    "cap1Impact": "Reduccion del 70% en tiempo de decision. Consistencia del 95% en criterios aplicados. Auditoria completa de cada decision.",
-    "cap2Title": "Procesamiento inteligente de documentos",
-    "cap2Problem": "Tu operacion procesa miles de documentos al mes. Cada uno requiere lectura humana, extraccion manual y captura en sistema.",
-    "cap2Approach": "Pipelines de NLP y vision por computadora que extraen, clasifican y estructuran informacion de cualquier formato de documento.",
-    "cap2Impact": "Procesamiento 20x mas rapido. Tasa de error menor al 2%. Personal reasignado a tareas de mayor valor.",
-    "cap3Title": "Plataformas de inteligencia operativa",
-    "cap3Problem": "Los datos de tu operacion estan distribuidos en 12 sistemas. Armar un reporte requiere trabajo manual y siempre llega tarde.",
-    "cap3Approach": "Capa de datos unificada con modelos predictivos que anticipan problemas y sugieren acciones antes de que revises un dashboard.",
-    "cap3Impact": "Visibilidad en tiempo real de la operacion completa. Alertas predictivas 48 horas antes del problema.",
-    "cap4Title": "Interfaces conversacionales especializadas",
-    "cap4Problem": "Tu equipo pasa horas buscando informacion en manuales, politicas y bases de conocimiento internas. Los clientes esperan respuestas inmediatas.",
-    "cap4Approach": "Agentes de IA entrenados con tu conocimiento institucional que responden preguntas complejas con precision y contexto.",
-    "cap4Impact": "Respuesta inmediata a consultas internas y externas. Reduccion del 80% en tiempo de busqueda de informacion."
+  "techStack": {
+    "title": "Nuestro stack",
+    "subtitle": "Tecnología moderna, probada en producción."
   },
-  "diagnosticCta": {
-    "title": "No sabes lo que no sabes",
-    "subtitle": "En 30 minutos mapeamos las 3 oportunidades de mayor impacto en tu operacion. Sin compromiso. Sin pitch de ventas.",
-    "cta": "Reservar diagnostico gratuito"
+  "blogPreview": {
+    "title": "Blog",
+    "subtitle": "Pensamiento técnico y estratégico. Sin marketing, sin clickbait.",
+    "cta": "Ver todos los artículos",
+    "article1Category": "Estrategia AI",
+    "article1Title": "Por qué las herramientas genéricas de AI no resuelven problemas específicos",
+    "article1Excerpt": "La diferencia entre implementar un chatbot genérico y construir un sistema de IA que realmente entiende tu negocio.",
+    "article1ReadTime": "8 min",
+    "article2Category": "Operaciones",
+    "article2Title": "El verdadero costo de no automatizar: cómo calcularlo",
+    "article2Excerpt": "Una guía práctica para cuantificar cuánto le cuesta a tu empresa seguir haciendo las cosas manualmente.",
+    "article2ReadTime": "6 min",
+    "article3Category": "Deep-Dive Técnico",
+    "article3Title": "Decision Intelligence: cuando tus datos existen pero no deciden",
+    "article3Excerpt": "Cómo convertir datos operativos en decisiones automáticas usando modelos de lenguaje y pipelines inteligentes.",
+    "article3ReadTime": "10 min"
   },
-  "depth": {
-    "title": "Donde otros ven complejidad, nosotros vemos patrones",
-    "pattern1Title": "Integracion profunda, no superficial",
-    "pattern1Desc": "No construimos islas. Cada sistema que entregamos se conecta con tu ERP, CRM y herramientas existentes via APIs robustas y bidireccionales.",
-    "pattern2Title": "Modelos entrenados con tus datos, no genericos",
-    "pattern2Desc": "Los modelos genericos resuelven el 60% del problema. El valor esta en el 40% restante, que requiere entrenamiento especifico con tu data.",
-    "pattern3Title": "Propiedad intelectual del cliente",
-    "pattern3Desc": "El codigo, los modelos y los datos son tuyos. Sin dependencia. Sin licencias recurrentes sobre lo que construimos para ti."
-  },
-  "insightsPreview": {
-    "title": "Perspectivas",
-    "subtitle": "Analisis tecnicos y operativos de nuestro equipo. Sin marketing. Sin clickbait.",
-    "cta": "Ver todas las perspectivas"
-  },
-  "footerCta": {
-    "title": "Tu proxima ventaja competitiva ya esta en tus datos",
-    "cta": "Iniciar conversacion",
-    "email": "hola@aifactory.com"
+  "finalCta": {
+    "title": "¿Listo para modernizar tu empresa?",
+    "subtitle": "Cuéntanos tu problema. Te decimos honestamente si podemos ayudarte.",
+    "cta": "Agenda una conversación",
+    "whatsapp": "O escríbenos por WhatsApp"
   },
   "footer": {
-    "tagline": "Disenamos y construimos software de IA a medida para empresas que compiten en serio.",
-    "legal": "Todos los derechos reservados",
-    "privacy": "Politica de privacidad",
-    "terms": "Terminos de servicio"
+    "tagline": "Diseñamos y construimos software inteligente para empresas que quieren crecer.",
+    "services": "Servicios",
+    "company": "Empresa",
+    "legal": "© 2026 LX3. Todos los derechos reservados.",
+    "connect": "Conecta",
+    "privacy": "Privacidad",
+    "terms": "Términos",
+    "location": "Santiago, Chile"
   },
-  "howWeWork": {
-    "title": "Como trabajamos",
-    "subtitle": "Un proceso disenado para eliminar riesgo y entregar resultados, no para extender contratos.",
-    "intro": "Cada proyecto sigue cuatro fases con entregables concretos, plazos definidos y criterios de exito medibles. Sabes exactamente que vas a obtener y cuando.",
-    "phase1Title": "Fase 1: Diagnostico",
-    "phase1What": "Analisis completo de tus procesos, datos y stack tecnologico. Identificamos 3-5 oportunidades de alto impacto con estimacion de ROI.",
-    "phase1Who": "Arquitecto de soluciones senior + Cientifico de datos. Entrevistas con tu equipo operativo y tecnico.",
-    "phase1Deliverable": "Reporte de diagnostico con mapa de oportunidades, arquitectura preliminar y hoja de ruta priorizada por impacto.",
-    "phase1Timeline": "2-3 semanas",
-    "phase2Title": "Fase 2: Diseno",
-    "phase2What": "Arquitectura tecnica detallada, modelo de datos, especificacion de integraciones y plan de ejecucion sprint por sprint.",
-    "phase2Who": "Equipo completo: arquitecto, ingeniero de ML, ingeniero de datos. Sesiones de co-diseno con tu equipo tecnico.",
-    "phase2Deliverable": "Documento de arquitectura, contratos de API, esquema de datos y cronograma de construccion con milestones.",
-    "phase2Timeline": "2-4 semanas",
-    "phase3Title": "Fase 3: Construccion",
-    "phase3What": "Desarrollo iterativo en sprints de 2 semanas. Demo funcional al final de cada sprint. Integracion continua con tus sistemas.",
-    "phase3Who": "Squad dedicado: lider tecnico, ingenieros de ML, desarrolladores backend/frontend, QA.",
-    "phase3Deliverable": "Sistema funcionando en ambiente de staging, integrado con tus datos reales y listo para pruebas de aceptacion.",
-    "phase3Timeline": "8-16 semanas segun alcance",
-    "phase4Title": "Fase 4: Operacion",
-    "phase4What": "Despliegue a produccion, monitoreo de performance, reentrenamiento de modelos y soporte continuo.",
-    "phase4Who": "Equipo de operaciones de ML. Un punto de contacto dedicado para tu equipo.",
-    "phase4Deliverable": "Sistema en produccion con SLAs definidos, dashboards de monitoreo y plan de mejora continua.",
-    "phase4Timeline": "Continuo",
-    "cta": "Empezar con la Fase 1",
-    "labelWho": "Quién participa",
-    "labelDeliverable": "Entregable",
-    "labelTimeline": "Tiempo"
+  "servicesPage": {
+    "title": "Servicios",
+    "subtitle": "Cuatro servicios especializados para empresas que quieren crecer con tecnología.",
+    "internalApps": {
+      "title": "Aplicaciones internas a medida",
+      "headline": "Tu operación merece mejor software que un Excel compartido",
+      "description": "Construimos las aplicaciones que tu equipo usa todos los días: ERPs, CRMs, dashboards operativos, portales de clientes, sistemas de gestión. Diseñadas para tu flujo de trabajo específico, no para el promedio de la industria.",
+      "features": ["ERPs y CRMs a medida", "Dashboards operativos en tiempo real", "Portales de clientes y proveedores", "Integraciones con sistemas existentes", "Apps móviles para equipos en terreno"]
+    },
+    "aiAutomation": {
+      "title": "Automatización con IA",
+      "headline": "Inteligencia artificial donde realmente importa",
+      "description": "No vendemos IA como buzzword. La implementamos donde genera impacto medible: automatización de documentos, decisiones inteligentes, chatbots que realmente entienden tu negocio, y procesamiento de datos que antes requería equipos enteros.",
+      "features": ["Procesamiento inteligente de documentos", "Chatbots y asistentes especializados", "Decisiones automáticas basadas en datos", "Integración de LLMs en flujos existentes", "Análisis predictivo y reportes automáticos"]
+    },
+    "websites": {
+      "title": "Sitios web",
+      "headline": "Tu sitio web es tu mejor vendedor. Debería verse como tal.",
+      "description": "Sitios rápidos, modernos y diseñados para convertir. Optimizados para SEO, accesibles en móvil, y construidos con la misma calidad que aplicamos a software empresarial.",
+      "features": ["Diseño premium y responsive", "Optimización SEO técnico", "Velocidad de carga optimizada", "Integración con CRM y analytics", "Administración de contenido"]
+    },
+    "consulting": {
+      "title": "Consultoría tecnológica",
+      "headline": "Las decisiones tecnológicas correctas, antes de escribir código",
+      "description": "Te ayudamos a definir qué construir, con qué tecnología, y en qué orden. Auditorías de sistemas existentes, hojas de ruta tecnológicas, y definición de arquitectura. Sin PowerPoints interminables — con prototipos y recomendaciones accionables.",
+      "features": ["Auditoría de sistemas existentes", "Definición de arquitectura", "Hojas de ruta tecnológicas", "Selección de stack y herramientas", "Due diligence técnica"]
+    },
+    "learnMore": "Conocer más",
+    "ctaInternalApps": "¿Necesitas una aplicación interna?",
+    "ctaAiAutomation": "¿Listo para automatizar con IA?",
+    "ctaWebsites": "¿Necesitas un sitio web que convierta?",
+    "ctaConsulting": "¿Necesitas orientación tecnológica?",
+    "ctaButton": "Hablemos de tu proyecto",
+    "featuresTitle": "Lo que incluye"
   },
-  "capabilitiesPage": {
-    "title": "Capacidades",
-    "subtitle": "Cuatro disciplinas tecnicas. Cada una ejecutada con profundidad de especialista, no amplitud de generalista.",
-    "showTechnical": "Ver enfoque tecnico y resultado esperado",
-    "labelApproach": "Enfoque",
-    "labelImpact": "Impacto esperado",
-    "ctaCard": "Diagnostica si esto aplica a tu caso"
+  "casesPage": {
+    "title": "Casos de éxito",
+    "subtitle": "Proyectos reales con resultados medibles.",
+    "challengeTitle": "El desafío",
+    "solutionTitle": "La solución",
+    "resultsTitle": "Resultados",
+    "ctaTitle": "¿Tienes un desafío similar?",
+    "ctaSubtitle": "Cuéntanos tu problema y te mostramos cómo podemos resolverlo.",
+    "ctaButton": "Conversemos",
+    "backToCases": "Casos de éxito",
+    "opai": {
+      "title": "OPAI — ERP inteligente para Gard Security",
+      "subtitle": "Sistema de gestión operativa completo con IA integrada",
+      "description": "Gard Security necesitaba reemplazar múltiples sistemas desconectados con una plataforma unificada. Construimos OPAI: un ERP completo que gestiona contratos, turnos de guardias, recursos humanos, facturación, comunicaciones internas y reportes operativos. Integrado con IA para automatizar tareas repetitivas y generar insights operativos.",
+      "challenge": "Múltiples sistemas desconectados, procesos manuales, falta de visibilidad operativa en tiempo real.",
+      "solution": "Plataforma ERP unificada con 20+ módulos, IA integrada para automatización, y dashboard ejecutivo en tiempo real.",
+      "results": "Sistema en producción gestionando +500 guardias, reducción significativa en tiempo de procesos administrativos."
+    },
+    "gard": {
+      "title": "Gard Security — Sitio web corporativo",
+      "subtitle": "Presencia digital profesional para empresa líder en seguridad",
+      "description": "Diseñamos y construimos el sitio web corporativo de Gard Security (gard.cl), enfocado en transmitir confianza, profesionalismo y capacidad operativa. Optimizado para SEO y conversión de leads.",
+      "challenge": "Sitio web desactualizado que no reflejaba la escala ni profesionalismo de la empresa.",
+      "solution": "Rediseño completo con enfoque en conversión, SEO optimizado y diseño que transmite confianza.",
+      "results": "Sitio moderno, rápido y profesional que posiciona a Gard como líder en seguridad privada."
+    }
   },
   "aboutPage": {
     "title": "Nosotros",
-    "thesis1": "Fundamos AI Factory porque vimos el mismo patron demasiadas veces: empresas con datos valiosos, presupuesto aprobado y proyectos de IA que nunca llegaban a produccion. El problema no era la tecnologia. Era el modelo de ejecucion.",
-    "thesis2": "Construimos una fabrica porque fabricar es diferente a asesorar. Nuestro equipo combina experiencia en ingenieria de ML, arquitectura de sistemas empresariales y operacion de software en produccion. No hacemos estrategia sin construccion, ni construccion sin estrategia.",
-    "teamTitle": "El equipo",
-    "principlesTitle": "Principios que guian cada proyecto",
-    "p1Title": "El codigo es el entregable",
-    "p1Desc": "No vendemos ideas. Vendemos sistemas funcionando. Si no esta en produccion, no esta terminado.",
-    "p2Title": "Complejidad honesta",
-    "p2Desc": "Decimos lo que es dificil, lo que es riesgoso y lo que no sabemos. Prefierimos perder un proyecto que prometer lo que no podemos entregar.",
-    "p3Title": "Propiedad del cliente",
-    "p3Desc": "Todo lo que construimos es tuyo. Codigo fuente, modelos entrenados, documentacion. Si quieres operar internamente manana, puedes hacerlo."
+    "headline": "Un estudio de software, no una consultora",
+    "thesis1": "Fundamos LX3 porque vimos el mismo patrón demasiadas veces: empresas con problemas reales, presupuesto aprobado y proyectos que nunca llegaban a producción. El problema no era la tecnología. Era el modelo de ejecución.",
+    "thesis2": "No somos consultora — no vendemos PowerPoints. No somos software factory — no vendemos horas. Somos un estudio de producto que construye, se involucra en el negocio, y se queda como partner tecnológico.",
+    "principlesTitle": "Cómo pensamos",
+    "p1Title": "El código es el entregable",
+    "p1Desc": "No vendemos ideas. Vendemos software funcionando. Si no está en producción, no está terminado.",
+    "p2Title": "Honestidad brutal",
+    "p2Desc": "Decimos lo que es difícil, lo que es riesgoso y lo que no sabemos. Preferimos perder un proyecto que prometer lo que no podemos entregar.",
+    "p3Title": "Partner, no proveedor",
+    "p3Desc": "Nos involucramos en tu negocio. Entendemos tus métricas, tus clientes y tus restricciones. Construimos como si fuera nuestro."
   },
   "contactPage": {
-    "title": "Hablemos de tu operacion",
-    "subtitle": "Cuentanos que problema estas tratando de resolver. Respondemos en menos de 24 horas con una evaluacion inicial honesta.",
-    "formName": "Nombre completo",
-    "formEmail": "Email corporativo",
+    "title": "Hablemos",
+    "subtitle": "Cuéntanos qué problema estás tratando de resolver. Respondemos en menos de 24 horas con una evaluación honesta.",
+    "formName": "Nombre",
     "formCompany": "Empresa",
-    "formProblem": "Describe el problema que quieres resolver. Se especifico: que proceso, que volumen, que resultado esperas.",
-    "formSubmit": "Enviar para evaluacion",
-    "calendlyTitle": "O agenda directamente con nuestro equipo tecnico"
+    "formEmail": "Email",
+    "formPhone": "Teléfono (opcional)",
+    "formMessage": "¿Qué problema quieres resolver?",
+    "formHow": "¿Cómo nos encontraste?",
+    "formHowOptions": {
+      "google": "Google",
+      "linkedin": "LinkedIn",
+      "referral": "Referido",
+      "other": "Otro"
+    },
+    "formSubmit": "Enviar mensaje",
+    "formSuccess": "Mensaje enviado. Te contactamos en menos de 24 horas.",
+    "alternatives": "También puedes:",
+    "whatsapp": "Escribirnos por WhatsApp",
+    "email": "Enviarnos un email a hola@lx3.ai",
+    "calendly": "Agendar directamente"
   },
-  "diagnosticPage": {
-    "title": "Diagnostico de IA",
-    "subtitle": "Responde 8 preguntas sobre tu operacion. Nuestro sistema identifica donde la IA puede generar impacto medible en tu empresa especifica. Resultado en 3 minutos.",
-    "startCta": "Iniciar diagnostico"
+  "blogPage": {
+    "title": "Blog",
+    "subtitle": "Pensamiento técnico y estratégico del equipo de LX3.",
+    "readMore": "Leer artículo",
+    "readTime": "min de lectura",
+    "backToBlog": "Volver al blog",
+    "relatedArticles": "Artículos relacionados",
+    "shareTitle": "Compartir"
   },
   "chatbot": {
-    "greeting": "Soy el asistente tecnico de AI Factory. Puedo responder preguntas sobre nuestras capacidades, metodologia o ayudarte a evaluar si tu problema es un buen caso de uso para IA. Pregunta lo que necesites.",
-    "placeholder": "Describe tu situacion o pregunta...",
-    "sending": "Analizando...",
-    "scheduleCallCta": "Agendar llamada con el equipo tecnico",
+    "greeting": "Hola, soy el asistente de LX3. Puedo responder preguntas sobre nuestros servicios, proceso de trabajo, o ayudarte a evaluar si podemos resolver tu problema. ¿En qué te puedo ayudar?",
+    "placeholder": "Escribe tu mensaje...",
+    "sending": "Pensando...",
+    "scheduleCallCta": "Agendar llamada con el equipo",
     "emailSummaryCta": "Enviar resumen por email",
-    "summaryTitle": "Resumen de la conversacion"
+    "summaryTitle": "Resumen de la conversación"
   }
 }

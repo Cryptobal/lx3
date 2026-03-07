@@ -6,25 +6,45 @@ export const routing = defineRouting({
   defaultLocale: "es",
   pathnames: {
     "/": "/",
-    "/como-trabajamos": {
-      es: "/como-trabajamos",
-      en: "/how-we-work",
+    "/servicios": {
+      es: "/servicios",
+      en: "/services",
     },
-    "/capacidades": {
-      es: "/capacidades",
-      en: "/capabilities",
+    "/servicios/aplicaciones-internas": {
+      es: "/servicios/aplicaciones-internas",
+      en: "/services/internal-apps",
     },
-    "/diagnostico": {
-      es: "/diagnostico",
-      en: "/diagnostic",
+    "/servicios/automatizacion-ia": {
+      es: "/servicios/automatizacion-ia",
+      en: "/services/ai-automation",
     },
-    "/perspectivas": {
-      es: "/perspectivas",
-      en: "/insights",
+    "/servicios/sitios-web": {
+      es: "/servicios/sitios-web",
+      en: "/services/websites",
     },
-    "/nosotros": {
-      es: "/nosotros",
-      en: "/about",
+    "/servicios/consultoria": {
+      es: "/servicios/consultoria",
+      en: "/services/consulting",
+    },
+    "/casos": {
+      es: "/casos",
+      en: "/cases",
+    },
+    "/casos/opai-gard-security": {
+      es: "/casos/opai-gard-security",
+      en: "/cases/opai-gard-security",
+    },
+    "/casos/gard-sitio-web": {
+      es: "/casos/gard-sitio-web",
+      en: "/cases/gard-website",
+    },
+    "/blog": {
+      es: "/blog",
+      en: "/blog",
+    },
+    "/sobre-nosotros": {
+      es: "/sobre-nosotros",
+      en: "/about-us",
     },
     "/contacto": {
       es: "/contacto",

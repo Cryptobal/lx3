@@ -33,7 +33,7 @@ Genera el resumen siguiendo EXACTAMENTE esta estructura en markdown:
 # Resumen Diagnostico — ${leadData.company || 'Empresa'}
 
 **Fecha:** ${today}
-**Preparado por:** AI Factory — Equipo de Diagnostico
+**Preparado por:** LX3 — Software Studio
 
 ---
 
@@ -56,7 +56,7 @@ Para cada oportunidad (identifica 2-3), usa este formato:
 (mismo formato, si aplica)
 
 ## Siguiente Paso Recomendado
-Describe el siguiente paso recomendado: una sesion de descubrimiento profunda de 30 minutos con un estratega senior de AI Factory para validar estas oportunidades y definir un plan de accion.
+Describe el siguiente paso recomendado: una sesion de descubrimiento profunda de 30 minutos con el equipo de LX3 para validar estas oportunidades y definir un plan de accion.
 
 ---
 
@@ -64,11 +64,11 @@ Describe el siguiente paso recomendado: una sesion de descubrimiento profunda de
 
 ---
 
-Las oportunidades deben estar alineadas con las capacidades de AI Factory:
-- Automatizacion de Procesos
-- Inteligencia de Decision
-- IA para Experiencia del Cliente
-- Aplicaciones de IA Personalizadas
+Las oportunidades deben estar alineadas con las capacidades de LX3:
+- Aplicaciones internas
+- Automatizacion con IA
+- Sitios web
+- Consultoria tecnologica
 
 No incluyas precios, estimaciones de costos, porcentajes de ROI especificos, nombres de competidores ni detalles tecnicos de implementacion.`;
   }
@@ -86,7 +86,7 @@ Generate the summary following EXACTLY this structure in markdown:
 # Diagnostic Summary — ${leadData.company || 'Company'}
 
 **Date:** ${today}
-**Prepared by:** AI Factory — Diagnostic Team
+**Prepared by:** LX3 — Software Studio
 
 ---
 
@@ -109,7 +109,7 @@ For each opportunity (identify 2-3), use this format:
 (same format, if applicable)
 
 ## Recommended Next Step
-Describe the recommended next step: a 30-minute deep-dive discovery session with a senior AI Factory strategist to validate these opportunities and define an action plan.
+Describe the recommended next step: a 30-minute deep-dive discovery session with the LX3 team to validate these opportunities and define an action plan.
 
 ---
 
@@ -117,11 +117,11 @@ Describe the recommended next step: a 30-minute deep-dive discovery session with
 
 ---
 
-The opportunities must be aligned with AI Factory's capability areas:
-- Process Automation
-- Decision Intelligence
-- CX AI
-- Custom AI Apps
+The opportunities must be aligned with LX3's capability areas:
+- Custom internal apps
+- AI automation
+- Websites
+- Tech consulting
 
 Do not include pricing, cost estimates, specific ROI percentages, competitor names, or technical implementation details.`;
 }

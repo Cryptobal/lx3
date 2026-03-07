@@ -79,7 +79,7 @@ export function ContactForm() {
             />
           </svg>
         </div>
-        <p className="mt-6 text-lg font-medium text-white">{t("formSuccess")}</p>
+        <p className="mt-6 text-lg font-medium text-[var(--text-primary)]">{t("formSuccess")}</p>
       </div>
     );
   }
@@ -88,14 +88,14 @@ export function ContactForm() {
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
       {/* Nombre */}
       <div>
-        <label htmlFor="name" className="mb-2 block text-sm font-medium text-white/70">
+        <label htmlFor="name" className="mb-2 block text-sm font-medium text-[var(--text-secondary)]">
           {t("formName")} *
         </label>
         <input
           id="name"
           type="text"
           {...register("name", { required: true })}
-          className="w-full rounded-lg border border-white/10 bg-white/[0.03] px-4 py-3 text-white placeholder-white/30 outline-none transition-colors focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400"
+          className="w-full rounded-lg border border-[var(--border-default)] bg-[var(--bg-elevated)] px-4 py-3 text-[var(--text-primary)] placeholder-[var(--text-tertiary)] outline-none transition-colors focus:border-[var(--accent)] focus:ring-1 focus:ring-[var(--accent)]"
           placeholder={t("formName")}
         />
         {errors.name && (
@@ -105,14 +105,14 @@ export function ContactForm() {
 
       {/* Empresa */}
       <div>
-        <label htmlFor="company" className="mb-2 block text-sm font-medium text-white/70">
+        <label htmlFor="company" className="mb-2 block text-sm font-medium text-[var(--text-secondary)]">
           {t("formCompany")} *
         </label>
         <input
           id="company"
           type="text"
           {...register("company", { required: true })}
-          className="w-full rounded-lg border border-white/10 bg-white/[0.03] px-4 py-3 text-white placeholder-white/30 outline-none transition-colors focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400"
+          className="w-full rounded-lg border border-[var(--border-default)] bg-[var(--bg-elevated)] px-4 py-3 text-[var(--text-primary)] placeholder-[var(--text-tertiary)] outline-none transition-colors focus:border-[var(--accent)] focus:ring-1 focus:ring-[var(--accent)]"
           placeholder={t("formCompany")}
         />
         {errors.company && (
@@ -122,7 +122,7 @@ export function ContactForm() {
 
       {/* Email */}
       <div>
-        <label htmlFor="email" className="mb-2 block text-sm font-medium text-white/70">
+        <label htmlFor="email" className="mb-2 block text-sm font-medium text-[var(--text-secondary)]">
           {t("formEmail")} *
         </label>
         <input
@@ -132,7 +132,7 @@ export function ContactForm() {
             required: true,
             pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
           })}
-          className="w-full rounded-lg border border-white/10 bg-white/[0.03] px-4 py-3 text-white placeholder-white/30 outline-none transition-colors focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400"
+          className="w-full rounded-lg border border-[var(--border-default)] bg-[var(--bg-elevated)] px-4 py-3 text-[var(--text-primary)] placeholder-[var(--text-tertiary)] outline-none transition-colors focus:border-[var(--accent)] focus:ring-1 focus:ring-[var(--accent)]"
           placeholder="tu@empresa.com"
         />
         {errors.email && (
@@ -144,28 +144,28 @@ export function ContactForm() {
 
       {/* Telefono */}
       <div>
-        <label htmlFor="phone" className="mb-2 block text-sm font-medium text-white/70">
+        <label htmlFor="phone" className="mb-2 block text-sm font-medium text-[var(--text-secondary)]">
           {t("formPhone")}
         </label>
         <input
           id="phone"
           type="text"
           {...register("phone")}
-          className="w-full rounded-lg border border-white/10 bg-white/[0.03] px-4 py-3 text-white placeholder-white/30 outline-none transition-colors focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400"
+          className="w-full rounded-lg border border-[var(--border-default)] bg-[var(--bg-elevated)] px-4 py-3 text-[var(--text-primary)] placeholder-[var(--text-tertiary)] outline-none transition-colors focus:border-[var(--accent)] focus:ring-1 focus:ring-[var(--accent)]"
           placeholder="+56 9 1234 5678"
         />
       </div>
 
       {/* Mensaje */}
       <div>
-        <label htmlFor="message" className="mb-2 block text-sm font-medium text-white/70">
+        <label htmlFor="message" className="mb-2 block text-sm font-medium text-[var(--text-secondary)]">
           {t("formMessage")} *
         </label>
         <textarea
           id="message"
           rows={4}
           {...register("message", { required: true })}
-          className="w-full resize-none rounded-lg border border-white/10 bg-white/[0.03] px-4 py-3 text-white placeholder-white/30 outline-none transition-colors focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400"
+          className="w-full resize-none rounded-lg border border-[var(--border-default)] bg-[var(--bg-elevated)] px-4 py-3 text-[var(--text-primary)] placeholder-[var(--text-tertiary)] outline-none transition-colors focus:border-[var(--accent)] focus:ring-1 focus:ring-[var(--accent)]"
           placeholder={t("formMessage")}
         />
         {errors.message && (
@@ -175,28 +175,28 @@ export function ContactForm() {
 
       {/* Como nos encontraste */}
       <div>
-        <label htmlFor="source" className="mb-2 block text-sm font-medium text-white/70">
+        <label htmlFor="source" className="mb-2 block text-sm font-medium text-[var(--text-secondary)]">
           {t("formHow")}
         </label>
         <select
           id="source"
           {...register("source")}
-          className="w-full rounded-lg border border-white/10 bg-white/[0.03] px-4 py-3 text-white outline-none transition-colors focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400"
+          className="w-full rounded-lg border border-[var(--border-default)] bg-[var(--bg-elevated)] px-4 py-3 text-[var(--text-primary)] outline-none transition-colors focus:border-[var(--accent)] focus:ring-1 focus:ring-[var(--accent)]"
           defaultValue=""
         >
-          <option value="" disabled className="bg-[#0F1729] text-white/50">
+          <option value="" disabled className="bg-[var(--bg-primary)] text-[var(--text-secondary)]">
             --
           </option>
-          <option value="google" className="bg-[#0F1729]">
+          <option value="google" className="bg-[var(--bg-primary)]">
             {t("formHowOptions.google")}
           </option>
-          <option value="linkedin" className="bg-[#0F1729]">
+          <option value="linkedin" className="bg-[var(--bg-primary)]">
             {t("formHowOptions.linkedin")}
           </option>
-          <option value="referral" className="bg-[#0F1729]">
+          <option value="referral" className="bg-[var(--bg-primary)]">
             {t("formHowOptions.referral")}
           </option>
-          <option value="other" className="bg-[#0F1729]">
+          <option value="other" className="bg-[var(--bg-primary)]">
             {t("formHowOptions.other")}
           </option>
         </select>
@@ -213,7 +213,7 @@ export function ContactForm() {
       <button
         type="submit"
         disabled={status === "loading"}
-        className="w-full rounded-lg bg-gradient-to-r from-[#06B6D4] to-[#3B82F6] px-6 py-3 text-sm font-medium text-white shadow-lg shadow-cyan-500/25 transition-all duration-200 hover:shadow-xl hover:shadow-cyan-500/30 hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-50"
+        className="w-full rounded-lg bg-gradient-to-r from-[var(--accent)] to-[var(--coral)] px-6 py-3 text-sm font-medium text-[var(--text-primary)] shadow-lg shadow-[var(--accent-glow)] transition-all duration-200 hover:shadow-xl hover:shadow-[var(--accent-glow)] hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-50"
       >
         {status === "loading" ? (
           <span className="flex items-center justify-center gap-2">

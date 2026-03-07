@@ -10,14 +10,14 @@
     "blog": "Blog",
     "about": "Nosotros",
     "contact": "Contacto",
-    "cta": "Agenda una conversación"
+    "cta": "Conversemos"
   },
   "hero": {
-    "tag": "SOFTWARE STUDIO",
+    "tag": "Software Studio · Santiago, Chile",
     "headline": "Construimos el software que tu empresa necesita.",
     "headlineAccent": "Con IA.",
     "subheadline": "Somos el equipo de tecnología que tu empresa necesita, sin tener que contratarlo. Aplicaciones inteligentes, listas en semanas.",
-    "ctaPrimary": "Agenda una conversación",
+    "ctaPrimary": "Conversemos sobre tu proyecto",
     "ctaSecondary": "Ver nuestro trabajo"
   },
   "socialProof": {
@@ -89,9 +89,9 @@
   },
   "finalCta": {
     "title": "¿Listo para modernizar tu empresa?",
-    "subtitle": "Cuéntanos tu problema. Te decimos honestamente si podemos ayudarte.",
+    "subtitle": "Sin compromiso, sin letra chica. Respondemos en menos de 24 horas.",
     "cta": "Agenda una conversación",
-    "whatsapp": "O escríbenos por WhatsApp"
+    "whatsapp": "Escribir por WhatsApp"
   },
   "footer": {
     "tagline": "Diseñamos y construimos software inteligente para empresas que quieren crecer.",

@@ -98,20 +98,20 @@ function GardWebsiteCaseContent({ locale }: { locale: string }) {
         <AnimateOnScroll>
           <Link
             href="/casos"
-            className="mb-8 inline-flex items-center gap-2 text-sm text-white/40 transition-colors hover:text-white"
+            className="mb-8 inline-flex items-center gap-2 text-sm text-[var(--text-tertiary)] transition-colors hover:text-[var(--text-primary)]"
           >
             <ArrowLeft className="h-4 w-4" />
             {t("backToCases")}
           </Link>
 
           <div className="max-w-3xl">
-            <h1 className="font-display text-4xl font-semibold tracking-tight text-white md:text-5xl">
+            <h1 className="font-display text-4xl font-semibold tracking-tight text-[var(--text-primary)] md:text-5xl">
               {t("gard.title")}
             </h1>
             <p className="mt-4 text-lg text-accent/80">
               {t("gard.subtitle")}
             </p>
-            <p className="mt-6 text-base leading-relaxed text-white/60">
+            <p className="mt-6 text-base leading-relaxed text-[var(--text-secondary)]">
               {t("gard.description")}
             </p>
           </div>
@@ -125,16 +125,16 @@ function GardWebsiteCaseContent({ locale }: { locale: string }) {
             const Icon = section.icon;
             return (
               <AnimateOnScroll key={section.key} delay={i * 0.1}>
-                <div className="rounded-2xl border border-white/5 bg-surface-elevated p-8 md:p-10">
+                <div className="rounded-2xl border border-[var(--border-subtle)] bg-surface-elevated p-8 md:p-10">
                   <div className="flex items-start gap-5">
                     <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-accent/10">
                       <Icon className="h-6 w-6 text-accent" />
                     </div>
                     <div>
-                      <h2 className="font-display text-xl font-semibold text-white md:text-2xl">
+                      <h2 className="font-display text-xl font-semibold text-[var(--text-primary)] md:text-2xl">
                         {t(section.titleKey)}
                       </h2>
-                      <p className="mt-4 text-base leading-relaxed text-white/60">
+                      <p className="mt-4 text-base leading-relaxed text-[var(--text-secondary)]">
                         {t(section.contentKey)}
                       </p>
                     </div>
@@ -149,11 +149,11 @@ function GardWebsiteCaseContent({ locale }: { locale: string }) {
       {/* CTA */}
       <SectionWrapper className="py-20">
         <AnimateOnScroll>
-          <div className="rounded-2xl border border-white/5 bg-surface-elevated/50 p-10 text-center md:p-16">
-            <h2 className="font-display text-2xl font-semibold text-white md:text-3xl">
+          <div className="rounded-2xl border border-[var(--border-subtle)] bg-surface-elevated/50 p-10 text-center md:p-16">
+            <h2 className="font-display text-2xl font-semibold text-[var(--text-primary)] md:text-3xl">
               {t("ctaTitle")}
             </h2>
-            <p className="mx-auto mt-4 max-w-lg text-base text-white/50">
+            <p className="mx-auto mt-4 max-w-lg text-base text-[var(--text-secondary)]">
               {t("ctaSubtitle")}
             </p>
             <div className="mt-8">

@@ -10,14 +10,14 @@
     "blog": "Blog",
     "about": "About",
     "contact": "Contact",
-    "cta": "Get in touch"
+    "cta": "Let's talk"
   },
   "hero": {
-    "tag": "Software Studio",
+    "tag": "Software Studio · Santiago, Chile",
     "headline": "We build the software your business needs.",
     "headlineAccent": "With AI.",
     "subheadline": "Custom applications, AI automation, and modern websites for mid-market companies that need technology that actually works. From Santiago to the world.",
-    "ctaPrimary": "Start your project",
+    "ctaPrimary": "Let's talk about your project",
     "ctaSecondary": "See our work"
   },
   "socialProof": {
@@ -89,15 +89,15 @@
   },
   "finalCta": {
     "title": "Ready to build something that works?",
-    "subtitle": "Tell us about your project. We respond within 24 hours with an honest assessment and a clear path forward.",
+    "subtitle": "No strings attached, no fine print. We respond within 24 hours.",
     "cta": "Start the conversation",
-    "whatsapp": "Or write us on WhatsApp"
+    "whatsapp": "Write us on WhatsApp"
   },
   "footer": {
     "tagline": "We design and build intelligent software for growing businesses.",
     "services": "Services",
     "company": "Company",
-    "legal": "All rights reserved",
+    "legal": "© 2026 LX3. All rights reserved.",
     "connect": "Connect",
     "privacy": "Privacy Policy",
     "terms": "Terms of Service",

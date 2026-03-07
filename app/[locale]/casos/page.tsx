@@ -59,10 +59,10 @@ function CasesContent() {
     <SectionWrapper className="pt-32">
       <AnimateOnScroll>
         <div className="max-w-3xl">
-          <h1 className="font-display text-4xl font-semibold tracking-tight text-white md:text-5xl">
+          <h1 className="font-display text-4xl font-semibold tracking-tight text-[var(--text-primary)] md:text-5xl">
             {t("title")}
           </h1>
-          <p className="mt-4 text-lg text-white/60">
+          <p className="mt-4 text-lg text-[var(--text-secondary)]">
             {t("subtitle")}
           </p>
         </div>
@@ -72,25 +72,25 @@ function CasesContent() {
         {cases.map((caseItem, i) => (
           <AnimateOnScroll key={caseItem.key} delay={i * 0.15}>
             <Link href={caseItem.href}>
-              <article className="group relative flex h-full flex-col rounded-2xl border border-white/5 bg-surface-elevated p-8 transition-all duration-300 hover:border-accent/30 hover:shadow-lg hover:shadow-accent/5">
+              <article className="group relative flex h-full flex-col rounded-2xl border border-[var(--border-subtle)] bg-surface-elevated p-8 transition-all duration-300 hover:border-accent/30 hover:shadow-lg hover:shadow-accent/5">
                 <div className="flex items-start justify-between gap-4">
                   <div className="flex-1">
-                    <h2 className="font-display text-2xl font-semibold text-white transition-colors group-hover:text-accent">
+                    <h2 className="font-display text-2xl font-semibold text-[var(--text-primary)] transition-colors group-hover:text-accent">
                       {t(`${caseItem.key}.title`)}
                     </h2>
                     <p className="mt-2 text-sm font-medium text-accent/80">
                       {t(`${caseItem.key}.subtitle`)}
                     </p>
                   </div>
-                  <ArrowUpRight className="h-5 w-5 shrink-0 text-white/20 transition-all duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-accent" />
+                  <ArrowUpRight className="h-5 w-5 shrink-0 text-[var(--text-tertiary)] transition-all duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-accent" />
                 </div>
 
-                <p className="mt-6 flex-1 text-base leading-relaxed text-white/50">
+                <p className="mt-6 flex-1 text-base leading-relaxed text-[var(--text-secondary)]">
                   {t(`${caseItem.key}.description`)}
                 </p>
 
-                <div className="mt-8 border-t border-white/5 pt-6">
-                  <span className="text-sm font-medium text-white/40 transition-colors group-hover:text-accent/70">
+                <div className="mt-8 border-t border-[var(--border-subtle)] pt-6">
+                  <span className="text-sm font-medium text-[var(--text-tertiary)] transition-colors group-hover:text-accent/70">
                     {t(`${caseItem.key}.subtitle`)}
                   </span>
                 </div>

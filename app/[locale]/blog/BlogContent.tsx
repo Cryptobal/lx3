@@ -11,7 +11,7 @@ import type { BlogArticle } from "@/content/blog";
 const categoryConfig = {
   estrategia: {
     label: { es: "Estrategia", en: "Strategy" },
-    color: "text-cyan-400 border-cyan-400/20 bg-cyan-400/5",
+    color: "text-[var(--accent)] border-[var(--accent)]/20 bg-[var(--accent)]/5",
   },
   tecnologia: {
     label: { es: "Tecnologia", en: "Technology" },
@@ -70,10 +70,10 @@ export function BlogContent({ articles, locale }: BlogContentProps) {
       {/* Hero */}
       <AnimateOnScroll>
         <div className="max-w-3xl">
-          <h1 className="font-display text-4xl font-bold tracking-tight text-white md:text-5xl lg:text-6xl">
+          <h1 className="font-display text-4xl font-bold tracking-tight text-[var(--text-primary)] md:text-5xl lg:text-6xl">
             {t("title")}
           </h1>
-          <p className="mt-4 text-lg text-white/60 md:text-xl">
+          <p className="mt-4 text-lg text-[var(--text-secondary)] md:text-xl">
             {t("subtitle")}
           </p>
         </div>
@@ -89,7 +89,7 @@ export function BlogContent({ articles, locale }: BlogContentProps) {
               className={`rounded-full border px-4 py-2 font-mono text-xs uppercase tracking-wider transition-all duration-200 ${
                 activeFilter === filter.key
                   ? "border-accent/40 bg-accent/10 text-accent"
-                  : "border-white/10 bg-white/5 text-white/50 hover:border-white/20 hover:text-white/70"
+                  : "border-[var(--border-default)] bg-[var(--bg-surface)] text-[var(--text-secondary)] hover:border-[var(--border-default)] hover:text-[var(--text-secondary)]"
               }`}
             >
               {filter.label}
@@ -105,7 +105,7 @@ export function BlogContent({ articles, locale }: BlogContentProps) {
           return (
             <AnimateOnScroll key={article.slug} delay={0.1 + i * 0.05}>
               <Link href={`/blog/${article.slug}` as "/blog"}>
-                <article className="group flex h-full cursor-pointer flex-col rounded-2xl border border-white/5 bg-surface-elevated p-7 transition-all duration-300 hover:border-accent/20 hover:shadow-[0_0_30px_rgba(6,182,212,0.06)]">
+                <article className="group flex h-full cursor-pointer flex-col rounded-2xl border border-[var(--border-subtle)] bg-surface-elevated p-7 transition-all duration-300 hover:border-accent/20 hover:shadow-[0_0_30px_rgba(6,182,212,0.06)]">
                   {/* Category tag */}
                   <span
                     className={`inline-block w-fit rounded-full border px-3 py-1 font-mono text-xs uppercase tracking-wider ${cat.color}`}
@@ -114,18 +114,18 @@ export function BlogContent({ articles, locale }: BlogContentProps) {
                   </span>
 
                   {/* Title */}
-                  <h2 className="mt-5 font-display text-lg font-semibold leading-snug text-white transition-colors group-hover:text-accent">
+                  <h2 className="mt-5 font-display text-lg font-semibold leading-snug text-[var(--text-primary)] transition-colors group-hover:text-accent">
                     {article.title[lang]}
                   </h2>
 
                   {/* Excerpt */}
-                  <p className="mt-3 flex-1 text-sm leading-relaxed text-white/50">
+                  <p className="mt-3 flex-1 text-sm leading-relaxed text-[var(--text-secondary)]">
                     {article.excerpt[lang]}
                   </p>
 
                   {/* Date + read time + arrow */}
-                  <div className="mt-6 flex items-center justify-between border-t border-white/5 pt-4">
-                    <div className="flex items-center gap-4 text-white/30">
+                  <div className="mt-6 flex items-center justify-between border-t border-[var(--border-subtle)] pt-4">
+                    <div className="flex items-center gap-4 text-[var(--text-tertiary)]">
                       <span className="font-mono text-xs">
                         {formatDate(article.date)}
                       </span>
@@ -136,7 +136,7 @@ export function BlogContent({ articles, locale }: BlogContentProps) {
                         </span>
                       </div>
                     </div>
-                    <ArrowUpRight className="h-4 w-4 text-white/20 transition-all group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-accent" />
+                    <ArrowUpRight className="h-4 w-4 text-[var(--text-tertiary)] transition-all group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-accent" />
                   </div>
                 </article>
               </Link>
@@ -148,7 +148,7 @@ export function BlogContent({ articles, locale }: BlogContentProps) {
       {/* Empty state */}
       {filtered.length === 0 && (
         <div className="mt-20 text-center">
-          <p className="text-lg text-white/40">
+          <p className="text-lg text-[var(--text-tertiary)]">
             {lang === "es"
               ? "No hay articulos en esta categoria todavia."
               : "No articles in this category yet."}

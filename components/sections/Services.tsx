@@ -3,65 +3,102 @@ import { SectionWrapper } from "@/components/shared/SectionWrapper";
 import { Link } from "@/lib/i18n/routing";
 import { Monitor, Zap, Globe, Compass, ArrowUpRight } from "lucide-react";
 
-const serviceIcons = [Monitor, Zap, Globe, Compass];
-
-const serviceLinks = [
-  "/servicios/aplicaciones-internas",
-  "/servicios/automatizacion-ia",
-  "/servicios/sitios-web",
-  "/servicios/consultoria",
-] as const;
+const cards = [
+  {
+    icon: Monitor,
+    titleKey: "s1Title" as const,
+    descKey: "s1Desc" as const,
+    link: "/servicios/aplicaciones-internas" as const,
+    accent: "var(--accent)",
+  },
+  {
+    icon: Zap,
+    titleKey: "s2Title" as const,
+    descKey: "s2Desc" as const,
+    link: "/servicios/automatizacion-ia" as const,
+    accent: "var(--coral)",
+  },
+  {
+    icon: Globe,
+    titleKey: "s3Title" as const,
+    descKey: "s3Desc" as const,
+    link: "/servicios/sitios-web" as const,
+    accent: "var(--green)",
+  },
+  {
+    icon: Compass,
+    titleKey: "s4Title" as const,
+    descKey: "s4Desc" as const,
+    link: "/servicios/consultoria" as const,
+    accent: "var(--accent)",
+  },
+];
 
 export function Services() {
   const t = useTranslations("services");
 
-  const services = [
-    { title: t("s1Title"), desc: t("s1Desc"), link: serviceLinks[0] },
-    { title: t("s2Title"), desc: t("s2Desc"), link: serviceLinks[1] },
-    { title: t("s3Title"), desc: t("s3Desc"), link: serviceLinks[2] },
-    { title: t("s4Title"), desc: t("s4Desc"), link: serviceLinks[3] },
-  ];
-
   return (
-    <SectionWrapper>
-      <div className="max-w-2xl">
-        <h2 className="font-display text-3xl font-bold tracking-tight text-white md:text-4xl lg:text-5xl">
+    <section className="bg-[var(--bg-primary)]">
+      <SectionWrapper>
+        {/* Section label */}
+        <span className="font-mono text-xs font-medium uppercase tracking-widest text-[var(--coral)]">
+          SERVICIOS
+        </span>
+
+        {/* Title */}
+        <h2 className="mt-4 font-display text-3xl font-bold tracking-tight text-[var(--text-primary)] md:text-4xl lg:text-5xl">
           {t("title")}
         </h2>
-        <p className="mt-4 text-lg text-white/60">
-          {t("subtitle")}
-        </p>
-      </div>
 
-      <div className="mt-14 grid gap-6 md:grid-cols-2">
-        {services.map((service, i) => {
-          const Icon = serviceIcons[i];
-          return (
-            <Link
-              key={i}
-              href={service.link}
-              className="group relative rounded-2xl border border-white/5 bg-surface-elevated p-8 transition-all duration-300 hover:border-accent/30 hover:glow-accent"
-            >
-              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-accent/10">
-                <Icon className="h-6 w-6 text-accent" />
-              </div>
+        {/* Cards grid */}
+        <div className="mt-14 grid gap-6 md:grid-cols-2">
+          {cards.map((card, i) => {
+            const Icon = card.icon;
+            return (
+              <Link
+                key={i}
+                href={card.link}
+                className="group relative rounded-[14px] border border-[var(--border-subtle)] bg-[var(--bg-elevated)] p-8 transition-all duration-300 hover:-translate-y-1"
+                style={
+                  {
+                    "--card-accent": card.accent,
+                  } as React.CSSProperties
+                }
+              >
+                {/* Hover border + glow */}
+                <div className="pointer-events-none absolute inset-0 rounded-[14px] border border-transparent transition-all duration-300 group-hover:border-[var(--card-accent)] group-hover:shadow-[0_0_24px_-4px_var(--card-accent)]" />
 
-              <h3 className="mt-6 font-display text-xl font-semibold text-white">
-                {service.title}
-              </h3>
+                {/* Icon */}
+                <div
+                  className="flex h-12 w-12 items-center justify-center rounded-full"
+                  style={{ backgroundColor: `color-mix(in srgb, ${card.accent} 12%, transparent)` }}
+                >
+                  <Icon
+                    className="h-6 w-6"
+                    style={{ color: card.accent }}
+                  />
+                </div>
 
-              <p className="mt-3 leading-relaxed text-white/60">
-                {service.desc}
-              </p>
+                {/* Title */}
+                <h3 className="mt-6 font-display text-xl font-semibold text-[var(--text-primary)]">
+                  {t(card.titleKey)}
+                </h3>
 
-              <div className="mt-6 inline-flex items-center gap-1.5 text-sm font-medium text-accent opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-                <span>Ver servicio</span>
-                <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-              </div>
-            </Link>
-          );
-        })}
-      </div>
-    </SectionWrapper>
+                {/* Description */}
+                <p className="mt-3 text-sm leading-relaxed text-[var(--text-secondary)]">
+                  {t(card.descKey)}
+                </p>
+
+                {/* Hover CTA */}
+                <div className="mt-6 inline-flex items-center gap-1.5 text-sm font-medium opacity-0 transition-opacity duration-300 group-hover:opacity-100" style={{ color: card.accent }}>
+                  <span>Explorar</span>
+                  <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                </div>
+              </Link>
+            );
+          })}
+        </div>
+      </SectionWrapper>
+    </section>
   );
 }

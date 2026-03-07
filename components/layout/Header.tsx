@@ -11,7 +11,6 @@ const navLinks = [
   { href: "/casos", key: "cases" },
   { href: "/blog", key: "blog" },
   { href: "/sobre-nosotros", key: "about" },
-  { href: "/contacto", key: "contact" },
 ] as const;
 
 export function Header() {
@@ -46,7 +45,7 @@ export function Header() {
       className={cn(
         "fixed top-0 z-50 w-full transition-all duration-300",
         scrolled
-          ? "border-b border-white/5 bg-[#0B1120]/90 backdrop-blur-lg"
+          ? "border-b border-[var(--border-subtle)] bg-[#06080E]/90 backdrop-blur-lg"
           : "bg-transparent"
       )}
     >
@@ -54,11 +53,9 @@ export function Header() {
         {/* ---- Logo ---- */}
         <Link
           href="/"
-          className="group relative font-display text-xl font-bold tracking-tight text-white transition-all duration-300"
+          className="font-display text-xl font-bold tracking-tight"
         >
-          <span className="bg-gradient-to-r from-white to-white bg-clip-text text-transparent transition-all duration-300 group-hover:from-accent group-hover:to-accent-secondary">
-            LX3
-          </span>
+          <span className="gradient-text">LX3</span>
         </Link>
 
         {/* ---- Desktop Nav ---- */}
@@ -67,7 +64,7 @@ export function Header() {
             <Link
               key={item.key}
               href={item.href}
-              className="relative text-sm text-white/60 transition-colors duration-200 hover:text-white after:absolute after:-bottom-1 after:left-0 after:h-px after:w-0 after:bg-gradient-to-r after:from-accent after:to-accent-secondary after:transition-all after:duration-300 hover:after:w-full"
+              className="relative text-sm text-[var(--text-secondary)] transition-colors duration-200 hover:text-[var(--text-primary)] after:absolute after:-bottom-1 after:left-0 after:h-px after:w-0 after:bg-[var(--accent)] after:transition-all after:duration-300 hover:after:w-full"
             >
               {t(item.key)}
             </Link>
@@ -79,22 +76,21 @@ export function Header() {
           {/* CTA Button - Desktop */}
           <Link
             href="/contacto"
-            className="group relative hidden overflow-hidden rounded-lg bg-gradient-to-r from-accent to-accent-secondary px-5 py-2.5 text-sm font-medium text-white transition-all duration-300 hover:shadow-[0_0_24px_rgba(6,182,212,0.25),0_0_64px_rgba(6,182,212,0.1)] md:inline-flex"
+            className="hidden rounded-[11px] bg-[var(--accent)] px-5 py-2.5 text-sm font-medium text-white transition-all duration-300 hover:bg-[var(--accent-hover)] hover:shadow-[0_0_20px_var(--accent-glow)] md:inline-flex"
           >
-            <span className="relative z-10">{t("cta")}</span>
-            <span className="absolute inset-0 bg-gradient-to-r from-accent/80 to-accent-secondary/80 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+            {t("cta")}
           </Link>
 
           {/* Mobile Hamburger */}
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
-            className="relative z-50 flex h-10 w-10 items-center justify-center rounded-lg transition-colors hover:bg-white/5 md:hidden"
+            className="relative z-50 flex h-10 w-10 items-center justify-center rounded-lg transition-colors hover:bg-[var(--bg-elevated)] md:hidden"
             aria-label="Toggle menu"
           >
             {mobileOpen ? (
-              <X className="h-5 w-5 text-white" />
+              <X className="h-5 w-5 text-[var(--text-primary)]" />
             ) : (
-              <Menu className="h-5 w-5 text-white" />
+              <Menu className="h-5 w-5 text-[var(--text-primary)]" />
             )}
           </button>
         </div>
@@ -103,7 +99,7 @@ export function Header() {
       {/* ---- Mobile Slide-Down Panel ---- */}
       <div
         className={cn(
-          "fixed inset-x-0 top-0 z-40 overflow-hidden bg-[#0B1120]/98 backdrop-blur-xl transition-all duration-500 ease-out md:hidden",
+          "fixed inset-x-0 top-0 z-40 overflow-hidden bg-[#06080E]/98 backdrop-blur-xl transition-all duration-500 ease-out md:hidden",
           mobileOpen
             ? "pointer-events-auto max-h-screen opacity-100"
             : "pointer-events-none max-h-0 opacity-0"
@@ -115,7 +111,7 @@ export function Header() {
               key={item.key}
               href={item.href}
               onClick={closeMobile}
-              className="text-lg font-medium text-white/80 transition-colors duration-200 hover:text-white"
+              className="text-lg font-medium text-[var(--text-secondary)] transition-colors duration-200 hover:text-[var(--text-primary)]"
             >
               {t(item.key)}
             </Link>
@@ -125,7 +121,7 @@ export function Header() {
           <Link
             href="/contacto"
             onClick={closeMobile}
-            className="mt-4 w-full max-w-xs rounded-lg bg-gradient-to-r from-accent to-accent-secondary px-6 py-3 text-center text-sm font-medium text-white transition-all duration-300 hover:shadow-[0_0_24px_rgba(6,182,212,0.25),0_0_64px_rgba(6,182,212,0.1)]"
+            className="mt-4 w-full max-w-xs rounded-[11px] bg-[var(--accent)] px-6 py-3 text-center text-sm font-medium text-white transition-all duration-300 hover:bg-[var(--accent-hover)] hover:shadow-[0_0_20px_var(--accent-glow)]"
           >
             {t("cta")}
           </Link>

@@ -1,8 +1,11 @@
 import { Resend } from 'resend';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-
 const LEAD_RECIPIENT = 'carlos.irigoyen@gmail.com';
+
+function getResendClient() {
+  const apiKey = process.env.RESEND_API_KEY;
+  return apiKey ? new Resend(apiKey) : null;
+}
 
 interface LeadEmailData {
   name?: string;
@@ -129,6 +132,11 @@ export async function sendLeadNotification(data: LeadEmailData) {
     data.tier === 'hot' ? '🔥 HOT' : data.tier === 'warm' ? '🟡 WARM' : '🔵 COLD';
 
   try {
+    const resend = getResendClient();
+    if (!resend) {
+      throw new Error('Missing RESEND_API_KEY');
+    }
+
     const result = await resend.emails.send({
       from: 'LX3 <leads@lx3.ai>',
       to: LEAD_RECIPIENT,

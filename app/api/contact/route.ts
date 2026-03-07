@@ -4,7 +4,10 @@ import { z } from "zod";
 
 export const runtime = "nodejs";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+function getResendClient() {
+  const apiKey = process.env.RESEND_API_KEY;
+  return apiKey ? new Resend(apiKey) : null;
+}
 
 const contactSchema = z.object({
   name: z.string().min(1),
@@ -84,6 +87,15 @@ function buildContactEmailHtml(data: z.infer<typeof contactSchema>): string {
 
 export async function POST(request: NextRequest) {
   try {
+    const resend = getResendClient();
+    if (!resend) {
+      console.error("[Contact API] Missing RESEND_API_KEY");
+      return new Response(
+        JSON.stringify({ error: "Servicio de correo no configurado. Intenta mas tarde." }),
+        { status: 503, headers: { "Content-Type": "application/json" } }
+      );
+    }
+
     const body = await request.json();
 
     const parsed = contactSchema.safeParse(body);

@@ -13,15 +13,15 @@ import type { BlogArticle } from "@/content/blog";
 const categoryConfig = {
   estrategia: {
     label: { es: "Estrategia", en: "Strategy" },
-    color: "text-cyan-400 border-cyan-400/20 bg-cyan-400/5",
+    color: "text-[var(--accent)] border-[var(--accent)]/20 bg-[var(--accent)]/5",
   },
   tecnologia: {
     label: { es: "Tecnologia", en: "Technology" },
-    color: "text-blue-400 border-blue-400/20 bg-blue-400/5",
+    color: "text-[var(--coral)] border-[var(--coral)]/20 bg-[var(--coral)]/5",
   },
   operaciones: {
     label: { es: "Operaciones", en: "Operations" },
-    color: "text-emerald-400 border-emerald-400/20 bg-emerald-400/5",
+    color: "text-[var(--green)] border-[var(--green)]/20 bg-[var(--green)]/5",
   },
 } as const;
 
@@ -109,7 +109,7 @@ export function ArticleContent({
           <AnimateOnScroll>
             <Link
               href="/blog"
-              className="mb-10 inline-flex items-center gap-2 text-sm text-white/40 transition-colors hover:text-accent"
+              className="mb-10 inline-flex items-center gap-2 text-sm text-[var(--text-tertiary)] transition-colors hover:text-[var(--accent)]"
             >
               <ArrowLeft className="h-4 w-4" />
               {t("backToBlog")}
@@ -127,16 +127,16 @@ export function ArticleContent({
               </span>
 
               {/* Title */}
-              <h1 className="mt-6 font-display text-3xl font-bold leading-tight tracking-tight text-white md:text-4xl lg:text-5xl">
+              <h1 className="mt-6 font-display text-3xl font-bold leading-tight tracking-tight text-[var(--text-primary)] md:text-4xl lg:text-5xl">
                 {article.title[lang]}
               </h1>
 
               {/* Meta */}
-              <div className="mt-6 flex items-center gap-4 text-white/40">
+              <div className="mt-6 flex items-center gap-4 text-[var(--text-tertiary)]">
                 <span className="font-mono text-sm">
                   {formatDate(article.date)}
                 </span>
-                <span className="h-1 w-1 rounded-full bg-white/20" />
+                <span className="h-1 w-1 rounded-full bg-[var(--text-tertiary)]" />
                 <div className="flex items-center gap-1.5">
                   <Clock className="h-3.5 w-3.5" />
                   <span className="font-mono text-sm">
@@ -146,7 +146,7 @@ export function ArticleContent({
               </div>
 
               {/* Divider */}
-              <div className="mt-8 border-t border-white/5" />
+              <div className="mt-8 border-t border-[var(--border-subtle)]" />
             </header>
           </AnimateOnScroll>
 
@@ -161,7 +161,7 @@ export function ArticleContent({
             {headings.length > 0 && (
               <aside className="hidden w-56 shrink-0 lg:block">
                 <div className="sticky top-32">
-                  <p className="mb-4 font-mono text-xs uppercase tracking-wider text-white/30">
+                  <p className="mb-4 font-mono text-xs uppercase tracking-wider text-[var(--text-tertiary)]">
                     {lang === "es" ? "Contenido" : "Contents"}
                   </p>
                   <nav className="space-y-2">
@@ -169,7 +169,7 @@ export function ArticleContent({
                       <a
                         key={heading.id}
                         href={`#${heading.id}`}
-                        className={`block text-sm leading-snug text-white/40 transition-colors hover:text-accent ${
+                        className={`block text-sm leading-snug text-[var(--text-tertiary)] transition-colors hover:text-[var(--accent)] ${
                           heading.level === 3 ? "pl-3" : ""
                         }`}
                       >
@@ -184,21 +184,21 @@ export function ArticleContent({
 
           {/* Share buttons */}
           <AnimateOnScroll>
-            <div className="mt-16 border-t border-white/5 pt-8">
-              <p className="mb-4 font-mono text-xs uppercase tracking-wider text-white/30">
+            <div className="mt-16 border-t border-[var(--border-subtle)] pt-8">
+              <p className="mb-4 font-mono text-xs uppercase tracking-wider text-[var(--text-tertiary)]">
                 {t("shareTitle")}
               </p>
               <div className="flex gap-3">
                 <button
                   onClick={shareOnLinkedIn}
-                  className="flex items-center gap-2 rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white/60 transition-all hover:border-accent/30 hover:text-accent"
+                  className="flex items-center gap-2 rounded-lg border border-[var(--border-subtle)] bg-[var(--bg-elevated)] px-4 py-2.5 text-sm text-[var(--text-secondary)] transition-all hover:border-[var(--accent)]/30 hover:text-[var(--accent)]"
                 >
                   <Linkedin className="h-4 w-4" />
                   LinkedIn
                 </button>
                 <button
                   onClick={shareOnTwitter}
-                  className="flex items-center gap-2 rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white/60 transition-all hover:border-accent/30 hover:text-accent"
+                  className="flex items-center gap-2 rounded-lg border border-[var(--border-subtle)] bg-[var(--bg-elevated)] px-4 py-2.5 text-sm text-[var(--text-secondary)] transition-all hover:border-[var(--accent)]/30 hover:text-[var(--accent)]"
                 >
                   <svg className="h-4 w-4" viewBox="0 0 24 24" fill="currentColor">
                     <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
@@ -207,7 +207,7 @@ export function ArticleContent({
                 </button>
                 <button
                   onClick={handleCopyLink}
-                  className="flex items-center gap-2 rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white/60 transition-all hover:border-accent/30 hover:text-accent"
+                  className="flex items-center gap-2 rounded-lg border border-[var(--border-subtle)] bg-[var(--bg-elevated)] px-4 py-2.5 text-sm text-[var(--text-secondary)] transition-all hover:border-[var(--accent)]/30 hover:text-[var(--accent)]"
                 >
                   <Link2 className="h-4 w-4" />
                   {lang === "es" ? "Copiar enlace" : "Copy link"}
@@ -218,21 +218,21 @@ export function ArticleContent({
 
           {/* CTA */}
           <AnimateOnScroll>
-            <div className="mt-16 rounded-2xl border border-white/5 bg-gradient-to-br from-surface-elevated to-surface p-8 text-center md:p-12">
-              <h3 className="font-display text-2xl font-bold text-white md:text-3xl">
+            <div className="mt-16 rounded-2xl border border-[var(--border-subtle)] bg-[var(--bg-elevated)] p-8 text-center md:p-12">
+              <h3 className="font-display text-2xl font-bold text-[var(--text-primary)] md:text-3xl">
                 {lang === "es"
-                  ? "Quieres hablar sobre esto?"
+                  ? "¿Quieres hablar sobre esto?"
                   : "Want to discuss this?"}
               </h3>
-              <p className="mx-auto mt-3 max-w-md text-white/50">
+              <p className="mx-auto mt-3 max-w-md text-[var(--text-secondary)]">
                 {lang === "es"
-                  ? "Nuestro equipo puede ayudarte a evaluar como estos conceptos aplican a tu operacion."
+                  ? "Nuestro equipo puede ayudarte a evaluar cómo estos conceptos aplican a tu operación."
                   : "Our team can help you evaluate how these concepts apply to your operation."}
               </p>
               <div className="mt-6">
                 <CTAButton href="/contacto" variant="primary" size="lg">
                   {lang === "es"
-                    ? "Agenda una conversacion"
+                    ? "Conversemos sobre tu proyecto"
                     : "Schedule a conversation"}
                 </CTAButton>
               </div>
@@ -243,7 +243,7 @@ export function ArticleContent({
           {relatedArticles.length > 0 && (
             <AnimateOnScroll>
               <div className="mt-20">
-                <h3 className="font-display text-2xl font-bold text-white">
+                <h3 className="font-display text-2xl font-bold text-[var(--text-primary)]">
                   {t("relatedArticles")}
                 </h3>
                 <div className="mt-8 grid gap-6 md:grid-cols-2">
@@ -254,26 +254,26 @@ export function ArticleContent({
                         key={related.slug}
                         href={`/blog/${related.slug}` as "/blog"}
                       >
-                        <article className="group flex h-full cursor-pointer flex-col rounded-2xl border border-white/5 bg-surface-elevated p-7 transition-all duration-300 hover:border-accent/20 hover:shadow-[0_0_30px_rgba(6,182,212,0.06)]">
+                        <article className="group flex h-full cursor-pointer flex-col rounded-2xl border border-[var(--border-subtle)] bg-[var(--bg-elevated)] p-7 transition-all duration-300 hover:border-[var(--accent)]/20 hover:shadow-[0_0_30px_rgba(58,139,253,0.06)]">
                           <span
                             className={`inline-block w-fit rounded-full border px-3 py-1 font-mono text-xs uppercase tracking-wider ${relCat.color}`}
                           >
                             {relCat.label[lang]}
                           </span>
-                          <h4 className="mt-4 font-display text-lg font-semibold leading-snug text-white transition-colors group-hover:text-accent">
+                          <h4 className="mt-4 font-display text-lg font-semibold leading-snug text-[var(--text-primary)] transition-colors group-hover:text-[var(--accent)]">
                             {related.title[lang]}
                           </h4>
-                          <p className="mt-3 flex-1 text-sm leading-relaxed text-white/50">
+                          <p className="mt-3 flex-1 text-sm leading-relaxed text-[var(--text-secondary)]">
                             {related.excerpt[lang]}
                           </p>
                           <div className="mt-5 flex items-center justify-between">
-                            <div className="flex items-center gap-1.5 text-white/30">
+                            <div className="flex items-center gap-1.5 text-[var(--text-tertiary)]">
                               <Clock className="h-3.5 w-3.5" />
                               <span className="font-mono text-xs">
                                 {related.readTime} {t("readTime")}
                               </span>
                             </div>
-                            <ArrowUpRight className="h-4 w-4 text-white/20 transition-all group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-accent" />
+                            <ArrowUpRight className="h-4 w-4 text-[var(--text-tertiary)] transition-all group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-[var(--accent)]" />
                           </div>
                         </article>
                       </Link>

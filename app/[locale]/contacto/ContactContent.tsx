@@ -12,10 +12,10 @@ export function ContactContent() {
       <div className="grid gap-12 md:grid-cols-2">
         {/* Form */}
         <div>
-          <h1 className="text-4xl font-semibold tracking-tight text-foreground md:text-5xl dark:text-white">
+          <h1 className="text-4xl font-semibold tracking-tight text-[var(--text-primary)] md:text-5xl">
             {t("title")}
           </h1>
-          <p className="mt-4 text-lg text-foreground/60 dark:text-white/60">
+          <p className="mt-4 text-lg text-[var(--text-secondary)]">
             {t("subtitle")}
           </p>
 
@@ -29,7 +29,7 @@ export function ContactContent() {
             <div>
               <label
                 htmlFor="name"
-                className="block text-sm font-medium text-foreground/70 dark:text-white/70"
+                className="block text-sm font-medium text-[var(--text-secondary)]"
               >
                 {t("formName")}
               </label>
@@ -38,14 +38,14 @@ export function ContactContent() {
                 name="name"
                 type="text"
                 required
-                className="mt-1 w-full rounded-lg border border-foreground/10 bg-transparent px-4 py-2.5 text-sm text-foreground outline-none transition-colors focus:border-accent dark:border-white/10 dark:text-white"
+                className="mt-1 w-full rounded-lg border border-[var(--border-subtle)] bg-transparent px-4 py-2.5 text-sm text-[var(--text-primary)] outline-none transition-colors focus:border-[var(--accent)]"
               />
             </div>
 
             <div>
               <label
                 htmlFor="email"
-                className="block text-sm font-medium text-foreground/70 dark:text-white/70"
+                className="block text-sm font-medium text-[var(--text-secondary)]"
               >
                 {t("formEmail")}
               </label>
@@ -54,14 +54,14 @@ export function ContactContent() {
                 name="email"
                 type="email"
                 required
-                className="mt-1 w-full rounded-lg border border-foreground/10 bg-transparent px-4 py-2.5 text-sm text-foreground outline-none transition-colors focus:border-accent dark:border-white/10 dark:text-white"
+                className="mt-1 w-full rounded-lg border border-[var(--border-subtle)] bg-transparent px-4 py-2.5 text-sm text-[var(--text-primary)] outline-none transition-colors focus:border-[var(--accent)]"
               />
             </div>
 
             <div>
               <label
                 htmlFor="company"
-                className="block text-sm font-medium text-foreground/70 dark:text-white/70"
+                className="block text-sm font-medium text-[var(--text-secondary)]"
               >
                 {t("formCompany")}
               </label>
@@ -70,14 +70,14 @@ export function ContactContent() {
                 name="company"
                 type="text"
                 required
-                className="mt-1 w-full rounded-lg border border-foreground/10 bg-transparent px-4 py-2.5 text-sm text-foreground outline-none transition-colors focus:border-accent dark:border-white/10 dark:text-white"
+                className="mt-1 w-full rounded-lg border border-[var(--border-subtle)] bg-transparent px-4 py-2.5 text-sm text-[var(--text-primary)] outline-none transition-colors focus:border-[var(--accent)]"
               />
             </div>
 
             <div>
               <label
                 htmlFor="problem"
-                className="block text-sm font-medium text-foreground/70 dark:text-white/70"
+                className="block text-sm font-medium text-[var(--text-secondary)]"
               >
                 {t("formProblem")}
               </label>
@@ -86,7 +86,7 @@ export function ContactContent() {
                 name="problem"
                 required
                 rows={3}
-                className="mt-1 w-full resize-none rounded-lg border border-foreground/10 bg-transparent px-4 py-2.5 text-sm text-foreground outline-none transition-colors focus:border-accent dark:border-white/10 dark:text-white"
+                className="mt-1 w-full resize-none rounded-lg border border-[var(--border-subtle)] bg-transparent px-4 py-2.5 text-sm text-[var(--text-primary)] outline-none transition-colors focus:border-[var(--accent)]"
               />
             </div>
 
@@ -98,11 +98,11 @@ export function ContactContent() {
 
         {/* Calendly placeholder */}
         <div>
-          <h2 className="text-xl font-semibold text-foreground dark:text-white">
+          <h2 className="text-xl font-semibold text-[var(--text-primary)]">
             {t("calendlyTitle")}
           </h2>
-          <div className="mt-4 flex h-96 items-center justify-center rounded-xl border border-foreground/5 bg-foreground/[0.02] dark:border-white/5 dark:bg-white/[0.02]">
-            <p className="text-sm text-foreground/30 dark:text-white/30">
+          <div className="mt-4 flex h-96 items-center justify-center rounded-xl border border-[var(--border-subtle)] bg-[var(--bg-elevated)]">
+            <p className="text-sm text-[var(--text-tertiary)]">
               Calendly embed will go here
             </p>
           </div>

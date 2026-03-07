@@ -10,14 +10,14 @@
     "blog": "Blog",
     "about": "Nosotros",
     "contact": "Contacto",
-    "cta": "Agenda una conversación"
+    "cta": "Conversemos"
   },
   "hero": {
-    "tag": "SOFTWARE STUDIO",
+    "tag": "Software Studio · Santiago, Chile",
     "headline": "Construimos el software que tu empresa necesita.",
     "headlineAccent": "Con IA.",
-    "subheadline": "Somos el equipo de tecnología que las empresas medianas no necesitan contratar. Aplicaciones inteligentes, listas en semanas.",
-    "ctaPrimary": "Agenda una conversación",
+    "subheadline": "Somos el equipo de tecnología que tu empresa necesita, sin tener que contratarlo. Aplicaciones inteligentes, listas en semanas.",
+    "ctaPrimary": "Conversemos sobre tu proyecto",
     "ctaSecondary": "Ver nuestro trabajo"
   },
   "socialProof": {
@@ -83,15 +83,15 @@
     "article2Excerpt": "Una guía práctica para cuantificar cuánto le cuesta a tu empresa seguir haciendo las cosas manualmente.",
     "article2ReadTime": "6 min",
     "article3Category": "Deep-Dive Técnico",
-    "article3Title": "Decision Intelligence: cuando tus datos existen pero no deciden",
+    "article3Title": "Decisión Intelligence: cuando tus datos existen pero no deciden",
     "article3Excerpt": "Cómo convertir datos operativos en decisiones automáticas usando modelos de lenguaje y pipelines inteligentes.",
     "article3ReadTime": "10 min"
   },
   "finalCta": {
     "title": "¿Listo para modernizar tu empresa?",
-    "subtitle": "Cuéntanos tu problema. Te decimos honestamente si podemos ayudarte.",
+    "subtitle": "Sin compromiso, sin letra chica. Respondemos en menos de 24 horas.",
     "cta": "Agenda una conversación",
-    "whatsapp": "O escríbenos por WhatsApp"
+    "whatsapp": "Escribir por WhatsApp"
   },
   "footer": {
     "tagline": "Diseñamos y construimos software inteligente para empresas que quieren crecer.",
@@ -210,13 +210,13 @@
     "shareTitle": "Compartir"
   },
   "chatbot": {
-    "greeting": "Hola, soy el asistente de LX3. Preguntame lo que quieras sobre nuestros servicios, casos de exito, tecnologia, o como podemos ayudarte con tu proyecto.",
+    "greeting": "Hola, soy el asistente de LX3. Pregúntame lo que quieras sobre nuestros servicios, casos de éxito, tecnología, o cómo podemos ayudarte con tu proyecto.",
     "placeholder": "Escribe tu mensaje...",
     "sending": "Pensando...",
-    "tooltip": "Tienes un proyecto en mente? Preguntame lo que quieras",
-    "quickReply1": "Que servicios ofrecen?",
-    "quickReply2": "Ver un caso de exito",
+    "tooltip": "¿Tienes un proyecto en mente? Pregúntame lo que quieras",
+    "quickReply1": "¿Qué servicios ofrecen?",
+    "quickReply2": "Ver un caso de éxito",
     "quickReply3": "Cotizar un proyecto",
-    "quickReply4": "Como es el proceso de trabajo?"
+    "quickReply4": "¿Cómo es el proceso de trabajo?"
   }
 }

@@ -68,7 +68,7 @@ function AboutContent() {
       desc: t("p1Desc"),
       icon: (
         <svg
-          className="h-6 w-6 text-cyan-400"
+          className="h-6 w-6 text-[var(--accent)]"
           fill="none"
           viewBox="0 0 24 24"
           strokeWidth={1.5}
@@ -88,7 +88,7 @@ function AboutContent() {
       desc: t("p2Desc"),
       icon: (
         <svg
-          className="h-6 w-6 text-cyan-400"
+          className="h-6 w-6 text-[var(--accent)]"
           fill="none"
           viewBox="0 0 24 24"
           strokeWidth={1.5}
@@ -108,7 +108,7 @@ function AboutContent() {
       desc: t("p3Desc"),
       icon: (
         <svg
-          className="h-6 w-6 text-cyan-400"
+          className="h-6 w-6 text-[var(--accent)]"
           fill="none"
           viewBox="0 0 24 24"
           strokeWidth={1.5}
@@ -130,10 +130,10 @@ function AboutContent() {
       <SectionWrapper className="pt-32 pb-16">
         <AnimateOnScroll>
           <div className="max-w-3xl">
-            <p className="text-sm font-medium uppercase tracking-widest text-cyan-400">
+            <p className="text-sm font-medium uppercase tracking-widest text-[var(--accent)]">
               {t("title")}
             </p>
-            <h1 className="mt-4 font-display text-4xl font-semibold tracking-tight text-white md:text-5xl lg:text-6xl">
+            <h1 className="mt-4 font-display text-4xl font-semibold tracking-tight text-[var(--text-primary)] md:text-5xl lg:text-6xl">
               {t("headline")}
             </h1>
           </div>
@@ -141,12 +141,12 @@ function AboutContent() {
 
         <div className="mt-12 max-w-3xl space-y-6">
           <AnimateOnScroll delay={0.1}>
-            <p className="text-lg leading-relaxed text-white/80 md:text-xl">
+            <p className="text-lg leading-relaxed text-[var(--text-secondary)] md:text-xl">
               {t("thesis1")}
             </p>
           </AnimateOnScroll>
           <AnimateOnScroll delay={0.2}>
-            <p className="text-lg leading-relaxed text-white/80 md:text-xl">
+            <p className="text-lg leading-relaxed text-[var(--text-secondary)] md:text-xl">
               {t("thesis2")}
             </p>
           </AnimateOnScroll>
@@ -156,7 +156,7 @@ function AboutContent() {
       {/* Principles */}
       <SectionWrapper className="py-20">
         <AnimateOnScroll>
-          <h2 className="font-display text-2xl font-semibold text-white md:text-3xl">
+          <h2 className="font-display text-2xl font-semibold text-[var(--text-primary)] md:text-3xl">
             {t("principlesTitle")}
           </h2>
         </AnimateOnScroll>
@@ -164,14 +164,14 @@ function AboutContent() {
         <div className="mt-12 grid gap-6 md:grid-cols-3">
           {principles.map((principle, i) => (
             <AnimateOnScroll key={principle.key} delay={0.1 * (i + 1)}>
-              <div className="rounded-xl border border-white/5 bg-white/[0.03] p-8 transition-colors hover:border-white/10 hover:bg-white/[0.05]">
-                <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-cyan-400/10">
+              <div className="rounded-xl border border-[var(--border-subtle)] bg-[var(--bg-elevated)] p-8 transition-colors hover:border-[var(--border-default)] hover:bg-[var(--bg-surface)]">
+                <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-[var(--accent)]/10">
                   {principle.icon}
                 </div>
-                <h3 className="mt-6 font-display text-lg font-semibold text-white">
+                <h3 className="mt-6 font-display text-lg font-semibold text-[var(--text-primary)]">
                   {principle.title}
                 </h3>
-                <p className="mt-3 text-sm leading-relaxed text-white/60">
+                <p className="mt-3 text-sm leading-relaxed text-[var(--text-secondary)]">
                   {principle.desc}
                 </p>
               </div>
@@ -184,12 +184,12 @@ function AboutContent() {
       <SectionWrapper className="py-20">
         <AnimateOnScroll>
           <div className="flex flex-col items-center text-center">
-            <h2 className="font-display text-2xl font-semibold text-white md:text-3xl">
+            <h2 className="font-display text-2xl font-semibold text-[var(--text-primary)] md:text-3xl">
               {t("principlesTitle") === "Principles"
                 ? "Ready to build together?"
                 : "Construyamos juntos"}
             </h2>
-            <p className="mt-4 max-w-xl text-white/60">
+            <p className="mt-4 max-w-xl text-[var(--text-secondary)]">
               {t("principlesTitle") === "Principles"
                 ? "Tell us about your project. We respond within 24 hours with an honest assessment."
                 : "Cuentanos tu proyecto. Respondemos en menos de 24 horas con una evaluacion honesta."}

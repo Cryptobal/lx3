@@ -101,10 +101,10 @@ function ServicesContent() {
       {/* Hero */}
       <SectionWrapper className="pt-32">
         <div className="max-w-3xl">
-          <h1 className="font-display text-4xl font-semibold tracking-tight text-white md:text-5xl">
+          <h1 className="font-display text-4xl font-semibold tracking-tight text-[var(--text-primary)] md:text-5xl">
             {t("title")}
           </h1>
-          <p className="mt-4 text-lg text-white/60">
+          <p className="mt-4 text-lg text-[var(--text-secondary)]">
             {t("subtitle")}
           </p>
         </div>
@@ -119,26 +119,26 @@ function ServicesContent() {
               <AnimateOnScroll key={service.key} delay={i * 0.1}>
                 <Link
                   href={service.href}
-                  className="group flex h-full flex-col rounded-2xl border border-white/5 bg-white/[0.02] p-8 transition-all duration-300 hover:border-white/10 hover:bg-white/[0.04]"
+                  className="group flex h-full flex-col rounded-2xl border border-[var(--border-subtle)] bg-[var(--bg-elevated)] p-8 transition-all duration-300 hover:border-[var(--border-default)] hover:bg-[var(--bg-surface)]"
                 >
                   <div className="flex items-center gap-4">
-                    <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-cyan-500/10">
-                      <Icon className="h-6 w-6 text-cyan-400" />
+                    <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-[var(--accent)]/10">
+                      <Icon className="h-6 w-6 text-[var(--accent)]" />
                     </div>
-                    <span className="font-mono text-sm text-white/30">
+                    <span className="font-mono text-sm text-[var(--text-tertiary)]">
                       0{i + 1}
                     </span>
                   </div>
 
-                  <h2 className="mt-5 text-xl font-semibold text-white">
+                  <h2 className="mt-5 text-xl font-semibold text-[var(--text-primary)]">
                     {tServices(service.titleKey)}
                   </h2>
 
-                  <p className="mt-3 flex-1 text-sm leading-relaxed text-white/50">
+                  <p className="mt-3 flex-1 text-sm leading-relaxed text-[var(--text-secondary)]">
                     {tServices(service.descKey)}
                   </p>
 
-                  <div className="mt-6 inline-flex items-center gap-2 text-sm font-medium text-cyan-400 transition-colors group-hover:text-cyan-300">
+                  <div className="mt-6 inline-flex items-center gap-2 text-sm font-medium text-[var(--accent)] transition-colors group-hover:text-[var(--accent)]">
                     {t("learnMore")}
                     <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
                   </div>

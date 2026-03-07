@@ -1,22 +1,60 @@
 @import "tailwindcss";
 
 /* ============================================
-   LX3 Software Studio - Design System
-   Dark-first, premium, world-class
+   LX3 Software Studio — Midnight Coral
+   Design System
    ============================================ */
 
 :root {
-  --background: #050505;
-  --foreground: #FAFAFA;
-  --accent: #06B6D4;
-  --accent-hover: #22D3EE;
-  --accent-secondary: #3B82F6;
-  --muted: #71717A;
-  --muted-foreground: #A1A1AA;
-  --surface: #0A0A0A;
-  --surface-elevated: #141414;
-  --border: #1E1E1E;
-  --ring: #06B6D4;
+  /* Fondos — azul-gris oscuro */
+  --bg-deep:        #06080E;
+  --bg-primary:     #0D1117;
+  --bg-elevated:    #161B22;
+  --bg-surface:     #1E242C;
+  --bg-hover:       #262D38;
+
+  /* Borders */
+  --border-subtle:  #1C222C;
+  --border-default: #2D3440;
+  --border-strong:  #445060;
+
+  /* Texto */
+  --text-primary:   #F0F3F8;
+  --text-secondary: #8B99AE;
+  --text-tertiary:  #5E6E82;
+  --text-muted:     #3E4E60;
+
+  /* Accent — Azul zafiro */
+  --accent:         #3A8BFD;
+  --accent-hover:   #5CA0FF;
+  --accent-light:   rgba(58,139,253,0.09);
+  --accent-glow:    rgba(58,139,253,0.25);
+
+  /* Accent secundario — Coral */
+  --coral:          #FB923C;
+  --coral-light:    rgba(251,146,60,0.10);
+  --coral-glow:     rgba(251,146,60,0.20);
+
+  /* Verde esmeralda */
+  --green:          #34D399;
+  --green-light:    rgba(52,211,153,0.10);
+  --green-glow:     rgba(52,211,153,0.15);
+
+  /* Status */
+  --success: #22C55E;
+  --warning: #EAB308;
+  --error:   #EF4444;
+
+  /* Compat aliases for existing Tailwind usage */
+  --background: var(--bg-deep);
+  --foreground: var(--text-primary);
+  --surface: var(--bg-primary);
+  --surface-elevated: var(--bg-elevated);
+  --border: var(--border-subtle);
+  --ring: var(--accent);
+  --muted: var(--text-tertiary);
+  --muted-foreground: var(--text-secondary);
+  --accent-secondary: var(--coral);
 }
 
 @theme inline {
@@ -32,9 +70,9 @@
   --color-border: var(--border);
   --color-ring: var(--ring);
 
-  --font-display: var(--font-space-grotesk);
-  --font-sans: var(--font-jakarta);
-  --font-mono: var(--font-geist-mono);
+  --font-display: var(--font-jakarta);
+  --font-sans: var(--font-inter);
+  --font-mono: var(--font-jetbrains);
 
   --animate-duration-fast: 150ms;
   --animate-duration-base: 250ms;
@@ -50,9 +88,9 @@ html {
 }
 
 body {
-  background-color: var(--background);
-  color: var(--foreground);
-  font-family: var(--font-jakarta), system-ui, -apple-system, sans-serif;
+  background-color: var(--bg-deep);
+  color: var(--text-primary);
+  font-family: var(--font-inter), system-ui, -apple-system, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
@@ -77,7 +115,7 @@ body {
 
 * {
   scrollbar-width: thin;
-  scrollbar-color: var(--border) transparent;
+  scrollbar-color: var(--border-default) transparent;
 }
 
 ::-webkit-scrollbar {
@@ -90,12 +128,12 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: var(--border);
+  background-color: var(--border-default);
   border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background-color: var(--muted);
+  background-color: var(--border-strong);
 }
 
 /* --- Grain Texture Overlay --- */
@@ -106,14 +144,16 @@ body {
   inset: 0;
   z-index: 9999;
   pointer-events: none;
-  opacity: 0.03;
+  opacity: 0.028;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 128px;
 }
 
 /* --- Gradient Utilities --- */
 
 .gradient-text {
-  background: linear-gradient(135deg, var(--accent) 0%, var(--accent-secondary) 100%);
+  background: linear-gradient(90deg, #3A8BFD, #FB923C);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -121,11 +161,59 @@ body {
 
 .mesh-gradient {
   background:
-    radial-gradient(ellipse at 20% 50%, rgba(6, 182, 212, 0.08) 0%, transparent 50%),
-    radial-gradient(ellipse at 80% 20%, rgba(59, 130, 246, 0.06) 0%, transparent 50%),
-    radial-gradient(ellipse at 50% 80%, rgba(6, 182, 212, 0.04) 0%, transparent 50%);
+    radial-gradient(ellipse 60% 50% at 25% 40%, rgba(58,139,253,0.10) 0%, transparent 55%),
+    radial-gradient(ellipse 50% 50% at 80% 30%, rgba(251,146,60,0.06) 0%, transparent 55%),
+    radial-gradient(ellipse 50% 40% at 50% 85%, rgba(52,211,153,0.04) 0%, transparent 50%);
+}
+
+.mesh-gradient-intense {
+  background:
+    radial-gradient(ellipse 55% 55% at 50% 50%, rgba(58,139,253,0.12) 0%, transparent 65%),
+    radial-gradient(ellipse 40% 40% at 80% 30%, rgba(251,146,60,0.08) 0%, transparent 50%),
+    radial-gradient(ellipse 40% 40% at 20% 70%, rgba(52,211,153,0.06) 0%, transparent 50%);
 }
 
 .glow-accent {
-  box-shadow: 0 0 20px rgba(6, 182, 212, 0.15), 0 0 60px rgba(6, 182, 212, 0.05);
+  box-shadow: 0 0 30px var(--accent-glow), inset 0 1px 0 rgba(255,255,255,0.03);
+}
+
+/* --- Mesh drift animation --- */
+
+@keyframes meshDrift {
+  0%, 100% { transform: translate(0,0) scale(1); }
+  33% { transform: translate(12px,-8px) scale(1.02); }
+  66% { transform: translate(-8px,12px) scale(0.98); }
+}
+
+.mesh-animate {
+  animation: meshDrift 20s ease-in-out infinite;
+}
+
+/* --- Typography scale --- */
+
+.text-hero {
+  font-size: clamp(2.4rem, 5.5vw, 4.4rem);
+  line-height: 1.08;
+}
+
+/* --- Scroll indicator --- */
+
+@keyframes scrollBounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(8px); }
+}
+
+.scroll-indicator {
+  animation: scrollBounce 2s ease-in-out infinite;
+}
+
+/* --- Pulsing dot --- */
+
+@keyframes pulseDot {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+.pulse-dot {
+  animation: pulseDot 2s ease-in-out infinite;
 }

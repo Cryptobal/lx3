@@ -16,11 +16,11 @@ export const articles: BlogArticle[] = [
     date: "2026-02-18",
     readTime: 8,
     title: {
-      es: "Por que las herramientas genericas de IA no resuelven problemas especificos",
+      es: "Por qué las herramientas genéricas de IA no resuelven problemas específicos",
       en: "Why generic AI tools don't solve specific business problems",
     },
     excerpt: {
-      es: "Las empresas invierten en herramientas genericas esperando resultados especificos. Este desajuste explica por que la mayoria de los proyectos de IA nunca llegan a produccion.",
+      es: "Las empresas invierten en herramientas genéricas esperando resultados específicos. Este desajuste explica por qué la mayoría de los proyectos de IA nunca llegan a producción.",
       en: "Companies invest in generic tools expecting specific results. This mismatch explains why most AI projects never make it to production.",
     },
     content: {
@@ -130,7 +130,7 @@ If the answer requires more than two sentences of explanation, you probably need
       en: "The real cost of not automating: what mid-market companies lose every quarter",
     },
     excerpt: {
-      es: "No automatizar tiene un costo compuesto que la mayoria de empresas no calculan correctamente. Cuantificamos el tiempo perdido, las tasas de error y los costos de oportunidad.",
+      es: "No automatizar tiene un costo compuesto que la mayoría de empresas no calculan correctamente. Cuantificamos el tiempo perdido, las tasas de error y los costos de oportunidad.",
       en: "Not automating has a compound cost that most companies don't calculate correctly. We quantify lost time, error rates, and opportunity costs.",
     },
     content: {
@@ -260,11 +260,11 @@ That number — not the first one — is the true cost of not automating.`,
     date: "2026-01-10",
     readTime: 7,
     title: {
-      es: "Como elegir entre construir software interno vs comprar SaaS",
+      es: "Cómo elegir entre construir software interno vs comprar SaaS",
       en: "How to choose between building custom software vs buying SaaS",
     },
     excerpt: {
-      es: "Construir o comprar no es una decision binaria. Presentamos un marco de decision practico para empresas medianas que necesitan tecnologia que funcione.",
+      es: "Construir o comprar no es una decisión binaria. Presentamos un marco de decisión práctico para empresas medianas que necesitan tecnología que funcione.",
       en: "Build or buy is not a binary decision. We present a practical decision framework for mid-market companies that need technology that works.",
     },
     content: {

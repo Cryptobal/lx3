@@ -5,15 +5,16 @@ import { Link } from "@/lib/i18n/routing";
 import { cva, type VariantProps } from "class-variance-authority";
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 rounded-lg font-medium transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
+  "inline-flex items-center justify-center gap-2 font-medium transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg-primary)] disabled:pointer-events-none disabled:opacity-50",
   {
     variants: {
       variant: {
         primary:
-          "bg-gradient-to-r from-[#06B6D4] to-[#3B82F6] text-white shadow-lg shadow-cyan-500/25 hover:shadow-xl hover:shadow-cyan-500/30 hover:brightness-110",
+          "rounded-[11px] bg-[var(--accent)] text-white hover:bg-[var(--accent-hover)] hover:shadow-[0_0_20px_var(--accent-glow)]",
         secondary:
-          "border border-white/10 bg-white/5 text-white hover:bg-white/10",
-        ghost: "text-white/70 hover:text-accent",
+          "rounded-[11px] border border-[var(--border-default)] bg-transparent text-[var(--text-primary)] hover:border-[var(--coral)] hover:text-[var(--coral)]",
+        ghost:
+          "text-[var(--text-secondary)] hover:text-[var(--accent)]",
       },
       size: {
         sm: "px-4 py-2 text-sm",

@@ -61,10 +61,10 @@ function AiAutomationContent() {
       <SectionWrapper className="pt-32">
         <div className="max-w-3xl">
           <AnimateOnScroll>
-            <h1 className="font-display text-4xl font-semibold tracking-tight text-white md:text-5xl">
+            <h1 className="font-display text-4xl font-semibold tracking-tight text-[var(--text-primary)] md:text-5xl">
               {t("aiAutomation.headline")}
             </h1>
-            <p className="mt-6 text-lg leading-relaxed text-white/60">
+            <p className="mt-6 text-lg leading-relaxed text-[var(--text-secondary)]">
               {t("aiAutomation.description")}
             </p>
           </AnimateOnScroll>
@@ -77,24 +77,24 @@ function AiAutomationContent() {
           <div className="grid gap-12 md:grid-cols-2">
             {/* Left: extended description */}
             <div>
-              <h2 className="text-2xl font-semibold text-white md:text-3xl">
+              <h2 className="text-2xl font-semibold text-[var(--text-primary)] md:text-3xl">
                 {t("aiAutomation.title")}
               </h2>
-              <p className="mt-4 text-base leading-relaxed text-white/50">
+              <p className="mt-4 text-base leading-relaxed text-[var(--text-secondary)]">
                 {t("aiAutomation.description")}
               </p>
             </div>
 
             {/* Right: features */}
             <div>
-              <h3 className="font-mono text-xs uppercase tracking-wider text-white/30">
+              <h3 className="font-mono text-xs uppercase tracking-wider text-[var(--text-tertiary)]">
                 {t("featuresTitle")}
               </h3>
               <ul className="mt-4 space-y-3">
                 {features.map((feature, i) => (
                   <li key={i} className="flex items-start gap-3">
-                    <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-cyan-400" />
-                    <span className="text-sm text-white/70">{feature}</span>
+                    <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-[var(--accent)]" />
+                    <span className="text-sm text-[var(--text-secondary)]">{feature}</span>
                   </li>
                 ))}
               </ul>
@@ -106,8 +106,8 @@ function AiAutomationContent() {
       {/* CTA */}
       <SectionWrapper>
         <AnimateOnScroll>
-          <div className="rounded-2xl border border-white/5 bg-white/[0.02] p-10 text-center md:p-16">
-            <h2 className="font-display text-2xl font-semibold text-white md:text-3xl">
+          <div className="rounded-2xl border border-[var(--border-subtle)] bg-[var(--bg-elevated)] p-10 text-center md:p-16">
+            <h2 className="font-display text-2xl font-semibold text-[var(--text-primary)] md:text-3xl">
               {t("ctaAiAutomation")}
             </h2>
             <div className="mt-8">

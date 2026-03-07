@@ -56,13 +56,13 @@ function ContactContent() {
         {/* Left: Form */}
         <div>
           <AnimateOnScroll>
-            <p className="text-sm font-medium uppercase tracking-widest text-cyan-400">
+            <p className="text-sm font-medium uppercase tracking-widest text-[var(--accent)]">
               {t("title")}
             </p>
-            <h1 className="mt-4 font-display text-4xl font-semibold tracking-tight text-white md:text-5xl">
+            <h1 className="mt-4 font-display text-4xl font-semibold tracking-tight text-[var(--text-primary)] md:text-5xl">
               {t("title")}
             </h1>
-            <p className="mt-4 text-lg text-white/60">
+            <p className="mt-4 text-lg text-[var(--text-secondary)]">
               {t("subtitle")}
             </p>
           </AnimateOnScroll>
@@ -78,7 +78,7 @@ function ContactContent() {
         <div className="lg:pt-24">
           <AnimateOnScroll delay={0.2}>
             <div className="space-y-6">
-              <p className="text-sm font-medium uppercase tracking-widest text-white/40">
+              <p className="text-sm font-medium uppercase tracking-widest text-[var(--text-tertiary)]">
                 {t("alternatives")}
               </p>
 
@@ -87,7 +87,7 @@ function ContactContent() {
                 href="https://wa.me/56982307771"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-4 rounded-xl border border-white/5 bg-white/[0.03] p-5 transition-colors hover:border-white/10 hover:bg-white/[0.05]"
+                className="flex items-center gap-4 rounded-xl border border-[var(--border-subtle)] bg-[var(--bg-elevated)] p-5 transition-colors hover:border-[var(--border-default)] hover:bg-[var(--bg-surface)]"
               >
                 <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-emerald-500/10">
                   <svg
@@ -99,11 +99,11 @@ function ContactContent() {
                   </svg>
                 </div>
                 <div>
-                  <p className="font-medium text-white">{t("whatsapp")}</p>
-                  <p className="text-sm text-white/40">+56 9 8230 7771</p>
+                  <p className="font-medium text-[var(--text-primary)]">{t("whatsapp")}</p>
+                  <p className="text-sm text-[var(--text-tertiary)]">+56 9 8230 7771</p>
                 </div>
                 <svg
-                  className="ml-auto h-5 w-5 text-white/20"
+                  className="ml-auto h-5 w-5 text-[var(--text-tertiary)]"
                   fill="none"
                   viewBox="0 0 24 24"
                   strokeWidth={1.5}
@@ -120,7 +120,7 @@ function ContactContent() {
               {/* Email */}
               <a
                 href="mailto:contacto@lx3.ai"
-                className="flex items-center gap-4 rounded-xl border border-white/5 bg-white/[0.03] p-5 transition-colors hover:border-white/10 hover:bg-white/[0.05]"
+                className="flex items-center gap-4 rounded-xl border border-[var(--border-subtle)] bg-[var(--bg-elevated)] p-5 transition-colors hover:border-[var(--border-default)] hover:bg-[var(--bg-surface)]"
               >
                 <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-blue-500/10">
                   <svg
@@ -138,11 +138,11 @@ function ContactContent() {
                   </svg>
                 </div>
                 <div>
-                  <p className="font-medium text-white">{t("email")}</p>
-                  <p className="text-sm text-white/40">contacto@lx3.ai</p>
+                  <p className="font-medium text-[var(--text-primary)]">{t("email")}</p>
+                  <p className="text-sm text-[var(--text-tertiary)]">contacto@lx3.ai</p>
                 </div>
                 <svg
-                  className="ml-auto h-5 w-5 text-white/20"
+                  className="ml-auto h-5 w-5 text-[var(--text-tertiary)]"
                   fill="none"
                   viewBox="0 0 24 24"
                   strokeWidth={1.5}

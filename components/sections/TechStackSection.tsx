@@ -1,45 +1,98 @@
 import { useTranslations } from "next-intl";
 import { SectionWrapper } from "@/components/shared/SectionWrapper";
+import { Link } from "@/lib/i18n/routing";
+import { ArrowUpRight } from "lucide-react";
 
-const techStack = [
-  { name: "Next.js", category: "Framework" },
-  { name: "React", category: "UI" },
-  { name: "TypeScript", category: "Language" },
-  { name: "Tailwind CSS", category: "Styling" },
-  { name: "PostgreSQL", category: "Database" },
-  { name: "Claude AI", category: "AI" },
-  { name: "Vercel", category: "Platform" },
+const technologies = [
+  "Next.js",
+  "React",
+  "TypeScript",
+  "Tailwind CSS",
+  "PostgreSQL",
+  "Vercel",
+  "Claude AI",
+  "Node.js",
 ];
 
 export function TechStackSection() {
   const t = useTranslations("techStack");
+  const tb = useTranslations("blogPreview");
+
+  const articles = [
+    {
+      title: tb("article1Title"),
+      category: tb("article1Category"),
+    },
+    {
+      title: tb("article2Title"),
+      category: tb("article2Category"),
+    },
+    {
+      title: tb("article3Title"),
+      category: tb("article3Category"),
+    },
+  ];
 
   return (
-    <SectionWrapper>
-      <div className="text-center">
-        <h2 className="font-display text-3xl font-bold tracking-tight text-white md:text-4xl lg:text-5xl">
-          {t("title")}
-        </h2>
-        <p className="mx-auto mt-4 max-w-lg text-lg text-white/60">
-          {t("subtitle")}
-        </p>
-      </div>
+    <section className="border-t border-[var(--border-subtle)] bg-[var(--bg-primary)]">
+      <SectionWrapper>
+        <div className="grid gap-16 md:grid-cols-2 md:gap-12">
+          {/* Left side: Tech Stack */}
+          <div>
+            <span className="font-mono text-xs uppercase tracking-[0.2em] text-[var(--accent)]">
+              STACK
+            </span>
 
-      <div className="mx-auto mt-14 flex max-w-3xl flex-wrap items-center justify-center gap-4">
-        {techStack.map((tech) => (
-          <div
-            key={tech.name}
-            className="group rounded-xl border border-white/5 bg-surface-elevated px-6 py-4 transition-all duration-300 hover:scale-105 hover:border-accent/20 hover:shadow-[0_0_20px_rgba(6,182,212,0.08)]"
-          >
-            <span className="block font-display text-base font-medium text-white/80 transition-colors group-hover:text-white">
-              {tech.name}
-            </span>
-            <span className="mt-0.5 block font-mono text-xs text-white/30">
-              {tech.category}
-            </span>
+            <div className="mt-8 grid grid-cols-2 gap-3">
+              {technologies.map((tech) => (
+                <div
+                  key={tech}
+                  className="flex items-center gap-3 rounded-xl border border-[var(--border-subtle)] bg-[var(--bg-elevated)] px-5 py-3 transition-colors hover:border-[var(--border-default)]"
+                >
+                  <span className="h-2 w-2 shrink-0 rounded-full bg-[var(--coral)]" />
+                  <span className="font-sans text-sm text-[var(--text-primary)]">
+                    {tech}
+                  </span>
+                </div>
+              ))}
+            </div>
           </div>
-        ))}
-      </div>
-    </SectionWrapper>
+
+          {/* Right side: Blog Preview */}
+          <div>
+            <span className="font-mono text-xs uppercase tracking-[0.2em] text-[var(--coral)]">
+              PERSPECTIVAS
+            </span>
+
+            <div className="mt-8 space-y-0 divide-y divide-[var(--border-subtle)]">
+              {articles.map((article, i) => (
+                <div
+                  key={i}
+                  className="group flex cursor-pointer items-start justify-between gap-4 py-5 first:pt-0 last:pb-0"
+                >
+                  <div>
+                    <span className="font-mono text-xs uppercase tracking-wider text-[var(--text-tertiary)]">
+                      {article.category}
+                    </span>
+                    <h3 className="mt-1 font-display text-base font-semibold text-[var(--text-primary)] transition-colors group-hover:text-[var(--accent)]">
+                      {article.title}
+                    </h3>
+                  </div>
+                  <ArrowUpRight className="mt-5 h-4 w-4 shrink-0 text-[var(--text-tertiary)] transition-all group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-[var(--accent)]" />
+                </div>
+              ))}
+            </div>
+
+            <Link
+              href={"/blog" as "/"}
+              className="mt-6 inline-flex items-center gap-1 font-sans text-sm text-[var(--coral)] transition-colors hover:text-[var(--accent)]"
+            >
+              Ver todos los artículos
+              <span aria-hidden="true">→</span>
+            </Link>
+          </div>
+        </div>
+      </SectionWrapper>
+    </section>
   );
 }

@@ -2,12 +2,10 @@ import type { Metadata } from "next";
 import { setRequestLocale } from "next-intl/server";
 import { JsonLd } from "@/components/shared/JsonLd";
 import { Hero } from "@/components/sections/Hero";
-import { SocialProof } from "@/components/sections/SocialProof";
 import { Services } from "@/components/sections/Services";
 import { Showcase } from "@/components/sections/Showcase";
 import { Process } from "@/components/sections/Process";
 import { TechStackSection } from "@/components/sections/TechStackSection";
-import { BlogPreview } from "@/components/sections/BlogPreview";
 import { FinalCTA } from "@/components/sections/FinalCTA";
 import { AnimateOnScroll } from "@/components/shared/AnimateOnScroll";
 
@@ -86,9 +84,6 @@ export default async function HomePage({
       />
       <Hero />
       <AnimateOnScroll>
-        <SocialProof />
-      </AnimateOnScroll>
-      <AnimateOnScroll>
         <Services />
       </AnimateOnScroll>
       <AnimateOnScroll>
@@ -99,9 +94,6 @@ export default async function HomePage({
       </AnimateOnScroll>
       <AnimateOnScroll>
         <TechStackSection />
-      </AnimateOnScroll>
-      <AnimateOnScroll>
-        <BlogPreview />
       </AnimateOnScroll>
       <AnimateOnScroll>
         <FinalCTA />

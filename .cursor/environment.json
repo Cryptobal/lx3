@@ -1,0 +1,8 @@
+{
+  "name": "lx3-ai-factory",
+  "install": "pnpm install --frozen-lockfile",
+  "build": {
+    "context": ".",
+    "dockerfile": "Dockerfile"
+  }
+}

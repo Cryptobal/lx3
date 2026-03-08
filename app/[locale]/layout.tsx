@@ -7,7 +7,6 @@ import { routing } from "@/lib/i18n/routing";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { FloatingChatButton } from "@/components/chatbot/FloatingChatButton";
-import WhatsAppButton from "@/components/shared/WhatsAppButton";
 import { Analytics } from "@vercel/analytics/next";
 
 const jakarta = Plus_Jakarta_Sans({
@@ -102,7 +101,6 @@ export default async function LocaleLayout({
           <main>{children}</main>
           <Footer />
           <FloatingChatButton />
-          <WhatsAppButton />
         </NextIntlClientProvider>
         <Analytics />
       </body>

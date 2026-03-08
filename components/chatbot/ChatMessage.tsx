@@ -2,11 +2,51 @@
 
 import { cn } from "@/lib/utils/cn";
 import { Sparkles, User } from "lucide-react";
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 interface ChatMessageProps {
   role: "user" | "assistant";
   content: string;
+  isStreaming?: boolean;
+}
+
+function useSmoothedText(targetContent: string, isStreaming?: boolean) {
+  const [displayed, setDisplayed] = useState(targetContent);
+  const targetRef = useRef(targetContent);
+
+  useEffect(() => {
+    targetRef.current = targetContent;
+  }, [targetContent]);
+
+  useEffect(() => {
+    if (!isStreaming) {
+      setDisplayed(targetRef.current);
+      return;
+    }
+
+    const interval = setInterval(() => {
+      setDisplayed((current) => {
+        const target = targetRef.current;
+        if (current === target) return current;
+
+        const remaining = target.length - current.length;
+        // Fast flush if far behind, otherwise smoothly type one character or a few
+        const speed = Math.max(1, Math.ceil(remaining / 4));
+        return target.slice(0, current.length + speed);
+      });
+    }, 20);
+
+    return () => clearInterval(interval);
+  }, [isStreaming]);
+
+  // Final catch-up when streaming completes
+  useEffect(() => {
+    if (!isStreaming) {
+      setDisplayed(targetRef.current);
+    }
+  }, [isStreaming]);
+
+  return isStreaming ? displayed : targetContent;
 }
 
 function processInlineMarkdown(text: string): React.ReactNode[] {
@@ -76,10 +116,11 @@ function renderMarkdown(content: string): React.ReactNode {
   });
 }
 
-export function ChatMessage({ role, content }: ChatMessageProps) {
+export function ChatMessage({ role, content, isStreaming }: ChatMessageProps) {
   const isAssistant = role === "assistant";
+  const smoothedContent = useSmoothedText(content, isStreaming);
 
-  if (!content) return null;
+  if (!smoothedContent && !isStreaming) return null;
 
   return (
     <div

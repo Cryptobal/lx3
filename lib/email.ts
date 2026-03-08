@@ -1,7 +1,6 @@
 import { Resend } from 'resend';
 
-const LEAD_RECIPIENT = 'carlos.irigoyen@gmail.com';
-
+const LEAD_RECIPIENT = ['contacto@lx3.ai', 'carlos.irigoyen@gmail.com'];
 function getResendClient() {
   const apiKey = process.env.RESEND_API_KEY;
   return apiKey ? new Resend(apiKey) : null;
@@ -62,14 +61,14 @@ function buildLeadEmailHtml(data: LeadEmailData): string {
 
   const conversationHtml = data.messages
     ? data.messages
-        .map(
-          (m) => `
+      .map(
+        (m) => `
         <div style="margin-bottom: 12px;">
           <strong style="color: ${m.role === 'user' ? '#2b6cb0' : '#718096'};">${m.role === 'user' ? '👤 Prospecto' : '🤖 LX3'}:</strong>
           <p style="margin: 4px 0 0 0; color: #4a5568; line-height: 1.5;">${m.content.replace(/\n/g, '<br/>')}</p>
         </div>`
-        )
-        .join('')
+      )
+      .join('')
     : '';
 
   return `
@@ -93,28 +92,26 @@ function buildLeadEmailHtml(data: LeadEmailData): string {
       ${fieldRows}
     </table>
 
-    ${
-      data.conversationSummary
-        ? `
+    ${data.conversationSummary
+      ? `
     <div style="margin-bottom: 24px;">
       <h2 style="font-size: 16px; color: #1a202c; margin-bottom: 8px;">Resumen Diagnostico</h2>
       <div style="background: #f7fafc; border-radius: 8px; padding: 16px; color: #4a5568; line-height: 1.6; font-size: 14px;">
         ${data.conversationSummary.replace(/\n/g, '<br/>')}
       </div>
     </div>`
-        : ''
+      : ''
     }
 
-    ${
-      conversationHtml
-        ? `
+    ${conversationHtml
+      ? `
     <div>
       <h2 style="font-size: 16px; color: #1a202c; margin-bottom: 12px;">Conversacion Completa</h2>
       <div style="background: #f7fafc; border-radius: 8px; padding: 16px; font-size: 13px;">
         ${conversationHtml}
       </div>
     </div>`
-        : ''
+      : ''
     }
 
   </div>

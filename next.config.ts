@@ -28,6 +28,20 @@ const nextConfig: NextConfig = {
         source: "/(.*)",
         headers: securityHeaders,
       },
+      {
+        source: "/llms.txt",
+        headers: [
+          { key: "X-Robots-Tag", value: "all" },
+          { key: "Cache-Control", value: "public, max-age=86400" },
+        ],
+      },
+      {
+        source: "/llms-full.txt",
+        headers: [
+          { key: "X-Robots-Tag", value: "all" },
+          { key: "Cache-Control", value: "public, max-age=86400" },
+        ],
+      },
     ];
   },
 };

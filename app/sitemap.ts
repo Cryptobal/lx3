@@ -1,4 +1,5 @@
 import type { MetadataRoute } from "next";
+import { articles } from "@/content/blog";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = "https://lx3.ai";
@@ -18,14 +19,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${baseUrl}/contacto`, lastModified: new Date(), changeFrequency: "monthly" as const, priority: 0.7 },
   ];
 
-  // Import blog articles and add them
-  // For now, hardcode the 3 blog slugs
-  const blogPosts = [
-    "herramientas-genericas-ai",
-    "costo-no-automatizar",
-    "construir-vs-comprar-software",
-  ].map((slug) => ({
-    url: `${baseUrl}/blog/${slug}`,
+  const blogPosts = articles.map((article) => ({
+    url: `${baseUrl}/blog/${article.slug}`,
     lastModified: new Date(),
     changeFrequency: "monthly" as const,
     priority: 0.6,

@@ -5,25 +5,10 @@ import { useTranslations } from "next-intl";
 import { Link } from "@/lib/i18n/routing";
 import { SectionWrapper } from "@/components/shared/SectionWrapper";
 import { AnimateOnScroll } from "@/components/shared/AnimateOnScroll";
+import { getCategoryClasses, getCategoryLabel } from "@/content/blog-categories";
 import { Clock, ArrowUpRight } from "lucide-react";
 import type { BlogArticle } from "@/content/blog";
-
-const categoryConfig = {
-  estrategia: {
-    label: { es: "Estrategia", en: "Strategy" },
-    color: "text-[var(--accent)] border-[var(--accent)]/20 bg-[var(--accent)]/5",
-  },
-  tecnologia: {
-    label: { es: "Tecnologia", en: "Technology" },
-    color: "text-blue-400 border-blue-400/20 bg-blue-400/5",
-  },
-  operaciones: {
-    label: { es: "Operaciones", en: "Operations" },
-    color: "text-emerald-400 border-emerald-400/20 bg-emerald-400/5",
-  },
-} as const;
-
-type FilterCategory = "all" | BlogArticle["category"];
+type FilterCategory = "all" | string;
 
 interface BlogContentProps {
   articles: BlogArticle[];
@@ -34,21 +19,14 @@ export function BlogContent({ articles, locale }: BlogContentProps) {
   const t = useTranslations("blogPage");
   const lang = locale === "en" ? "en" : "es";
   const [activeFilter, setActiveFilter] = useState<FilterCategory>("all");
+  const categories = Array.from(new Set(articles.map((article) => article.category)));
 
   const filters: { key: FilterCategory; label: string }[] = [
     { key: "all", label: lang === "es" ? "Todos" : "All" },
-    {
-      key: "estrategia",
-      label: categoryConfig.estrategia.label[lang],
-    },
-    {
-      key: "tecnologia",
-      label: categoryConfig.tecnologia.label[lang],
-    },
-    {
-      key: "operaciones",
-      label: categoryConfig.operaciones.label[lang],
-    },
+    ...categories.map((category) => ({
+      key: category,
+      label: getCategoryLabel(category),
+    })),
   ];
 
   const filtered =
@@ -101,16 +79,15 @@ export function BlogContent({ articles, locale }: BlogContentProps) {
       {/* Article Grid */}
       <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {filtered.map((article, i) => {
-          const cat = categoryConfig[article.category];
           return (
             <AnimateOnScroll key={article.slug} delay={0.1 + i * 0.05}>
               <Link href={`/blog/${article.slug}` as "/blog"}>
                 <article className="group flex h-full cursor-pointer flex-col rounded-2xl border border-[var(--border-subtle)] bg-surface-elevated p-7 transition-all duration-300 hover:border-accent/20 hover:shadow-[0_0_30px_rgba(6,182,212,0.06)]">
                   {/* Category tag */}
                   <span
-                    className={`inline-block w-fit rounded-full border px-3 py-1 font-mono text-xs uppercase tracking-wider ${cat.color}`}
+                    className={`inline-block w-fit rounded-full border px-3 py-1 font-mono text-xs uppercase tracking-wider ${getCategoryClasses(article.category)}`}
                   >
-                    {cat.label[lang]}
+                    {getCategoryLabel(article.category)}
                   </span>
 
                   {/* Title */}

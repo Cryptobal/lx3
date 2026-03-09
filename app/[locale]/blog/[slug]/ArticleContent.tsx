@@ -6,24 +6,10 @@ import { SectionWrapper } from "@/components/shared/SectionWrapper";
 import { AnimateOnScroll } from "@/components/shared/AnimateOnScroll";
 import { JsonLd } from "@/components/shared/JsonLd";
 import { CTAButton } from "@/components/shared/CTAButton";
-import { MarkdownRenderer, extractHeadings } from "@/content/markdown";
+import { MarkdownRenderer, extractFaqs, extractHeadings } from "@/content/markdown";
+import { getCategoryClasses, getCategoryLabel } from "@/content/blog-categories";
 import { ArrowLeft, Clock, Linkedin, ArrowUpRight, Link2 } from "lucide-react";
 import type { BlogArticle } from "@/content/blog";
-
-const categoryConfig = {
-  estrategia: {
-    label: { es: "Estrategia", en: "Strategy" },
-    color: "text-[var(--accent)] border-[var(--accent)]/20 bg-[var(--accent)]/5",
-  },
-  tecnologia: {
-    label: { es: "Tecnologia", en: "Technology" },
-    color: "text-[var(--coral)] border-[var(--coral)]/20 bg-[var(--coral)]/5",
-  },
-  operaciones: {
-    label: { es: "Operaciones", en: "Operations" },
-    color: "text-[var(--green)] border-[var(--green)]/20 bg-[var(--green)]/5",
-  },
-} as const;
 
 interface ArticleContentProps {
   article: BlogArticle;
@@ -38,9 +24,9 @@ export function ArticleContent({
 }: ArticleContentProps) {
   const t = useTranslations("blogPage");
   const lang = (locale === "en" ? "en" : "es") as "es" | "en";
-  const cat = categoryConfig[article.category];
   const content = article.content[lang];
   const headings = extractHeadings(content);
+  const faqs = extractFaqs(content);
 
   const formatDate = (dateStr: string) => {
     const date = new Date(dateStr + "T00:00:00");
@@ -86,11 +72,11 @@ export function ArticleContent({
           "@context": "https://schema.org",
           "@type": "Article",
           headline: article.title[lang],
-          description: article.excerpt[lang],
+          description: article.description?.[lang] || article.excerpt[lang],
           datePublished: article.date,
           author: {
             "@type": "Organization",
-            name: "LX3",
+            name: article.author || "LX3",
             url: "https://lx3.ai",
           },
           publisher: {
@@ -98,10 +84,28 @@ export function ArticleContent({
             name: "LX3",
             url: "https://lx3.ai",
           },
+          articleSection: article.category,
+          keywords: article.tags?.join(", "),
           mainEntityOfPage: articleUrl || `https://lx3.ai/blog/${article.slug}`,
           image: article.ogImage || "https://lx3.ai/og-default.jpg",
         }}
       />
+      {faqs.length > 0 && (
+        <JsonLd
+          data={{
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            mainEntity: faqs.map((faq) => ({
+              "@type": "Question",
+              name: faq.question,
+              acceptedAnswer: {
+                "@type": "Answer",
+                text: faq.answer,
+              },
+            })),
+          }}
+        />
+      )}
 
       <SectionWrapper className="pt-32 pb-20">
         <div className="mx-auto max-w-4xl">
@@ -121,9 +125,9 @@ export function ArticleContent({
             <header className="mb-12">
               {/* Category tag */}
               <span
-                className={`inline-block rounded-full border px-3 py-1 font-mono text-xs uppercase tracking-wider ${cat.color}`}
+                className={`inline-block rounded-full border px-3 py-1 font-mono text-xs uppercase tracking-wider ${getCategoryClasses(article.category)}`}
               >
-                {cat.label[lang]}
+                {getCategoryLabel(article.category)}
               </span>
 
               {/* Title */}
@@ -248,7 +252,6 @@ export function ArticleContent({
                 </h3>
                 <div className="mt-8 grid gap-6 md:grid-cols-2">
                   {relatedArticles.map((related) => {
-                    const relCat = categoryConfig[related.category];
                     return (
                       <Link
                         key={related.slug}
@@ -256,9 +259,9 @@ export function ArticleContent({
                       >
                         <article className="group flex h-full cursor-pointer flex-col rounded-2xl border border-[var(--border-subtle)] bg-[var(--bg-elevated)] p-7 transition-all duration-300 hover:border-[var(--accent)]/20 hover:shadow-[0_0_30px_rgba(58,139,253,0.06)]">
                           <span
-                            className={`inline-block w-fit rounded-full border px-3 py-1 font-mono text-xs uppercase tracking-wider ${relCat.color}`}
+                            className={`inline-block w-fit rounded-full border px-3 py-1 font-mono text-xs uppercase tracking-wider ${getCategoryClasses(related.category)}`}
                           >
-                            {relCat.label[lang]}
+                            {getCategoryLabel(related.category)}
                           </span>
                           <h4 className="mt-4 font-display text-lg font-semibold leading-snug text-[var(--text-primary)] transition-colors group-hover:text-[var(--accent)]">
                             {related.title[lang]}

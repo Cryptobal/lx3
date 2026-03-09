@@ -20,21 +20,40 @@ export function MarkdownRenderer({ content, className }: MarkdownRendererProps) 
 // --- Types ---
 
 type Block =
+  | { type: "blockquote"; text: string }
   | { type: "h2"; text: string; id: string }
   | { type: "h3"; text: string; id: string }
   | { type: "paragraph"; text: string }
   | { type: "ul"; items: string[] }
+  | { type: "ol"; items: string[] }
+  | { type: "table"; headers: string[]; rows: string[][] }
+  | { type: "hr" }
   | { type: "code"; text: string };
 
 // --- Parsing ---
 
 function slugify(text: string): string {
   return text
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
     .toLowerCase()
     .replace(/[^a-z0-9\s-]/g, "")
     .replace(/\s+/g, "-")
     .replace(/-+/g, "-")
     .trim();
+}
+
+function isTableSeparator(line: string) {
+  return /^\s*\|?\s*:?-{3,}:?\s*(\|\s*:?-{3,}:?\s*)+\|?\s*$/.test(line);
+}
+
+function splitTableRow(line: string) {
+  return line
+    .trim()
+    .replace(/^\|/, "")
+    .replace(/\|$/, "")
+    .split("|")
+    .map((cell) => cell.trim());
 }
 
 function parseBlocks(markdown: string): Block[] {
@@ -64,6 +83,24 @@ function parseBlocks(markdown: string): Block[] {
       continue;
     }
 
+    // Horizontal rule
+    if (/^\s*---\s*$/.test(line)) {
+      blocks.push({ type: "hr" });
+      i++;
+      continue;
+    }
+
+    // Blockquote
+    if (line.trim().startsWith(">")) {
+      const quoteLines: string[] = [];
+      while (i < lines.length && lines[i].trim().startsWith(">")) {
+        quoteLines.push(lines[i].trim().replace(/^>\s?/, ""));
+        i++;
+      }
+      blocks.push({ type: "blockquote", text: quoteLines.join(" ") });
+      continue;
+    }
+
     // H2
     if (line.startsWith("## ")) {
       const text = line.slice(3).trim();
@@ -80,6 +117,25 @@ function parseBlocks(markdown: string): Block[] {
       continue;
     }
 
+    // Table
+    if (
+      line.includes("|") &&
+      i + 1 < lines.length &&
+      isTableSeparator(lines[i + 1])
+    ) {
+      const headers = splitTableRow(line);
+      i += 2; // Skip header and separator
+      const rows: string[][] = [];
+
+      while (i < lines.length && lines[i].trim() !== "" && lines[i].includes("|")) {
+        rows.push(splitTableRow(lines[i]));
+        i++;
+      }
+
+      blocks.push({ type: "table", headers, rows });
+      continue;
+    }
+
     // Unordered list
     if (line.trim().startsWith("- ")) {
       const items: string[] = [];
@@ -91,14 +147,29 @@ function parseBlocks(markdown: string): Block[] {
       continue;
     }
 
+    // Ordered list
+    if (/^\s*\d+\.\s+/.test(line)) {
+      const items: string[] = [];
+      while (i < lines.length && /^\s*\d+\.\s+/.test(lines[i])) {
+        items.push(lines[i].trim().replace(/^\d+\.\s+/, ""));
+        i++;
+      }
+      blocks.push({ type: "ol", items });
+      continue;
+    }
+
     // Paragraph — collect consecutive non-empty, non-special lines
     const paragraphLines: string[] = [];
     while (
       i < lines.length &&
       lines[i].trim() !== "" &&
+      !/^\s*---\s*$/.test(lines[i]) &&
+      !lines[i].trim().startsWith(">") &&
       !lines[i].startsWith("## ") &&
       !lines[i].startsWith("### ") &&
+      !(lines[i].includes("|") && i + 1 < lines.length && isTableSeparator(lines[i + 1])) &&
       !lines[i].trim().startsWith("- ") &&
+      !/^\s*\d+\.\s+/.test(lines[i]) &&
       !lines[i].trim().startsWith("```")
     ) {
       paragraphLines.push(lines[i]);
@@ -116,8 +187,7 @@ function parseBlocks(markdown: string): Block[] {
 
 function renderInline(text: string): React.ReactNode[] {
   const nodes: React.ReactNode[] = [];
-  // Match **bold**, *italic*, `code`
-  const pattern = /(\*\*(.+?)\*\*|\*(.+?)\*|`(.+?)`)/g;
+  const pattern = /(\[([^\]]+)\]\(([^)]+)\)|\*\*(.+?)\*\*|\*(.+?)\*|`(.+?)`)/g;
   let lastIndex = 0;
   let match: RegExpExecArray | null;
   let key = 0;
@@ -129,27 +199,41 @@ function renderInline(text: string): React.ReactNode[] {
     }
 
     if (match[2]) {
+      const href = match[3];
+      const isExternal = /^https?:\/\//.test(href);
+      nodes.push(
+        <a
+          key={key++}
+          href={href}
+          target={isExternal ? "_blank" : undefined}
+          rel={isExternal ? "noreferrer" : undefined}
+          className="text-accent underline decoration-accent/30 underline-offset-4 transition-colors hover:text-white"
+        >
+          {renderInline(match[2])}
+        </a>
+      );
+    } else if (match[4]) {
       // **bold**
       nodes.push(
         <strong key={key++} className="font-semibold text-white">
-          {match[2]}
+          {renderInline(match[4])}
         </strong>
       );
-    } else if (match[3]) {
+    } else if (match[5]) {
       // *italic*
       nodes.push(
         <em key={key++} className="italic text-white/70">
-          {match[3]}
+          {renderInline(match[5])}
         </em>
       );
-    } else if (match[4]) {
+    } else if (match[6]) {
       // `code`
       nodes.push(
         <code
           key={key++}
           className="rounded bg-white/5 px-1.5 py-0.5 font-mono text-sm text-accent"
         >
-          {match[4]}
+          {match[6]}
         </code>
       );
     }
@@ -169,6 +253,13 @@ function renderInline(text: string): React.ReactNode[] {
 
 function renderBlock(block: Block): React.ReactNode {
   switch (block.type) {
+    case "blockquote":
+      return (
+        <blockquote className="mb-6 rounded-2xl border border-[var(--accent)]/20 bg-[var(--accent)]/5 p-5 text-base leading-relaxed text-white/85">
+          {renderInline(block.text)}
+        </blockquote>
+      );
+
     case "h2":
       return (
         <h2
@@ -211,6 +302,57 @@ function renderBlock(block: Block): React.ReactNode {
         </ul>
       );
 
+    case "ol":
+      return (
+        <ol className="mb-5 space-y-3 pl-6 text-base leading-relaxed text-white/75">
+          {block.items.map((item, i) => (
+            <li key={i} className="list-decimal pl-1">
+              {renderInline(item)}
+            </li>
+          ))}
+        </ol>
+      );
+
+    case "table":
+      return (
+        <div className="mb-6 overflow-x-auto rounded-2xl border border-[var(--border-subtle)]">
+          <table className="min-w-full border-collapse bg-[var(--bg-elevated)] text-left">
+            <thead>
+              <tr className="border-b border-[var(--border-subtle)] bg-white/5">
+                {block.headers.map((header, i) => (
+                  <th
+                    key={i}
+                    className="px-4 py-3 text-sm font-semibold text-white"
+                  >
+                    {renderInline(header)}
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {block.rows.map((row, rowIndex) => (
+                <tr
+                  key={rowIndex}
+                  className="border-b border-[var(--border-subtle)] last:border-b-0"
+                >
+                  {row.map((cell, cellIndex) => (
+                    <td
+                      key={cellIndex}
+                      className="px-4 py-3 text-sm leading-relaxed text-white/75"
+                    >
+                      {renderInline(cell)}
+                    </td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      );
+
+    case "hr":
+      return <hr className="my-10 border-[var(--border-subtle)]" />;
+
     case "code":
       return (
         <pre className="mb-5 overflow-x-auto rounded-xl border border-white/5 bg-surface-elevated p-5">
@@ -241,4 +383,66 @@ export function extractHeadings(
   }
 
   return headings;
+}
+
+function stripMarkdown(text: string) {
+  return text
+    .replace(/\[([^\]]+)\]\([^)]+\)/g, "$1")
+    .replace(/[*_`>#-]/g, "")
+    .trim();
+}
+
+export function extractFaqs(content: string) {
+  const lines = content.split("\n");
+  const faqs: { question: string; answer: string }[] = [];
+  const faqSectionIndex = lines.findIndex(
+    (line) => line.trim() === "## Preguntas frecuentes"
+  );
+
+  if (faqSectionIndex === -1) {
+    return faqs;
+  }
+
+  let i = faqSectionIndex + 1;
+
+  while (i < lines.length) {
+    const line = lines[i].trim();
+
+    if (line.startsWith("## ") && line !== "## Preguntas frecuentes") {
+      break;
+    }
+
+    if (line.startsWith("### ")) {
+      const question = stripMarkdown(line.slice(4));
+      i++;
+      const answerLines: string[] = [];
+
+      while (i < lines.length) {
+        const current = lines[i].trim();
+        if (!current) {
+          i++;
+          if (answerLines.length > 0) break;
+          continue;
+        }
+        if (current.startsWith("### ") || current.startsWith("## ")) {
+          break;
+        }
+        answerLines.push(stripMarkdown(current));
+        i++;
+      }
+
+      if (question && answerLines.length > 0) {
+        faqs.push({
+          question,
+          answer: answerLines.join(" "),
+        });
+      }
+
+      continue;
+    }
+
+    i++;
+  }
+
+  return faqs;
 }

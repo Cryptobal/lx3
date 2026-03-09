@@ -1,15 +1,22 @@
+import { loadMarkdownArticles } from "@/content/blog-markdown";
+
 export interface BlogArticle {
   slug: string;
-  category: "estrategia" | "tecnologia" | "operaciones";
+  category: string;
   date: string; // ISO date
   readTime: number; // minutes
+  readingTime?: string;
+  author?: string;
+  description?: { es: string; en: string };
+  tags?: string[];
+  featured?: boolean;
   title: { es: string; en: string };
   excerpt: { es: string; en: string };
   content: { es: string; en: string }; // markdown
   ogImage?: string;
 }
 
-export const articles: BlogArticle[] = [
+const legacyArticles: BlogArticle[] = [
   {
     slug: "herramientas-genericas-ia",
     category: "estrategia",
@@ -384,10 +391,27 @@ We recommend reviewing this decision every 12-18 months for each critical system
   },
 ];
 
+const markdownArticles = loadMarkdownArticles();
+
+export const articles: BlogArticle[] = [...markdownArticles, ...legacyArticles].sort(
+  (a, b) => b.date.localeCompare(a.date)
+);
+
 export function getArticleBySlug(slug: string): BlogArticle | undefined {
   return articles.find((a) => a.slug === slug);
 }
 
 export function getRelatedArticles(currentSlug: string): BlogArticle[] {
-  return articles.filter((a) => a.slug !== currentSlug);
+  const current = getArticleBySlug(currentSlug);
+
+  return articles
+    .filter((article) => article.slug !== currentSlug)
+    .sort((a, b) => {
+      const currentCategory = current?.category;
+      const aScore = a.category === currentCategory ? 1 : 0;
+      const bScore = b.category === currentCategory ? 1 : 0;
+      if (aScore !== bScore) return bScore - aScore;
+      return b.date.localeCompare(a.date);
+    })
+    .slice(0, 3);
 }

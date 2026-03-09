@@ -19,23 +19,26 @@ export async function generateMetadata({
   if (!article) return {};
 
   const lang = (locale === "en" ? "en" : "es") as "es" | "en";
-  const title = article.title[lang];
-  const description = article.excerpt[lang];
+  const baseTitle = article.title[lang];
+  const title = baseTitle.includes("2026")
+    ? `${baseTitle} | LX3`
+    : `${baseTitle} 2026 | LX3`;
+  const description = article.description?.[lang] || article.excerpt[lang];
 
   return {
     title,
     description,
     openGraph: {
-      title,
+      title: baseTitle,
       description,
       type: "article",
       publishedTime: article.date,
-      authors: ["LX3"],
+      authors: [article.author || "LX3"],
       images: article.ogImage ? [{ url: article.ogImage }] : undefined,
     },
     twitter: {
       card: "summary_large_image",
-      title,
+      title: baseTitle,
       description,
     },
   };

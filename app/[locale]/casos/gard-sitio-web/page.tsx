@@ -8,6 +8,8 @@ import { CTAButton } from "@/components/shared/CTAButton";
 import { JsonLd } from "@/components/shared/JsonLd";
 import { ArrowLeft, AlertTriangle, Lightbulb, TrendingUp } from "lucide-react";
 
+const GARD_WEBSITE_URL = "https://gard.cl";
+
 export async function generateMetadata({
   params,
 }: {
@@ -106,7 +108,14 @@ function GardWebsiteCaseContent({ locale }: { locale: string }) {
 
           <div className="max-w-3xl">
             <h1 className="font-display text-4xl font-semibold tracking-tight text-[var(--text-primary)] md:text-5xl">
-              {t("gard.title")}
+              <a
+                href={GARD_WEBSITE_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="transition-colors hover:text-accent hover:underline"
+              >
+                {t("gard.title")}
+              </a>
             </h1>
             <p className="mt-4 text-lg text-accent/80">
               {t("gard.subtitle")}

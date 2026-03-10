@@ -291,9 +291,11 @@ export function ChatWindow({ onClose }: ChatWindowProps) {
     <div className="flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-surface shadow-2xl sm:h-[600px]">
       {/* Header */}
       <div className="flex items-center gap-3 border-b border-white/10 bg-surface-elevated px-5 py-3.5">
-        <div className="flex h-9 w-9 items-center justify-center rounded-full bg-accent/15">
-          <Sparkles className="h-4 w-4 text-accent" />
-        </div>
+        <img
+          src="/logo/LX3_isotipo.svg"
+          alt="LX3"
+          className="h-8 w-8 shrink-0 rounded-lg"
+        />
         <div className="flex-1">
           <p className="text-sm font-semibold text-white">LX3</p>
           <p className="text-xs text-muted-foreground">

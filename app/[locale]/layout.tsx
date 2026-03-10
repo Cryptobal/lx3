@@ -57,11 +57,18 @@ export async function generateMetadata({
       template: `%s | LX3`,
     },
     description: descriptions[locale] || descriptions.es,
+    icons: {
+      icon: [{ url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" }],
+      apple: [{ url: "/apple-touch-icon.png", sizes: "180x180" }],
+    },
     openGraph: {
       type: "website",
       locale: locale === "en" ? "en_US" : "es_CL",
       siteName: "LX3",
-      images: [{ url: "/og-default.jpg", width: 1200, height: 630 }],
+      images: [
+        { url: "/og-default.jpg", width: 1200, height: 630 },
+        { url: "/logo/LX3_logotipo_dark-bg_1400x400.png", width: 1400, height: 400 },
+      ],
     },
     twitter: {
       card: "summary_large_image",

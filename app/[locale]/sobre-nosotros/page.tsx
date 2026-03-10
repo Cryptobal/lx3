@@ -26,7 +26,7 @@ const organizationSchema = {
   "@type": "Organization",
   name: "LX3",
   url: "https://lx3.ai",
-  logo: "https://lx3.ai/logo.svg",
+  logo: "https://lx3.ai/logo/LX3_isotipo_512.png",
   description:
     "Estudio de software que disena y construye aplicaciones inteligentes para empresas.",
   foundingDate: "2024",

@@ -30,9 +30,13 @@ export function Footer() {
         <div className="grid gap-12 sm:grid-cols-2 lg:grid-cols-4">
           {/* Column 1 — Brand */}
           <div className="sm:col-span-2 lg:col-span-1">
-            <p className="font-display text-xl font-bold">
-              <span className="gradient-text">LX3</span>
-            </p>
+            <Link href="/" className="inline-block">
+              <img
+                src="/logo/LX3_logotipo_dark-bg.svg"
+                alt="LX3"
+                className="h-6 w-auto opacity-80"
+              />
+            </Link>
             <p className="mt-3 max-w-xs text-sm leading-relaxed text-[var(--text-tertiary)]">
               {t("tagline")}
             </p>

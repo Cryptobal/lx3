@@ -51,11 +51,12 @@ export function Header() {
     >
       <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
         {/* ---- Logo ---- */}
-        <Link
-          href="/"
-          className="font-display text-xl font-bold tracking-tight"
-        >
-          <span className="gradient-text">LX3</span>
+        <Link href="/" className="flex items-center">
+          <img
+            src="/logo/LX3_logotipo_dark-bg.svg"
+            alt="LX3 — Software Studio"
+            className="h-8 w-auto"
+          />
         </Link>
 
         {/* ---- Desktop Nav ---- */}

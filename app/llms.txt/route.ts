@@ -9,6 +9,9 @@ function getLlmContent() {
   return `# LX3 — Software Studio
 > Diseñamos y construimos aplicaciones inteligentes para empresas que quieren crecer.
 
+## Logo
+https://lx3.ai/logo/LX3_isotipo_512.png
+
 LX3 es un Software Studio con base en Santiago, Chile. Diseñamos y construimos software a medida con inteligencia artificial para empresas medianas en Chile y Latinoamérica. No somos consultora ni software factory — somos un estudio de producto que se involucra en el negocio del cliente, construye soluciones reales, y se queda como partner tecnológico a largo plazo.
 
 ## Servicios

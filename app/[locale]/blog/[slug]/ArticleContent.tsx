@@ -83,6 +83,7 @@ export function ArticleContent({
             "@type": "Organization",
             name: "LX3",
             url: "https://lx3.ai",
+            logo: "https://lx3.ai/logo/LX3_isotipo_512.png",
           },
           articleSection: article.category,
           keywords: article.tags?.join(", "),

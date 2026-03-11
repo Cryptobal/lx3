@@ -63,7 +63,7 @@ Las consultoras venden diagnósticos y PowerPoints. Los freelancers desaparecen.
 - Sitio web: ${BASE_URL}
 - WhatsApp: +56 9 8230 7771
 - Ubicación: Santiago, Chile
-- LinkedIn: https://linkedin.com/company/lx3
+- LinkedIn: https://www.linkedin.com/company/lx3-ai
 
 ## URLs principales
 

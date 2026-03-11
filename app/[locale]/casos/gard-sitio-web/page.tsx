@@ -123,6 +123,14 @@ function GardWebsiteCaseContent({ locale }: { locale: string }) {
             <p className="mt-6 text-base leading-relaxed text-[var(--text-secondary)]">
               {t("gard.description")}
             </p>
+            <a
+              href={GARD_WEBSITE_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-4 inline-block text-sm text-[var(--text-tertiary)] transition-colors hover:text-accent"
+            >
+              {locale === "en" ? "Visit gard.cl →" : "Visitar gard.cl →"}
+            </a>
           </div>
         </AnimateOnScroll>
       </SectionWrapper>

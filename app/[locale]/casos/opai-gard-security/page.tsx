@@ -8,7 +8,7 @@ import { CTAButton } from "@/components/shared/CTAButton";
 import { JsonLd } from "@/components/shared/JsonLd";
 import { ArrowLeft, AlertTriangle, Lightbulb, TrendingUp } from "lucide-react";
 
-const OPAI_WEBSITE_URL = "https://opai.gard.cl";
+const OPAI_WEBSITE_URL = "https://opai.gard.cl/welcome";
 
 export async function generateMetadata({
   params,
@@ -123,6 +123,14 @@ function OpaiCaseContent({ locale }: { locale: string }) {
             <p className="mt-6 text-base leading-relaxed text-[var(--text-secondary)]">
               {t("opai.description")}
             </p>
+            <a
+              href={OPAI_WEBSITE_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-4 inline-block text-sm text-[var(--text-tertiary)] transition-colors hover:text-accent"
+            >
+              {locale === "en" ? "Access OPAI →" : "Acceder a OPAI →"}
+            </a>
           </div>
         </AnimateOnScroll>
       </SectionWrapper>

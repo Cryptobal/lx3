@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { articles } from "@/content/blog";
 
-const BASE_URL = "https://lx3.ai";
+const BASE_URL = "https://www.lx3.ai";
 
 function getLlmFullContent() {
   const blogEntries = articles
@@ -15,7 +15,7 @@ function getLlmFullContent() {
 > Diseñamos y construimos aplicaciones inteligentes para empresas que quieren crecer.
 
 ## Logo
-https://lx3.ai/logo/LX3_isotipo_512.png
+https://www.lx3.ai/logo/LX3_isotipo_512.png
 
 ## Sobre LX3
 

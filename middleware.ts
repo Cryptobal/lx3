@@ -1,7 +1,17 @@
 import createMiddleware from "next-intl/middleware";
+import { NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
 import { routing } from "@/lib/i18n/routing";
 
-export default createMiddleware(routing);
+const intlMiddleware = createMiddleware(routing);
+
+export default function middleware(request: NextRequest) {
+  const response = intlMiddleware(request);
+  if (response?.status === 307 && response.headers.get("location")) {
+    return NextResponse.redirect(response.headers.get("location")!, 301);
+  }
+  return response;
+}
 
 export const config = {
   matcher: ["/((?!api|_next|_vercel|.*\\..*).*)"],

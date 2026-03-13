@@ -9,7 +9,7 @@ LX3 (lx3.ai) is a bilingual (es/en) marketing website for a Chilean software stu
 ### Running the app
 
 - `pnpm dev` starts the dev server on `http://localhost:3000`.
-- The root URL (`/`) redirects (307) to `/es` (Spanish locale). Always test pages under `/es/...` or `/en/...`.
+- The root URL (`/`) redirects (308 permanent) to `/es` (Spanish locale). Always test pages under `/es/...` or `/en/...`.
 - No `.env` file is committed. The app runs fully without API keys; the chatbot (`/api/chat`) requires `LX3_ANTHROPIC_API_KEY` and the contact/leads endpoints require `RESEND_API_KEY`, but the UI renders and navigates without them.
 
 ### Lint / Build / Test

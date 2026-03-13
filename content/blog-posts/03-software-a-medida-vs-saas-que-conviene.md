@@ -139,4 +139,4 @@ SaaS es excelente para problemas estándar. El software a medida es poderoso cua
 
 ---
 
-*¿Necesitas ayuda para decidir entre SaaS y software propio sin caer en sobrecompra ni sobreingeniería? En LX3 diseñamos y construimos software inteligente para empresas que quieren crecer. [Conversemos sobre tu proyecto](https://lx3.ai/contacto) o escríbenos por [WhatsApp](https://wa.me/56982307771).*
+*¿Necesitas ayuda para decidir entre SaaS y software propio sin caer en sobrecompra ni sobreingeniería? En LX3 diseñamos y construimos software inteligente para empresas que quieren crecer. [Conversemos sobre tu proyecto](https://www.lx3.ai/es/contacto) o escríbenos por [WhatsApp](https://wa.me/56982307771).*

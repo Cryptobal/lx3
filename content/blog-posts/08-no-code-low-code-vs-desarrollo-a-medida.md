@@ -117,4 +117,4 @@ No-code y low-code no compiten con el desarrollo a medida en todos los escenario
 
 ---
 
-*¿Necesitas ayuda para decidir si tu operación ya superó el no-code? En LX3 diseñamos y construimos software inteligente para empresas que quieren crecer. [Conversemos sobre tu proyecto](https://lx3.ai/contacto) o escríbenos por [WhatsApp](https://wa.me/56982307771).*
+*¿Necesitas ayuda para decidir si tu operación ya superó el no-code? En LX3 diseñamos y construimos software inteligente para empresas que quieren crecer. [Conversemos sobre tu proyecto](https://www.lx3.ai/es/contacto) o escríbenos por [WhatsApp](https://wa.me/56982307771).*

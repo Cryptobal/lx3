@@ -25,8 +25,8 @@ const organizationSchema = {
   "@context": "https://schema.org",
   "@type": "Organization",
   name: "LX3",
-  url: "https://lx3.ai",
-  logo: "https://lx3.ai/logo/LX3_isotipo_512.png",
+  url: "https://www.lx3.ai",
+  logo: "https://www.lx3.ai/logo/LX3_isotipo_512.png",
   description:
     "Estudio de software que disena y construye aplicaciones inteligentes para empresas.",
   foundingDate: "2024",
@@ -142,10 +142,41 @@ function AboutContent() {
         <div className="mt-12 max-w-3xl space-y-6">
           <AnimateOnScroll delay={0.1}>
             <p className="text-lg leading-relaxed text-[var(--text-secondary)] md:text-xl">
-              {t("thesis1")}
+              {t("mission")}
             </p>
           </AnimateOnScroll>
           <AnimateOnScroll delay={0.2}>
+            <p className="text-lg leading-relaxed text-[var(--text-secondary)] md:text-xl">
+              {t("philosophy")}
+            </p>
+          </AnimateOnScroll>
+          <AnimateOnScroll delay={0.3}>
+            <h2 className="mt-10 text-xl font-semibold text-[var(--text-primary)]">
+              {t("differentiatorsTitle")}
+            </h2>
+            <ul className="mt-4 space-y-3">
+              <li className="flex items-start gap-3 text-[var(--text-secondary)]">
+                <span className="h-1.5 w-1.5 mt-2 shrink-0 rounded-full bg-[var(--accent)]" />
+                {t("diff1")}
+              </li>
+              <li className="flex items-start gap-3 text-[var(--text-secondary)]">
+                <span className="h-1.5 w-1.5 mt-2 shrink-0 rounded-full bg-[var(--accent)]" />
+                {t("diff2")}
+              </li>
+            </ul>
+          </AnimateOnScroll>
+          <AnimateOnScroll delay={0.4}>
+            <div className="mt-8 rounded-xl border border-[var(--border-subtle)] bg-[var(--bg-elevated)] p-6">
+              <p className="text-sm text-[var(--text-tertiary)]">{t("techStack")}</p>
+              <p className="mt-2 text-sm font-medium text-[var(--text-primary)]">{t("location")}</p>
+            </div>
+          </AnimateOnScroll>
+          <AnimateOnScroll delay={0.5}>
+            <p className="text-lg leading-relaxed text-[var(--text-secondary)] md:text-xl">
+              {t("thesis1")}
+            </p>
+          </AnimateOnScroll>
+          <AnimateOnScroll delay={0.6}>
             <p className="text-lg leading-relaxed text-[var(--text-secondary)] md:text-xl">
               {t("thesis2")}
             </p>

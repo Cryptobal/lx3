@@ -77,18 +77,18 @@ export function ArticleContent({
           author: {
             "@type": "Organization",
             name: article.author || "LX3",
-            url: "https://lx3.ai",
+            url: "https://www.lx3.ai",
           },
           publisher: {
             "@type": "Organization",
             name: "LX3",
-            url: "https://lx3.ai",
-            logo: "https://lx3.ai/logo/LX3_isotipo_512.png",
+            url: "https://www.lx3.ai",
+            logo: "https://www.lx3.ai/logo/LX3_isotipo_512.png",
           },
           articleSection: article.category,
           keywords: article.tags?.join(", "),
-          mainEntityOfPage: articleUrl || `https://lx3.ai/blog/${article.slug}`,
-          image: article.ogImage || "https://lx3.ai/og-default.jpg",
+          mainEntityOfPage: articleUrl || `https://www.lx3.ai/es/blog/${article.slug}`,
+          image: article.ogImage || "https://www.lx3.ai/og-default.jpg",
         }}
       />
       {faqs.length > 0 && (
@@ -234,11 +234,16 @@ export function ArticleContent({
                   ? "Nuestro equipo puede ayudarte a evaluar cómo estos conceptos aplican a tu operación."
                   : "Our team can help you evaluate how these concepts apply to your operation."}
               </p>
-              <div className="mt-6">
+              <div className="mt-6 flex flex-col items-center justify-center gap-4 sm:flex-row">
                 <CTAButton href="/contacto" variant="primary" size="lg">
                   {lang === "es"
                     ? "Conversemos sobre tu proyecto"
                     : "Schedule a conversation"}
+                </CTAButton>
+                <CTAButton href="/servicios" variant="secondary" size="lg">
+                  {lang === "es"
+                    ? "Ver nuestros servicios"
+                    : "View our services"}
                 </CTAButton>
               </div>
             </div>

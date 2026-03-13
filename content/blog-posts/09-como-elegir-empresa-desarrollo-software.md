@@ -144,4 +144,4 @@ Elegir una empresa de desarrollo es elegir capacidad de ejecución, no solo capa
 
 ---
 
-*¿Necesitas ayuda para evaluar proveedores tecnológicos con criterio? En LX3 diseñamos y construimos software inteligente para empresas que quieren crecer. [Conversemos sobre tu proyecto](https://lx3.ai/contacto) o escríbenos por [WhatsApp](https://wa.me/56982307771).*
+*¿Necesitas ayuda para evaluar proveedores tecnológicos con criterio? En LX3 diseñamos y construimos software inteligente para empresas que quieren crecer. [Conversemos sobre tu proyecto](https://www.lx3.ai/es/contacto) o escríbenos por [WhatsApp](https://wa.me/56982307771).*

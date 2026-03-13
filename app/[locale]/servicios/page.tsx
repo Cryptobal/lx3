@@ -76,7 +76,7 @@ function ServicesContent() {
     provider: {
       "@type": "Organization",
       name: "LX3",
-      url: "https://lx3.ai",
+      url: "https://www.lx3.ai",
     },
     description: t("subtitle"),
     hasOfferCatalog: {
@@ -106,6 +106,9 @@ function ServicesContent() {
           </h1>
           <p className="mt-4 text-lg text-[var(--text-secondary)]">
             {t("subtitle")}
+          </p>
+          <p className="mt-6 text-base leading-relaxed text-[var(--text-tertiary)]">
+            {t("intro")}
           </p>
         </div>
       </SectionWrapper>

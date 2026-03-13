@@ -1,5 +1,6 @@
 import { useTranslations } from "next-intl";
 import { Link } from "@/lib/i18n/routing";
+import { EmailLink } from "@/components/shared/EmailLink";
 
 export function Footer() {
   const t = useTranslations("footer");
@@ -95,19 +96,17 @@ export function Footer() {
                 <a
                   href="https://wa.me/56982307771"
                   target="_blank"
-                  rel="noopener noreferrer"
+                  rel="nofollow noopener noreferrer"
                   className="text-sm text-[var(--text-tertiary)] transition-colors duration-200 hover:text-[var(--text-primary)]"
                 >
                   WhatsApp
                 </a>
               </li>
               <li>
-                <a
-                  href="mailto:contacto@lx3.ai"
+                <EmailLink
+                  email="contacto@lx3.ai"
                   className="text-sm text-[var(--text-tertiary)] transition-colors duration-200 hover:text-[var(--text-primary)]"
-                >
-                  contacto@lx3.ai
-                </a>
+                />
               </li>
             </ul>
 

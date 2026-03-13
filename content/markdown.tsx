@@ -201,12 +201,18 @@ function renderInline(text: string): React.ReactNode[] {
     if (match[2]) {
       const href = match[3];
       const isExternal = /^https?:\/\//.test(href);
+      const isWhatsApp = href.startsWith("https://wa.me/");
+      const rel = isExternal
+        ? isWhatsApp
+          ? "nofollow noopener noreferrer"
+          : "noopener noreferrer"
+        : undefined;
       nodes.push(
         <a
           key={key++}
           href={href}
           target={isExternal ? "_blank" : undefined}
-          rel={isExternal ? "noreferrer" : undefined}
+          rel={rel}
           className="text-accent underline decoration-accent/30 underline-offset-4 transition-colors hover:text-white"
         >
           {renderInline(match[2])}

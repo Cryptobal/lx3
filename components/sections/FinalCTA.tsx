@@ -43,7 +43,7 @@ export function FinalCTA() {
           <a
             href="https://wa.me/56982307771"
             target="_blank"
-            rel="noopener noreferrer"
+            rel="nofollow noopener noreferrer"
             className="inline-flex items-center justify-center gap-2 rounded-[11px] border border-[var(--border-default)] bg-transparent px-8 py-4 text-base font-medium text-[var(--text-primary)] transition-all duration-200 hover:border-[#25D366] hover:text-[#25D366]"
           >
             <MessageCircle className="h-5 w-5" />

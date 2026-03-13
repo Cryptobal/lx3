@@ -60,12 +60,12 @@ function GardWebsiteCaseContent({ locale }: { locale: string }) {
     author: {
       "@type": "Organization",
       name: "LX3 Software Studio",
-      url: "https://lx3.ai",
+      url: "https://www.lx3.ai",
     },
     publisher: {
       "@type": "Organization",
       name: "LX3 Software Studio",
-      url: "https://lx3.ai",
+      url: "https://www.lx3.ai",
     },
     inLanguage: locale === "en" ? "en" : "es",
   };
@@ -135,6 +135,25 @@ function GardWebsiteCaseContent({ locale }: { locale: string }) {
         </AnimateOnScroll>
       </SectionWrapper>
 
+      {/* Features */}
+      <SectionWrapper className="py-12">
+        <AnimateOnScroll>
+          <div className="rounded-2xl border border-[var(--border-subtle)] bg-surface-elevated p-8 md:p-10">
+            <h2 className="font-display text-xl font-semibold text-[var(--text-primary)] md:text-2xl">
+              {t("gard.featuresTitle")}
+            </h2>
+            <ul className="mt-6 grid gap-3 sm:grid-cols-2">
+              {(t.raw("gard.features") as string[]).map((feature, i) => (
+                <li key={i} className="flex items-center gap-2 text-sm text-[var(--text-secondary)]">
+                  <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--accent)]" />
+                  {feature}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </AnimateOnScroll>
+      </SectionWrapper>
+
       {/* Challenge / Solution / Results */}
       <SectionWrapper className="py-12">
         <div className="space-y-16">
@@ -173,10 +192,16 @@ function GardWebsiteCaseContent({ locale }: { locale: string }) {
             <p className="mx-auto mt-4 max-w-lg text-base text-[var(--text-secondary)]">
               {t("ctaSubtitle")}
             </p>
-            <div className="mt-8">
+            <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
               <CTAButton href="/contacto" variant="primary" size="lg">
                 {t("ctaButton")}
               </CTAButton>
+              <Link
+                href="/servicios/sitios-web"
+                className="text-sm font-medium text-[var(--accent)] underline decoration-[var(--accent)]/30 underline-offset-4 hover:text-[var(--accent)]"
+              >
+                {t("relatedServiceWebsites")} →
+              </Link>
             </div>
           </div>
         </AnimateOnScroll>

@@ -143,4 +143,4 @@ La IA ya es accesible para empresas medianas. El desafío real es usarla con cri
 
 ---
 
-*¿Necesitas ayuda para definir un roadmap de IA aplicable a tu negocio? En LX3 diseñamos y construimos software inteligente para empresas que quieren crecer. [Conversemos sobre tu proyecto](https://lx3.ai/contacto) o escríbenos por [WhatsApp](https://wa.me/56982307771).*
+*¿Necesitas ayuda para definir un roadmap de IA aplicable a tu negocio? En LX3 diseñamos y construimos software inteligente para empresas que quieren crecer. [Conversemos sobre tu proyecto](https://www.lx3.ai/es/contacto) o escríbenos por [WhatsApp](https://wa.me/56982307771).*

@@ -22,6 +22,16 @@ const nextConfig: NextConfig = {
   images: {
     formats: ["image/avif", "image/webp"],
   },
+  async redirects() {
+    return [
+      {
+        source: "/:path*",
+        has: [{ type: "host", value: "lx3.ai" }],
+        destination: "https://www.lx3.ai/:path*",
+        permanent: true,
+      },
+    ];
+  },
   async headers() {
     return [
       {
@@ -41,6 +51,10 @@ const nextConfig: NextConfig = {
           { key: "X-Robots-Tag", value: "all" },
           { key: "Cache-Control", value: "public, max-age=86400" },
         ],
+      },
+      {
+        source: "/cdn-cgi/:path*",
+        headers: [{ key: "X-Robots-Tag", value: "noindex, nofollow" }],
       },
     ];
   },

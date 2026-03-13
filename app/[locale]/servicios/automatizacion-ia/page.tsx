@@ -3,8 +3,8 @@ import { useTranslations } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
 import { SectionWrapper } from "@/components/shared/SectionWrapper";
 import { AnimateOnScroll } from "@/components/shared/AnimateOnScroll";
-import { CTAButton } from "@/components/shared/CTAButton";
 import { JsonLd } from "@/components/shared/JsonLd";
+import { ServicePageSections } from "@/components/sections/ServicePageSections";
 import { CheckCircle2 } from "lucide-react";
 
 export async function generateMetadata({
@@ -49,7 +49,7 @@ function AiAutomationContent() {
     provider: {
       "@type": "Organization",
       name: "LX3",
-      url: "https://lx3.ai",
+      url: "https://www.lx3.ai",
     },
   };
 
@@ -75,7 +75,6 @@ function AiAutomationContent() {
       <SectionWrapper className="pt-0">
         <AnimateOnScroll>
           <div className="grid gap-12 md:grid-cols-2">
-            {/* Left: extended description */}
             <div>
               <h2 className="text-2xl font-semibold text-[var(--text-primary)] md:text-3xl">
                 {t("aiAutomation.title")}
@@ -84,8 +83,6 @@ function AiAutomationContent() {
                 {t("aiAutomation.description")}
               </p>
             </div>
-
-            {/* Right: features */}
             <div>
               <h3 className="font-mono text-xs uppercase tracking-wider text-[var(--text-tertiary)]">
                 {t("featuresTitle")}
@@ -103,21 +100,15 @@ function AiAutomationContent() {
         </AnimateOnScroll>
       </SectionWrapper>
 
-      {/* CTA */}
-      <SectionWrapper>
-        <AnimateOnScroll>
-          <div className="rounded-2xl border border-[var(--border-subtle)] bg-[var(--bg-elevated)] p-10 text-center md:p-16">
-            <h2 className="font-display text-2xl font-semibold text-[var(--text-primary)] md:text-3xl">
-              {t("ctaAiAutomation")}
-            </h2>
-            <div className="mt-8">
-              <CTAButton href="/contacto" size="lg">
-                {t("ctaButton")}
-              </CTAButton>
-            </div>
-          </div>
-        </AnimateOnScroll>
-      </SectionWrapper>
+      <ServicePageSections
+        serviceKey="aiAutomation"
+        ctaKey="ctaAiAutomation"
+        relatedLinks={[
+          { path: { es: "blog/agentes-de-ia-para-empresas-casos-uso", en: "blog/agentes-de-ia-para-empresas-casos-uso" }, labelKey: "aiAutomation.related1Label" },
+          { path: { es: "blog/automatizacion-procesos-inteligencia-artificial-empresas", en: "blog/automatizacion-procesos-inteligencia-artificial-empresas" }, labelKey: "aiAutomation.related2Label" },
+          { path: { es: "casos/opai-gard-security", en: "cases/opai-gard-security" }, labelKey: "aiAutomation.related3Label" },
+        ]}
+      />
     </>
   );
 }

@@ -3,8 +3,8 @@ import { useTranslations } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
 import { SectionWrapper } from "@/components/shared/SectionWrapper";
 import { AnimateOnScroll } from "@/components/shared/AnimateOnScroll";
-import { CTAButton } from "@/components/shared/CTAButton";
 import { JsonLd } from "@/components/shared/JsonLd";
+import { ServicePageSections } from "@/components/sections/ServicePageSections";
 import { CheckCircle2 } from "lucide-react";
 
 export async function generateMetadata({
@@ -49,7 +49,7 @@ function ConsultingContent() {
     provider: {
       "@type": "Organization",
       name: "LX3",
-      url: "https://lx3.ai",
+      url: "https://www.lx3.ai",
     },
   };
 
@@ -75,7 +75,6 @@ function ConsultingContent() {
       <SectionWrapper className="pt-0">
         <AnimateOnScroll>
           <div className="grid gap-12 md:grid-cols-2">
-            {/* Left: extended description */}
             <div>
               <h2 className="text-2xl font-semibold text-[var(--text-primary)] md:text-3xl">
                 {t("consulting.title")}
@@ -84,8 +83,6 @@ function ConsultingContent() {
                 {t("consulting.description")}
               </p>
             </div>
-
-            {/* Right: features */}
             <div>
               <h3 className="font-mono text-xs uppercase tracking-wider text-[var(--text-tertiary)]">
                 {t("featuresTitle")}
@@ -103,21 +100,14 @@ function ConsultingContent() {
         </AnimateOnScroll>
       </SectionWrapper>
 
-      {/* CTA */}
-      <SectionWrapper>
-        <AnimateOnScroll>
-          <div className="rounded-2xl border border-[var(--border-subtle)] bg-[var(--bg-elevated)] p-10 text-center md:p-16">
-            <h2 className="font-display text-2xl font-semibold text-[var(--text-primary)] md:text-3xl">
-              {t("ctaConsulting")}
-            </h2>
-            <div className="mt-8">
-              <CTAButton href="/contacto" size="lg">
-                {t("ctaButton")}
-              </CTAButton>
-            </div>
-          </div>
-        </AnimateOnScroll>
-      </SectionWrapper>
+      <ServicePageSections
+        serviceKey="consulting"
+        ctaKey="ctaConsulting"
+        relatedLinks={[
+          { path: { es: "blog/software-a-medida-vs-saas-que-conviene", en: "blog/software-a-medida-vs-saas-que-conviene" }, labelKey: "consulting.related1Label" },
+          { path: { es: "blog/no-code-low-code-vs-desarrollo-a-medida", en: "blog/no-code-low-code-vs-desarrollo-a-medida" }, labelKey: "consulting.related2Label" },
+        ]}
+      />
     </>
   );
 }

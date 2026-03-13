@@ -1,29 +1,50 @@
 import type { MetadataRoute } from "next";
 import { articles } from "@/content/blog";
 
+const BASE_URL = "https://www.lx3.ai";
+
+const staticRoutes: { es: string; en: string }[] = [
+  { es: "/es", en: "/en" },
+  { es: "/es/servicios", en: "/en/services" },
+  { es: "/es/servicios/aplicaciones-internas", en: "/en/services/internal-apps" },
+  { es: "/es/servicios/automatizacion-ia", en: "/en/services/ai-automation" },
+  { es: "/es/servicios/sitios-web", en: "/en/services/websites" },
+  { es: "/es/servicios/consultoria", en: "/en/services/consulting" },
+  { es: "/es/casos", en: "/en/cases" },
+  { es: "/es/casos/opai-gard-security", en: "/en/cases/opai-gard-security" },
+  { es: "/es/casos/gard-sitio-web", en: "/en/cases/gard-website" },
+  { es: "/es/blog", en: "/en/blog" },
+  { es: "/es/sobre-nosotros", en: "/en/about-us" },
+  { es: "/es/contacto", en: "/en/contact" },
+];
+
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = "https://lx3.ai";
+  const staticPages: MetadataRoute.Sitemap = staticRoutes.map(({ es, en }) => ({
+    url: `${BASE_URL}${es}`,
+    lastModified: new Date(),
+    changeFrequency: "monthly" as const,
+    priority: es === "/es" ? 1 : es.includes("/servicios") || es.includes("/casos") ? 0.8 : 0.7,
+    alternates: {
+      languages: {
+        es: `${BASE_URL}${es}`,
+        en: `${BASE_URL}${en}`,
+        "x-default": `${BASE_URL}${es}`,
+      },
+    },
+  }));
 
-  const staticPages = [
-    { url: baseUrl, lastModified: new Date(), changeFrequency: "monthly" as const, priority: 1 },
-    { url: `${baseUrl}/servicios`, lastModified: new Date(), changeFrequency: "monthly" as const, priority: 0.9 },
-    { url: `${baseUrl}/servicios/aplicaciones-internas`, lastModified: new Date(), changeFrequency: "monthly" as const, priority: 0.8 },
-    { url: `${baseUrl}/servicios/automatizacion-ia`, lastModified: new Date(), changeFrequency: "monthly" as const, priority: 0.8 },
-    { url: `${baseUrl}/servicios/sitios-web`, lastModified: new Date(), changeFrequency: "monthly" as const, priority: 0.8 },
-    { url: `${baseUrl}/servicios/consultoria`, lastModified: new Date(), changeFrequency: "monthly" as const, priority: 0.8 },
-    { url: `${baseUrl}/casos`, lastModified: new Date(), changeFrequency: "monthly" as const, priority: 0.8 },
-    { url: `${baseUrl}/casos/opai-gard-security`, lastModified: new Date(), changeFrequency: "monthly" as const, priority: 0.7 },
-    { url: `${baseUrl}/casos/gard-sitio-web`, lastModified: new Date(), changeFrequency: "monthly" as const, priority: 0.7 },
-    { url: `${baseUrl}/blog`, lastModified: new Date(), changeFrequency: "weekly" as const, priority: 0.8 },
-    { url: `${baseUrl}/sobre-nosotros`, lastModified: new Date(), changeFrequency: "monthly" as const, priority: 0.6 },
-    { url: `${baseUrl}/contacto`, lastModified: new Date(), changeFrequency: "monthly" as const, priority: 0.7 },
-  ];
-
-  const blogPosts = articles.map((article) => ({
-    url: `${baseUrl}/blog/${article.slug}`,
+  const blogPosts: MetadataRoute.Sitemap = articles.map((article) => ({
+    url: `${BASE_URL}/es/blog/${article.slug}`,
     lastModified: new Date(),
     changeFrequency: "monthly" as const,
     priority: 0.6,
+    alternates: {
+      languages: {
+        es: `${BASE_URL}/es/blog/${article.slug}`,
+        en: `${BASE_URL}/en/blog/${article.slug}`,
+        "x-default": `${BASE_URL}/es/blog/${article.slug}`,
+      },
+    },
   }));
 
   return [...staticPages, ...blogPosts];

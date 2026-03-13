@@ -306,7 +306,7 @@ export function ChatWindow({ onClose }: ChatWindowProps) {
           <a
             href="https://wa.me/56982307771?text=Hola%2C%20me%20interesa%20saber%20m%C3%A1s%20sobre%20los%20servicios%20de%20LX3"
             target="_blank"
-            rel="noopener noreferrer"
+            rel="nofollow noopener noreferrer"
             className="group flex items-center gap-1.5 rounded-full bg-[#25D366]/10 px-2.5 py-1 text-xs font-medium text-[#25D366] transition-colors hover:bg-[#25D366]"
             title="Contactar por WhatsApp"
           >

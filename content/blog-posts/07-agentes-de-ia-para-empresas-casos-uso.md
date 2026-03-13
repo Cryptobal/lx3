@@ -135,4 +135,4 @@ Los agentes de IA son valiosos porque convierten lenguaje y contexto en acciones
 
 ---
 
-*¿Necesitas ayuda para implementar un agente de IA conectado con tu operación real? En LX3 diseñamos y construimos software inteligente para empresas que quieren crecer. [Conversemos sobre tu proyecto](https://lx3.ai/contacto) o escríbenos por [WhatsApp](https://wa.me/56982307771).*
+*¿Necesitas ayuda para implementar un agente de IA conectado con tu operación real? En LX3 diseñamos y construimos software inteligente para empresas que quieren crecer. [Conversemos sobre tu proyecto](https://www.lx3.ai/es/contacto) o escríbenos por [WhatsApp](https://wa.me/56982307771).*

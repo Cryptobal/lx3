@@ -35,7 +35,7 @@ export async function generateMetadata({
       type: "website",
       locale: locale === "en" ? "en_US" : "es_CL",
       siteName: "LX3",
-      url: "https://lx3.ai",
+      url: locale === "en" ? "https://www.lx3.ai/en" : "https://www.lx3.ai/es",
     },
     twitter: {
       card: "summary_large_image",
@@ -43,10 +43,11 @@ export async function generateMetadata({
       description: descriptions[locale] || descriptions.es,
     },
     alternates: {
-      canonical: "https://lx3.ai",
+      canonical: locale === "en" ? "https://www.lx3.ai/en" : "https://www.lx3.ai/es",
       languages: {
-        es: "https://lx3.ai",
-        en: "https://lx3.ai/en",
+        es: "https://www.lx3.ai/es",
+        en: "https://www.lx3.ai/en",
+        "x-default": "https://www.lx3.ai/es",
       },
     },
   };
@@ -62,12 +63,12 @@ export default async function HomePage({
 
   return (
     <>
-      <JsonLd
+      <    JsonLd
         data={{
           "@context": "https://schema.org",
           "@type": "Organization",
           name: "LX3",
-          url: "https://lx3.ai",
+          url: "https://www.lx3.ai",
           description:
             "Software Studio que diseña y construye aplicaciones inteligentes para empresas",
           address: {

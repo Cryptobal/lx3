@@ -20,14 +20,21 @@ export async function generateMetadata({
 
   const lang = (locale === "en" ? "en" : "es") as "es" | "en";
   const baseTitle = article.title[lang];
-  const title = baseTitle.includes("2026")
-    ? `${baseTitle} | LX3`
-    : `${baseTitle} 2026 | LX3`;
   const description = article.description?.[lang] || article.excerpt[lang];
+  const canonicalEs = `https://www.lx3.ai/es/blog/${slug}`;
+  const canonicalEn = `https://www.lx3.ai/en/blog/${slug}`;
 
   return {
-    title,
+    title: baseTitle,
     description,
+    alternates: {
+      canonical: lang === "en" ? canonicalEn : canonicalEs,
+      languages: {
+        es: canonicalEs,
+        en: canonicalEn,
+        "x-default": canonicalEs,
+      },
+    },
     openGraph: {
       title: baseTitle,
       description,

@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://lx3.ai"),
+  metadataBase: new URL("https://www.lx3.ai"),
 };
 
 export default function RootLayout({

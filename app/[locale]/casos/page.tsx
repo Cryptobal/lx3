@@ -4,6 +4,7 @@ import { setRequestLocale } from "next-intl/server";
 import { Link } from "@/lib/i18n/routing";
 import { SectionWrapper } from "@/components/shared/SectionWrapper";
 import { AnimateOnScroll } from "@/components/shared/AnimateOnScroll";
+import { CTAButton } from "@/components/shared/CTAButton";
 import { ArrowUpRight } from "lucide-react";
 
 const cases = [
@@ -65,6 +66,9 @@ function CasesContent() {
           <p className="mt-4 text-lg text-[var(--text-secondary)]">
             {t("subtitle")}
           </p>
+          <p className="mt-6 text-base leading-relaxed text-[var(--text-tertiary)]">
+            {t("intro")}
+          </p>
         </div>
       </AnimateOnScroll>
 
@@ -99,6 +103,19 @@ function CasesContent() {
           </AnimateOnScroll>
         ))}
       </div>
+
+      <AnimateOnScroll>
+        <div className="mt-16 rounded-2xl border border-[var(--border-subtle)] bg-[var(--bg-elevated)] p-10 text-center md:p-12">
+          <p className="text-base leading-relaxed text-[var(--text-secondary)]">
+            {t("ctaOutro")}
+          </p>
+          <div className="mt-8">
+            <CTAButton href="/contacto" variant="primary" size="lg">
+              {t("ctaButton")}
+            </CTAButton>
+          </div>
+        </div>
+      </AnimateOnScroll>
     </SectionWrapper>
   );
 }

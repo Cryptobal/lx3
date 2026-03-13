@@ -6,7 +6,7 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: "*",
         allow: "/",
-        disallow: ["/api/", "/admin/"],
+        disallow: ["/api/", "/_next/"],
       },
       // Bots de IA — PERMITIR TODOS explícitamente
       { userAgent: "GPTBot", allow: "/" },
@@ -20,6 +20,6 @@ export default function robots(): MetadataRoute.Robots {
       { userAgent: "Applebot", allow: "/" },
       { userAgent: "cohere-ai", allow: "/" },
     ],
-    sitemap: "https://lx3.ai/sitemap.xml",
+    sitemap: "https://www.lx3.ai/sitemap.xml",
   };
 }

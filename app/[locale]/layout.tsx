@@ -102,6 +102,8 @@ export default async function LocaleLayout({
   return (
     <html lang={locale} className="scroll-smooth" suppressHydrationWarning>
       <head>
+        <link rel="preconnect" href="https://www.googletagmanager.com" />
+        <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
         <link
           rel="alternate"
           type="text/plain"

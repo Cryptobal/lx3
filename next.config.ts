@@ -1,7 +1,11 @@
 import type { NextConfig } from "next";
 import createNextIntlPlugin from "next-intl/plugin";
+import bundleAnalyzer from "@next/bundle-analyzer";
 
 const withNextIntl = createNextIntlPlugin("./lib/i18n/request.ts");
+const withBundleAnalyzer = bundleAnalyzer({
+  enabled: process.env.ANALYZE === "true",
+});
 
 const securityHeaders = [
   { key: "X-DNS-Prefetch-Control", value: "on" },
@@ -18,6 +22,10 @@ const securityHeaders = [
 const nextConfig: NextConfig = {
   turbopack: {
     root: process.cwd(),
+  },
+  experimental: {
+    // Inline CSS crítico para reducir render-blocking (alternativa a critters, compatible con App Router)
+    inlineCss: true,
   },
   images: {
     formats: ["image/avif", "image/webp"],
@@ -60,4 +68,4 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default withNextIntl(nextConfig);
+export default withBundleAnalyzer(withNextIntl(nextConfig));

@@ -55,6 +55,8 @@ export function Header() {
           <img
             src="/logo/LX3_logotipo_dark-bg.svg"
             alt="LX3 — Software Studio"
+            width={140}
+            height={40}
             className="h-8 w-auto"
           />
         </Link>

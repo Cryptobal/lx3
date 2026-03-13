@@ -39,6 +39,8 @@ export function Footer() {
               <img
                 src="/logo/LX3_logotipo_dark-bg.svg"
                 alt="LX3"
+                width={140}
+                height={40}
                 className="h-6 w-auto opacity-80"
               />
             </Link>

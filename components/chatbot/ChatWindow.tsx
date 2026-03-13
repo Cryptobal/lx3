@@ -294,6 +294,8 @@ export function ChatWindow({ onClose }: ChatWindowProps) {
         <img
           src="/logo/LX3_isotipo.svg"
           alt="LX3"
+          width={32}
+          height={32}
           className="h-8 w-8 shrink-0 rounded-lg"
         />
         <div className="flex-1">

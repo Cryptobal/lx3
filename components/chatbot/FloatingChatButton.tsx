@@ -1,10 +1,19 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import dynamic from "next/dynamic";
 import { useTranslations } from "next-intl";
 import { usePathname } from "next/navigation";
 import { MessageCircle, X } from "lucide-react";
-import { ChatWindow } from "./ChatWindow";
+
+const ChatWindow = dynamic(() => import("./ChatWindow").then((m) => ({ default: m.ChatWindow })), {
+  ssr: false,
+  loading: () => (
+    <div className="flex h-full items-center justify-center rounded-2xl border border-white/10 bg-surface">
+      <div className="h-8 w-8 animate-pulse rounded-full bg-accent/20" />
+    </div>
+  ),
+});
 
 export function FloatingChatButton() {
   const t = useTranslations("chatbot");
@@ -14,14 +23,24 @@ export function FloatingChatButton() {
 
   const isDiagnosticPage = pathname.includes("/diagnostico");
 
-  // Show proactive tooltip after 8 seconds
+  // Show proactive tooltip after 8 seconds — diferido con requestIdleCallback para no bloquear el hilo principal
   useEffect(() => {
-    if (isDiagnosticPage || open || showTooltip) {
-      return;
-    }
+    if (isDiagnosticPage || open || showTooltip) return;
 
-    const timer = setTimeout(() => setShowTooltip(true), 8000);
-    return () => clearTimeout(timer);
+    let timer: ReturnType<typeof setTimeout>;
+    let idleId: number | undefined;
+    const schedule = () => {
+      timer = setTimeout(() => setShowTooltip(true), 8000);
+    };
+    if (typeof window !== "undefined" && window.requestIdleCallback) {
+      idleId = window.requestIdleCallback(schedule, { timeout: 1000 });
+    } else {
+      schedule();
+    }
+    return () => {
+      if (typeof idleId === "number") window.cancelIdleCallback?.(idleId);
+      if (timer) clearTimeout(timer);
+    };
   }, [open, isDiagnosticPage, showTooltip]);
 
   // Dismiss tooltip on scroll

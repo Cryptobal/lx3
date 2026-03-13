@@ -1,5 +1,8 @@
 import type { MetadataRoute } from "next";
 
+// Solo directivas estándar: User-agent, Allow, Disallow, Sitemap.
+// NO usar Content-Signal (search=yes, ai-train=no): Google lo marca como error.
+
 export default function robots(): MetadataRoute.Robots {
   return {
     rules: [

@@ -10,14 +10,9 @@ interface EmailLinkProps {
 }
 
 export function EmailLink({ email, displayText, className, children }: EmailLinkProps) {
-  const [localPart, domain] = email.split("@");
   return (
     <a
-      href="#"
-      onClick={(e) => {
-        e.preventDefault();
-        window.location.href = `mailto:${localPart}@${domain}`;
-      }}
+      href={`mailto:${email}`}
       className={className}
     >
       {children ?? (displayText ?? email)}

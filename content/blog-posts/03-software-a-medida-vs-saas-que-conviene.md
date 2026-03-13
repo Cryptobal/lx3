@@ -18,7 +18,7 @@ SaaS significa software como servicio. Pagas una suscripción mensual o anual po
 
 Software a medida significa diseñar y construir una aplicación específicamente para tu empresa. No compras una licencia genérica; inviertes en un activo digital que responde a tus flujos, tus reglas y tus integraciones. El costo inicial suele ser más alto, pero el control también lo es.
 
-Para un gerente no técnico, la mejor forma de verlo es esta: SaaS te presta una oficina ya construida; software a medida te permite decidir distribución, procesos, conexiones y crecimiento. Ninguna opción es universalmente mejor. La pregunta correcta es qué necesita tu operación para funcionar mejor hoy y escalar mejor mañana.
+Para un gerente no técnico, la mejor forma de verlo es esta: SaaS te presta una oficina ya construida; software a medida te permite decidir distribución, procesos, conexiones y crecimiento. Ninguna opción es universalmente mejor. La pregunta correcta es qué necesita tu operación para funcionar mejor hoy y escalar mejor mañana. Si no estás seguro de si necesitas una página web o una aplicación web, lee [aplicación web vs página web](/blog/aplicacion-web-vs-pagina-web).
 
 ## Comparativa honesta: software a medida vs SaaS
 

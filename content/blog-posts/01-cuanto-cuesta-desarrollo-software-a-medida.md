@@ -58,6 +58,8 @@ La siguiente tabla no reemplaza una estimación formal, pero sirve como referenc
 | CRM o ERP modular | USD 15.000 - 80.000 | 2 a 6 meses | Operación central, comercial, servicio, finanzas |
 | Plataforma compleja con IA | USD 30.000 - 150.000+ | 3 a 9 meses | Operación crítica, múltiples integraciones, automatización avanzada |
 
+Para rangos específicos de aplicaciones web en Chile (en CLP), revisa [cuánto cuesta una aplicación web a medida en Chile](/blog/cuanto-cuesta-aplicacion-web-a-medida-chile).
+
 Hay tres ideas importantes detrás de estos rangos. La primera: el costo inicial no cuenta toda la historia; el valor real está en cuántas licencias, horas manuales y errores reemplaza el sistema. La segunda: un proyecto de USD 20.000 que resuelve el proceso correcto puede generar más retorno que uno de USD 80.000 mal enfocado. La tercera: el mejor punto de partida no siempre es construir todo, sino construir lo mínimo correcto.
 
 ## Precio fijo, time & materials o retainer: ¿qué modelo conviene?

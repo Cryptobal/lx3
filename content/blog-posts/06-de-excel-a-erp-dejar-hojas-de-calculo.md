@@ -10,7 +10,7 @@ readingTime: "17 min"
 featured: false
 ---
 
-> **En resumen:** Excel sigue siendo útil para análisis puntuales, pero deja de servir como sistema operativo cuando varias áreas dependen de la misma información. Si más de 3 personas editan archivos críticos, los reportes tardan horas y nadie sabe cuál es la versión correcta, ya no tienes una planilla: tienes un cuello de botella. La salida no es reemplazar todo de golpe, sino migrar por fases empezando por el flujo más costoso. Si no estás seguro de si ya es momento de cambiar, revisa las [5 señales de que tu empresa necesita un sistema propio](/blog/5-senales-empresa-necesita-sistema-propio).
+> **En resumen:** Excel sigue siendo útil para análisis puntuales, pero deja de servir como sistema operativo cuando varias áreas dependen de la misma información. Si más de 3 personas editan archivos críticos, los reportes tardan horas y nadie sabe cuál es la versión correcta, ya no tienes una planilla: tienes un cuello de botella. La salida no es reemplazar todo de golpe, sino migrar por fases empezando por el flujo más costoso. Si no estás seguro de si ya es momento de cambiar, revisa las [5 señales de que tu empresa necesita un sistema propio](/blog/5-senales-empresa-necesita-sistema-propio). Para entender qué tipo de sistema necesitas (interno, portal de clientes, ERP), [sistema web interno: cuándo tu empresa necesita uno](/blog/sistema-web-interno-para-empresas) explica las opciones.
 
 ## La historia que se repite: 47 Excel, 6 responsables y ningún dato confiable
 

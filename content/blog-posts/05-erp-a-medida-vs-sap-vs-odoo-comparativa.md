@@ -62,6 +62,7 @@ Se vuelve especialmente lógico cuando:
 - Requieres experiencia específica por rol.
 - Quieres incorporar IA en cotizaciones, asignaciones, reportes o tickets.
 - Tienes costos de licencia que crecerán con usuarios y módulos.
+- Necesitas un portal de clientes donde vean su información en tiempo real — en [portal de clientes: qué es, ejemplos y cuánto cuesta](/blog/portal-de-clientes-que-es-ejemplos-costo) explicamos el detalle.
 
 No siempre es la opción más barata al inicio. Pero sí puede ser la más rentable cuando el ERP es parte de la ventaja operativa.
 

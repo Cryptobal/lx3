@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Script from "next/script";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages, setRequestLocale } from "next-intl/server";
 import { Plus_Jakarta_Sans, Inter, JetBrains_Mono } from "next/font/google";
@@ -120,18 +119,6 @@ export default async function LocaleLayout({
           <FloatingChatButton />
         </NextIntlClientProvider>
         <Analytics />
-        <Script
-          src="https://www.googletagmanager.com/gtag/js?id=G-CHT2Q0WLX5"
-          strategy="afterInteractive"
-        />
-        <Script id="google-analytics" strategy="afterInteractive">
-          {`
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', 'G-CHT2Q0WLX5');
-          `}
-        </Script>
       </body>
     </html>
   );

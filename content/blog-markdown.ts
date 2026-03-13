@@ -12,6 +12,8 @@ interface BlogMarkdownFrontmatter {
   readingTime: string;
   featured: boolean;
   ogImage?: string;
+  title_en?: string;
+  description_en?: string;
 }
 
 interface BlogArticleInput {
@@ -25,7 +27,10 @@ interface BlogArticleInput {
   featured: boolean;
   title: string;
   description: string;
+  titleEn?: string;
+  descriptionEn?: string;
   content: string;
+  contentEn?: string;
   ogImage?: string;
 }
 
@@ -89,7 +94,26 @@ function parseFrontmatter(fileContent: string): {
   };
 }
 
+function splitBilingualContent(markdownContent: string): {
+  contentEs: string;
+  contentEn?: string;
+} {
+  const trimmed = markdownContent.trim();
+  const enMatch = trimmed.match(/<!--\s*EN\s*-->([\s\S]*?)<!--\s*ES\s*-->([\s\S]*)$/);
+  if (enMatch) {
+    return {
+      contentEs: enMatch[2].trim(),
+      contentEn: enMatch[1].trim(),
+    };
+  }
+  return { contentEs: trimmed };
+}
+
 function buildArticle(input: BlogArticleInput) {
+  const titleEn = input.titleEn ?? input.title;
+  const descriptionEn = input.descriptionEn ?? input.description;
+  const contentEn = input.contentEn ?? input.content;
+
   return {
     slug: input.slug,
     category: input.category,
@@ -99,10 +123,10 @@ function buildArticle(input: BlogArticleInput) {
     author: input.author,
     tags: input.tags,
     featured: input.featured,
-    title: { es: input.title, en: input.title },
-    excerpt: { es: input.description, en: input.description },
-    description: { es: input.description, en: input.description },
-    content: { es: input.content, en: input.content },
+    title: { es: input.title, en: titleEn },
+    excerpt: { es: input.description, en: descriptionEn },
+    description: { es: input.description, en: descriptionEn },
+    content: { es: input.content, en: contentEn },
     ogImage: input.ogImage,
   };
 }
@@ -121,6 +145,7 @@ export function loadMarkdownArticles() {
     const filePath = path.join(BLOG_POSTS_DIR, fileName);
     const rawFile = fs.readFileSync(filePath, "utf8");
     const { frontmatter, content } = parseFrontmatter(rawFile);
+    const { contentEs, contentEn } = splitBilingualContent(content);
     const readTime = Number.parseInt(frontmatter.readingTime, 10) || 1;
 
     return buildArticle({
@@ -134,7 +159,10 @@ export function loadMarkdownArticles() {
       featured: frontmatter.featured,
       title: frontmatter.title,
       description: frontmatter.description,
-      content,
+      titleEn: frontmatter.title_en,
+      descriptionEn: frontmatter.description_en,
+      content: contentEs,
+      contentEn,
       ogImage: frontmatter.ogImage,
     });
   });

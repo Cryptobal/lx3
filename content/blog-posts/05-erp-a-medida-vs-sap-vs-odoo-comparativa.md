@@ -89,7 +89,7 @@ Una forma simple de comprobarlo es esta: si para explicar tu proceso necesitas d
 
 ## Caso real de LX3: por qué OPAI existió
 
-OPAI nació porque Gard Security evaluó alternativas estándar, incluyendo SAP y Odoo, pero ninguna cubría la complejidad específica de una operación de seguridad privada con múltiples roles, turnos, tickets, supervisión y trazabilidad comercial-operativa. En vez de encajar el negocio dentro de un molde, diseñamos una plataforma propia con más de 20 módulos.
+OPAI nació porque Gard Security evaluó alternativas estándar, incluyendo SAP y Odoo, pero ninguna cubría la complejidad específica de una operación de seguridad privada con múltiples roles, turnos, tickets, supervisión y trazabilidad comercial-operativa. En vez de encajar el negocio dentro de un molde, diseñamos una plataforma propia con más de 20 módulos. Para el detalle completo, revisa el [caso OPAI](/blog/caso-opai-erp-ia-gard-security).
 
 Ese punto es clave. OPAI no se justifica porque "hacer a medida sea mejor en abstracto". Se justifica porque el negocio necesitaba una sola plataforma capaz de conectar CRM, cotización, operación, terreno y visibilidad ejecutiva. Si quieres profundizar en la lógica detrás de esa decisión, también te recomendamos leer [software a medida vs SaaS](/blog/software-a-medida-vs-saas-que-conviene) y [de Excel al ERP](/blog/de-excel-a-erp-dejar-hojas-de-calculo). Para ver el enfoque de producto, revisa nuestro servicio de [aplicaciones internas a medida](/servicios/aplicaciones-internas).
 

@@ -16,7 +16,7 @@ featured: true
 
 La pregunta "¿cuánto cuesta desarrollar software a medida?" parece simple, pero en la práctica es parecida a preguntar cuánto cuesta construir una oficina. La respuesta cambia por metros cuadrados, ubicación, terminaciones, permisos, estructura, velocidad de ejecución y mantenimiento posterior. Con software pasa lo mismo: dos proyectos que se describen como "necesitamos un sistema interno" pueden tener diferencias de costo de 5x o 10x.
 
-Por eso conviene desconfiar de quien promete un precio cerrado después de una sola llamada. Si un proveedor no entiende tus procesos, tus integraciones, tus restricciones y tu criterio de éxito, en realidad no está cotizando el proyecto: está adivinando. Y cuando una cotización nace de una adivinanza, casi siempre termina en una de estas tres salidas: sobreprecio para cubrir incertidumbre, subprecio que luego se corrige con adicionales, o un producto incompleto que nunca llega a ser realmente útil.
+Por eso conviene desconfiar de quien promete un precio cerrado después de una sola llamada. Si quieres entender el proceso completo antes de cotizar, revisa [cómo funciona un proyecto de software a medida](/blog/como-funciona-proyecto-software-a-medida). Si un proveedor no entiende tus procesos, tus integraciones, tus restricciones y tu criterio de éxito, en realidad no está cotizando el proyecto: está adivinando. Y cuando una cotización nace de una adivinanza, casi siempre termina en una de estas tres salidas: sobreprecio para cubrir incertidumbre, subprecio que luego se corrige con adicionales, o un producto incompleto que nunca llega a ser realmente útil.
 
 En empresas medianas, la complejidad rara vez está en "hacer pantallas". Está en traducir operaciones reales a lógica de negocio: aprobaciones, reglas comerciales, permisos, integraciones, auditoría, trazabilidad, reportes y automatizaciones. Ese trabajo no siempre se ve en la demo inicial, pero es lo que define el costo.
 
@@ -153,7 +153,7 @@ Es lo normal. Por eso conviene diseñar arquitectura, backlog y modelo contractu
 
 ## Conclusión
 
-El costo del software a medida no se define por una tarifa mágica, sino por la combinación entre complejidad, impacto y forma de ejecución. Para una empresa mediana, la pregunta correcta no es "¿cuál es el precio final?", sino "¿cuál es la manera más inteligente de capturar valor sin asumir más riesgo del necesario?". En la mayoría de los casos, eso empieza con discovery claro, MVP acotado y un partner capaz de evolucionar contigo.
+El costo del software a medida no se define por una tarifa mágica, sino por la combinación entre complejidad, impacto y forma de ejecución. Para una empresa mediana, la pregunta correcta no es "¿cuál es el precio final?", sino "¿cuál es la manera más inteligente de capturar valor sin asumir más riesgo del necesario?". En la mayoría de los casos, eso empieza con discovery claro, [MVP acotado](/blog/mvp-en-30-dias-validar-idea-software) y un partner capaz de evolucionar contigo.
 
 ---
 

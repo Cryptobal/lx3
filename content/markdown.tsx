@@ -398,12 +398,21 @@ function stripMarkdown(text: string) {
     .trim();
 }
 
+const FAQ_SECTION_HEADERS = [
+  "## Preguntas frecuentes",
+  "## FAQ",
+  "## Frequently Asked Questions",
+];
+
+function isFaqSectionHeader(line: string): boolean {
+  const trimmed = line.trim();
+  return FAQ_SECTION_HEADERS.some((h) => trimmed === h);
+}
+
 export function extractFaqs(content: string) {
   const lines = content.split("\n");
   const faqs: { question: string; answer: string }[] = [];
-  const faqSectionIndex = lines.findIndex(
-    (line) => line.trim() === "## Preguntas frecuentes"
-  );
+  const faqSectionIndex = lines.findIndex(isFaqSectionHeader);
 
   if (faqSectionIndex === -1) {
     return faqs;
@@ -414,7 +423,7 @@ export function extractFaqs(content: string) {
   while (i < lines.length) {
     const line = lines[i].trim();
 
-    if (line.startsWith("## ") && line !== "## Preguntas frecuentes") {
+    if (line.startsWith("## ") && !isFaqSectionHeader(line)) {
       break;
     }
 

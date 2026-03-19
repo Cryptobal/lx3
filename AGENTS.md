@@ -4,7 +4,7 @@
 
 ### Project overview
 
-LX3 (lx3.ai) is a bilingual (es/en) marketing website for a Chilean software studio built with **Next.js 16**, React 19, TypeScript, Tailwind CSS v4, and Framer Motion. It is a single-service app with no database, no Docker, and no microservices.
+LX3 (lx3.ai) is a bilingual (es/en) marketing website for a Chilean software studio built with **Next.js 16**, React 19, TypeScript, Tailwind CSS v4, and Framer Motion. It uses **Neon (PostgreSQL)** for chat conversation persistence and lead backup. No Docker, no microservices.
 
 ### Running the app
 
@@ -23,3 +23,4 @@ LX3 (lx3.ai) is a bilingual (es/en) marketing website for a Chilean software stu
 - pnpm will warn about ignored build scripts for `@parcel/watcher` and `@swc/core`. This does not affect dev or build — Next.js uses its own bundled SWC binaries.
 - The `pnpm-workspace.yaml` uses `ignoredBuiltDependencies` for `sharp` and `unrs-resolver`; do not remove those entries.
 - Content (blog articles, case studies, services) is hardcoded in TypeScript files under `content/` and page components, not fetched from a CMS.
+- **Database:** Prisma 7 + Neon Postgres. Chat messages are saved to `Conversation` and `Message` tables. Leads sent via email are logged in `LeadSent`. Requires `DATABASE_URL` and `DATABASE_URL_UNPOOLED` in `.env.local`.

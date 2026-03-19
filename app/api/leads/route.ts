@@ -1,4 +1,5 @@
 import { type NextRequest } from 'next/server';
+import { prisma } from '@/lib/db';
 import { sendLeadNotification } from '@/lib/email';
 
 export const runtime = 'nodejs';
@@ -51,6 +52,22 @@ export async function POST(request: NextRequest) {
     });
 
     if (result.success) {
+      if (prisma) {
+        try {
+          const s = score ?? (leadData?.score as number | undefined);
+          await prisma.leadSent.create({
+            data: {
+              email: leadData?.email as string | undefined,
+              name: leadData?.name as string | undefined,
+              company: leadData?.company as string | undefined,
+              score: s != null ? Math.round(Number(s)) : undefined,
+              tier: (tier ?? leadData?.tier) as string | undefined,
+            },
+          });
+        } catch (dbErr) {
+          console.error('[Leads DB Save Error]', dbErr);
+        }
+      }
       return new Response(
         JSON.stringify({ success: true, emailId: result.id }),
         { status: 200, headers: { 'Content-Type': 'application/json' } }

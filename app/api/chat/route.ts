@@ -2,6 +2,30 @@ import { streamText } from 'ai';
 import { createAnthropic } from '@ai-sdk/anthropic';
 import { type NextRequest } from 'next/server';
 
+import { prisma } from '@/lib/db';
+
+async function saveConversation(
+  sessionId: string,
+  userContent: string,
+  assistantContent: string
+): Promise<void> {
+  if (!prisma) return;
+  try {
+    const conversation = await prisma.conversation.upsert({
+      where: { sessionId },
+      create: { sessionId },
+      update: {},
+    });
+    await prisma.message.createMany({
+      data: [
+        { conversationId: conversation.id, role: 'user', content: userContent },
+        { conversationId: conversation.id, role: 'assistant', content: assistantContent },
+      ],
+    });
+  } catch (err) {
+    console.error('[Chat DB Save Error]', err);
+  }
+}
 import { type ChatMessage, type ConversationState, type LeadData } from '@/lib/chatbot/types';
 import { buildSystemPrompt } from '@/lib/chatbot/system-prompt';
 import { calculateLeadScore, getLeadTier } from '@/lib/chatbot/scoring';
@@ -223,6 +247,8 @@ export async function POST(request: NextRequest) {
       const updatedLeadData = extractLeadData(messages, state.leadData);
       const score = calculateLeadScore(updatedLeadData);
 
+      saveConversation(sessionId, latestUserMessage.content, redirectMessage);
+
       const updatedState: ConversationState = {
         leadData: { ...updatedLeadData, score },
         language,
@@ -270,6 +296,9 @@ export async function POST(request: NextRequest) {
     // Real streaming response
     const encoder = new TextEncoder();
 
+    const lastUserContent = latestUserMessage?.content ?? '';
+    let assistantContent = '';
+
     const responseStream = new ReadableStream({
       async start(controller) {
         try {
@@ -282,6 +311,7 @@ export async function POST(request: NextRequest) {
           });
 
           for await (const chunk of result.textStream) {
+            assistantContent += chunk;
             controller.enqueue(encoder.encode(`0:${JSON.stringify(chunk)}\n`));
           }
         } catch (aiError) {
@@ -289,8 +319,11 @@ export async function POST(request: NextRequest) {
           const errorMsg = language === 'es'
             ? 'Hubo un error al procesar tu mensaje. Puedes intentar de nuevo o escribirnos directo por WhatsApp al +56 9 8230 7771.'
             : 'There was an error processing your message. You can try again or reach us directly on WhatsApp at +56 9 8230 7771.';
+          assistantContent = errorMsg;
           controller.enqueue(encoder.encode(`0:${JSON.stringify(errorMsg)}\n`));
         }
+
+        saveConversation(sessionId, lastUserContent, assistantContent);
 
         // Send metadata after text completes
         controller.enqueue(encoder.encode(`d:${JSON.stringify({

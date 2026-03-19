@@ -8,7 +8,8 @@ date: "2026-03-19"
 author: "LX3"
 category: "Tecnología Empresarial"
 tags: ["ERP Chile", "software a medida", "inteligencia artificial", "SAP alternativa", "Defontana alternativa", "Manager ERP", "Oracle NetSuite Chile", "transformación digital Chile", "software empresarial Chile", "desarrollo a medida"]
-ogImage: "/blog/erp-vs-software-medida-chile-og.jpg"
+ogImage: "/blog/erp-vs-software-medida-chile-og.png"
+heroImage: "/blog/erp-vs-software-medida-chile.png"
 readingTime: "9 min"
 featured: true
 ---
@@ -90,13 +91,13 @@ Lo que OPAI resuelve y ningún ERP estándar puede:
 
 ¿Podría SAP hacer esto? Técnicamente, con suficiente tiempo y dinero, quizás. ¿Defontana? No está en su ADN. ¿Manager+? Le faltarían meses de customización.
 
-OPAI fue construido en meses, no años. Funciona hoy. Evoluciona cada semana.
+OPAI fue construido en meses, no años. Funciona hoy. Evoluciona cada semana. [Lee el caso completo de OPAI aquí](/blog/caso-opai-erp-ia-gard-security).
 
 ---
 
 ## "Pero el Software a Medida es Más Caro"
 
-Este es el mito más grande de la industria. Veamos los números reales:
+Este es el mito más grande de la industria. Veamos los números reales (si quieres una guía detallada de precios, revisa [cuánto cuesta desarrollar software a medida](/blog/cuanto-cuesta-desarrollo-software-a-medida)):
 
 ### Costo de un ERP Estándar en Chile (estimación típica para empresa mediana)
 
@@ -121,7 +122,7 @@ La diferencia clave: con un ERP, pagas una renta mensual perpetua por usar softw
 
 ## ¿Para Quién es el Software a Medida?
 
-No todas las empresas necesitan software a medida. Si tu operación es 100% estándar — contabilidad, facturación, inventario básico — un ERP como Defontana o Manager puede ser suficiente.
+No todas las empresas necesitan software a medida. Si tu operación es 100% estándar — contabilidad, facturación, inventario básico — un ERP como Defontana o Manager puede ser suficiente (lee también nuestra [comparativa entre software a medida vs SaaS](/blog/software-a-medida-vs-saas-que-conviene)).
 
 El software a medida es para ti si:
 
@@ -149,6 +150,8 @@ En LX3.ai, la inteligencia artificial no es un feature de marketing. Es el núcl
 ---
 
 ## Cómo Trabajamos en LX3.ai
+
+Si quieres entender el proceso paso a paso, revisa [cómo funciona un proyecto de software a medida](/blog/como-funciona-proyecto-software-a-medida).
 
 ### 1. Diagnóstico Estratégico
 Entendemos tu operación, no solo tus requerimientos técnicos. Mapeamos procesos, identificamos ineficiencias y definimos dónde la tecnología genera mayor impacto.

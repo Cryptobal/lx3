@@ -12,6 +12,7 @@ interface BlogMarkdownFrontmatter {
   readingTime: string;
   featured: boolean;
   ogImage?: string;
+  heroImage?: string;
   title_en?: string;
   description_en?: string;
 }
@@ -32,6 +33,7 @@ interface BlogArticleInput {
   content: string;
   contentEn?: string;
   ogImage?: string;
+  heroImage?: string;
 }
 
 const BLOG_POSTS_DIR = path.join(process.cwd(), "content", "blog-posts");
@@ -128,6 +130,7 @@ function buildArticle(input: BlogArticleInput) {
     description: { es: input.description, en: descriptionEn },
     content: { es: input.content, en: contentEn },
     ogImage: input.ogImage,
+    heroImage: input.heroImage,
   };
 }
 
@@ -164,6 +167,7 @@ export function loadMarkdownArticles() {
       content: contentEs,
       contentEn,
       ogImage: frontmatter.ogImage,
+      heroImage: frontmatter.heroImage,
     });
   });
 }

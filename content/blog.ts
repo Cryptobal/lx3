@@ -14,6 +14,7 @@ export interface BlogArticle {
   excerpt: { es: string; en: string };
   content: { es: string; en: string }; // markdown
   ogImage?: string;
+  heroImage?: string;
 }
 
 const legacyArticles: BlogArticle[] = [

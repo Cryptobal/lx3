@@ -1,7 +1,7 @@
 export function getCategoryClasses(category: string) {
   const normalized = category.toLowerCase();
 
-  if (normalized.includes("inteligencia") || normalized === "tecnologia") {
+  if (normalized.includes("inteligencia") || normalized.includes("tecnolog")) {
     return "text-[var(--coral)] border-[var(--coral)]/20 bg-[var(--coral)]/5";
   }
 

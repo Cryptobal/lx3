@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { Link } from "@/lib/i18n/routing";
 import { SectionWrapper } from "@/components/shared/SectionWrapper";
@@ -154,6 +155,22 @@ export function ArticleContent({
               <div className="mt-8 border-t border-[var(--border-subtle)]" />
             </header>
           </AnimateOnScroll>
+
+          {/* Hero image */}
+          {(article.heroImage || article.ogImage) && (
+            <AnimateOnScroll delay={0.08}>
+              <div className="mb-12 overflow-hidden rounded-2xl border border-[var(--border-subtle)]">
+                <Image
+                  src={article.heroImage || article.ogImage!}
+                  alt={article.title[lang]}
+                  width={1200}
+                  height={630}
+                  priority
+                  className="h-auto w-full object-cover"
+                />
+              </div>
+            </AnimateOnScroll>
+          )}
 
           {/* Content layout: Article + Sidebar */}
           <div className="flex gap-12">

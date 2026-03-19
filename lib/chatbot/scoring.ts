@@ -32,6 +32,8 @@ const BUDGET_TIMELINE_KEYWORDS = [
   'next quarter', 'proximo trimestre',
   'ready to start', 'listos para empezar',
   'as soon as possible', 'lo antes posible',
+  'cotizacion', 'cotizar', 'cotizaciones', 'quote', 'quotation', 'estimate', 'estimacion',
+  'propuesta', 'proposal', 'presupuesto',
 ];
 
 const C_LEVEL_TITLES = [
@@ -122,10 +124,16 @@ export function calculateLeadScore(leadData: Partial<LeadData>): number {
     leadData.painPoint || '',
     leadData.previousAttempts || '',
     leadData.decisionMakers || '',
+    leadData.service || '',
   ].join(' ');
 
   if (containsAny(allText, BUDGET_TIMELINE_KEYWORDS)) {
     score += 10;
+  }
+
+  // Solicitud explícita de cotización/propuesta (service suele contener esto)
+  if (leadData.service && containsAny(leadData.service, ['cotiz', 'quote', 'propuesta', 'presupuesto', 'estimate'])) {
+    score += 25;
   }
 
   if (leadData.painPoint && leadData.previousAttempts && leadData.decisionMakers) {
@@ -171,9 +179,14 @@ export function getScoreBreakdown(leadData: Partial<LeadData>): Record<string, n
     leadData.painPoint || '',
     leadData.previousAttempts || '',
     leadData.decisionMakers || '',
+    leadData.service || '',
   ].join(' ');
   if (containsAny(allText, BUDGET_TIMELINE_KEYWORDS)) {
     breakdown['Budget/Timeline Mentioned'] = 10;
+  }
+
+  if (leadData.service && containsAny(leadData.service, ['cotiz', 'quote', 'propuesta', 'presupuesto', 'estimate'])) {
+    breakdown['Quote/Proposal Request'] = 25;
   }
 
   if (leadData.painPoint && leadData.previousAttempts && leadData.decisionMakers) {

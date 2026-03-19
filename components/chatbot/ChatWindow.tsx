@@ -98,7 +98,7 @@ export function ChatWindow({ onClose }: ChatWindowProps) {
       try {
         setLeadSent(true);
         const state = metadata.conversationState as Record<string, unknown> | undefined;
-        await fetch("/api/leads", {
+        const response = await fetch("/api/leads", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
@@ -112,6 +112,12 @@ export function ChatWindow({ onClose }: ChatWindowProps) {
             language: locale,
           }),
         });
+
+        if (!response.ok) {
+          const errBody = await response.json().catch(() => ({}));
+          console.error("[Lead Send Error] API returned", response.status, errBody);
+          setLeadSent(false); // Allow retry on failure
+        }
       } catch (error) {
         console.error("[Lead Send Error]", error);
         setLeadSent(false); // Allow retry on failure

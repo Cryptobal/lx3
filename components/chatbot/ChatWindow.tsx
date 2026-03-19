@@ -17,8 +17,7 @@ interface ConversationState {
 }
 
 const STORAGE_KEY = "lx3-chat";
-const LEAD_SCORE_THRESHOLD = 30;
-const MIN_MESSAGES_FOR_LEAD = 3;
+const MIN_MESSAGES_FOR_LEAD = 2;
 const STREAM_FLUSH_MS = 40;
 const STREAM_FLUSH_THRESHOLD = 24;
 
@@ -255,15 +254,10 @@ export function ChatWindow({ onClose }: ChatWindowProps) {
       }
       flushPendingContent();
 
-      // Send lead email when score crosses threshold
+      // Send ALL conversations by email (with lead score for prioritization)
       const userMessageCount = allMessages.filter((m) => m.role === "user").length;
-      const leadScore = (streamMetadata.leadScore as number) ?? 0;
 
-      if (
-        leadScore >= LEAD_SCORE_THRESHOLD &&
-        userMessageCount >= MIN_MESSAGES_FOR_LEAD &&
-        !leadSent
-      ) {
+      if (userMessageCount >= MIN_MESSAGES_FOR_LEAD && !leadSent) {
         const finalMessages = [
           ...allMessages,
           { role: "assistant" as const, content: assistantContent },
@@ -294,7 +288,7 @@ export function ChatWindow({ onClose }: ChatWindowProps) {
   ];
 
   return (
-    <div className="flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-surface shadow-2xl sm:h-[600px]">
+    <div className="flex h-full min-h-0 flex-col overflow-hidden rounded-2xl border border-white/10 bg-surface shadow-2xl sm:h-[600px]">
       {/* Header */}
       <div className="flex items-center gap-3 border-b border-white/10 bg-surface-elevated px-5 py-3.5">
         <img
@@ -390,8 +384,8 @@ export function ChatWindow({ onClose }: ChatWindowProps) {
         )}
       </div>
 
-      {/* Input */}
-      <div className="border-t border-white/10 bg-surface px-4 py-3">
+      {/* Input — shrink-0 + safe-area para que el botón quede siempre visible en móvil */}
+      <div className="shrink-0 border-t border-white/10 bg-surface px-4 py-3 pb-[max(0.75rem,env(safe-area-inset-bottom))]">
         <ChatInput
           value={input}
           onChange={setInput}

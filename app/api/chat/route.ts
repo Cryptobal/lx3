@@ -281,7 +281,8 @@ export async function POST(request: NextRequest) {
     updatedLeadData.score = score;
     state.leadData = updatedLeadData;
 
-    const systemPrompt = buildSystemPrompt(language, updatedLeadData);
+    const userMessageCount = messages.filter((m) => m.role === 'user').length;
+    const systemPrompt = buildSystemPrompt(language, updatedLeadData, userMessageCount);
 
     const coreMessages = messages
       .filter((m) => m.role === 'user' || m.role === 'assistant')

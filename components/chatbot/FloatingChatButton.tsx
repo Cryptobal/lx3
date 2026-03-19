@@ -99,8 +99,15 @@ export function FloatingChatButton() {
       {/* Chat panel — fullscreen on mobile, floating panel on desktop */}
       {open && (
         <>
-          {/* Mobile: fullscreen overlay */}
-          <div className="fixed inset-0 z-50 flex flex-col sm:hidden">
+          {/* Mobile: fullscreen overlay — 100dvh + safe-area para teclado y home indicator */}
+          <div
+            className="fixed inset-0 z-50 flex flex-col sm:hidden"
+            style={{
+              height: '100dvh',
+              maxHeight: '-webkit-fill-available',
+              paddingBottom: 'env(safe-area-inset-bottom, 0px)',
+            }}
+          >
             <ChatWindow onClose={() => setOpen(false)} />
           </div>
           {/* Desktop: floating panel on right side */}

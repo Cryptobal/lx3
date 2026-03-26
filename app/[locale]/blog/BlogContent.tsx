@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { Link } from "@/lib/i18n/routing";
 import { SectionWrapper } from "@/components/shared/SectionWrapper";
@@ -82,7 +83,19 @@ export function BlogContent({ articles, locale }: BlogContentProps) {
           return (
             <AnimateOnScroll key={article.slug} delay={0.1 + i * 0.05}>
               <Link href={`/blog/${article.slug}` as "/blog"}>
-                <article className="group flex h-full cursor-pointer flex-col rounded-2xl border border-[var(--border-subtle)] bg-surface-elevated p-7 transition-all duration-300 hover:border-accent/20 hover:shadow-[0_0_30px_rgba(6,182,212,0.06)]">
+                <article className="group flex h-full cursor-pointer flex-col overflow-hidden rounded-2xl border border-[var(--border-subtle)] bg-surface-elevated transition-all duration-300 hover:border-accent/20 hover:shadow-[0_0_30px_rgba(6,182,212,0.06)]">
+                  {article.ogImage && (
+                    <div className="relative aspect-[16/9] w-full shrink-0 border-b border-[var(--border-subtle)]">
+                      <Image
+                        src={article.ogImage}
+                        alt={article.title[lang]}
+                        fill
+                        className="object-cover"
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                      />
+                    </div>
+                  )}
+                  <div className="flex flex-1 flex-col p-7">
                   {/* Category tag */}
                   <span
                     className={`inline-block w-fit rounded-full border px-3 py-1 font-mono text-xs uppercase tracking-wider ${getCategoryClasses(article.category)}`}
@@ -114,6 +127,7 @@ export function BlogContent({ articles, locale }: BlogContentProps) {
                       </div>
                     </div>
                     <ArrowUpRight className="h-4 w-4 text-[var(--text-tertiary)] transition-all group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-accent" />
+                  </div>
                   </div>
                 </article>
               </Link>

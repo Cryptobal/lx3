@@ -23,8 +23,15 @@ export async function generateMetadata({
   const description = article.description?.[lang] || article.excerpt[lang];
   const canonicalEs = `https://www.lx3.ai/es/blog/${slug}`;
   const canonicalEn = `https://www.lx3.ai/en/blog/${slug}`;
+  const ogImageUrl =
+    article.ogImage != null
+      ? article.ogImage.startsWith("http")
+        ? article.ogImage
+        : `https://www.lx3.ai${article.ogImage}`
+      : undefined;
 
   return {
+    metadataBase: new URL("https://www.lx3.ai"),
     title: baseTitle,
     description,
     alternates: {
@@ -41,12 +48,14 @@ export async function generateMetadata({
       type: "article",
       publishedTime: article.date,
       authors: [article.author || "LX3"],
-      images: article.ogImage ? [{ url: article.ogImage }] : undefined,
+      url: lang === "en" ? canonicalEn : canonicalEs,
+      images: ogImageUrl ? [{ url: ogImageUrl, width: 800, height: 450 }] : undefined,
     },
     twitter: {
       card: "summary_large_image",
       title: baseTitle,
       description,
+      images: ogImageUrl ? [ogImageUrl] : undefined,
     },
   };
 }

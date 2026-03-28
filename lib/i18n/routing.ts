@@ -50,6 +50,10 @@ export const routing = defineRouting({
       es: "/contacto",
       en: "/contact",
     },
+    "/cotiza": {
+      es: "/cotiza",
+      en: "/quote",
+    },
   },
 });
 

@@ -5,6 +5,7 @@ import { SectionWrapper } from "@/components/shared/SectionWrapper";
 import { AnimateOnScroll } from "@/components/shared/AnimateOnScroll";
 import { JsonLd } from "@/components/shared/JsonLd";
 import { ServicePageSections } from "@/components/sections/ServicePageSections";
+import { Link } from "@/lib/i18n/routing";
 import { CheckCircle2 } from "lucide-react";
 
 export async function generateMetadata({
@@ -38,6 +39,7 @@ export default async function WebsitesPage({
 
 function WebsitesContent() {
   const t = useTranslations("servicesPage");
+  const tCotiza = useTranslations("cotizadorPage");
 
   const features = t.raw("websites.features") as string[];
 
@@ -96,6 +98,26 @@ function WebsitesContent() {
                 ))}
               </ul>
             </div>
+          </div>
+        </AnimateOnScroll>
+      </SectionWrapper>
+
+      {/* CTA to Cotizador */}
+      <SectionWrapper>
+        <AnimateOnScroll>
+          <div className="rounded-2xl border border-[var(--border-default)] bg-gradient-to-br from-[var(--bg-elevated)] to-[var(--bg-surface)] p-8 text-center sm:p-12">
+            <h2 className="font-display text-2xl font-bold text-[var(--text-primary)] sm:text-3xl">
+              {tCotiza("ctaSection.title")}
+            </h2>
+            <p className="mx-auto mt-3 max-w-md text-base text-[var(--text-secondary)]">
+              {tCotiza("ctaSection.subtitle")}
+            </p>
+            <Link
+              href="/cotiza"
+              className="mt-6 inline-flex rounded-full bg-gradient-to-r from-[var(--coral)] to-[#f97316] px-8 py-3.5 text-sm font-semibold text-[#06080E] transition-all hover:shadow-[0_0_24px_var(--coral-glow)]"
+            >
+              {tCotiza("ctaSection.button")}
+            </Link>
           </div>
         </AnimateOnScroll>
       </SectionWrapper>

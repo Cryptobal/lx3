@@ -75,8 +75,16 @@ export function Header() {
         </nav>
 
         {/* ---- Right Side ---- */}
-        <div className="flex items-center gap-4">
-          {/* CTA Button - Desktop */}
+        <div className="flex items-center gap-3">
+          {/* Quote CTA - Desktop */}
+          <Link
+            href="/cotiza"
+            className="hidden rounded-full bg-gradient-to-r from-[var(--coral)] to-[#f97316] px-5 py-2.5 text-sm font-semibold text-[#06080E] transition-all duration-300 hover:shadow-[0_0_20px_var(--coral-glow)] md:inline-flex"
+          >
+            {t("cotizaTuWeb")}
+          </Link>
+
+          {/* Contact CTA - Desktop */}
           <Link
             href="/contacto"
             className="hidden rounded-[11px] bg-[var(--accent)] px-5 py-2.5 text-sm font-medium text-white transition-all duration-300 hover:bg-[var(--accent-hover)] hover:shadow-[0_0_20px_var(--accent-glow)] md:inline-flex"
@@ -120,11 +128,20 @@ export function Header() {
             </Link>
           ))}
 
+          {/* Mobile Quote CTA */}
+          <Link
+            href="/cotiza"
+            onClick={closeMobile}
+            className="mt-4 w-full max-w-xs rounded-full bg-gradient-to-r from-[var(--coral)] to-[#f97316] px-6 py-3 text-center text-sm font-semibold text-[#06080E] transition-all duration-300 hover:shadow-[0_0_20px_var(--coral-glow)]"
+          >
+            {t("cotizaTuWeb")}
+          </Link>
+
           {/* Mobile CTA */}
           <Link
             href="/contacto"
             onClick={closeMobile}
-            className="mt-4 w-full max-w-xs rounded-[11px] bg-[var(--accent)] px-6 py-3 text-center text-sm font-medium text-white transition-all duration-300 hover:bg-[var(--accent-hover)] hover:shadow-[0_0_20px_var(--accent-glow)]"
+            className="w-full max-w-xs rounded-[11px] bg-[var(--accent)] px-6 py-3 text-center text-sm font-medium text-white transition-all duration-300 hover:bg-[var(--accent-hover)] hover:shadow-[0_0_20px_var(--accent-glow)]"
           >
             {t("cta")}
           </Link>

@@ -10,7 +10,8 @@
     "blog": "Blog",
     "about": "Nosotros",
     "contact": "Contacto",
-    "cta": "Conversemos"
+    "cta": "Conversemos",
+    "cotizaTuWeb": "Cotiza tu web"
   },
   "hero": {
     "tag": "Software Studio · Santiago, Chile",
@@ -287,5 +288,158 @@
     "quickReply2": "Ver un caso de éxito",
     "quickReply3": "Cotizar un proyecto",
     "quickReply4": "¿Cómo es el proceso de trabajo?"
+  },
+  "cotizadorPage": {
+    "steps": {
+      "package": "Paquete",
+      "addons": "Add-ons",
+      "plan": "Plan",
+      "details": "Datos"
+    },
+    "step1": {
+      "title": "Elige tu paquete",
+      "subtitle": "Selecciona el tipo de sitio web que necesitas."
+    },
+    "step2": {
+      "title": "Agrega funcionalidades",
+      "subtitle": "Personaliza tu sitio con las funcionalidades que necesites.",
+      "note": "Todos los add-ons son opcionales. Puedes saltarte este paso."
+    },
+    "step3": {
+      "title": "Plan mensual SEO + Mantención",
+      "subtitle": "Elige un plan para mantener tu sitio optimizado y actualizado.",
+      "note": "Opcional. Incluye hosting, mantención técnica y SEO orgánico mensual."
+    },
+    "step4": {
+      "title": "Tus datos",
+      "subtitle": "Completa tus datos para recibir la cotización."
+    },
+    "packages": {
+      "landing": {
+        "name": "Landing Pro",
+        "description": "1 página, diseño a medida, formulario contacto, SEO on-page, mobile-first, hosting Vercel 1er año, dominio .cl 1er año. Entrega 7 días.",
+        "includes": [
+          "Diseño a medida responsive",
+          "Formulario de contacto",
+          "SEO on-page optimizado",
+          "Mobile-first design",
+          "Hosting Vercel incluido 1er año",
+          "Dominio .cl incluido 1er año",
+          "Entrega en 7 días"
+        ]
+      },
+      "corporate": {
+        "name": "Web Corporativa",
+        "description": "5-8 páginas, blog integrado, Google Analytics 4, SEO técnico completo, botón WhatsApp. Entrega 3 semanas.",
+        "includes": [
+          "5 a 8 páginas personalizadas",
+          "Blog integrado",
+          "Google Analytics 4",
+          "SEO técnico completo",
+          "Botón WhatsApp",
+          "Diseño responsive premium",
+          "Hosting Vercel incluido 1er año",
+          "Entrega en 3 semanas"
+        ]
+      },
+      "platform": {
+        "name": "Web + Funcionalidad",
+        "description": "Todo anterior + integraciones a medida, pasarela de pagos, CRM o reservas, catálogo con filtros, dashboard métricas. Cotización a medida.",
+        "includes": [
+          "Todo lo de Web Corporativa",
+          "Integraciones a medida",
+          "Pasarela de pagos",
+          "CRM o sistema de reservas",
+          "Catálogo con filtros avanzados",
+          "Dashboard de métricas",
+          "Cotización y plazo a medida"
+        ]
+      }
+    },
+    "addons": {
+      "extraPage": "Página adicional",
+      "blog": "Blog integrado",
+      "whatsapp": "Integración WhatsApp",
+      "payments": "Mercado Pago / Flow",
+      "catalog": "Catálogo de productos",
+      "forms": "Formularios avanzados",
+      "chatbot": "Chatbot con IA",
+      "multilang": "Multilenguaje (ES/EN)"
+    },
+    "plans": {
+      "basic": {
+        "name": "Mantención Básica",
+        "description": "Hosting, SSL, backups y soporte esencial.",
+        "features": [
+          "Hosting + SSL + backups",
+          "Actualizaciones de seguridad",
+          "1 cambio menor al mes",
+          "Soporte por email"
+        ]
+      },
+      "growth": {
+        "name": "Crecimiento SEO",
+        "description": "Todo lo básico más contenido SEO y reportes.",
+        "features": [
+          "Todo del plan básico",
+          "2 blog posts SEO al mes",
+          "Google Search Console",
+          "Reporte posicionamiento mensual",
+          "Optimización de velocidad"
+        ]
+      },
+      "pro": {
+        "name": "SEO Profesional",
+        "description": "Estrategia SEO completa con contenido y análisis.",
+        "features": [
+          "Todo del plan Crecimiento",
+          "4 blog posts SEO al mes",
+          "Keyword research mensual",
+          "Link building básico",
+          "GA4 avanzado",
+          "Recomendaciones estratégicas"
+        ]
+      }
+    },
+    "badges": {
+      "popular": "Popular",
+      "premium": "Premium",
+      "recommended": "Recomendado"
+    },
+    "summary": {
+      "title": "Resumen",
+      "totalOneTime": "Total pago único",
+      "totalMonthly": "Total mensual"
+    },
+    "form": {
+      "name": "Nombre",
+      "namePlaceholder": "Tu nombre completo",
+      "company": "Empresa",
+      "companyPlaceholder": "Nombre de tu empresa (opcional)",
+      "email": "Email",
+      "emailPlaceholder": "tu@email.com",
+      "phone": "Teléfono",
+      "phonePlaceholder": "+56 9 1234 5678",
+      "disclaimer": "Precio referencial sujeto a evaluación final. IVA no incluido.",
+      "submit": "Enviar cotización →",
+      "submitting": "Enviando...",
+      "errorGeneric": "Error al enviar. Intenta de nuevo."
+    },
+    "nav": {
+      "back": "Atrás",
+      "next": "Siguiente",
+      "cotizaTuWeb": "Cotiza tu web"
+    },
+    "success": {
+      "title": "¡Cotización enviada!",
+      "message": "{name}, recibimos tu solicitud por {package} ({total}). {plan}. Te contactaremos en menos de 24 horas.",
+      "noPlan": "Sin plan mensual",
+      "newQuote": "Nueva cotización"
+    },
+    "ctaSection": {
+      "title": "¿Listo para cotizar?",
+      "subtitle": "Arma tu sitio web paso a paso y obtén un precio en tiempo real.",
+      "button": "Cotiza tu sitio web →"
+    }
   }
 }

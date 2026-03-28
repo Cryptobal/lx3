@@ -4,10 +4,6 @@ import { getMessages, setRequestLocale } from "next-intl/server";
 import { Plus_Jakarta_Sans, Inter, JetBrains_Mono } from "next/font/google";
 import { notFound } from "next/navigation";
 import { routing } from "@/lib/i18n/routing";
-import { Header } from "@/components/layout/Header";
-import { Footer } from "@/components/layout/Footer";
-import { FloatingChatButton } from "@/components/chatbot/FloatingChatButton";
-import WhatsAppButton from "@/components/shared/WhatsAppButton";
 import { Analytics } from "@vercel/analytics/next";
 
 const jakarta = Plus_Jakarta_Sans({
@@ -116,11 +112,7 @@ export default async function LocaleLayout({
         className={`${jakarta.variable} ${inter.variable} ${jetbrains.variable} grain-overlay min-h-screen bg-background font-sans text-foreground antialiased`}
       >
         <NextIntlClientProvider messages={messages}>
-          <Header />
-          <main>{children}</main>
-          <Footer />
-          <FloatingChatButton />
-          <WhatsAppButton />
+          {children}
         </NextIntlClientProvider>
         <Analytics />
       </body>

@@ -10,7 +10,8 @@
     "blog": "Blog",
     "about": "About",
     "contact": "Contact",
-    "cta": "Let's talk"
+    "cta": "Let's talk",
+    "cotizaTuWeb": "Get a quote"
   },
   "hero": {
     "tag": "Software Studio · Santiago, Chile",
@@ -311,5 +312,158 @@
     "quickReply2": "Show me a success story",
     "quickReply3": "Get a project estimate",
     "quickReply4": "How does your process work?"
+  },
+  "cotizadorPage": {
+    "steps": {
+      "package": "Package",
+      "addons": "Add-ons",
+      "plan": "Plan",
+      "details": "Details"
+    },
+    "step1": {
+      "title": "Choose your package",
+      "subtitle": "Select the type of website you need."
+    },
+    "step2": {
+      "title": "Add features",
+      "subtitle": "Customize your site with the features you need.",
+      "note": "All add-ons are optional. You can skip this step."
+    },
+    "step3": {
+      "title": "Monthly SEO + Maintenance Plan",
+      "subtitle": "Choose a plan to keep your site optimized and up to date.",
+      "note": "Optional. Includes hosting, technical maintenance and monthly organic SEO."
+    },
+    "step4": {
+      "title": "Your details",
+      "subtitle": "Fill in your information to receive the quote."
+    },
+    "packages": {
+      "landing": {
+        "name": "Landing Pro",
+        "description": "1 page, custom design, contact form, on-page SEO, mobile-first, Vercel hosting 1st year, .cl domain 1st year. 7-day delivery.",
+        "includes": [
+          "Custom responsive design",
+          "Contact form",
+          "Optimized on-page SEO",
+          "Mobile-first design",
+          "Vercel hosting included 1st year",
+          ".cl domain included 1st year",
+          "7-day delivery"
+        ]
+      },
+      "corporate": {
+        "name": "Corporate Website",
+        "description": "5-8 pages, integrated blog, Google Analytics 4, full technical SEO, WhatsApp button. 3-week delivery.",
+        "includes": [
+          "5 to 8 custom pages",
+          "Integrated blog",
+          "Google Analytics 4",
+          "Full technical SEO",
+          "WhatsApp button",
+          "Premium responsive design",
+          "Vercel hosting included 1st year",
+          "3-week delivery"
+        ]
+      },
+      "platform": {
+        "name": "Web + Functionality",
+        "description": "All the above + custom integrations, payment gateway, CRM or bookings, catalog with filters, metrics dashboard. Custom quote.",
+        "includes": [
+          "Everything in Corporate Website",
+          "Custom integrations",
+          "Payment gateway",
+          "CRM or booking system",
+          "Catalog with advanced filters",
+          "Metrics dashboard",
+          "Custom quote and timeline"
+        ]
+      }
+    },
+    "addons": {
+      "extraPage": "Additional page",
+      "blog": "Integrated blog",
+      "whatsapp": "WhatsApp integration",
+      "payments": "Mercado Pago / Flow",
+      "catalog": "Product catalog",
+      "forms": "Advanced forms",
+      "chatbot": "AI Chatbot",
+      "multilang": "Multilanguage (ES/EN)"
+    },
+    "plans": {
+      "basic": {
+        "name": "Basic Maintenance",
+        "description": "Hosting, SSL, backups and essential support.",
+        "features": [
+          "Hosting + SSL + backups",
+          "Security updates",
+          "1 minor change per month",
+          "Email support"
+        ]
+      },
+      "growth": {
+        "name": "SEO Growth",
+        "description": "Everything basic plus SEO content and reports.",
+        "features": [
+          "Everything in Basic plan",
+          "2 SEO blog posts per month",
+          "Google Search Console",
+          "Monthly ranking report",
+          "Speed optimization"
+        ]
+      },
+      "pro": {
+        "name": "Professional SEO",
+        "description": "Full SEO strategy with content and analysis.",
+        "features": [
+          "Everything in Growth plan",
+          "4 SEO blog posts per month",
+          "Monthly keyword research",
+          "Basic link building",
+          "Advanced GA4",
+          "Strategic recommendations"
+        ]
+      }
+    },
+    "badges": {
+      "popular": "Popular",
+      "premium": "Premium",
+      "recommended": "Recommended"
+    },
+    "summary": {
+      "title": "Summary",
+      "totalOneTime": "One-time total",
+      "totalMonthly": "Monthly total"
+    },
+    "form": {
+      "name": "Name",
+      "namePlaceholder": "Your full name",
+      "company": "Company",
+      "companyPlaceholder": "Company name (optional)",
+      "email": "Email",
+      "emailPlaceholder": "you@email.com",
+      "phone": "Phone",
+      "phonePlaceholder": "+56 9 1234 5678",
+      "disclaimer": "Reference price subject to final evaluation. VAT not included.",
+      "submit": "Send quote →",
+      "submitting": "Sending...",
+      "errorGeneric": "Error sending. Please try again."
+    },
+    "nav": {
+      "back": "Back",
+      "next": "Next",
+      "cotizaTuWeb": "Get a quote"
+    },
+    "success": {
+      "title": "Quote sent!",
+      "message": "{name}, we received your request for {package} ({total}). {plan}. We'll contact you within 24 hours.",
+      "noPlan": "No monthly plan",
+      "newQuote": "New quote"
+    },
+    "ctaSection": {
+      "title": "Ready to get a quote?",
+      "subtitle": "Build your website step by step and get a real-time price.",
+      "button": "Get your website quote →"
+    }
   }
 }

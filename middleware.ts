@@ -1,8 +1,10 @@
 import createMiddleware from "next-intl/middleware";
 import { NextResponse } from "next/server";
-import { auth } from "@/lib/auth";
+import NextAuth from "next-auth";
+import { authConfig } from "@/lib/auth.config";
 import { routing } from "@/lib/i18n/routing";
 
+const { auth } = NextAuth(authConfig);
 const intlMiddleware = createMiddleware(routing);
 
 const publicAdminPaths = ["/admin/login"];

@@ -9,16 +9,15 @@ export async function generateMetadata({
   params: Promise<{ locale: string }>;
 }): Promise<Metadata> {
   const { locale } = await params;
-
   const isEn = locale === "en";
 
   return {
     title: isEn
-      ? "Get a Quote — Web & Software | LX3 Software Studio"
-      : "Cotiza tu Proyecto — Web y Software | LX3 Software Studio",
+      ? "Get a Quote — Website & Software | LX3"
+      : "Cotiza tu Proyecto — Web y Software | LX3",
     description: isEn
-      ? "Build your website or software project step by step and get a real-time quote. Websites from $490,000 CLP. Software from $3,000,000 CLP."
-      : "Arma tu sitio web o proyecto de software paso a paso y obtén un precio en tiempo real. Sitios web desde $490.000 CLP. Software desde $3.000.000 CLP.",
+      ? "Build your website step by step and get a real-time quote. Or request a free software diagnostic. Websites from $490,000 CLP."
+      : "Arma tu sitio web paso a paso y obtén un precio en tiempo real. O solicita un diagnóstico gratuito de software. Sitios desde $490.000 CLP.",
     openGraph: {
       type: "website",
       locale: isEn ? "en_US" : "es_CL",
@@ -42,8 +41,8 @@ export default async function CotizaPage({
     "@type": "Service",
     name: isEn ? "Web & Software Development" : "Desarrollo Web y Software",
     description: isEn
-      ? "Custom website and software development services with real-time pricing"
-      : "Servicios de desarrollo de sitios web y software con precios en tiempo real",
+      ? "Custom website development with real-time pricing, and software diagnostic service"
+      : "Desarrollo de sitios web con precios en tiempo real, y servicio de diagnóstico de software",
     provider: {
       "@type": "Organization",
       name: "LX3 Software Studio",
@@ -64,26 +63,8 @@ export default async function CotizaPage({
       },
       {
         "@type": "Offer",
-        name: isEn ? "Web + Functionality" : "Web + Funcionalidad",
+        name: isEn ? "Custom Web" : "Web a Medida",
         price: "2500000",
-        priceCurrency: "CLP",
-      },
-      {
-        "@type": "Offer",
-        name: "MVP Starter",
-        price: "3000000",
-        priceCurrency: "CLP",
-      },
-      {
-        "@type": "Offer",
-        name: isEn ? "Business Platform" : "Plataforma Business",
-        price: "8000000",
-        priceCurrency: "CLP",
-      },
-      {
-        "@type": "Offer",
-        name: "Enterprise",
-        price: "15000000",
         priceCurrency: "CLP",
       },
     ],

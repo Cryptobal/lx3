@@ -315,8 +315,8 @@
   },
   "cotizadorPage": {
     "tabs": {
-      "web": "\uD83C\uDF10 Website",
-      "software": "\u2699\uFE0F Software"
+      "web": "Get a website quote",
+      "software": "Need software?"
     },
     "steps": {
       "package": "Package",
@@ -326,11 +326,11 @@
     },
     "step1": {
       "title": "Choose your package",
-      "subtitle": "Select the type of project you need."
+      "subtitle": "Select the type of website that best fits your business."
     },
     "step2": {
       "title": "Add features",
-      "subtitle": "Customize your project with the features you need.",
+      "subtitle": "Customize your site with the features you need.",
       "note": "All add-ons are optional. You can skip this step.",
       "includedTitle": "\u2713 Included in {package}",
       "includedLabel": "Included in your plan",
@@ -338,8 +338,8 @@
       "closeInfo": "Close"
     },
     "step3": {
-      "title": "Monthly plan",
-      "subtitle": "Choose a plan to keep your project optimized and supported.",
+      "title": "Monthly SEO + Maintenance plan",
+      "subtitle": "Optional. Subscribe now or later. Includes hosting, technical maintenance, and organic Google positioning.",
       "note": "Optional. Click again to deselect."
     },
     "step4": {
@@ -349,119 +349,74 @@
     "packages": {
       "landing": {
         "name": "Landing Pro",
-        "description": "1 page, custom design, contact form, on-page SEO, mobile-first, Vercel hosting 1st year, .cl domain 1st year. 7 days.",
+        "description": "Perfect for validating your idea or launching a campaign. Professional online presence in 7 days.",
         "includes": [
-          "Custom responsive design",
-          "Contact form",
-          "Basic on-page SEO",
-          "Mobile-first design",
-          "Vercel hosting included 1st year",
-          ".cl domain included 1st year"
-        ]
+          "Custom design (no templates)",
+          "Contact form with notification",
+          "On-page SEO for Google ranking",
+          "100% responsive (looks perfect on mobile)",
+          "Vercel hosting for 1 year",
+          ".cl domain included first year",
+          "Guaranteed delivery in 7 business days"
+        ],
+        "socialProof": "Similar to the landing pages we create for client acquisition campaigns."
       },
       "corporate": {
-        "name": "Corporate Website",
-        "description": "5-8 pages, blog, analytics, full SEO, WhatsApp. 3 weeks.",
+        "name": "Corporate",
+        "description": "For businesses that need to rank on Google, generate leads, and build trust. The website that works for you 24/7.",
         "includes": [
-          "Everything in Landing",
-          "5 to 8 custom pages",
-          "Integrated blog",
-          "Google Analytics 4",
-          "Full technical SEO",
-          "WhatsApp button"
-        ]
+          "Everything in Landing Pro",
+          "5-8 content pages (Home, Services, About, Blog, Contact, etc.)",
+          "Integrated blog for SEO positioning",
+          "Google Analytics 4 configured",
+          "Full technical SEO (meta tags, sitemap, schema, speed)",
+          "Integrated WhatsApp button",
+          "Delivery in 3 weeks"
+        ],
+        "socialProof": "Like gard.cl — corporate website for a security company with 500+ employees.",
+        "highlight": "8x more content than Landing for only 3x the price"
       },
       "platform": {
-        "name": "Web + Functionality",
-        "description": "Integrations, payments, CRM, catalogs, custom-built.",
+        "name": "Custom Web",
+        "description": "For operations that need more than a website: online payments, catalogs, bookings, dashboards. Your custom web platform.",
         "includes": [
           "Everything in Corporate",
-          "Custom integrations",
-          "Payment gateway",
-          "CRM or bookings",
-          "Catalog with filters",
-          "Metrics dashboard"
-        ]
-      },
-      "mvp": {
-        "name": "MVP Starter",
-        "description": "1 core module, auth, dashboard, 4-8 weeks.",
-        "includes": [
-          "1 functional core module",
-          "User authentication",
-          "Basic dashboard",
-          "PostgreSQL",
-          "Vercel deployment",
-          "30-day support"
-        ]
-      },
-      "business": {
-        "name": "Business Platform",
-        "description": "3-5 modules, integrations, reports, 8-12 weeks.",
-        "includes": [
-          "3 to 5 modules",
-          "Roles and permissions",
-          "Analytics dashboard",
-          "API integrations",
-          "Exportable reports",
-          "Training"
-        ]
-      },
-      "enterprise": {
-        "name": "Enterprise",
-        "description": "Full custom, multi-module, AI, custom quote.",
-        "includes": [
-          "Unlimited modules",
-          "Multi-tenant",
-          "Integrated AI",
-          "Mobile app",
-          "SLA + dedicated support",
-          "Evolution roadmap"
-        ]
+          "Custom integrations with your operations",
+          "Payment gateway (Mercado Pago, Flow, WebPay)",
+          "CRM, booking system, or client portal",
+          "Product catalog with advanced filters",
+          "Business metrics dashboard",
+          "Timeline and scope defined together"
+        ],
+        "socialProof": "Like OPAI — platform with 20+ modules for Gard Security."
       }
     },
     "addons": {
       "extraPage": "Additional page",
       "blog": "Integrated blog",
       "whatsapp": "WhatsApp integration",
-      "mercadopago": "Mercado Pago / Flow",
+      "mercadopago": "Online payments",
       "catalogo": "Product catalog",
       "forms": "Advanced forms",
       "chatbot": "AI Chatbot",
-      "multilang": "Multilanguage (ES/EN)",
-      "crm": "CRM Module",
-      "cotizaciones": "Quotes / Billing",
-      "roles": "Roles & permissions",
-      "api": "External API integration",
-      "mobile": "Mobile app iOS/Android",
-      "dashboard": "Analytics dashboard",
-      "chatbotAi": "Internal AI Chatbot",
-      "extraModule": "Additional module"
+      "multilang": "Multilanguage ES/EN"
     },
     "addonInfo": {
-      "extraPage": "Extra page with custom design, optimized SEO, responsive. For sections like team, portfolio, FAQ.",
-      "blog": "Blog system with CMS to create and edit articles without a developer. Each post optimized for Google.",
-      "whatsapp": "Floating WhatsApp button with predefined message. Visitors write directly to your number with one tap.",
-      "mercadopago": "Payment gateway with card, transfer or debit. Compatible with WebPay, Mercado Pago and Flow.",
-      "catalogo": "Showcase with filters, categories, search and detailed product pages. Informational catalog, not full e-commerce.",
-      "forms": "Multi-step forms, conditional logic, real-time validation, email notifications.",
-      "chatbot": "Assistant trained with YOUR information. Answers questions, qualifies leads, routes to WhatsApp.",
-      "multilang": "Site duplicated in Spanish and English with /es, /en routes. Independent SEO per language.",
-      "crm": "Contact management, kanban sales pipeline, interaction history, opportunity tracking.",
-      "cotizaciones": "Branded PDF quotes, conversion to orders, billing records. Integrable with local tax systems.",
-      "roles": "Granular permissions by role: admin, supervisor, operator, client, etc.",
-      "api": "Connection with external services: ERP, accounting, third-party APIs, webhooks. Each one custom-built.",
-      "mobile": "Native app with Capacitor. Installable from stores, push notifications.",
-      "dashboard": "Real-time metrics panel, charts, KPIs, date filters, export.",
-      "chatbotAi": "AI for your team: searches docs, answers about processes, generates reports. Trained with your data.",
-      "extraModule": "Any module: inventory, HR, tickets, scheduling, document management. Defined together."
+      "extraPage": "Add sections like Team, Portfolio, FAQ, or Testimonials. Each page custom-designed and optimized for Google.",
+      "blog": "Publish articles that rank your business on Google. Easy-to-use system — edit and publish without needing a developer.",
+      "whatsapp": "Your visitors contact you with a single tap. Floating button with a predefined message straight to your WhatsApp number.",
+      "mercadopago": "Accept card, transfer, or debit payments directly on your site. Compatible with Mercado Pago, Flow, and WebPay.",
+      "catalogo": "Showcase your products or services with photos, filters, categories, and search. Your clients find what they need without calling you.",
+      "forms": "Multi-step forms with conditional logic and real-time validation. Ideal for quotes, surveys, or complex registrations.",
+      "chatbot": "An assistant that knows YOUR business. Answers customer questions 24/7, qualifies leads, and alerts you when someone wants to buy.",
+      "multilang": "Your full site in Spanish and English with independent URLs. SEO optimized per language. Ideal if you sell to international markets."
     },
     "plans": {
       "basic": {
         "name": "Basic Maintenance",
-        "description": "Hosting, SSL, backups and essential support.",
+        "description": "Hosting, SSL, backups, and essential support.",
         "features": [
-          "Hosting + SSL + backups",
+          "Hosting + SSL + automatic backups",
           "Security updates",
           "1 minor change per month",
           "Email support"
@@ -471,54 +426,23 @@
         "name": "SEO Growth",
         "description": "Everything basic plus SEO content and reports.",
         "features": [
-          "Everything in Basic plan",
+          "Everything in Basic Maintenance",
           "2 SEO blog posts per month",
-          "Google Search Console",
+          "Google Search Console configured",
           "Monthly ranking report",
-          "Speed optimization"
+          "Ongoing speed optimization"
         ]
       },
       "pro": {
         "name": "Professional SEO",
         "description": "Full SEO strategy with content and analysis.",
         "features": [
-          "Everything in Growth plan",
+          "Everything in Growth",
           "4 SEO blog posts per month",
           "Monthly keyword research",
           "Basic link building",
-          "Advanced GA4 + reports"
-        ]
-      },
-      "support": {
-        "name": "Support + Maintenance",
-        "description": "Hosting, monitoring, bug fixes and support.",
-        "features": [
-          "Hosting + monitoring",
-          "Bug fixes",
-          "Security updates",
-          "Email + WhatsApp support"
-        ]
-      },
-      "evolution": {
-        "name": "Continuous Evolution",
-        "description": "Monthly improvements, new features, roadmap.",
-        "features": [
-          "Everything in Support",
-          "Monthly improvements (8h dev)",
-          "New features",
-          "Monthly roadmap meeting",
-          "Backlog prioritization"
-        ]
-      },
-      "dedicated": {
-        "name": "Dedicated Team",
-        "description": "Dedicated development, weekly sprints, SLA.",
-        "features": [
-          "Everything in Evolution",
-          "20h development per month",
-          "Weekly sprint planning",
-          "Dedicated Slack",
-          "4h SLA response"
+          "Advanced Google Analytics 4",
+          "Monthly strategic recommendations"
         ]
       }
     },
@@ -541,6 +465,9 @@
       "emailPlaceholder": "you@email.com",
       "phone": "Phone",
       "phonePlaceholder": "+56 9 1234 5678",
+      "source": "How did you find us?",
+      "sourcePlaceholder": "Select an option",
+      "sourceOptions": ["Google", "LinkedIn", "Referral", "Other"],
       "notes": "Notes",
       "notesPlaceholder": "Anything we should know about your project?",
       "disclaimer": "Reference price subject to final evaluation. VAT not included.",
@@ -549,6 +476,45 @@
       "errorGeneric": "Error sending. Please try again.",
       "customQuoteText": "Your project doesn't fit these packages?",
       "customQuoteLink": "Request a fully custom quote \u2192"
+    },
+    "trust": {
+      "guarantee": {
+        "title": "Satisfaction guarantee",
+        "description": "Not happy with the design in the first 14 days? We'll give you a full refund."
+      },
+      "ownership": {
+        "title": "The site is 100% yours",
+        "description": "Code, design, domain, and hosting in your name. No lock-in."
+      },
+      "timeline": {
+        "title": "On-time delivery",
+        "description": "Delivered on the committed timeline or we give you a discount."
+      }
+    },
+    "faq": {
+      "title": "Frequently asked questions",
+      "items": [
+        {
+          "q": "Does the price include VAT?",
+          "a": "Prices shown do not include VAT. The final amount is detailed in the formal proposal."
+        },
+        {
+          "q": "What if I need changes later?",
+          "a": "With any monthly plan, changes are included. Without a plan, each modification is quoted separately."
+        },
+        {
+          "q": "Can I start with Landing and upgrade to Corporate later?",
+          "a": "Yes. We design with scalability in mind. The upgrade is quoted as the price difference."
+        },
+        {
+          "q": "What technology do you use?",
+          "a": "Next.js, React, TypeScript, Tailwind CSS. Hosted on Vercel with global CDN. The same technologies used by companies like Netflix and Uber."
+        },
+        {
+          "q": "Does it include content and copy?",
+          "a": "We include structure and base copywriting. If you have your own text, we integrate it. We also offer professional copywriting as an add-on."
+        }
+      ]
     },
     "nav": {
       "back": "Back",
@@ -565,6 +531,58 @@
       "title": "Ready to get a quote?",
       "subtitle": "Build your website step by step and get a real-time price.",
       "button": "Get your website quote \u2192"
+    },
+    "diagnostic": {
+      "title": "Every software project is unique",
+      "subtitle": "Tell us about your operation and we'll schedule a free 30-minute diagnostic to define scope, technology, and estimated budget.",
+      "socialProof": "We built OPAI, an ERP with 20+ modules for Gard Security (500+ employees). If your operation needs a custom system, let's talk.",
+      "errorGeneric": "Error sending. Please try again.",
+      "q1": {
+        "question": "What does your company need?",
+        "options": ["CRM / Sales management", "ERP / Operations management", "Client portal", "Dashboard / Reports", "Mobile app for field teams", "AI-powered process automation", "Other"],
+        "otherPlaceholder": "Describe what you need..."
+      },
+      "q2": {
+        "question": "How many people would use the system?",
+        "options": ["1-10 users", "10-50 users", "50-200 users", "200+ users"]
+      },
+      "q3": {
+        "question": "What tools do you use today?",
+        "options": ["Excel / Google Sheets", "Legacy in-house system", "SaaS (Salesforce, HubSpot, etc.)", "ERP (SAP, Oracle, etc.)", "Nothing — everything is manual", "Other"],
+        "otherPlaceholder": "What tool do you use?"
+      },
+      "q4": {
+        "question": "Do you have an internal tech team?",
+        "options": ["Yes, we have developers", "We have IT but they don't develop", "No, we need everything outsourced"]
+      },
+      "q5": {
+        "question": "What is your estimated budget?",
+        "options": ["Under $3,000,000 CLP", "$3,000,000 – $8,000,000 CLP", "$8,000,000 – $15,000,000 CLP", "Over $15,000,000 CLP", "Not sure, I need guidance"]
+      },
+      "q6": {
+        "question": "Contact details",
+        "name": "Name",
+        "namePlaceholder": "Your full name",
+        "company": "Company",
+        "companyPlaceholder": "Your company name",
+        "email": "Email",
+        "emailPlaceholder": "you@email.com",
+        "phone": "Phone",
+        "phonePlaceholder": "+56 9 1234 5678",
+        "description": "Brief project description",
+        "descriptionPlaceholder": "Tell us in 2-3 lines what problem you want to solve"
+      },
+      "nav": {
+        "back": "Back",
+        "next": "Next",
+        "submit": "Request free diagnostic \u2192",
+        "submitting": "Sending..."
+      },
+      "success": {
+        "title": "Diagnostic requested!",
+        "message": "An LX3 specialist will contact you within 24 hours to schedule your free 30-minute diagnostic session.",
+        "backHome": "Back to home"
+      }
     }
   }
 }

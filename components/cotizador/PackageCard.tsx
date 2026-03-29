@@ -12,6 +12,8 @@ interface PackageCardProps {
   description: string;
   includes: string[];
   badgeLabel?: string;
+  socialProof?: string;
+  highlight?: string;
 }
 
 export function PackageCard({
@@ -22,6 +24,8 @@ export function PackageCard({
   description,
   includes,
   badgeLabel,
+  socialProof,
+  highlight,
 }: PackageCardProps) {
   return (
     <motion.button
@@ -71,7 +75,7 @@ export function PackageCard({
               {name}
             </h3>
             <span
-              className="text-lg font-bold sm:text-xl"
+              className="font-mono text-lg font-bold sm:text-xl"
               style={{ color: pkg.color }}
             >
               {pkg.priceLabel}
@@ -80,35 +84,50 @@ export function PackageCard({
           <p className="mt-1 text-sm leading-relaxed text-[var(--text-secondary)]">
             {description}
           </p>
+          {highlight && (
+            <p
+              className="mt-2 text-xs font-semibold"
+              style={{ color: pkg.color }}
+            >
+              {highlight}
+            </p>
+          )}
         </div>
       </div>
 
-      {/* Expanded includes list */}
+      {/* Expanded includes list + social proof */}
       <AnimatePresence>
         {selected && includes.length > 0 && (
-          <motion.ul
+          <motion.div
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="mt-4 space-y-2 overflow-hidden border-t border-[var(--border-subtle)] pt-4"
+            className="overflow-hidden"
           >
-            {includes.map((item, i) => (
-              <li key={i} className="flex items-start gap-2 text-sm text-[var(--text-secondary)]">
-                <svg
-                  className="mt-0.5 h-4 w-4 shrink-0"
-                  style={{ color: pkg.color }}
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  strokeWidth={2.5}
-                >
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                </svg>
-                {item}
-              </li>
-            ))}
-          </motion.ul>
+            <ul className="mt-4 space-y-2 border-t border-[var(--border-subtle)] pt-4">
+              {includes.map((item, i) => (
+                <li key={i} className="flex items-start gap-2 text-sm text-[var(--text-secondary)]">
+                  <svg
+                    className="mt-0.5 h-4 w-4 shrink-0"
+                    style={{ color: pkg.color }}
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    strokeWidth={2.5}
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                  </svg>
+                  {item}
+                </li>
+              ))}
+            </ul>
+            {socialProof && (
+              <p className="mt-4 rounded-lg bg-[var(--bg-surface)] p-3 text-xs italic leading-relaxed text-[var(--text-tertiary)]">
+                {socialProof}
+              </p>
+            )}
+          </motion.div>
         )}
       </AnimatePresence>
     </motion.button>

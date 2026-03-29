@@ -290,6 +290,10 @@
     "quickReply4": "¿Cómo es el proceso de trabajo?"
   },
   "cotizadorPage": {
+    "tabs": {
+      "web": "Cotiza tu sitio web",
+      "software": "\u00BFNecesitas software?"
+    },
     "steps": {
       "package": "Paquete",
       "addons": "Add-ons",
@@ -298,17 +302,21 @@
     },
     "step1": {
       "title": "Elige tu paquete",
-      "subtitle": "Selecciona el tipo de sitio web que necesitas."
+      "subtitle": "Selecciona el tipo de sitio web que mejor se adapta a tu negocio."
     },
     "step2": {
       "title": "Agrega funcionalidades",
       "subtitle": "Personaliza tu sitio con las funcionalidades que necesites.",
-      "note": "Todos los add-ons son opcionales. Puedes saltarte este paso."
+      "note": "Todos los add-ons son opcionales. Puedes saltarte este paso.",
+      "includedTitle": "\u2713 Incluido en {package}",
+      "includedLabel": "Incluido en tu plan",
+      "additionalTitle": "Funcionalidades adicionales",
+      "closeInfo": "Cerrar"
     },
     "step3": {
       "title": "Plan mensual SEO + Mantención",
-      "subtitle": "Elige un plan para mantener tu sitio optimizado y actualizado.",
-      "note": "Opcional. Incluye hosting, mantención técnica y SEO orgánico mensual."
+      "subtitle": "Opcional. Contrata ahora o después. Incluye hosting, mantención técnica y posicionamiento orgánico en Google.",
+      "note": "Opcional. Haz click nuevamente para deseleccionar."
     },
     "step4": {
       "title": "Tus datos",
@@ -317,61 +325,74 @@
     "packages": {
       "landing": {
         "name": "Landing Pro",
-        "description": "1 página, diseño a medida, formulario contacto, SEO on-page, mobile-first, hosting Vercel 1er año, dominio .cl 1er año. Entrega 7 días.",
+        "description": "Ideal para validar tu idea o lanzar una campaña. Presencia profesional online en 7 días.",
         "includes": [
-          "Diseño a medida responsive",
-          "Formulario de contacto",
-          "SEO on-page optimizado",
-          "Mobile-first design",
-          "Hosting Vercel incluido 1er año",
-          "Dominio .cl incluido 1er año",
-          "Entrega en 7 días"
-        ]
+          "Diseño a medida (no plantilla)",
+          "Formulario de contacto con notificación",
+          "SEO on-page para aparecer en Google",
+          "100% responsive (se ve perfecto en celular)",
+          "Hosting en Vercel por 1 año",
+          "Dominio .cl incluido primer año",
+          "Entrega garantizada en 7 días hábiles"
+        ],
+        "socialProof": "Similar a las landing pages que creamos para campañas de captación de clientes."
       },
       "corporate": {
-        "name": "Web Corporativa",
-        "description": "5-8 páginas, blog integrado, Google Analytics 4, SEO técnico completo, botón WhatsApp. Entrega 3 semanas.",
+        "name": "Corporativa",
+        "description": "Para empresas que necesitan aparecer en Google, generar contactos y transmitir confianza. El sitio que trabaja por ti 24/7.",
         "includes": [
-          "5 a 8 páginas personalizadas",
-          "Blog integrado",
-          "Google Analytics 4",
-          "SEO técnico completo",
-          "Botón WhatsApp",
-          "Diseño responsive premium",
-          "Hosting Vercel incluido 1er año",
+          "Todo del plan Landing Pro",
+          "5-8 páginas de contenido (Inicio, Servicios, Nosotros, Blog, Contacto, etc.)",
+          "Blog integrado para posicionamiento SEO",
+          "Google Analytics 4 configurado",
+          "SEO técnico completo (meta tags, sitemap, schema, velocidad)",
+          "Botón WhatsApp integrado",
           "Entrega en 3 semanas"
-        ]
+        ],
+        "socialProof": "Como gard.cl — sitio corporativo para empresa de seguridad con 500+ empleados.",
+        "highlight": "8x más contenido que Landing por solo 3x el precio"
       },
       "platform": {
-        "name": "Web + Funcionalidad",
-        "description": "Todo anterior + integraciones a medida, pasarela de pagos, CRM o reservas, catálogo con filtros, dashboard métricas. Cotización a medida.",
+        "name": "Web a Medida",
+        "description": "Para operaciones que necesitan más que un sitio: pagos online, catálogos, reservas, dashboards. Tu plataforma web a medida.",
         "includes": [
-          "Todo lo de Web Corporativa",
-          "Integraciones a medida",
-          "Pasarela de pagos",
-          "CRM o sistema de reservas",
-          "Catálogo con filtros avanzados",
-          "Dashboard de métricas",
-          "Cotización y plazo a medida"
-        ]
+          "Todo del plan Corporativa",
+          "Integraciones a medida con tu operación",
+          "Pasarela de pagos (Mercado Pago, Flow, WebPay)",
+          "CRM, sistema de reservas, o portal clientes",
+          "Catálogo de productos con filtros avanzados",
+          "Dashboard de métricas de negocio",
+          "Plazo y alcance definidos en conjunto"
+        ],
+        "socialProof": "Como OPAI — plataforma con 20+ módulos para Gard Security."
       }
     },
     "addons": {
       "extraPage": "Página adicional",
       "blog": "Blog integrado",
-      "whatsapp": "Integración WhatsApp",
-      "payments": "Mercado Pago / Flow",
-      "catalog": "Catálogo de productos",
+      "whatsapp": "WhatsApp integrado",
+      "mercadopago": "Pagos online",
+      "catalogo": "Catálogo de productos",
       "forms": "Formularios avanzados",
       "chatbot": "Chatbot con IA",
-      "multilang": "Multilenguaje (ES/EN)"
+      "multilang": "Multilenguaje ES/EN"
+    },
+    "addonInfo": {
+      "extraPage": "Agrega secciones como Equipo, Portafolio, FAQ o Testimonios. Cada página diseñada a medida y optimizada para Google.",
+      "blog": "Publica artículos que posicionan tu empresa en Google. Sistema fácil de usar — editas y publicas sin depender de un desarrollador.",
+      "whatsapp": "Tus visitantes te contactan con un solo tap. Botón flotante con mensaje predefinido directo a tu número de WhatsApp.",
+      "mercadopago": "Recibe pagos con tarjeta, transferencia o débito directamente en tu sitio. Compatible con Mercado Pago, Flow y WebPay.",
+      "catalogo": "Muestra tus productos o servicios con fotos, filtros, categorías y buscador. Tus clientes encuentran lo que buscan sin llamarte.",
+      "forms": "Formularios multi-paso, con lógica condicional y validación en tiempo real. Ideal para cotizaciones, encuestas o registros complejos.",
+      "chatbot": "Un asistente que conoce TU negocio. Responde preguntas de tus clientes 24/7, califica leads y te avisa cuando alguien quiere comprar.",
+      "multilang": "Tu sitio completo en español e inglés con URLs independientes. SEO optimizado por idioma. Ideal si vendes a mercados internacionales."
     },
     "plans": {
       "basic": {
         "name": "Mantención Básica",
         "description": "Hosting, SSL, backups y soporte esencial.",
         "features": [
-          "Hosting + SSL + backups",
+          "Hosting + SSL + backups automáticos",
           "Actualizaciones de seguridad",
           "1 cambio menor al mes",
           "Soporte por email"
@@ -381,23 +402,23 @@
         "name": "Crecimiento SEO",
         "description": "Todo lo básico más contenido SEO y reportes.",
         "features": [
-          "Todo del plan básico",
-          "2 blog posts SEO al mes",
-          "Google Search Console",
-          "Reporte posicionamiento mensual",
-          "Optimización de velocidad"
+          "Todo de Mantención Básica",
+          "2 artículos SEO al mes para posicionar en Google",
+          "Google Search Console configurado",
+          "Reporte de posicionamiento mensual",
+          "Optimización de velocidad continua"
         ]
       },
       "pro": {
         "name": "SEO Profesional",
         "description": "Estrategia SEO completa con contenido y análisis.",
         "features": [
-          "Todo del plan Crecimiento",
-          "4 blog posts SEO al mes",
-          "Keyword research mensual",
+          "Todo de Crecimiento",
+          "4 artículos SEO al mes",
+          "Investigación de keywords mensual",
           "Link building básico",
-          "GA4 avanzado",
-          "Recomendaciones estratégicas"
+          "Google Analytics 4 avanzado",
+          "Recomendaciones estratégicas mensuales"
         ]
       }
     },
@@ -420,10 +441,56 @@
       "emailPlaceholder": "tu@email.com",
       "phone": "Teléfono",
       "phonePlaceholder": "+56 9 1234 5678",
+      "source": "\u00BFCómo nos encontraste?",
+      "sourcePlaceholder": "Selecciona una opción",
+      "sourceOptions": ["Google", "LinkedIn", "Referido", "Otro"],
+      "notes": "Notas",
+      "notesPlaceholder": "\u00BFAlgo que debamos saber sobre tu proyecto?",
       "disclaimer": "Precio referencial sujeto a evaluación final. IVA no incluido.",
-      "submit": "Enviar cotización →",
+      "submit": "Enviar cotización \u2192",
       "submitting": "Enviando...",
-      "errorGeneric": "Error al enviar. Intenta de nuevo."
+      "errorGeneric": "Error al enviar. Intenta de nuevo.",
+      "customQuoteText": "\u00BFTu proyecto no encaja en estos paquetes?",
+      "customQuoteLink": "Solicitar cotización 100% a medida \u2192"
+    },
+    "trust": {
+      "guarantee": {
+        "title": "Garantía de satisfacción",
+        "description": "Si no estás conforme con el diseño en los primeros 14 días, te devolvemos el 100%."
+      },
+      "ownership": {
+        "title": "El sitio es 100% tuyo",
+        "description": "Código, diseño, dominio y hosting a tu nombre. Sin dependencias."
+      },
+      "timeline": {
+        "title": "Entrega en plazo",
+        "description": "Entrega en el plazo comprometido o te hacemos un descuento."
+      }
+    },
+    "faq": {
+      "title": "Preguntas frecuentes",
+      "items": [
+        {
+          "q": "\u00BFEl precio incluye IVA?",
+          "a": "Los precios mostrados no incluyen IVA. El monto final se detalla en la propuesta formal."
+        },
+        {
+          "q": "\u00BFQué pasa si necesito cambios después?",
+          "a": "Con cualquier plan mensual tienes cambios incluidos. Sin plan, cada modificación se cotiza por separado."
+        },
+        {
+          "q": "\u00BFPuedo partir con Landing y subir a Corporativa después?",
+          "a": "Sí. Diseñamos pensando en escalabilidad. El upgrade se cotiza como diferencia de precio."
+        },
+        {
+          "q": "\u00BFQué tecnología usan?",
+          "a": "Next.js, React, TypeScript, Tailwind CSS. Hosting en Vercel con CDN global. Son las mismas tecnologías que usan empresas como Netflix y Uber."
+        },
+        {
+          "q": "\u00BFIncluye contenido y textos?",
+          "a": "Incluimos estructura y copywriting base. Si tienes textos propios, los integramos. También ofrecemos redacción profesional como add-on."
+        }
+      ]
     },
     "nav": {
       "back": "Atrás",
@@ -431,15 +498,67 @@
       "cotizaTuWeb": "Cotiza tu web"
     },
     "success": {
-      "title": "¡Cotización enviada!",
+      "title": "\u00A1Cotización enviada!",
       "message": "{name}, recibimos tu solicitud por {package} ({total}). {plan}. Te contactaremos en menos de 24 horas.",
       "noPlan": "Sin plan mensual",
       "newQuote": "Nueva cotización"
     },
     "ctaSection": {
-      "title": "¿Listo para cotizar?",
+      "title": "\u00BFListo para cotizar tu sitio?",
       "subtitle": "Arma tu sitio web paso a paso y obtén un precio en tiempo real.",
-      "button": "Cotiza tu sitio web →"
+      "button": "Cotiza tu sitio web \u2192"
+    },
+    "diagnostic": {
+      "title": "Cada proyecto de software es único",
+      "subtitle": "Cuéntanos sobre tu operación y agendaremos un diagnóstico gratuito de 30 minutos para definir alcance, tecnología y presupuesto estimado.",
+      "socialProof": "Construimos OPAI, un ERP con 20+ módulos para Gard Security (500+ empleados). Si tu operación necesita un sistema a medida, hablemos.",
+      "errorGeneric": "Error al enviar. Intenta de nuevo.",
+      "q1": {
+        "question": "\u00BFQué necesita tu empresa?",
+        "options": ["CRM / Gestión comercial", "ERP / Gestión operativa", "Portal de clientes", "Dashboard / Reportes", "App mobile para equipo en terreno", "Automatización de procesos con IA", "Otro"],
+        "otherPlaceholder": "Describe qué necesitas..."
+      },
+      "q2": {
+        "question": "\u00BFCuántas personas usarían el sistema?",
+        "options": ["1-10 usuarios", "10-50 usuarios", "50-200 usuarios", "200+ usuarios"]
+      },
+      "q3": {
+        "question": "\u00BFQué herramientas usan hoy?",
+        "options": ["Excel / Google Sheets", "Sistema propio (legacy)", "SaaS (Salesforce, HubSpot, etc.)", "ERP (SAP, Oracle, etc.)", "Nada — todo es manual", "Otro"],
+        "otherPlaceholder": "¿Qué herramienta usan?"
+      },
+      "q4": {
+        "question": "\u00BFTienen equipo técnico interno?",
+        "options": ["Sí, tenemos desarrolladores", "Tenemos alguien de TI pero no desarrolla", "No, necesitamos todo externalizado"]
+      },
+      "q5": {
+        "question": "\u00BFCuál es tu presupuesto estimado?",
+        "options": ["Menos de $3.000.000 CLP", "$3.000.000 – $8.000.000 CLP", "$8.000.000 – $15.000.000 CLP", "Más de $15.000.000 CLP", "No tengo claro, necesito orientación"]
+      },
+      "q6": {
+        "question": "Datos de contacto",
+        "name": "Nombre",
+        "namePlaceholder": "Tu nombre completo",
+        "company": "Empresa",
+        "companyPlaceholder": "Nombre de tu empresa",
+        "email": "Email",
+        "emailPlaceholder": "tu@email.com",
+        "phone": "Teléfono",
+        "phonePlaceholder": "+56 9 1234 5678",
+        "description": "Descripción breve del proyecto",
+        "descriptionPlaceholder": "Cuéntanos en 2-3 líneas qué problema quieres resolver"
+      },
+      "nav": {
+        "back": "Atrás",
+        "next": "Siguiente",
+        "submit": "Solicitar diagnóstico gratuito \u2192",
+        "submitting": "Enviando..."
+      },
+      "success": {
+        "title": "\u00A1Diagnóstico solicitado!",
+        "message": "Un especialista de LX3 te contactará en menos de 24 horas para agendar tu sesión de diagnóstico gratuita de 30 minutos.",
+        "backHome": "Volver al inicio"
+      }
     }
   }
 }

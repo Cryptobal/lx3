@@ -6,7 +6,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "@/lib/i18n/routing";
 import { cn } from "@/lib/utils/cn";
 
-import type { CotizadorState, FormData } from "./types";
+import type { CotizadorState, FormData, ActiveTab } from "./types";
 import { packages, addons, monthlyPlans, formatCLP } from "./data";
 import { StepIndicator } from "./StepIndicator";
 import { PackageCard } from "./PackageCard";
@@ -14,6 +14,10 @@ import { AddonItem } from "./AddonItem";
 import { MonthlyPlanCard } from "./MonthlyPlanCard";
 import { PriceSummary } from "./PriceSummary";
 import { FloatingBar } from "./FloatingBar";
+import { InfoModal } from "./InfoModal";
+import { FAQ } from "./FAQ";
+import { TrustBadges } from "./TrustBadges";
+import { DiagnosticWizard } from "./DiagnosticWizard";
 
 const TOTAL_STEPS = 4;
 
@@ -29,42 +33,53 @@ const slideVariants = {
   }),
 };
 
-export function Cotizador() {
-  const t = useTranslations("cotizadorPage");
-
-  const [state, setState] = useState<CotizadorState>({
+function initialState(): CotizadorState {
+  return {
     step: 1,
     selectedPackage: null,
     addonCounts: {},
     monthlyPlan: null,
-    formData: { name: "", company: "", email: "", phone: "" },
-  });
+    formData: { name: "", company: "", email: "", phone: "", source: "", notes: "" },
+  };
+}
 
+export function Cotizador() {
+  const t = useTranslations("cotizadorPage");
+
+  const [activeTab, setActiveTab] = useState<ActiveTab>("web");
+  const [state, setState] = useState<CotizadorState>(initialState);
   const [direction, setDirection] = useState(1);
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  // Calculate totals
+  const selectedPkg = useMemo(
+    () => packages.find((p) => p.id === state.selectedPackage) ?? null,
+    [state.selectedPackage]
+  );
+
   const totalOneTime = useMemo(() => {
-    const pkg = packages.find((p) => p.id === state.selectedPackage);
-    const pkgPrice = pkg?.price ?? 0;
+    const pkgPrice = selectedPkg?.price ?? 0;
     const addonsPrice = addons.reduce((sum, addon) => {
       const count = state.addonCounts[addon.id] ?? 0;
+      const isIncluded = selectedPkg?.includedAddons.includes(addon.id);
+      if (isIncluded) return sum;
       return sum + addon.price * count;
     }, 0);
     return pkgPrice + addonsPrice;
-  }, [state.selectedPackage, state.addonCounts]);
+  }, [selectedPkg, state.addonCounts]);
 
   const totalMonthly = useMemo(() => {
     const plan = monthlyPlans.find((p) => p.id === state.monthlyPlan);
     return plan?.price ?? 0;
   }, [state.monthlyPlan]);
 
-  const goTo = useCallback((step: number) => {
-    setDirection(step > state.step ? 1 : -1);
-    setState((prev) => ({ ...prev, step }));
-  }, [state.step]);
+  const switchTab = useCallback((tab: ActiveTab) => {
+    setActiveTab(tab);
+    setState(initialState());
+    setSubmitted(false);
+    setError(null);
+  }, []);
 
   const next = useCallback(() => {
     if (state.step < TOTAL_STEPS) {
@@ -120,13 +135,7 @@ export function Cotizador() {
   };
 
   const reset = () => {
-    setState({
-      step: 1,
-      selectedPackage: null,
-      addonCounts: {},
-      monthlyPlan: null,
-      formData: { name: "", company: "", email: "", phone: "" },
-    });
+    setState(initialState());
     setSubmitted(false);
     setError(null);
   };
@@ -145,167 +154,228 @@ export function Cotizador() {
         ? !!(state.formData.name && state.formData.email)
         : true;
 
-  // Success screen
-  if (submitted) {
-    const pkg = packages.find((p) => p.id === state.selectedPackage);
+  // Success screen (web tab)
+  if (submitted && activeTab === "web") {
     const plan = monthlyPlans.find((p) => p.id === state.monthlyPlan);
 
     return (
-      <div className="flex min-h-[60vh] items-center justify-center px-4">
-        <motion.div
-          initial={{ scale: 0.9, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          className="max-w-md text-center"
-        >
-          <div className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-[var(--green-light)]">
-            <svg className="h-10 w-10 text-[var(--green)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-            </svg>
-          </div>
-          <h2 className="font-display text-2xl font-bold text-[var(--text-primary)]">
-            {t("success.title")}
-          </h2>
-          <p className="mt-4 text-sm leading-relaxed text-[var(--text-secondary)]">
-            {t("success.message", {
-              name: state.formData.name,
-              package: pkg ? t(pkg.nameKey) : "",
-              total: formatCLP(totalOneTime),
-              plan: plan ? `${t(plan.nameKey)} (${formatCLP(plan.price)}/mes)` : t("success.noPlan"),
-            })}
-          </p>
-          <button
-            onClick={reset}
-            className="mt-8 rounded-xl bg-[var(--accent)] px-8 py-3 text-sm font-medium text-white transition-all hover:bg-[var(--accent-hover)] hover:shadow-[0_0_20px_var(--accent-glow)]"
+      <div className="mx-auto max-w-6xl px-4 sm:px-6">
+        <TabSelector activeTab={activeTab} onSwitch={switchTab} t={t} />
+        <div className="flex min-h-[60vh] items-center justify-center px-4">
+          <motion.div
+            initial={{ scale: 0.9, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            className="max-w-md text-center"
           >
-            {t("success.newQuote")}
-          </button>
-        </motion.div>
+            <div className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-[var(--green)]/10">
+              <svg className="h-10 w-10 text-[var(--green)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+              </svg>
+            </div>
+            <h2 className="font-display text-2xl font-bold text-[var(--text-primary)]">
+              {t("success.title")}
+            </h2>
+            <p className="mt-4 text-sm leading-relaxed text-[var(--text-secondary)]">
+              {t("success.message", {
+                name: state.formData.name,
+                package: selectedPkg ? t(selectedPkg.nameKey) : "",
+                total: formatCLP(totalOneTime),
+                plan: plan ? `${t(plan.nameKey)} (${formatCLP(plan.price)}/mes)` : t("success.noPlan"),
+              })}
+            </p>
+            <button
+              onClick={reset}
+              className="mt-8 rounded-xl bg-[var(--accent)] px-8 py-3 text-sm font-medium text-white transition-all hover:bg-[var(--accent-hover)] hover:shadow-[0_0_20px_var(--accent-glow)]"
+            >
+              {t("success.newQuote")}
+            </button>
+          </motion.div>
+        </div>
       </div>
     );
   }
 
   return (
     <div className="mx-auto max-w-6xl px-4 pb-28 sm:px-6 min-[900px]:pb-8">
-      {/* Step indicator */}
-      <div className="mb-8 sm:mb-10">
-        <StepIndicator currentStep={state.step} totalSteps={TOTAL_STEPS} labels={stepLabels} />
-      </div>
+      {/* Tab selector */}
+      <TabSelector activeTab={activeTab} onSwitch={switchTab} t={t} />
 
-      <div className="min-[900px]:flex min-[900px]:gap-8">
-        {/* Main content */}
-        <div className="flex-1">
-          <AnimatePresence mode="wait" custom={direction}>
-            <motion.div
-              key={state.step}
-              custom={direction}
-              variants={slideVariants}
-              initial="enter"
-              animate="center"
-              exit="exit"
-              transition={{ duration: 0.3, ease: "easeInOut" }}
-            >
-              {state.step === 1 && (
-                <Step1
-                  t={t}
-                  selectedPackage={state.selectedPackage}
-                  onSelect={(id) => setState((p) => ({ ...p, selectedPackage: id }))}
-                />
+      {activeTab === "software" ? (
+        <DiagnosticWizard />
+      ) : (
+        <>
+          {/* Step indicator */}
+          <div className="mb-8 sm:mb-10">
+            <StepIndicator currentStep={state.step} totalSteps={TOTAL_STEPS} labels={stepLabels} />
+          </div>
+
+          <div className="min-[900px]:flex min-[900px]:gap-8">
+            {/* Main content */}
+            <div className="flex-1">
+              <AnimatePresence mode="wait" custom={direction}>
+                <motion.div
+                  key={state.step}
+                  custom={direction}
+                  variants={slideVariants}
+                  initial="enter"
+                  animate="center"
+                  exit="exit"
+                  transition={{ duration: 0.3, ease: "easeInOut" }}
+                >
+                  {state.step === 1 && (
+                    <Step1
+                      t={t}
+                      selectedPackage={state.selectedPackage}
+                      onSelect={(id) =>
+                        setState((p) => ({
+                          ...p,
+                          selectedPackage: id,
+                          addonCounts: {},
+                        }))
+                      }
+                    />
+                  )}
+                  {state.step === 2 && (
+                    <Step2
+                      t={t}
+                      addonCounts={state.addonCounts}
+                      selectedPkg={selectedPkg}
+                      onChange={(id, count) =>
+                        setState((p) => ({
+                          ...p,
+                          addonCounts: { ...p.addonCounts, [id]: count },
+                        }))
+                      }
+                    />
+                  )}
+                  {state.step === 3 && (
+                    <Step3
+                      t={t}
+                      selectedPlan={state.monthlyPlan}
+                      onSelect={(id) =>
+                        setState((p) => ({
+                          ...p,
+                          monthlyPlan: p.monthlyPlan === id ? null : id,
+                        }))
+                      }
+                    />
+                  )}
+                  {state.step === 4 && (
+                    <Step4
+                      t={t}
+                      state={state}
+                      totalOneTime={totalOneTime}
+                      totalMonthly={totalMonthly}
+                      formData={state.formData}
+                      onFieldChange={updateFormData}
+                      onSubmit={handleSubmit}
+                      submitting={submitting}
+                      error={error}
+                      canSubmit={canProceed}
+                      onBack={prev}
+                    />
+                  )}
+                </motion.div>
+              </AnimatePresence>
+
+              {/* Navigation buttons */}
+              {state.step < 4 && (
+                <div className="mt-8 flex items-center justify-between gap-4">
+                  <button
+                    onClick={prev}
+                    disabled={state.step === 1}
+                    className={cn(
+                      "rounded-xl border border-[var(--border-default)] px-6 py-3 text-sm font-medium transition-all",
+                      state.step === 1
+                        ? "cursor-not-allowed opacity-30"
+                        : "text-[var(--text-secondary)] hover:border-[var(--border-strong)] hover:text-[var(--text-primary)]"
+                    )}
+                  >
+                    {t("nav.back")}
+                  </button>
+                  <button
+                    onClick={next}
+                    disabled={!canProceed}
+                    className={cn(
+                      "rounded-xl px-8 py-3 text-sm font-medium text-white transition-all",
+                      canProceed
+                        ? "bg-[var(--accent)] hover:bg-[var(--accent-hover)] hover:shadow-[0_0_20px_var(--accent-glow)]"
+                        : "cursor-not-allowed bg-[var(--bg-surface)] text-[var(--text-tertiary)]"
+                    )}
+                  >
+                    {t("nav.next")}
+                  </button>
+                </div>
               )}
-              {state.step === 2 && (
-                <Step2
-                  t={t}
-                  addonCounts={state.addonCounts}
-                  onChange={(id, count) =>
-                    setState((p) => ({
-                      ...p,
-                      addonCounts: { ...p.addonCounts, [id]: count },
-                    }))
-                  }
-                />
-              )}
-              {state.step === 3 && (
-                <Step3
-                  t={t}
-                  selectedPlan={state.monthlyPlan}
-                  onSelect={(id) =>
-                    setState((p) => ({
-                      ...p,
-                      monthlyPlan: p.monthlyPlan === id ? null : id,
-                    }))
-                  }
-                />
-              )}
-              {state.step === 4 && (
-                <Step4
-                  t={t}
+            </div>
+
+            {/* Desktop sidebar */}
+            <div className="hidden min-[900px]:block min-[900px]:w-80">
+              <div className="sticky top-8">
+                <PriceSummary
                   state={state}
                   totalOneTime={totalOneTime}
                   totalMonthly={totalMonthly}
-                  formData={state.formData}
-                  onFieldChange={updateFormData}
-                  onSubmit={handleSubmit}
-                  submitting={submitting}
-                  error={error}
-                  canSubmit={canProceed}
-                  onBack={prev}
+                  t={(key: string) => t(key)}
+                  tRaw={(key: string) => t.raw(key)}
                 />
-              )}
-            </motion.div>
-          </AnimatePresence>
-
-          {/* Navigation buttons */}
-          {state.step < 4 && (
-            <div className="mt-8 flex items-center justify-between gap-4">
-              <button
-                onClick={prev}
-                disabled={state.step === 1}
-                className={cn(
-                  "rounded-xl border border-[var(--border-default)] px-6 py-3 text-sm font-medium transition-all",
-                  state.step === 1
-                    ? "cursor-not-allowed opacity-30"
-                    : "text-[var(--text-secondary)] hover:border-[var(--border-strong)] hover:text-[var(--text-primary)]"
-                )}
-              >
-                {t("nav.back")}
-              </button>
-              <button
-                onClick={next}
-                disabled={!canProceed}
-                className={cn(
-                  "rounded-xl px-8 py-3 text-sm font-medium text-white transition-all",
-                  canProceed
-                    ? "bg-[var(--accent)] hover:bg-[var(--accent-hover)] hover:shadow-[0_0_20px_var(--accent-glow)]"
-                    : "cursor-not-allowed bg-[var(--bg-surface)] text-[var(--text-tertiary)]"
-                )}
-              >
-                {t("nav.next")}
-              </button>
+              </div>
             </div>
-          )}
-        </div>
+          </div>
 
-        {/* Desktop sidebar */}
-        <div className="hidden min-[900px]:block min-[900px]:w-80">
-          <div className="sticky top-8">
-            <PriceSummary
-              state={state}
+          {/* Mobile floating bar */}
+          <div className="min-[900px]:hidden">
+            <FloatingBar
               totalOneTime={totalOneTime}
               totalMonthly={totalMonthly}
-              t={(key: string) => t(key)}
-              tRaw={(key: string) => t.raw(key)}
+              labelOneTime={t("summary.totalOneTime")}
+              labelMonthly={t("summary.totalMonthly")}
             />
           </div>
-        </div>
-      </div>
+        </>
+      )}
+    </div>
+  );
+}
 
-      {/* Mobile floating bar */}
-      <div className="min-[900px]:hidden">
-        <FloatingBar
-          totalOneTime={totalOneTime}
-          totalMonthly={totalMonthly}
-          labelOneTime={t("summary.totalOneTime")}
-          labelMonthly={t("summary.totalMonthly")}
-        />
+/* ─── Tab selector ─────────────────────────────────────── */
+
+function TabSelector({
+  activeTab,
+  onSwitch,
+  t,
+}: {
+  activeTab: ActiveTab;
+  onSwitch: (tab: ActiveTab) => void;
+  t: ReturnType<typeof useTranslations>;
+}) {
+  return (
+    <div className="mb-8 flex justify-center">
+      <div className="inline-flex rounded-xl border border-[var(--border-default)] bg-[var(--bg-elevated)] p-1">
+        <button
+          type="button"
+          onClick={() => onSwitch("web")}
+          className={cn(
+            "rounded-lg px-5 py-2.5 text-sm font-medium transition-all duration-200",
+            activeTab === "web"
+              ? "bg-[var(--accent)] text-white shadow-sm"
+              : "text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
+          )}
+        >
+          {t("tabs.web")}
+        </button>
+        <button
+          type="button"
+          onClick={() => onSwitch("software")}
+          className={cn(
+            "rounded-lg px-5 py-2.5 text-sm font-medium transition-all duration-200",
+            activeTab === "software"
+              ? "bg-[var(--accent)] text-white shadow-sm"
+              : "text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
+          )}
+        >
+          {t("tabs.software")}
+        </button>
       </div>
     </div>
   );
@@ -341,6 +411,8 @@ function Step1({
             description={t(pkg.descriptionKey)}
             includes={t.raw(pkg.includesKey) as string[]}
             badgeLabel={pkg.badge ? t(`badges.${pkg.badge}`) : undefined}
+            socialProof={t(pkg.socialProofKey)}
+            highlight={pkg.highlightKey ? t(pkg.highlightKey) : undefined}
           />
         ))}
       </div>
@@ -351,12 +423,20 @@ function Step1({
 function Step2({
   t,
   addonCounts,
+  selectedPkg,
   onChange,
 }: {
   t: ReturnType<typeof useTranslations>;
   addonCounts: Record<string, number>;
+  selectedPkg: (typeof packages)[number] | null;
   onChange: (id: string, count: number) => void;
 }) {
+  const [infoAddon, setInfoAddon] = useState<string | null>(null);
+  const infoAddonData = addons.find((a) => a.id === infoAddon);
+
+  const includedAddons = addons.filter((a) => selectedPkg?.includedAddons.includes(a.id));
+  const availableAddons = addons.filter((a) => !selectedPkg?.includedAddons.includes(a.id));
+
   return (
     <div>
       <h2 className="font-display text-xl font-bold text-[var(--text-primary)] sm:text-2xl">
@@ -365,21 +445,64 @@ function Step2({
       <p className="mt-2 text-sm text-[var(--text-secondary)]">
         {t("step2.subtitle")}
       </p>
-      <div className="mt-6 space-y-3">
-        {addons.map((addon) => (
-          <AddonItem
-            key={addon.id}
-            name={t(addon.nameKey)}
-            price={addon.price}
-            type={addon.type}
-            count={addonCounts[addon.id] ?? 0}
-            onChange={(count) => onChange(addon.id, count)}
-          />
-        ))}
+
+      {/* Included addons */}
+      {includedAddons.length > 0 && (
+        <div className="mt-6">
+          <h3 className="mb-3 text-sm font-medium text-[var(--green)]">
+            {t("step2.includedTitle", { package: selectedPkg ? t(selectedPkg.nameKey) : "" })}
+          </h3>
+          <div className="space-y-3">
+            {includedAddons.map((addon) => (
+              <AddonItem
+                key={addon.id}
+                name={t(addon.nameKey)}
+                price={addon.price}
+                type={addon.type}
+                count={0}
+                onChange={() => {}}
+                included
+                includedLabel={t("step2.includedLabel")}
+                onInfoClick={() => setInfoAddon(addon.id)}
+              />
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Available addons */}
+      <div className={cn("mt-6", includedAddons.length > 0 && "mt-8")}>
+        {includedAddons.length > 0 && (
+          <h3 className="mb-3 text-sm font-medium text-[var(--text-secondary)]">
+            {t("step2.additionalTitle")}
+          </h3>
+        )}
+        <div className="space-y-3">
+          {availableAddons.map((addon) => (
+            <AddonItem
+              key={addon.id}
+              name={t(addon.nameKey)}
+              price={addon.price}
+              type={addon.type}
+              count={addonCounts[addon.id] ?? 0}
+              onChange={(count) => onChange(addon.id, count)}
+              onInfoClick={() => setInfoAddon(addon.id)}
+            />
+          ))}
+        </div>
       </div>
+
       <p className="mt-4 text-xs text-[var(--text-tertiary)]">
         {t("step2.note")}
       </p>
+
+      <InfoModal
+        open={!!infoAddon}
+        onClose={() => setInfoAddon(null)}
+        title={infoAddonData ? t(infoAddonData.nameKey) : ""}
+        description={infoAddonData ? t(infoAddonData.infoKey) : ""}
+        closeLabel={t("step2.closeInfo")}
+      />
     </div>
   );
 }
@@ -447,6 +570,9 @@ function Step4({
   canSubmit: boolean;
   onBack: () => void;
 }) {
+  const sourceOptions = t.raw("form.sourceOptions") as string[];
+  const sourceValues = ["google", "linkedin", "referral", "other"];
+
   return (
     <div>
       <h2 className="font-display text-xl font-bold text-[var(--text-primary)] sm:text-2xl">
@@ -456,7 +582,7 @@ function Step4({
         {t("step4.subtitle")}
       </p>
 
-      {/* Mobile summary (no sidebar on mobile) */}
+      {/* Mobile summary */}
       <div className="mt-6 min-[900px]:hidden">
         <PriceSummary
           state={state}
@@ -519,6 +645,54 @@ function Step4({
             placeholder={t("form.phonePlaceholder")}
           />
         </div>
+        <div>
+          <label className="mb-1.5 block text-sm font-medium text-[var(--text-secondary)]">
+            {t("form.source")}
+          </label>
+          <select
+            value={formData.source}
+            onChange={(e) => onFieldChange("source", e.target.value)}
+            className="w-full appearance-none rounded-xl border border-[var(--border-default)] bg-[var(--bg-surface)] px-4 py-3 text-sm text-[var(--text-primary)] focus:border-[var(--accent)] focus:outline-none focus:ring-1 focus:ring-[var(--accent)]"
+          >
+            <option value="">{t("form.sourcePlaceholder")}</option>
+            {sourceOptions.map((label, i) => (
+              <option key={sourceValues[i]} value={sourceValues[i]}>
+                {label}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div>
+          <label className="mb-1.5 block text-sm font-medium text-[var(--text-secondary)]">
+            {t("form.notes")}
+          </label>
+          <textarea
+            value={formData.notes}
+            onChange={(e) => onFieldChange("notes", e.target.value)}
+            rows={3}
+            className="w-full resize-none rounded-xl border border-[var(--border-default)] bg-[var(--bg-surface)] px-4 py-3 text-sm text-[var(--text-primary)] placeholder:text-[var(--text-muted)] focus:border-[var(--accent)] focus:outline-none focus:ring-1 focus:ring-[var(--accent)]"
+            placeholder={t("form.notesPlaceholder")}
+          />
+        </div>
+      </div>
+
+      {/* Trust badges */}
+      <TrustBadges />
+
+      {/* FAQ */}
+      <FAQ />
+
+      {/* Custom quote CTA */}
+      <div className="mt-8 rounded-xl border border-dashed border-[var(--border-strong)] bg-[var(--bg-surface)] p-5 text-center">
+        <p className="text-sm text-[var(--text-secondary)]">
+          {t("form.customQuoteText")}
+        </p>
+        <Link
+          href="/contacto"
+          className="mt-2 inline-block text-sm font-semibold text-[var(--coral)] transition-colors hover:text-[var(--coral-hover)]"
+        >
+          {t("form.customQuoteLink")}
+        </Link>
       </div>
 
       <p className="mt-4 text-xs text-[var(--text-tertiary)]">

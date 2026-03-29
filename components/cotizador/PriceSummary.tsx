@@ -1,7 +1,6 @@
 "use client";
 
-import { formatCLP } from "./data";
-import { packages, addons, monthlyPlans } from "./data";
+import { formatCLP, packages, addons, monthlyPlans } from "./data";
 import type { CotizadorState } from "./types";
 
 interface PriceSummaryProps {
@@ -16,7 +15,11 @@ export function PriceSummary({ state, totalOneTime, totalMonthly, t }: PriceSumm
   const pkg = packages.find((p) => p.id === state.selectedPackage);
   const plan = monthlyPlans.find((p) => p.id === state.monthlyPlan);
 
-  const activeAddons = addons.filter((a) => (state.addonCounts[a.id] ?? 0) > 0);
+  const activeAddons = addons.filter((a) => {
+    const count = state.addonCounts[a.id] ?? 0;
+    const isIncluded = pkg?.includedAddons.includes(a.id);
+    return count > 0 && !isIncluded;
+  });
 
   return (
     <div className="rounded-2xl border border-[var(--border-default)] bg-[var(--bg-elevated)] p-6">
@@ -31,7 +34,7 @@ export function PriceSummary({ state, totalOneTime, totalMonthly, t }: PriceSumm
             <span className="text-sm text-[var(--text-secondary)]">
               {t(pkg.nameKey)}
             </span>
-            <span className="shrink-0 text-sm font-medium text-[var(--text-primary)]">
+            <span className="shrink-0 font-mono text-sm font-medium text-[var(--text-primary)]">
               {formatCLP(pkg.price)}
             </span>
           </div>
@@ -46,7 +49,7 @@ export function PriceSummary({ state, totalOneTime, totalMonthly, t }: PriceSumm
                 {t(addon.nameKey)}
                 {count > 1 && ` ×${count}`}
               </span>
-              <span className="shrink-0 text-sm font-medium text-[var(--text-primary)]">
+              <span className="shrink-0 font-mono text-sm font-medium text-[var(--text-primary)]">
                 {formatCLP(addon.price * count)}
               </span>
             </div>
@@ -59,7 +62,7 @@ export function PriceSummary({ state, totalOneTime, totalMonthly, t }: PriceSumm
             <span className="text-sm font-semibold text-[var(--text-primary)]">
               {t("summary.totalOneTime")}
             </span>
-            <span className="text-xl font-bold text-[var(--accent)]">
+            <span className="font-mono text-xl font-bold text-[var(--accent)]">
               {formatCLP(totalOneTime)}
             </span>
           </div>
@@ -72,7 +75,7 @@ export function PriceSummary({ state, totalOneTime, totalMonthly, t }: PriceSumm
               <span className="text-sm text-[var(--text-secondary)]">
                 {t(plan.nameKey)}
               </span>
-              <span className="shrink-0 text-sm font-medium text-[var(--text-primary)]">
+              <span className="shrink-0 font-mono text-sm font-medium text-[var(--text-primary)]">
                 {formatCLP(plan.price)}/mes
               </span>
             </div>
@@ -80,7 +83,7 @@ export function PriceSummary({ state, totalOneTime, totalMonthly, t }: PriceSumm
               <span className="text-sm font-semibold text-[var(--text-primary)]">
                 {t("summary.totalMonthly")}
               </span>
-              <span className="text-lg font-bold text-[var(--coral)]">
+              <span className="font-mono text-lg font-bold text-[var(--coral)]">
                 {formatCLP(totalMonthly)}/mes
               </span>
             </div>

@@ -32,3 +32,78 @@ export type Message = Prisma.MessageModel
  * 
  */
 export type LeadSent = Prisma.LeadSentModel
+/**
+ * Model User
+ * 
+ */
+export type User = Prisma.UserModel
+/**
+ * Model Account
+ * 
+ */
+export type Account = Prisma.AccountModel
+/**
+ * Model Session
+ * 
+ */
+export type Session = Prisma.SessionModel
+/**
+ * Model VerificationToken
+ * 
+ */
+export type VerificationToken = Prisma.VerificationTokenModel
+/**
+ * Model Contact
+ * 
+ */
+export type Contact = Prisma.ContactModel
+/**
+ * Model Company
+ * 
+ */
+export type Company = Prisma.CompanyModel
+/**
+ * Model PipelineStage
+ * 
+ */
+export type PipelineStage = Prisma.PipelineStageModel
+/**
+ * Model Deal
+ * 
+ */
+export type Deal = Prisma.DealModel
+/**
+ * Model Quote
+ * 
+ */
+export type Quote = Prisma.QuoteModel
+/**
+ * Model QuoteItem
+ * 
+ */
+export type QuoteItem = Prisma.QuoteItemModel
+/**
+ * Model QuoteViewLog
+ * 
+ */
+export type QuoteViewLog = Prisma.QuoteViewLogModel
+/**
+ * Model Activity
+ * 
+ */
+export type Activity = Prisma.ActivityModel
+/**
+ * Model VisitorSession
+ * 
+ */
+export type VisitorSession = Prisma.VisitorSessionModel
+/**
+ * Model PageView
+ * 
+ */
+export type PageView = Prisma.PageViewModel
+/**
+ * Model EmailLog
+ * 
+ */
+export type EmailLog = Prisma.EmailLogModel

@@ -30,35 +30,46 @@ export default function LoginPage() {
         router.refresh();
       }
     } catch {
-      setError("Error al iniciar sesion. Intenta nuevamente.");
+      setError("Error al iniciar sesión. Intenta nuevamente.");
     } finally {
       setLoading(false);
     }
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gray-950 px-4">
+    <div className="flex min-h-[100dvh] items-center justify-center bg-zinc-950 px-4">
       <div className="w-full max-w-sm">
-        <div className="rounded-2xl border border-gray-800 bg-gray-900 p-8 shadow-2xl">
+        <div className="rounded-2xl border border-zinc-800 bg-zinc-900 p-8 shadow-2xl">
           {/* Logo */}
-          <div className="mb-8 text-center">
-            <h1 className="text-3xl font-bold text-white">LX3</h1>
-            <p className="mt-1 text-sm text-gray-400">Growth OS</p>
+          <div className="mb-8 flex flex-col items-center gap-3">
+            <img
+              src="/logo/LX3_isotipo.svg"
+              alt="LX3"
+              width={48}
+              height={48}
+              className="h-12 w-12"
+            />
+            <div className="text-center">
+              <h1 className="text-xl font-bold tracking-tight text-white">
+                Growth OS
+              </h1>
+              <p className="mt-0.5 text-xs text-zinc-500">
+                Plataforma de gestión comercial
+              </p>
+            </div>
           </div>
 
-          {/* Error */}
           {error && (
-            <div className="mb-4 rounded-lg border border-red-500/30 bg-red-500/10 px-4 py-3 text-sm text-red-400">
+            <div className="mb-4 rounded-lg border border-red-500/20 bg-red-500/10 px-4 py-3 text-sm text-red-400">
               {error}
             </div>
           )}
 
-          {/* Form */}
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
               <label
                 htmlFor="email"
-                className="mb-1 block text-sm font-medium text-gray-300"
+                className="mb-1.5 block text-sm font-medium text-zinc-300"
               >
                 Email
               </label>
@@ -69,7 +80,8 @@ export default function LoginPage() {
                 onChange={(e) => setEmail(e.target.value)}
                 required
                 placeholder="tu@email.com"
-                className="w-full rounded-lg border border-gray-700 bg-gray-800 px-3 py-2.5 text-sm text-white placeholder-gray-500 transition-colors focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                autoComplete="email"
+                className="w-full rounded-lg border border-zinc-700 bg-zinc-800 px-3 py-2.5 text-sm text-white placeholder-zinc-500 transition-colors focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
                 disabled={loading}
               />
             </div>
@@ -77,9 +89,9 @@ export default function LoginPage() {
             <div>
               <label
                 htmlFor="password"
-                className="mb-1 block text-sm font-medium text-gray-300"
+                className="mb-1.5 block text-sm font-medium text-zinc-300"
               >
-                Contrasena
+                Contraseña
               </label>
               <input
                 id="password"
@@ -87,8 +99,9 @@ export default function LoginPage() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
-                placeholder="Tu contrasena"
-                className="w-full rounded-lg border border-gray-700 bg-gray-800 px-3 py-2.5 text-sm text-white placeholder-gray-500 transition-colors focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                placeholder="Tu contraseña"
+                autoComplete="current-password"
+                className="w-full rounded-lg border border-zinc-700 bg-zinc-800 px-3 py-2.5 text-sm text-white placeholder-zinc-500 transition-colors focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
                 disabled={loading}
               />
             </div>
@@ -96,16 +109,39 @@ export default function LoginPage() {
             <button
               type="submit"
               disabled={loading}
-              className="mt-2 w-full rounded-lg bg-blue-600 px-4 py-2.5 text-sm font-medium text-white transition-colors hover:bg-blue-700 disabled:opacity-50"
+              className="mt-2 w-full rounded-lg bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-blue-500 disabled:opacity-50"
             >
-              {loading ? "Iniciando sesion..." : "Iniciar Sesion"}
+              {loading ? (
+                <span className="flex items-center justify-center gap-2">
+                  <svg
+                    className="h-4 w-4 animate-spin"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                  >
+                    <circle
+                      cx="12"
+                      cy="12"
+                      r="10"
+                      stroke="currentColor"
+                      strokeWidth="3"
+                      className="opacity-25"
+                    />
+                    <path
+                      d="M4 12a8 8 0 018-8"
+                      stroke="currentColor"
+                      strokeWidth="3"
+                      strokeLinecap="round"
+                      className="opacity-75"
+                    />
+                  </svg>
+                  Iniciando sesión...
+                </span>
+              ) : (
+                "Iniciar Sesión"
+              )}
             </button>
           </form>
         </div>
-
-        <p className="mt-6 text-center text-xs text-gray-600">
-          LX3 Growth OS &mdash; Plataforma de gestion comercial
-        </p>
       </div>
     </div>
   );

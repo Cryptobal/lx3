@@ -90,9 +90,6 @@ export default async function CotizaPage({
                 className="h-7 w-auto"
               />
             </Link>
-            <span className="text-sm font-medium text-[var(--text-tertiary)]">
-              / {isEn ? "Quoter" : "Cotizador"}
-            </span>
           </div>
           <Link
             href="/"

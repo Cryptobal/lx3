@@ -11,7 +11,7 @@
     "about": "Nosotros",
     "contact": "Contacto",
     "cta": "Conversemos",
-    "cotizaTuWeb": "Cotiza tu web"
+    "cotizaTuWeb": "Cotizadores dinámicos"
   },
   "hero": {
     "tag": "Software Studio · Santiago, Chile",
@@ -291,7 +291,7 @@
   },
   "cotizadorPage": {
     "tabs": {
-      "web": "Cotiza tu sitio web",
+      "web": "Cotizadores dinámicos",
       "software": "\u00BFNecesitas software?"
     },
     "steps": {
@@ -495,7 +495,7 @@
     "nav": {
       "back": "Atrás",
       "next": "Siguiente",
-      "cotizaTuWeb": "Cotiza tu web"
+      "cotizaTuWeb": "Cotizadores dinámicos"
     },
     "success": {
       "title": "\u00A1Cotización enviada!",

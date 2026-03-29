@@ -1,11 +1,11 @@
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
-import { PrismaAdapter } from "@auth/prisma-adapter";
 import bcrypt from "bcryptjs";
 import { prisma } from "@/lib/db";
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
-  adapter: prisma ? PrismaAdapter(prisma) : undefined,
+  trustHost: true,
+  secret: process.env.AUTH_SECRET,
   session: { strategy: "jwt" },
   pages: {
     signIn: "/admin/login",
@@ -53,6 +53,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
             return null;
           }
 
+          console.log("[auth] Login OK:", user.email);
           return {
             id: user.id,
             name: user.name,
@@ -67,13 +68,27 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     }),
   ],
   callbacks: {
+    async signIn({ user }) {
+      console.log("[auth] signIn callback, user:", user?.email);
+      return true;
+    },
     async jwt({ token, user }) {
-      if (user && prisma) {
-        const dbUser = await prisma.user.findUnique({
-          where: { email: user.email! },
-          select: { role: true },
-        });
-        token.role = dbUser?.role ?? "MEMBER";
+      if (user) {
+        token.id = user.id;
+        if (prisma) {
+          try {
+            const dbUser = await prisma.user.findUnique({
+              where: { email: user.email! },
+              select: { role: true },
+            });
+            token.role = dbUser?.role ?? "MEMBER";
+          } catch (error) {
+            console.error("[auth] jwt callback DB error:", error);
+            token.role = "MEMBER";
+          }
+        } else {
+          token.role = "MEMBER";
+        }
       }
       return token;
     },

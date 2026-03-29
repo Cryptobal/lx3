@@ -199,7 +199,7 @@ export type QuoteViewLogGroupByOutputType = {
   _max: QuoteViewLogMaxAggregateOutputType | null
 }
 
-export type GetQuoteViewLogGroupByPayload<T extends QuoteViewLogGroupByArgs> = Prisma.PrismaPromise<
+type GetQuoteViewLogGroupByPayload<T extends QuoteViewLogGroupByArgs> = Prisma.PrismaPromise<
   Array<
     Prisma.PickEnumerable<QuoteViewLogGroupByOutputType, T['by']> &
       {

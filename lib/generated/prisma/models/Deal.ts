@@ -266,7 +266,7 @@ export type DealGroupByOutputType = {
   _max: DealMaxAggregateOutputType | null
 }
 
-export type GetDealGroupByPayload<T extends DealGroupByArgs> = Prisma.PrismaPromise<
+type GetDealGroupByPayload<T extends DealGroupByArgs> = Prisma.PrismaPromise<
   Array<
     Prisma.PickEnumerable<DealGroupByOutputType, T['by']> &
       {

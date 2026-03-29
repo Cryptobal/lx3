@@ -213,7 +213,7 @@ export type PipelineStageGroupByOutputType = {
   _max: PipelineStageMaxAggregateOutputType | null
 }
 
-export type GetPipelineStageGroupByPayload<T extends PipelineStageGroupByArgs> = Prisma.PrismaPromise<
+type GetPipelineStageGroupByPayload<T extends PipelineStageGroupByArgs> = Prisma.PrismaPromise<
   Array<
     Prisma.PickEnumerable<PipelineStageGroupByOutputType, T['by']> &
       {

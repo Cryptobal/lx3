@@ -210,7 +210,7 @@ export type PageViewGroupByOutputType = {
   _max: PageViewMaxAggregateOutputType | null
 }
 
-export type GetPageViewGroupByPayload<T extends PageViewGroupByArgs> = Prisma.PrismaPromise<
+type GetPageViewGroupByPayload<T extends PageViewGroupByArgs> = Prisma.PrismaPromise<
   Array<
     Prisma.PickEnumerable<PageViewGroupByOutputType, T['by']> &
       {

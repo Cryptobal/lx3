@@ -225,7 +225,7 @@ export type QuoteItemGroupByOutputType = {
   _max: QuoteItemMaxAggregateOutputType | null
 }
 
-export type GetQuoteItemGroupByPayload<T extends QuoteItemGroupByArgs> = Prisma.PrismaPromise<
+type GetQuoteItemGroupByPayload<T extends QuoteItemGroupByArgs> = Prisma.PrismaPromise<
   Array<
     Prisma.PickEnumerable<QuoteItemGroupByOutputType, T['by']> &
       {

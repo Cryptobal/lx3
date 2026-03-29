@@ -290,6 +290,10 @@
     "quickReply4": "¿Cómo es el proceso de trabajo?"
   },
   "cotizadorPage": {
+    "tabs": {
+      "web": "\uD83C\uDF10 Sitio Web",
+      "software": "\u2699\uFE0F Software"
+    },
     "steps": {
       "package": "Paquete",
       "addons": "Add-ons",
@@ -298,17 +302,21 @@
     },
     "step1": {
       "title": "Elige tu paquete",
-      "subtitle": "Selecciona el tipo de sitio web que necesitas."
+      "subtitle": "Selecciona el tipo de proyecto que necesitas."
     },
     "step2": {
       "title": "Agrega funcionalidades",
-      "subtitle": "Personaliza tu sitio con las funcionalidades que necesites.",
-      "note": "Todos los add-ons son opcionales. Puedes saltarte este paso."
+      "subtitle": "Personaliza tu proyecto con las funcionalidades que necesites.",
+      "note": "Todos los add-ons son opcionales. Puedes saltarte este paso.",
+      "includedTitle": "\u2713 Incluido en {package}",
+      "includedLabel": "Incluido en tu plan",
+      "additionalTitle": "Funcionalidades adicionales",
+      "closeInfo": "Cerrar"
     },
     "step3": {
-      "title": "Plan mensual SEO + Mantención",
-      "subtitle": "Elige un plan para mantener tu sitio optimizado y actualizado.",
-      "note": "Opcional. Incluye hosting, mantención técnica y SEO orgánico mensual."
+      "title": "Plan mensual",
+      "subtitle": "Elige un plan para mantener tu proyecto optimizado y con soporte.",
+      "note": "Opcional. Puedes deseleccionar haciendo click nuevamente."
     },
     "step4": {
       "title": "Tus datos",
@@ -317,42 +325,74 @@
     "packages": {
       "landing": {
         "name": "Landing Pro",
-        "description": "1 página, diseño a medida, formulario contacto, SEO on-page, mobile-first, hosting Vercel 1er año, dominio .cl 1er año. Entrega 7 días.",
+        "description": "1 página, diseño a medida, formulario contacto, SEO on-page, mobile-first, hosting Vercel 1er año, dominio .cl 1er año. 7 días.",
         "includes": [
           "Diseño a medida responsive",
           "Formulario de contacto",
-          "SEO on-page optimizado",
+          "SEO on-page básico",
           "Mobile-first design",
           "Hosting Vercel incluido 1er año",
-          "Dominio .cl incluido 1er año",
-          "Entrega en 7 días"
+          "Dominio .cl incluido 1er año"
         ]
       },
       "corporate": {
         "name": "Web Corporativa",
-        "description": "5-8 páginas, blog integrado, Google Analytics 4, SEO técnico completo, botón WhatsApp. Entrega 3 semanas.",
+        "description": "5-8 páginas, blog, analytics, SEO completo, WhatsApp. 3 semanas.",
         "includes": [
+          "Todo del Landing",
           "5 a 8 páginas personalizadas",
           "Blog integrado",
           "Google Analytics 4",
           "SEO técnico completo",
-          "Botón WhatsApp",
-          "Diseño responsive premium",
-          "Hosting Vercel incluido 1er año",
-          "Entrega en 3 semanas"
+          "Botón WhatsApp"
         ]
       },
       "platform": {
         "name": "Web + Funcionalidad",
-        "description": "Todo anterior + integraciones a medida, pasarela de pagos, CRM o reservas, catálogo con filtros, dashboard métricas. Cotización a medida.",
+        "description": "Integraciones, pagos, CRM, catálogos, a medida.",
         "includes": [
-          "Todo lo de Web Corporativa",
+          "Todo de la Corporativa",
           "Integraciones a medida",
           "Pasarela de pagos",
-          "CRM o sistema de reservas",
-          "Catálogo con filtros avanzados",
-          "Dashboard de métricas",
-          "Cotización y plazo a medida"
+          "CRM o reservas",
+          "Catálogo con filtros",
+          "Dashboard de métricas"
+        ]
+      },
+      "mvp": {
+        "name": "MVP Starter",
+        "description": "1 módulo core, auth, dashboard, 4-8 semanas.",
+        "includes": [
+          "1 módulo funcional core",
+          "Autenticación de usuarios",
+          "Dashboard básico",
+          "PostgreSQL",
+          "Deploy en Vercel",
+          "Soporte 30 días"
+        ]
+      },
+      "business": {
+        "name": "Plataforma Business",
+        "description": "3-5 módulos, integraciones, reportes, 8-12 semanas.",
+        "includes": [
+          "3 a 5 módulos",
+          "Roles y permisos",
+          "Dashboard analytics",
+          "Integraciones API",
+          "Reportes exportables",
+          "Capacitación"
+        ]
+      },
+      "enterprise": {
+        "name": "Enterprise",
+        "description": "Full custom, multi-módulo, IA, cotización a medida.",
+        "includes": [
+          "Módulos ilimitados",
+          "Multi-tenant",
+          "IA integrada",
+          "App mobile",
+          "SLA + soporte dedicado",
+          "Roadmap de evolución"
         ]
       }
     },
@@ -360,11 +400,37 @@
       "extraPage": "Página adicional",
       "blog": "Blog integrado",
       "whatsapp": "Integración WhatsApp",
-      "payments": "Mercado Pago / Flow",
-      "catalog": "Catálogo de productos",
+      "mercadopago": "Mercado Pago / Flow",
+      "catalogo": "Catálogo de productos",
       "forms": "Formularios avanzados",
       "chatbot": "Chatbot con IA",
-      "multilang": "Multilenguaje (ES/EN)"
+      "multilang": "Multilenguaje (ES/EN)",
+      "crm": "Módulo CRM",
+      "cotizaciones": "Cotizaciones / Facturación",
+      "roles": "Roles y permisos",
+      "api": "Integración API externa",
+      "mobile": "App mobile iOS/Android",
+      "dashboard": "Dashboard analytics",
+      "chatbotAi": "Chatbot IA interno",
+      "extraModule": "Módulo adicional"
+    },
+    "addonInfo": {
+      "extraPage": "Página extra con diseño a medida, SEO optimizado, responsive. Para secciones como equipo, portafolio, FAQ.",
+      "blog": "Sistema de blog con CMS para crear y editar artículos sin desarrollador. Cada post optimizado para Google.",
+      "whatsapp": "Botón flotante WhatsApp con mensaje predefinido. El visitante escribe directo a tu número con un tap.",
+      "mercadopago": "Pasarela de pagos con tarjeta, transferencia o débito. Compatible con WebPay, Mercado Pago y Flow.",
+      "catalogo": "Vitrina con filtros, categorías, buscador y fichas detalladas. Catálogo informativo, no e-commerce completo.",
+      "forms": "Formularios multi-paso, condicionales, validación en tiempo real, notificaciones por email.",
+      "chatbot": "Asistente entrenado con TU información. Responde preguntas, califica leads, deriva a WhatsApp.",
+      "multilang": "Sitio duplicado en español e inglés con rutas /es, /en. SEO independiente por idioma.",
+      "crm": "Gestión de contactos, pipeline de ventas kanban, historial de interacciones, seguimiento de oportunidades.",
+      "cotizaciones": "Cotizaciones PDF con branding, conversión a órdenes, registro de facturación. Integrable con SII.",
+      "roles": "Permisos granulares por rol: admin, supervisor, operador, cliente, etc.",
+      "api": "Conexión con servicios externos: ERP, contabilidad, APIs de terceros, webhooks. Cada una a medida.",
+      "mobile": "App nativa con Capacitor. Instalable desde tiendas, push notifications.",
+      "dashboard": "Panel de métricas en tiempo real, gráficos, KPIs, filtros por fecha, exportación.",
+      "chatbotAi": "IA para tu equipo: busca en docs, responde sobre procesos, genera reportes. Entrenado con tus datos.",
+      "extraModule": "Cualquier módulo: inventario, RRHH, tickets, agenda, gestión documental. Se define en conjunto."
     },
     "plans": {
       "basic": {
@@ -396,8 +462,39 @@
           "4 blog posts SEO al mes",
           "Keyword research mensual",
           "Link building básico",
-          "GA4 avanzado",
-          "Recomendaciones estratégicas"
+          "GA4 avanzado + reportes"
+        ]
+      },
+      "support": {
+        "name": "Soporte + Mantención",
+        "description": "Hosting, monitoreo, bug fixes y soporte.",
+        "features": [
+          "Hosting + monitoreo",
+          "Bug fixes",
+          "Actualizaciones de seguridad",
+          "Soporte email + WhatsApp"
+        ]
+      },
+      "evolution": {
+        "name": "Evolución continua",
+        "description": "Mejoras mensuales, nuevas funcionalidades, roadmap.",
+        "features": [
+          "Todo de Soporte",
+          "Mejoras mensuales (8h dev)",
+          "Nuevas funcionalidades",
+          "Reunión mensual roadmap",
+          "Priorización de backlog"
+        ]
+      },
+      "dedicated": {
+        "name": "Equipo Dedicado",
+        "description": "Desarrollo dedicado, sprints semanales, SLA.",
+        "features": [
+          "Todo de Evolución",
+          "20h desarrollo al mes",
+          "Sprint planning semanal",
+          "Slack dedicado",
+          "SLA 4h respuesta"
         ]
       }
     },
@@ -420,10 +517,14 @@
       "emailPlaceholder": "tu@email.com",
       "phone": "Teléfono",
       "phonePlaceholder": "+56 9 1234 5678",
+      "notes": "Notas",
+      "notesPlaceholder": "¿Algo que debamos saber sobre tu proyecto?",
       "disclaimer": "Precio referencial sujeto a evaluación final. IVA no incluido.",
-      "submit": "Enviar cotización →",
+      "submit": "Enviar cotización \u2192",
       "submitting": "Enviando...",
-      "errorGeneric": "Error al enviar. Intenta de nuevo."
+      "errorGeneric": "Error al enviar. Intenta de nuevo.",
+      "customQuoteText": "¿Tu proyecto no encaja en estos paquetes?",
+      "customQuoteLink": "Solicitar cotización 100% a medida \u2192"
     },
     "nav": {
       "back": "Atrás",
@@ -431,7 +532,7 @@
       "cotizaTuWeb": "Cotiza tu web"
     },
     "success": {
-      "title": "¡Cotización enviada!",
+      "title": "\u00A1Cotización enviada!",
       "message": "{name}, recibimos tu solicitud por {package} ({total}). {plan}. Te contactaremos en menos de 24 horas.",
       "noPlan": "Sin plan mensual",
       "newQuote": "Nueva cotización"
@@ -439,7 +540,7 @@
     "ctaSection": {
       "title": "¿Listo para cotizar?",
       "subtitle": "Arma tu sitio web paso a paso y obtén un precio en tiempo real.",
-      "button": "Cotiza tu sitio web →"
+      "button": "Cotiza tu sitio web \u2192"
     }
   }
 }

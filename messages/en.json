@@ -314,6 +314,10 @@
     "quickReply4": "How does your process work?"
   },
   "cotizadorPage": {
+    "tabs": {
+      "web": "\uD83C\uDF10 Website",
+      "software": "\u2699\uFE0F Software"
+    },
     "steps": {
       "package": "Package",
       "addons": "Add-ons",
@@ -322,17 +326,21 @@
     },
     "step1": {
       "title": "Choose your package",
-      "subtitle": "Select the type of website you need."
+      "subtitle": "Select the type of project you need."
     },
     "step2": {
       "title": "Add features",
-      "subtitle": "Customize your site with the features you need.",
-      "note": "All add-ons are optional. You can skip this step."
+      "subtitle": "Customize your project with the features you need.",
+      "note": "All add-ons are optional. You can skip this step.",
+      "includedTitle": "\u2713 Included in {package}",
+      "includedLabel": "Included in your plan",
+      "additionalTitle": "Additional features",
+      "closeInfo": "Close"
     },
     "step3": {
-      "title": "Monthly SEO + Maintenance Plan",
-      "subtitle": "Choose a plan to keep your site optimized and up to date.",
-      "note": "Optional. Includes hosting, technical maintenance and monthly organic SEO."
+      "title": "Monthly plan",
+      "subtitle": "Choose a plan to keep your project optimized and supported.",
+      "note": "Optional. Click again to deselect."
     },
     "step4": {
       "title": "Your details",
@@ -341,42 +349,74 @@
     "packages": {
       "landing": {
         "name": "Landing Pro",
-        "description": "1 page, custom design, contact form, on-page SEO, mobile-first, Vercel hosting 1st year, .cl domain 1st year. 7-day delivery.",
+        "description": "1 page, custom design, contact form, on-page SEO, mobile-first, Vercel hosting 1st year, .cl domain 1st year. 7 days.",
         "includes": [
           "Custom responsive design",
           "Contact form",
-          "Optimized on-page SEO",
+          "Basic on-page SEO",
           "Mobile-first design",
           "Vercel hosting included 1st year",
-          ".cl domain included 1st year",
-          "7-day delivery"
+          ".cl domain included 1st year"
         ]
       },
       "corporate": {
         "name": "Corporate Website",
-        "description": "5-8 pages, integrated blog, Google Analytics 4, full technical SEO, WhatsApp button. 3-week delivery.",
+        "description": "5-8 pages, blog, analytics, full SEO, WhatsApp. 3 weeks.",
         "includes": [
+          "Everything in Landing",
           "5 to 8 custom pages",
           "Integrated blog",
           "Google Analytics 4",
           "Full technical SEO",
-          "WhatsApp button",
-          "Premium responsive design",
-          "Vercel hosting included 1st year",
-          "3-week delivery"
+          "WhatsApp button"
         ]
       },
       "platform": {
         "name": "Web + Functionality",
-        "description": "All the above + custom integrations, payment gateway, CRM or bookings, catalog with filters, metrics dashboard. Custom quote.",
+        "description": "Integrations, payments, CRM, catalogs, custom-built.",
         "includes": [
-          "Everything in Corporate Website",
+          "Everything in Corporate",
           "Custom integrations",
           "Payment gateway",
-          "CRM or booking system",
-          "Catalog with advanced filters",
-          "Metrics dashboard",
-          "Custom quote and timeline"
+          "CRM or bookings",
+          "Catalog with filters",
+          "Metrics dashboard"
+        ]
+      },
+      "mvp": {
+        "name": "MVP Starter",
+        "description": "1 core module, auth, dashboard, 4-8 weeks.",
+        "includes": [
+          "1 functional core module",
+          "User authentication",
+          "Basic dashboard",
+          "PostgreSQL",
+          "Vercel deployment",
+          "30-day support"
+        ]
+      },
+      "business": {
+        "name": "Business Platform",
+        "description": "3-5 modules, integrations, reports, 8-12 weeks.",
+        "includes": [
+          "3 to 5 modules",
+          "Roles and permissions",
+          "Analytics dashboard",
+          "API integrations",
+          "Exportable reports",
+          "Training"
+        ]
+      },
+      "enterprise": {
+        "name": "Enterprise",
+        "description": "Full custom, multi-module, AI, custom quote.",
+        "includes": [
+          "Unlimited modules",
+          "Multi-tenant",
+          "Integrated AI",
+          "Mobile app",
+          "SLA + dedicated support",
+          "Evolution roadmap"
         ]
       }
     },
@@ -384,11 +424,37 @@
       "extraPage": "Additional page",
       "blog": "Integrated blog",
       "whatsapp": "WhatsApp integration",
-      "payments": "Mercado Pago / Flow",
-      "catalog": "Product catalog",
+      "mercadopago": "Mercado Pago / Flow",
+      "catalogo": "Product catalog",
       "forms": "Advanced forms",
       "chatbot": "AI Chatbot",
-      "multilang": "Multilanguage (ES/EN)"
+      "multilang": "Multilanguage (ES/EN)",
+      "crm": "CRM Module",
+      "cotizaciones": "Quotes / Billing",
+      "roles": "Roles & permissions",
+      "api": "External API integration",
+      "mobile": "Mobile app iOS/Android",
+      "dashboard": "Analytics dashboard",
+      "chatbotAi": "Internal AI Chatbot",
+      "extraModule": "Additional module"
+    },
+    "addonInfo": {
+      "extraPage": "Extra page with custom design, optimized SEO, responsive. For sections like team, portfolio, FAQ.",
+      "blog": "Blog system with CMS to create and edit articles without a developer. Each post optimized for Google.",
+      "whatsapp": "Floating WhatsApp button with predefined message. Visitors write directly to your number with one tap.",
+      "mercadopago": "Payment gateway with card, transfer or debit. Compatible with WebPay, Mercado Pago and Flow.",
+      "catalogo": "Showcase with filters, categories, search and detailed product pages. Informational catalog, not full e-commerce.",
+      "forms": "Multi-step forms, conditional logic, real-time validation, email notifications.",
+      "chatbot": "Assistant trained with YOUR information. Answers questions, qualifies leads, routes to WhatsApp.",
+      "multilang": "Site duplicated in Spanish and English with /es, /en routes. Independent SEO per language.",
+      "crm": "Contact management, kanban sales pipeline, interaction history, opportunity tracking.",
+      "cotizaciones": "Branded PDF quotes, conversion to orders, billing records. Integrable with local tax systems.",
+      "roles": "Granular permissions by role: admin, supervisor, operator, client, etc.",
+      "api": "Connection with external services: ERP, accounting, third-party APIs, webhooks. Each one custom-built.",
+      "mobile": "Native app with Capacitor. Installable from stores, push notifications.",
+      "dashboard": "Real-time metrics panel, charts, KPIs, date filters, export.",
+      "chatbotAi": "AI for your team: searches docs, answers about processes, generates reports. Trained with your data.",
+      "extraModule": "Any module: inventory, HR, tickets, scheduling, document management. Defined together."
     },
     "plans": {
       "basic": {
@@ -420,8 +486,39 @@
           "4 SEO blog posts per month",
           "Monthly keyword research",
           "Basic link building",
-          "Advanced GA4",
-          "Strategic recommendations"
+          "Advanced GA4 + reports"
+        ]
+      },
+      "support": {
+        "name": "Support + Maintenance",
+        "description": "Hosting, monitoring, bug fixes and support.",
+        "features": [
+          "Hosting + monitoring",
+          "Bug fixes",
+          "Security updates",
+          "Email + WhatsApp support"
+        ]
+      },
+      "evolution": {
+        "name": "Continuous Evolution",
+        "description": "Monthly improvements, new features, roadmap.",
+        "features": [
+          "Everything in Support",
+          "Monthly improvements (8h dev)",
+          "New features",
+          "Monthly roadmap meeting",
+          "Backlog prioritization"
+        ]
+      },
+      "dedicated": {
+        "name": "Dedicated Team",
+        "description": "Dedicated development, weekly sprints, SLA.",
+        "features": [
+          "Everything in Evolution",
+          "20h development per month",
+          "Weekly sprint planning",
+          "Dedicated Slack",
+          "4h SLA response"
         ]
       }
     },
@@ -444,10 +541,14 @@
       "emailPlaceholder": "you@email.com",
       "phone": "Phone",
       "phonePlaceholder": "+56 9 1234 5678",
+      "notes": "Notes",
+      "notesPlaceholder": "Anything we should know about your project?",
       "disclaimer": "Reference price subject to final evaluation. VAT not included.",
-      "submit": "Send quote →",
+      "submit": "Send quote \u2192",
       "submitting": "Sending...",
-      "errorGeneric": "Error sending. Please try again."
+      "errorGeneric": "Error sending. Please try again.",
+      "customQuoteText": "Your project doesn't fit these packages?",
+      "customQuoteLink": "Request a fully custom quote \u2192"
     },
     "nav": {
       "back": "Back",
@@ -463,7 +564,7 @@
     "ctaSection": {
       "title": "Ready to get a quote?",
       "subtitle": "Build your website step by step and get a real-time price.",
-      "button": "Get your website quote →"
+      "button": "Get your website quote \u2192"
     }
   }
 }

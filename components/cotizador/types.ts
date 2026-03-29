@@ -1,3 +1,5 @@
+export type ProductType = "web" | "software";
+
 export interface Package {
   id: string;
   nameKey: string;
@@ -7,6 +9,7 @@ export interface Package {
   priceLabel: string;
   badge?: string;
   color: string;
+  includedAddons: string[];
 }
 
 export interface Addon {
@@ -14,6 +17,7 @@ export interface Addon {
   nameKey: string;
   price: number;
   type: "toggle" | "counter";
+  infoKey: string;
 }
 
 export interface MonthlyPlan {
@@ -30,9 +34,11 @@ export interface FormData {
   company: string;
   email: string;
   phone: string;
+  notes: string;
 }
 
 export interface CotizadorState {
+  product: ProductType;
   step: number;
   selectedPackage: string | null;
   addonCounts: Record<string, number>;

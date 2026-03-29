@@ -6,14 +6,15 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "@/lib/i18n/routing";
 import { cn } from "@/lib/utils/cn";
 
-import type { CotizadorState, FormData } from "./types";
-import { packages, addons, monthlyPlans, formatCLP } from "./data";
+import type { CotizadorState, FormData, ProductType } from "./types";
+import { getPackages, getAddons, getPlans, formatCLP } from "./data";
 import { StepIndicator } from "./StepIndicator";
 import { PackageCard } from "./PackageCard";
 import { AddonItem } from "./AddonItem";
 import { MonthlyPlanCard } from "./MonthlyPlanCard";
 import { PriceSummary } from "./PriceSummary";
 import { FloatingBar } from "./FloatingBar";
+import { InfoModal } from "./InfoModal";
 
 const TOTAL_STEPS = 4;
 
@@ -29,42 +30,57 @@ const slideVariants = {
   }),
 };
 
-export function Cotizador() {
-  const t = useTranslations("cotizadorPage");
-
-  const [state, setState] = useState<CotizadorState>({
+function initialState(): CotizadorState {
+  return {
+    product: "web",
     step: 1,
     selectedPackage: null,
     addonCounts: {},
     monthlyPlan: null,
-    formData: { name: "", company: "", email: "", phone: "" },
-  });
+    formData: { name: "", company: "", email: "", phone: "", notes: "" },
+  };
+}
 
+export function Cotizador() {
+  const t = useTranslations("cotizadorPage");
+
+  const [state, setState] = useState<CotizadorState>(initialState);
   const [direction, setDirection] = useState(1);
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  const packages = useMemo(() => getPackages(state.product), [state.product]);
+  const addons = useMemo(() => getAddons(state.product), [state.product]);
+  const plans = useMemo(() => getPlans(state.product), [state.product]);
+
+  const selectedPkg = useMemo(
+    () => packages.find((p) => p.id === state.selectedPackage) ?? null,
+    [packages, state.selectedPackage]
+  );
+
   // Calculate totals
   const totalOneTime = useMemo(() => {
-    const pkg = packages.find((p) => p.id === state.selectedPackage);
-    const pkgPrice = pkg?.price ?? 0;
+    const pkgPrice = selectedPkg?.price ?? 0;
     const addonsPrice = addons.reduce((sum, addon) => {
       const count = state.addonCounts[addon.id] ?? 0;
+      const isIncluded = selectedPkg?.includedAddons.includes(addon.id);
+      if (isIncluded) return sum;
       return sum + addon.price * count;
     }, 0);
     return pkgPrice + addonsPrice;
-  }, [state.selectedPackage, state.addonCounts]);
+  }, [selectedPkg, state.addonCounts, addons]);
 
   const totalMonthly = useMemo(() => {
-    const plan = monthlyPlans.find((p) => p.id === state.monthlyPlan);
+    const plan = plans.find((p) => p.id === state.monthlyPlan);
     return plan?.price ?? 0;
-  }, [state.monthlyPlan]);
+  }, [state.monthlyPlan, plans]);
 
-  const goTo = useCallback((step: number) => {
-    setDirection(step > state.step ? 1 : -1);
-    setState((prev) => ({ ...prev, step }));
-  }, [state.step]);
+  const switchProduct = useCallback((product: ProductType) => {
+    setState({ ...initialState(), product });
+    setDirection(1);
+    setError(null);
+  }, []);
 
   const next = useCallback(() => {
     if (state.step < TOTAL_STEPS) {
@@ -97,6 +113,7 @@ export function Cotizador() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
+          product: state.product,
           formData: state.formData,
           selectedPackage: state.selectedPackage,
           addonCounts: state.addonCounts,
@@ -120,13 +137,7 @@ export function Cotizador() {
   };
 
   const reset = () => {
-    setState({
-      step: 1,
-      selectedPackage: null,
-      addonCounts: {},
-      monthlyPlan: null,
-      formData: { name: "", company: "", email: "", phone: "" },
-    });
+    setState(initialState());
     setSubmitted(false);
     setError(null);
   };
@@ -147,8 +158,7 @@ export function Cotizador() {
 
   // Success screen
   if (submitted) {
-    const pkg = packages.find((p) => p.id === state.selectedPackage);
-    const plan = monthlyPlans.find((p) => p.id === state.monthlyPlan);
+    const plan = plans.find((p) => p.id === state.monthlyPlan);
 
     return (
       <div className="flex min-h-[60vh] items-center justify-center px-4">
@@ -157,7 +167,7 @@ export function Cotizador() {
           animate={{ scale: 1, opacity: 1 }}
           className="max-w-md text-center"
         >
-          <div className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-[var(--green-light)]">
+          <div className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-[var(--green)]/10">
             <svg className="h-10 w-10 text-[var(--green)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
             </svg>
@@ -168,7 +178,7 @@ export function Cotizador() {
           <p className="mt-4 text-sm leading-relaxed text-[var(--text-secondary)]">
             {t("success.message", {
               name: state.formData.name,
-              package: pkg ? t(pkg.nameKey) : "",
+              package: selectedPkg ? t(selectedPkg.nameKey) : "",
               total: formatCLP(totalOneTime),
               plan: plan ? `${t(plan.nameKey)} (${formatCLP(plan.price)}/mes)` : t("success.noPlan"),
             })}
@@ -186,6 +196,36 @@ export function Cotizador() {
 
   return (
     <div className="mx-auto max-w-6xl px-4 pb-28 sm:px-6 min-[900px]:pb-8">
+      {/* Product Tabs */}
+      <div className="mb-8 flex justify-center">
+        <div className="inline-flex rounded-xl border border-[var(--border-default)] bg-[var(--bg-elevated)] p-1">
+          <button
+            type="button"
+            onClick={() => switchProduct("web")}
+            className={cn(
+              "rounded-lg px-5 py-2.5 text-sm font-medium transition-all duration-200",
+              state.product === "web"
+                ? "bg-[var(--accent)] text-white shadow-sm"
+                : "text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
+            )}
+          >
+            {t("tabs.web")}
+          </button>
+          <button
+            type="button"
+            onClick={() => switchProduct("software")}
+            className={cn(
+              "rounded-lg px-5 py-2.5 text-sm font-medium transition-all duration-200",
+              state.product === "software"
+                ? "bg-[var(--accent)] text-white shadow-sm"
+                : "text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
+            )}
+          >
+            {t("tabs.software")}
+          </button>
+        </div>
+      </div>
+
       {/* Step indicator */}
       <div className="mb-8 sm:mb-10">
         <StepIndicator currentStep={state.step} totalSteps={TOTAL_STEPS} labels={stepLabels} />
@@ -196,7 +236,7 @@ export function Cotizador() {
         <div className="flex-1">
           <AnimatePresence mode="wait" custom={direction}>
             <motion.div
-              key={state.step}
+              key={`${state.product}-${state.step}`}
               custom={direction}
               variants={slideVariants}
               initial="enter"
@@ -207,14 +247,23 @@ export function Cotizador() {
               {state.step === 1 && (
                 <Step1
                   t={t}
+                  packages={packages}
                   selectedPackage={state.selectedPackage}
-                  onSelect={(id) => setState((p) => ({ ...p, selectedPackage: id }))}
+                  onSelect={(id) =>
+                    setState((p) => ({
+                      ...p,
+                      selectedPackage: id,
+                      addonCounts: {},
+                    }))
+                  }
                 />
               )}
               {state.step === 2 && (
                 <Step2
                   t={t}
+                  addons={addons}
                   addonCounts={state.addonCounts}
+                  selectedPkg={selectedPkg}
                   onChange={(id, count) =>
                     setState((p) => ({
                       ...p,
@@ -226,6 +275,7 @@ export function Cotizador() {
               {state.step === 3 && (
                 <Step3
                   t={t}
+                  plans={plans}
                   selectedPlan={state.monthlyPlan}
                   onSelect={(id) =>
                     setState((p) => ({
@@ -315,10 +365,12 @@ export function Cotizador() {
 
 function Step1({
   t,
+  packages,
   selectedPackage,
   onSelect,
 }: {
   t: ReturnType<typeof useTranslations>;
+  packages: ReturnType<typeof getPackages>;
   selectedPackage: string | null;
   onSelect: (id: string) => void;
 }) {
@@ -350,13 +402,23 @@ function Step1({
 
 function Step2({
   t,
+  addons,
   addonCounts,
+  selectedPkg,
   onChange,
 }: {
   t: ReturnType<typeof useTranslations>;
+  addons: ReturnType<typeof getAddons>;
   addonCounts: Record<string, number>;
+  selectedPkg: ReturnType<typeof getPackages>[number] | null;
   onChange: (id: string, count: number) => void;
 }) {
+  const [infoAddon, setInfoAddon] = useState<string | null>(null);
+  const infoAddonData = addons.find((a) => a.id === infoAddon);
+
+  const includedAddons = addons.filter((a) => selectedPkg?.includedAddons.includes(a.id));
+  const availableAddons = addons.filter((a) => !selectedPkg?.includedAddons.includes(a.id));
+
   return (
     <div>
       <h2 className="font-display text-xl font-bold text-[var(--text-primary)] sm:text-2xl">
@@ -365,31 +427,77 @@ function Step2({
       <p className="mt-2 text-sm text-[var(--text-secondary)]">
         {t("step2.subtitle")}
       </p>
-      <div className="mt-6 space-y-3">
-        {addons.map((addon) => (
-          <AddonItem
-            key={addon.id}
-            name={t(addon.nameKey)}
-            price={addon.price}
-            type={addon.type}
-            count={addonCounts[addon.id] ?? 0}
-            onChange={(count) => onChange(addon.id, count)}
-          />
-        ))}
+
+      {/* Included addons */}
+      {includedAddons.length > 0 && (
+        <div className="mt-6">
+          <h3 className="mb-3 text-sm font-medium text-[var(--green)]">
+            {t("step2.includedTitle", { package: selectedPkg ? t(selectedPkg.nameKey) : "" })}
+          </h3>
+          <div className="space-y-3">
+            {includedAddons.map((addon) => (
+              <AddonItem
+                key={addon.id}
+                name={t(addon.nameKey)}
+                price={addon.price}
+                type={addon.type}
+                count={0}
+                onChange={() => {}}
+                included
+                includedLabel={t("step2.includedLabel")}
+                onInfoClick={() => setInfoAddon(addon.id)}
+              />
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Available addons */}
+      <div className={cn("mt-6", includedAddons.length > 0 && "mt-8")}>
+        {includedAddons.length > 0 && (
+          <h3 className="mb-3 text-sm font-medium text-[var(--text-secondary)]">
+            {t("step2.additionalTitle")}
+          </h3>
+        )}
+        <div className="space-y-3">
+          {availableAddons.map((addon) => (
+            <AddonItem
+              key={addon.id}
+              name={t(addon.nameKey)}
+              price={addon.price}
+              type={addon.type}
+              count={addonCounts[addon.id] ?? 0}
+              onChange={(count) => onChange(addon.id, count)}
+              onInfoClick={() => setInfoAddon(addon.id)}
+            />
+          ))}
+        </div>
       </div>
+
       <p className="mt-4 text-xs text-[var(--text-tertiary)]">
         {t("step2.note")}
       </p>
+
+      {/* Info Modal */}
+      <InfoModal
+        open={!!infoAddon}
+        onClose={() => setInfoAddon(null)}
+        title={infoAddonData ? t(infoAddonData.nameKey) : ""}
+        description={infoAddonData ? t(infoAddonData.infoKey) : ""}
+        closeLabel={t("step2.closeInfo")}
+      />
     </div>
   );
 }
 
 function Step3({
   t,
+  plans,
   selectedPlan,
   onSelect,
 }: {
   t: ReturnType<typeof useTranslations>;
+  plans: ReturnType<typeof getPlans>;
   selectedPlan: string | null;
   onSelect: (id: string) => void;
 }) {
@@ -402,7 +510,7 @@ function Step3({
         {t("step3.subtitle")}
       </p>
       <div className="mt-6 space-y-4">
-        {monthlyPlans.map((plan) => (
+        {plans.map((plan) => (
           <MonthlyPlanCard
             key={plan.id}
             planId={plan.id}
@@ -519,6 +627,31 @@ function Step4({
             placeholder={t("form.phonePlaceholder")}
           />
         </div>
+        <div>
+          <label className="mb-1.5 block text-sm font-medium text-[var(--text-secondary)]">
+            {t("form.notes")}
+          </label>
+          <textarea
+            value={formData.notes}
+            onChange={(e) => onFieldChange("notes", e.target.value)}
+            rows={3}
+            className="w-full resize-none rounded-xl border border-[var(--border-default)] bg-[var(--bg-surface)] px-4 py-3 text-sm text-[var(--text-primary)] placeholder:text-[var(--text-muted)] focus:border-[var(--accent)] focus:outline-none focus:ring-1 focus:ring-[var(--accent)]"
+            placeholder={t("form.notesPlaceholder")}
+          />
+        </div>
+      </div>
+
+      {/* Custom quote CTA */}
+      <div className="mt-6 rounded-xl border border-dashed border-[var(--border-strong)] bg-[var(--bg-surface)] p-5 text-center">
+        <p className="text-sm text-[var(--text-secondary)]">
+          {t("form.customQuoteText")}
+        </p>
+        <Link
+          href="/contacto"
+          className="mt-2 inline-block text-sm font-semibold text-[var(--coral)] transition-colors hover:text-[var(--coral-hover)]"
+        >
+          {t("form.customQuoteLink")}
+        </Link>
       </div>
 
       <p className="mt-4 text-xs text-[var(--text-tertiary)]">

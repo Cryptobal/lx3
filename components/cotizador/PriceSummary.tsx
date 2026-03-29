@@ -1,7 +1,6 @@
 "use client";
 
-import { formatCLP } from "./data";
-import { packages, addons, monthlyPlans } from "./data";
+import { formatCLP, getPackages, getAddons, getPlans } from "./data";
 import type { CotizadorState } from "./types";
 
 interface PriceSummaryProps {
@@ -13,10 +12,18 @@ interface PriceSummaryProps {
 }
 
 export function PriceSummary({ state, totalOneTime, totalMonthly, t }: PriceSummaryProps) {
-  const pkg = packages.find((p) => p.id === state.selectedPackage);
-  const plan = monthlyPlans.find((p) => p.id === state.monthlyPlan);
+  const packages = getPackages(state.product);
+  const addons = getAddons(state.product);
+  const plans = getPlans(state.product);
 
-  const activeAddons = addons.filter((a) => (state.addonCounts[a.id] ?? 0) > 0);
+  const pkg = packages.find((p) => p.id === state.selectedPackage);
+  const plan = plans.find((p) => p.id === state.monthlyPlan);
+
+  const activeAddons = addons.filter((a) => {
+    const count = state.addonCounts[a.id] ?? 0;
+    const isIncluded = pkg?.includedAddons.includes(a.id);
+    return count > 0 && !isIncluded;
+  });
 
   return (
     <div className="rounded-2xl border border-[var(--border-default)] bg-[var(--bg-elevated)] p-6">

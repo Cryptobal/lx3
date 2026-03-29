@@ -142,6 +142,15 @@ export default function LoginPage() {
             </button>
           </form>
         </div>
+
+        <p className="mt-6 max-w-sm mx-auto text-center text-xs leading-relaxed text-zinc-500">
+          ¿Primer deploy? El usuario admin debe crearse en la base de datos: ejecuta{" "}
+          <code className="rounded bg-zinc-900 px-1 py-0.5 text-zinc-400">
+            pnpm db:seed
+          </code>{" "}
+          con <code className="rounded bg-zinc-900 px-1 py-0.5 text-zinc-400">DATABASE_URL</code> de
+          producción, o usa el endpoint de setup con la clave configurada en el servidor.
+        </p>
       </div>
     </div>
   );

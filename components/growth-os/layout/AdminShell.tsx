@@ -19,7 +19,7 @@ export function AdminShell({ children, user }: AdminShellProps) {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-zinc-50 dark:bg-zinc-950">
       <AdminSidebar
         collapsed={collapsed}
         onToggle={() => setCollapsed((c) => !c)}
@@ -38,7 +38,7 @@ export function AdminShell({ children, user }: AdminShellProps) {
           user={user}
         />
 
-        <main className="flex-1 p-4 sm:p-6">{children}</main>
+        <main className="flex-1 px-4 py-4 sm:px-6 sm:py-6">{children}</main>
       </div>
     </div>
   );

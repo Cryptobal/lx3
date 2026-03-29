@@ -67,8 +67,8 @@ function NavLink({
       className={cn(
         "flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors",
         active
-          ? "bg-blue-50 text-blue-700"
-          : "text-gray-600 hover:bg-gray-100 hover:text-gray-900",
+          ? "bg-blue-50 text-blue-700 dark:bg-blue-500/10 dark:text-blue-400"
+          : "text-gray-600 hover:bg-gray-100 hover:text-gray-900 dark:text-zinc-400 dark:hover:bg-zinc-800 dark:hover:text-zinc-200",
         collapsed && "justify-center px-2"
       )}
       title={collapsed ? item.label : undefined}
@@ -93,14 +93,14 @@ function SidebarContent({
       {/* Logo */}
       <div
         className={cn(
-          "flex h-16 items-center border-b border-gray-200 px-4",
+          "flex h-16 items-center border-b border-gray-200 dark:border-zinc-800 px-4",
           collapsed && "justify-center px-2"
         )}
       >
         <div className="flex items-center gap-2">
           <span className="text-xl font-bold text-blue-600">LX3</span>
           {!collapsed && (
-            <span className="text-sm font-medium text-gray-500">Growth OS</span>
+            <span className="text-sm font-medium text-gray-500 dark:text-zinc-500">Growth OS</span>
           )}
         </div>
       </div>
@@ -118,7 +118,7 @@ function SidebarContent({
       </nav>
 
       {/* Separator + bottom nav */}
-      <div className="border-t border-gray-200 px-3 py-4">
+      <div className="border-t border-gray-200 dark:border-zinc-800 px-3 py-4">
         {bottomNav.map((item) => (
           <NavLink
             key={item.href}
@@ -130,10 +130,10 @@ function SidebarContent({
       </div>
 
       {/* Collapse toggle */}
-      <div className="hidden border-t border-gray-200 p-3 lg:block">
+      <div className="hidden border-t border-gray-200 dark:border-zinc-800 p-3 lg:block">
         <button
           onClick={onToggle}
-          className="flex w-full items-center justify-center rounded-lg p-2 text-gray-400 transition-colors hover:bg-gray-100 hover:text-gray-600"
+          className="flex w-full items-center justify-center rounded-lg p-2 text-gray-400 transition-colors hover:bg-gray-100 hover:text-gray-600 dark:text-zinc-500 dark:hover:bg-zinc-800 dark:hover:text-zinc-300"
           aria-label={collapsed ? "Expandir menú" : "Colapsar menú"}
         >
           {collapsed ? (
@@ -160,7 +160,7 @@ export function AdminSidebar({
       {/* Desktop sidebar */}
       <aside
         className={cn(
-          "fixed inset-y-0 left-0 z-30 hidden border-r border-gray-200 bg-white transition-[width] duration-200 ease-in-out lg:block",
+          "fixed inset-y-0 left-0 z-30 hidden border-r border-gray-200 bg-white transition-[width] duration-200 ease-in-out lg:block dark:border-zinc-800 dark:bg-zinc-900",
           collapsed ? "w-16" : "w-[280px]"
         )}
       >
@@ -188,11 +188,11 @@ export function AdminSidebar({
               animate={{ x: 0 }}
               exit={{ x: -280 }}
               transition={{ type: "spring", damping: 25, stiffness: 300 }}
-              className="fixed inset-y-0 left-0 z-50 w-[280px] border-r border-gray-200 bg-white lg:hidden"
+              className="fixed inset-y-0 left-0 z-50 w-[280px] border-r border-gray-200 bg-white lg:hidden dark:border-zinc-800 dark:bg-zinc-900"
             >
               <button
                 onClick={onMobileClose}
-                className="absolute right-3 top-4 rounded-lg p-1.5 text-gray-400 hover:bg-gray-100 hover:text-gray-600"
+                className="absolute right-3 top-4 rounded-lg p-1.5 text-gray-400 hover:bg-gray-100 hover:text-gray-600 dark:text-zinc-500 dark:hover:bg-zinc-800 dark:hover:text-zinc-300"
                 aria-label="Cerrar menú"
               >
                 <X className="h-5 w-5" />

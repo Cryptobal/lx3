@@ -1,6 +1,7 @@
 import { Inter } from "next/font/google";
 import { SessionProvider } from "next-auth/react";
 import { Toaster } from "sonner";
+import { ThemeProvider } from "@/components/growth-os/layout/ThemeProvider";
 import "@/app/globals.css";
 
 const inter = Inter({
@@ -21,13 +22,13 @@ export default function AdminLayout({
 }) {
   return (
     <html lang="es" suppressHydrationWarning>
-      <body
-        className={`${inter.variable} bg-gray-50 font-sans antialiased`}
-      >
-        <SessionProvider>
-          {children}
-          <Toaster position="top-right" richColors />
-        </SessionProvider>
+      <body className={`${inter.variable} bg-zinc-50 dark:bg-zinc-950 font-sans antialiased text-zinc-900 dark:text-zinc-100`}>
+        <ThemeProvider>
+          <SessionProvider>
+            {children}
+            <Toaster position="top-right" richColors theme="system" />
+          </SessionProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

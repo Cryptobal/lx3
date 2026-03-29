@@ -104,7 +104,7 @@ export function QuotePublicView({ quoteId, status }: QuotePublicViewProps) {
           onClick={() =>
             window.alert("Descarga de PDF disponible próximamente")
           }
-          className="flex-1 flex items-center justify-center gap-2 border border-zinc-300 text-zinc-700 px-6 py-3 rounded-lg font-medium hover:bg-zinc-100 transition-colors"
+          className="flex-1 flex items-center justify-center gap-2 border border-zinc-300 dark:border-zinc-600 text-zinc-700 dark:text-zinc-300 px-6 py-3 rounded-lg font-medium hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
         >
           <Download className="h-5 w-5" />
           Descargar PDF
@@ -112,7 +112,7 @@ export function QuotePublicView({ quoteId, status }: QuotePublicViewProps) {
         <button
           onClick={handleAccept}
           disabled={submitting}
-          className="flex-1 flex items-center justify-center gap-2 bg-emerald-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-emerald-700 disabled:opacity-50 transition-colors"
+          className="flex-1 flex items-center justify-center gap-2 bg-emerald-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-emerald-700 dark:hover:bg-emerald-500 disabled:opacity-50 transition-colors"
         >
           {submitting ? (
             <Loader2 className="h-5 w-5 animate-spin" />
@@ -124,7 +124,7 @@ export function QuotePublicView({ quoteId, status }: QuotePublicViewProps) {
         <button
           onClick={() => setShowChangesForm(!showChangesForm)}
           disabled={submitting}
-          className="flex-1 flex items-center justify-center gap-2 border border-zinc-300 text-zinc-700 px-6 py-3 rounded-lg font-medium hover:bg-zinc-100 disabled:opacity-50 transition-colors"
+          className="flex-1 flex items-center justify-center gap-2 border border-zinc-300 dark:border-zinc-600 text-zinc-700 dark:text-zinc-300 px-6 py-3 rounded-lg font-medium hover:bg-zinc-100 dark:hover:bg-zinc-800 disabled:opacity-50 transition-colors"
         >
           <MessageSquare className="h-5 w-5" />
           Solicitar Cambios
@@ -132,22 +132,22 @@ export function QuotePublicView({ quoteId, status }: QuotePublicViewProps) {
       </div>
 
       {showChangesForm && (
-        <div className="border border-zinc-200 rounded-lg p-4 space-y-3">
-          <label className="block text-sm font-medium text-zinc-700">
+        <div className="border border-zinc-200 dark:border-zinc-700 rounded-lg p-4 space-y-3">
+          <label className="block text-sm font-medium text-zinc-700 dark:text-zinc-300">
             Describe los cambios que necesitas
           </label>
           <textarea
             value={changesMessage}
             onChange={(e) => setChangesMessage(e.target.value)}
             placeholder="Ej: Necesito agregar un servicio adicional de mantenimiento..."
-            className="w-full border border-zinc-300 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-zinc-900/10 resize-none"
+            className="w-full border border-zinc-300 dark:border-zinc-600 dark:bg-zinc-800 dark:text-zinc-100 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-zinc-900/10 dark:focus:ring-zinc-500/20 resize-none dark:placeholder:text-zinc-500"
             rows={4}
           />
           <div className="flex items-center gap-3">
             <button
               onClick={handleRequestChanges}
               disabled={submitting || !changesMessage.trim()}
-              className="inline-flex items-center gap-2 bg-zinc-900 text-white px-5 py-2.5 rounded-lg text-sm font-medium hover:bg-zinc-800 disabled:opacity-50 transition-colors"
+              className="inline-flex items-center gap-2 bg-zinc-900 dark:bg-zinc-100 text-white dark:text-zinc-900 px-5 py-2.5 rounded-lg text-sm font-medium hover:bg-zinc-800 dark:hover:bg-zinc-200 disabled:opacity-50 transition-colors"
             >
               {submitting ? (
                 <Loader2 className="h-4 w-4 animate-spin" />
@@ -159,7 +159,7 @@ export function QuotePublicView({ quoteId, status }: QuotePublicViewProps) {
                 setShowChangesForm(false);
                 setChangesMessage("");
               }}
-              className="text-sm text-zinc-500 hover:text-zinc-700 transition-colors"
+              className="text-sm text-zinc-500 hover:text-zinc-700 dark:hover:text-zinc-300 transition-colors"
             >
               Cancelar
             </button>

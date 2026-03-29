@@ -2,39 +2,40 @@
 
 import { useState, useTransition } from "react";
 import {
-  ArrowUp,
-  ArrowDown,
-  Trash2,
+  GripVertical,
   Plus,
+  Pencil,
+  Trash2,
   Trophy,
   XCircle,
-  Loader2,
+  X,
 } from "lucide-react";
-import { cn } from "@/lib/utils/cn";
 import { Badge } from "@/components/growth-os/shared/Badge";
-import {
-  createPipelineStage,
-  updatePipelineStage,
-  deletePipelineStage,
-  reorderPipelineStages,
-} from "@/lib/growth-os/actions/settings";
 import { toast } from "sonner";
 
-interface StageData {
+interface Stage {
   id: string;
   name: string;
-  color: string | null;
   order: number;
+  color: string | null;
+  isDefault: boolean;
   isWon: boolean;
   isLost: boolean;
-  dealCount: number;
+  _count: { deals: number };
 }
 
 interface PipelineSettingsProps {
-  initialStages: StageData[];
+  initialStages: Stage[];
 }
 
-const PRESET_COLORS = [
+interface StageFormData {
+  name: string;
+  color: string;
+  isWon: boolean;
+  isLost: boolean;
+}
+
+const DEFAULT_COLORS = [
   "#6B7280",
   "#3B82F6",
   "#10B981",
@@ -42,141 +43,104 @@ const PRESET_COLORS = [
   "#EF4444",
   "#8B5CF6",
   "#EC4899",
-  "#06B6D4",
-  "#F97316",
   "#14B8A6",
 ];
 
 export function PipelineSettings({ initialStages }: PipelineSettingsProps) {
-  const [stages, setStages] = useState<StageData[]>(initialStages);
-  const [newName, setNewName] = useState("");
-  const [newColor, setNewColor] = useState("#3B82F6");
-  const [editingId, setEditingId] = useState<string | null>(null);
-  const [editName, setEditName] = useState("");
-  const [editColor, setEditColor] = useState("");
+  const [stages, setStages] = useState<Stage[]>(initialStages);
+  const [showModal, setShowModal] = useState(false);
+  const [editingStage, setEditingStage] = useState<Stage | null>(null);
+  const [deleteConfirm, setDeleteConfirm] = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();
 
-  function handleAdd() {
-    if (!newName.trim()) return;
+  const [form, setForm] = useState<StageFormData>({
+    name: "",
+    color: "#3B82F6",
+    isWon: false,
+    isLost: false,
+  });
 
-    startTransition(async () => {
-      try {
-        const stage = await createPipelineStage({
-          name: newName.trim(),
-          color: newColor,
-        });
-        setStages((prev) => [
-          ...prev,
-          {
-            id: stage.id,
-            name: stage.name,
-            color: stage.color,
-            order: stage.order,
-            isWon: stage.isWon,
-            isLost: stage.isLost,
-            dealCount: 0,
-          },
-        ]);
-        setNewName("");
-        toast.success("Etapa creada");
-      } catch (error) {
-        toast.error(
-          error instanceof Error ? error.message : "Error al crear etapa"
-        );
-      }
+  function openAddModal() {
+    setEditingStage(null);
+    setForm({ name: "", color: "#3B82F6", isWon: false, isLost: false });
+    setShowModal(true);
+  }
+
+  function openEditModal(stage: Stage) {
+    setEditingStage(stage);
+    setForm({
+      name: stage.name,
+      color: stage.color ?? "#6B7280",
+      isWon: stage.isWon,
+      isLost: stage.isLost,
     });
+    setShowModal(true);
   }
 
-  function handleStartEdit(stage: StageData) {
-    setEditingId(stage.id);
-    setEditName(stage.name);
-    setEditColor(stage.color || "#6B7280");
-  }
-
-  function handleSaveEdit(id: string) {
-    if (!editName.trim()) return;
-
-    startTransition(async () => {
-      try {
-        await updatePipelineStage(id, {
-          name: editName.trim(),
-          color: editColor,
-        });
-        setStages((prev) =>
-          prev.map((s) =>
-            s.id === id ? { ...s, name: editName.trim(), color: editColor } : s
-          )
-        );
-        setEditingId(null);
-        toast.success("Etapa actualizada");
-      } catch (error) {
-        toast.error(
-          error instanceof Error ? error.message : "Error al actualizar"
-        );
-      }
-    });
-  }
-
-  function handleToggleWon(stage: StageData) {
-    startTransition(async () => {
-      try {
-        const newIsWon = !stage.isWon;
-        await updatePipelineStage(stage.id, {
-          isWon: newIsWon,
-          isLost: false,
-        });
-        setStages((prev) =>
-          prev.map((s) =>
-            s.id === stage.id
-              ? { ...s, isWon: newIsWon, isLost: false }
-              : s
-          )
-        );
-        toast.success(newIsWon ? "Marcada como ganada" : "Desmarcada");
-      } catch (error) {
-        toast.error(
-          error instanceof Error ? error.message : "Error al actualizar"
-        );
-      }
-    });
-  }
-
-  function handleToggleLost(stage: StageData) {
-    startTransition(async () => {
-      try {
-        const newIsLost = !stage.isLost;
-        await updatePipelineStage(stage.id, {
-          isLost: newIsLost,
-          isWon: false,
-        });
-        setStages((prev) =>
-          prev.map((s) =>
-            s.id === stage.id
-              ? { ...s, isLost: newIsLost, isWon: false }
-              : s
-          )
-        );
-        toast.success(newIsLost ? "Marcada como perdida" : "Desmarcada");
-      } catch (error) {
-        toast.error(
-          error instanceof Error ? error.message : "Error al actualizar"
-        );
-      }
-    });
-  }
-
-  function handleDelete(stage: StageData) {
-    if (stage.dealCount > 0) {
-      toast.error(
-        `No se puede eliminar: tiene ${stage.dealCount} negocio(s) asociado(s)`
-      );
+  function handleSave() {
+    if (!form.name.trim()) {
+      toast.error("El nombre es requerido");
       return;
     }
 
     startTransition(async () => {
       try {
-        await deletePipelineStage(stage.id);
-        setStages((prev) => prev.filter((s) => s.id !== stage.id));
+        const url = editingStage
+          ? `/api/growth-os/settings/stages/${editingStage.id}`
+          : "/api/growth-os/settings/stages";
+
+        const method = editingStage ? "PUT" : "POST";
+        const body = editingStage
+          ? { ...form }
+          : { ...form, order: stages.length };
+
+        const res = await fetch(url, {
+          method,
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(body),
+        });
+
+        if (!res.ok) {
+          const err = await res.json().catch(() => ({}));
+          throw new Error(err.error ?? "Error al guardar");
+        }
+
+        const { data } = await res.json();
+
+        if (editingStage) {
+          setStages((prev) =>
+            prev.map((s) => (s.id === editingStage.id ? { ...s, ...data } : s))
+          );
+          toast.success("Etapa actualizada");
+        } else {
+          setStages((prev) => [...prev, { ...data, _count: { deals: 0 } }]);
+          toast.success("Etapa creada");
+        }
+
+        setShowModal(false);
+      } catch (error) {
+        toast.error(
+          error instanceof Error ? error.message : "Error al guardar"
+        );
+      }
+    });
+  }
+
+  function handleDelete(stageId: string) {
+    startTransition(async () => {
+      try {
+        const res = await fetch(
+          `/api/growth-os/settings/stages/${stageId}`,
+          { method: "DELETE" }
+        );
+
+        if (!res.ok) {
+          const err = await res.json().catch(() => ({}));
+          throw new Error(err.error ?? "Error al eliminar");
+        }
+
+        setStages((prev) => prev.filter((s) => s.id !== stageId));
+        setDeleteConfirm(null);
         toast.success("Etapa eliminada");
       } catch (error) {
         toast.error(
@@ -186,252 +150,234 @@ export function PipelineSettings({ initialStages }: PipelineSettingsProps) {
     });
   }
 
-  function handleMoveUp(index: number) {
-    if (index === 0) return;
-
-    const updated = [...stages];
-    [updated[index - 1], updated[index]] = [updated[index], updated[index - 1]];
-
-    const reordered = updated.map((s, i) => ({ ...s, order: i }));
-    setStages(reordered);
-
-    startTransition(async () => {
-      try {
-        await reorderPipelineStages(
-          reordered.map((s) => ({ id: s.id, order: s.order }))
-        );
-      } catch (error) {
-        setStages(stages); // revert
-        toast.error("Error al reordenar");
-      }
-    });
-  }
-
-  function handleMoveDown(index: number) {
-    if (index === stages.length - 1) return;
-
-    const updated = [...stages];
-    [updated[index], updated[index + 1]] = [updated[index + 1], updated[index]];
-
-    const reordered = updated.map((s, i) => ({ ...s, order: i }));
-    setStages(reordered);
-
-    startTransition(async () => {
-      try {
-        await reorderPipelineStages(
-          reordered.map((s) => ({ id: s.id, order: s.order }))
-        );
-      } catch (error) {
-        setStages(stages); // revert
-        toast.error("Error al reordenar");
-      }
-    });
-  }
-
   return (
-    <div className="space-y-4">
-      {/* Stages list */}
-      <div className="divide-y divide-zinc-100 dark:divide-zinc-800">
-        {stages.map((stage, index) => (
-          <div
-            key={stage.id}
-            className="flex items-center gap-3 py-3 px-1"
+    <div>
+      {/* Pipeline Stages Section */}
+      <div className="rounded-lg border border-gray-200 bg-white">
+        <div className="flex items-center justify-between border-b border-gray-200 px-6 py-4">
+          <div>
+            <h2 className="text-lg font-semibold text-gray-900">
+              Etapas del Pipeline
+            </h2>
+            <p className="mt-0.5 text-sm text-gray-500">
+              Configura las etapas por las que pasan los negocios
+            </p>
+          </div>
+          <button
+            onClick={openAddModal}
+            className="inline-flex items-center gap-1.5 rounded-lg bg-blue-600 px-3 py-2 text-sm font-medium text-white transition-colors hover:bg-blue-700"
           >
-            {/* Color dot */}
-            <div
-              className="w-3 h-3 rounded-full flex-shrink-0"
-              style={{ backgroundColor: stage.color ?? "#6B7280" }}
-            />
+            <Plus className="h-4 w-4" />
+            Agregar etapa
+          </button>
+        </div>
 
-            {/* Name / Edit */}
-            {editingId === stage.id ? (
-              <div className="flex-1 flex items-center gap-2">
+        <div className="divide-y divide-gray-100">
+          {stages.map((stage) => (
+            <div
+              key={stage.id}
+              className="flex items-center gap-4 px-6 py-3 transition-colors hover:bg-gray-50"
+            >
+              <GripVertical className="h-4 w-4 shrink-0 text-gray-300" />
+
+              <span
+                className="h-3 w-3 shrink-0 rounded-full"
+                style={{ backgroundColor: stage.color ?? "#6B7280" }}
+              />
+
+              <span className="min-w-[140px] font-medium text-gray-900">
+                {stage.name}
+              </span>
+
+              <span className="text-xs text-gray-400">#{stage.order}</span>
+
+              <div className="flex items-center gap-1.5">
+                {stage.isWon && (
+                  <Badge label="Ganado" color="green" size="sm" />
+                )}
+                {stage.isLost && (
+                  <Badge label="Perdido" color="red" size="sm" />
+                )}
+                {stage.isDefault && (
+                  <Badge label="Default" color="blue" size="sm" />
+                )}
+              </div>
+
+              <span className="ml-auto text-xs text-gray-400">
+                {stage._count.deals} negocios
+              </span>
+
+              <div className="flex items-center gap-1">
+                <button
+                  onClick={() => openEditModal(stage)}
+                  className="rounded p-1 text-gray-400 transition-colors hover:bg-gray-100 hover:text-gray-600"
+                  title="Editar"
+                >
+                  <Pencil className="h-4 w-4" />
+                </button>
+                <button
+                  onClick={() => setDeleteConfirm(stage.id)}
+                  disabled={stage._count.deals > 0}
+                  className="rounded p-1 text-gray-400 transition-colors hover:bg-red-50 hover:text-red-600 disabled:cursor-not-allowed disabled:opacity-30"
+                  title={
+                    stage._count.deals > 0
+                      ? "No se puede eliminar: tiene negocios asociados"
+                      : "Eliminar"
+                  }
+                >
+                  <Trash2 className="h-4 w-4" />
+                </button>
+              </div>
+            </div>
+          ))}
+
+          {stages.length === 0 && (
+            <div className="px-6 py-8 text-center text-sm text-gray-500">
+              No hay etapas configuradas. Agrega una para comenzar.
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* Delete Confirmation */}
+      {deleteConfirm && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
+          <div className="w-full max-w-sm rounded-lg bg-white p-6 shadow-xl">
+            <h3 className="text-lg font-semibold text-gray-900">
+              Eliminar etapa
+            </h3>
+            <p className="mt-2 text-sm text-gray-500">
+              Esta accion no se puede deshacer. La etapa sera eliminada
+              permanentemente.
+            </p>
+            <div className="mt-4 flex justify-end gap-2">
+              <button
+                onClick={() => setDeleteConfirm(null)}
+                className="rounded-lg border border-gray-300 px-3 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50"
+              >
+                Cancelar
+              </button>
+              <button
+                onClick={() => handleDelete(deleteConfirm)}
+                disabled={isPending}
+                className="rounded-lg bg-red-600 px-3 py-2 text-sm font-medium text-white transition-colors hover:bg-red-700 disabled:opacity-50"
+              >
+                {isPending ? "Eliminando..." : "Eliminar"}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Add / Edit Modal */}
+      {showModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
+          <div className="w-full max-w-md rounded-lg bg-white p-6 shadow-xl">
+            <div className="mb-4 flex items-center justify-between">
+              <h3 className="text-lg font-semibold text-gray-900">
+                {editingStage ? "Editar etapa" : "Nueva etapa"}
+              </h3>
+              <button
+                onClick={() => setShowModal(false)}
+                className="rounded p-1 text-gray-400 hover:bg-gray-100 hover:text-gray-600"
+              >
+                <X className="h-5 w-5" />
+              </button>
+            </div>
+
+            <div className="space-y-4">
+              {/* Name */}
+              <div>
+                <label className="mb-1 block text-sm font-medium text-gray-700">
+                  Nombre
+                </label>
                 <input
                   type="text"
-                  value={editName}
-                  onChange={(e) => setEditName(e.target.value)}
-                  className="flex-1 px-2 py-1 text-sm border border-zinc-300 dark:border-zinc-600 rounded-md bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter") handleSaveEdit(stage.id);
-                    if (e.key === "Escape") setEditingId(null);
-                  }}
-                  autoFocus
+                  value={form.name}
+                  onChange={(e) =>
+                    setForm((prev) => ({ ...prev, name: e.target.value }))
+                  }
+                  className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                  placeholder="Ej: Negociacion"
                 />
-                <div className="flex items-center gap-1">
-                  {PRESET_COLORS.map((c) => (
+              </div>
+
+              {/* Color */}
+              <div>
+                <label className="mb-1 block text-sm font-medium text-gray-700">
+                  Color
+                </label>
+                <div className="flex flex-wrap gap-2">
+                  {DEFAULT_COLORS.map((c) => (
                     <button
                       key={c}
-                      type="button"
-                      onClick={() => setEditColor(c)}
-                      className={cn(
-                        "w-5 h-5 rounded-full border-2 transition-colors",
-                        editColor === c
-                          ? "border-zinc-900 dark:border-zinc-100"
+                      onClick={() => setForm((prev) => ({ ...prev, color: c }))}
+                      className={`h-8 w-8 rounded-full border-2 transition-all ${
+                        form.color === c
+                          ? "border-gray-900 scale-110"
                           : "border-transparent"
-                      )}
+                      }`}
                       style={{ backgroundColor: c }}
                     />
                   ))}
                 </div>
-                <button
-                  type="button"
-                  onClick={() => handleSaveEdit(stage.id)}
-                  disabled={isPending}
-                  className="px-2 py-1 text-xs font-medium rounded-md bg-zinc-900 text-white hover:bg-zinc-800 dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-zinc-200 transition-colors disabled:opacity-50"
-                >
-                  Guardar
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setEditingId(null)}
-                  className="px-2 py-1 text-xs font-medium rounded-md text-zinc-500 hover:text-zinc-700 dark:hover:text-zinc-300 transition-colors"
-                >
-                  Cancelar
-                </button>
               </div>
-            ) : (
+
+              {/* Flags */}
+              <div className="flex gap-6">
+                <label className="flex items-center gap-2 text-sm text-gray-700">
+                  <input
+                    type="checkbox"
+                    checked={form.isWon}
+                    onChange={(e) =>
+                      setForm((prev) => ({
+                        ...prev,
+                        isWon: e.target.checked,
+                        isLost: e.target.checked ? false : prev.isLost,
+                      }))
+                    }
+                    className="rounded border-gray-300"
+                  />
+                  <Trophy className="h-4 w-4 text-green-500" />
+                  Etapa ganada
+                </label>
+                <label className="flex items-center gap-2 text-sm text-gray-700">
+                  <input
+                    type="checkbox"
+                    checked={form.isLost}
+                    onChange={(e) =>
+                      setForm((prev) => ({
+                        ...prev,
+                        isLost: e.target.checked,
+                        isWon: e.target.checked ? false : prev.isWon,
+                      }))
+                    }
+                    className="rounded border-gray-300"
+                  />
+                  <XCircle className="h-4 w-4 text-red-500" />
+                  Etapa perdida
+                </label>
+              </div>
+            </div>
+
+            <div className="mt-6 flex justify-end gap-2">
               <button
-                type="button"
-                onClick={() => handleStartEdit(stage)}
-                className="flex-1 text-left text-sm font-medium text-zinc-900 dark:text-zinc-100 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+                onClick={() => setShowModal(false)}
+                className="rounded-lg border border-gray-300 px-3 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50"
               >
-                {stage.name}
+                Cancelar
               </button>
-            )}
-
-            {/* Badges */}
-            {editingId !== stage.id && (
-              <div className="flex items-center gap-1.5">
-                {stage.isWon && (
-                  <Badge variant="success" size="sm">Ganada</Badge>
-                )}
-                {stage.isLost && (
-                  <Badge variant="danger" size="sm">Perdida</Badge>
-                )}
-                {stage.dealCount > 0 && (
-                  <Badge variant="default" size="sm">
-                    {stage.dealCount} deal{stage.dealCount !== 1 ? "s" : ""}
-                  </Badge>
-                )}
-              </div>
-            )}
-
-            {/* Actions */}
-            {editingId !== stage.id && (
-              <div className="flex items-center gap-0.5">
-                <button
-                  type="button"
-                  onClick={() => handleMoveUp(index)}
-                  disabled={index === 0 || isPending}
-                  className="p-1.5 text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-300 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
-                  title="Mover arriba"
-                >
-                  <ArrowUp className="w-4 h-4" />
-                </button>
-                <button
-                  type="button"
-                  onClick={() => handleMoveDown(index)}
-                  disabled={index === stages.length - 1 || isPending}
-                  className="p-1.5 text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-300 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
-                  title="Mover abajo"
-                >
-                  <ArrowDown className="w-4 h-4" />
-                </button>
-                <button
-                  type="button"
-                  onClick={() => handleToggleWon(stage)}
-                  disabled={isPending}
-                  className={cn(
-                    "p-1.5 transition-colors",
-                    stage.isWon
-                      ? "text-emerald-500 hover:text-emerald-600"
-                      : "text-zinc-400 hover:text-emerald-500"
-                  )}
-                  title={stage.isWon ? "Desmarcar como ganada" : "Marcar como ganada"}
-                >
-                  <Trophy className="w-4 h-4" />
-                </button>
-                <button
-                  type="button"
-                  onClick={() => handleToggleLost(stage)}
-                  disabled={isPending}
-                  className={cn(
-                    "p-1.5 transition-colors",
-                    stage.isLost
-                      ? "text-red-500 hover:text-red-600"
-                      : "text-zinc-400 hover:text-red-500"
-                  )}
-                  title={stage.isLost ? "Desmarcar como perdida" : "Marcar como perdida"}
-                >
-                  <XCircle className="w-4 h-4" />
-                </button>
-                <button
-                  type="button"
-                  onClick={() => handleDelete(stage)}
-                  disabled={isPending || stage.dealCount > 0}
-                  className="p-1.5 text-zinc-400 hover:text-red-500 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
-                  title={
-                    stage.dealCount > 0
-                      ? "No se puede eliminar: tiene deals asociados"
-                      : "Eliminar etapa"
-                  }
-                >
-                  <Trash2 className="w-4 h-4" />
-                </button>
-              </div>
-            )}
+              <button
+                onClick={handleSave}
+                disabled={isPending}
+                className="rounded-lg bg-blue-600 px-3 py-2 text-sm font-medium text-white transition-colors hover:bg-blue-700 disabled:opacity-50"
+              >
+                {isPending ? "Guardando..." : "Guardar"}
+              </button>
+            </div>
           </div>
-        ))}
-      </div>
-
-      {stages.length === 0 && (
-        <p className="text-sm text-zinc-500 dark:text-zinc-400 text-center py-6">
-          No hay etapas configuradas. Agrega la primera etapa de tu pipeline.
-        </p>
-      )}
-
-      {/* Add new stage */}
-      <div className="flex items-center gap-3 pt-3 border-t border-zinc-200 dark:border-zinc-700">
-        <div className="flex items-center gap-1.5">
-          {PRESET_COLORS.slice(0, 6).map((c) => (
-            <button
-              key={c}
-              type="button"
-              onClick={() => setNewColor(c)}
-              className={cn(
-                "w-5 h-5 rounded-full border-2 transition-colors",
-                newColor === c
-                  ? "border-zinc-900 dark:border-zinc-100"
-                  : "border-transparent"
-              )}
-              style={{ backgroundColor: c }}
-            />
-          ))}
         </div>
-        <input
-          type="text"
-          value={newName}
-          onChange={(e) => setNewName(e.target.value)}
-          placeholder="Nombre de nueva etapa..."
-          className="flex-1 px-3 py-2 text-sm border border-zinc-300 dark:border-zinc-600 rounded-lg bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
-          onKeyDown={(e) => {
-            if (e.key === "Enter") handleAdd();
-          }}
-        />
-        <button
-          type="button"
-          onClick={handleAdd}
-          disabled={!newName.trim() || isPending}
-          className="inline-flex items-center gap-1.5 px-3 py-2 text-sm font-medium rounded-lg bg-zinc-900 text-white hover:bg-zinc-800 dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-zinc-200 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-        >
-          {isPending ? (
-            <Loader2 className="w-4 h-4 animate-spin" />
-          ) : (
-            <Plus className="w-4 h-4" />
-          )}
-          Agregar
-        </button>
-      </div>
+      )}
     </div>
   );
 }

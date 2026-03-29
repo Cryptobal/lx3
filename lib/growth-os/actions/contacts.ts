@@ -2,21 +2,19 @@
 
 import { prisma } from "@/lib/db";
 import { revalidatePath } from "next/cache";
-import type { ContactSource } from "@/lib/generated/prisma/client";
 
-export async function getContacts(params: {
+type ActionResult<T = unknown> = { success: true; data: T } | { success: false; error: string };
+
+export async function getContacts(params?: {
   search?: string;
   source?: string;
-  tag?: string;
-  companyId?: string;
   page?: number;
   pageSize?: number;
 }) {
-  if (!prisma) throw new Error("Database not available");
-
-  const { search, source, tag, companyId, page = 1, pageSize = 20 } = params;
+  if (!prisma) return { data: [], total: 0 };
 
   try {
+    const { search, source, page = 1, pageSize = 20 } = params ?? {};
     const where: Record<string, unknown> = {};
 
     if (search) {
@@ -24,21 +22,10 @@ export async function getContacts(params: {
         { firstName: { contains: search, mode: "insensitive" } },
         { lastName: { contains: search, mode: "insensitive" } },
         { email: { contains: search, mode: "insensitive" } },
-        { phone: { contains: search, mode: "insensitive" } },
+        { company: { name: { contains: search, mode: "insensitive" } } },
       ];
     }
-
-    if (source) {
-      where.source = source;
-    }
-
-    if (tag) {
-      where.tags = { has: tag };
-    }
-
-    if (companyId) {
-      where.companyId = companyId;
-    }
+    if (source) where.source = source;
 
     const [data, total] = await Promise.all([
       prisma.contact.findMany({
@@ -51,21 +38,15 @@ export async function getContacts(params: {
       prisma.contact.count({ where }),
     ]);
 
-    return {
-      data,
-      total,
-      page,
-      pageSize,
-      totalPages: Math.ceil(total / pageSize),
-    };
+    return { data: JSON.parse(JSON.stringify(data)), total };
   } catch (error) {
-    console.error("Failed to get contacts:", error);
-    throw new Error("Failed to get contacts");
+    console.error("getContacts error:", error);
+    return { data: [], total: 0 };
   }
 }
 
-export async function getContact(id: string) {
-  if (!prisma) throw new Error("Database not available");
+export async function getContact(id: string): Promise<ActionResult> {
+  if (!prisma) return { success: false, error: "Database not available" };
 
   try {
     const contact = await prisma.contact.findUnique({
@@ -73,21 +54,17 @@ export async function getContact(id: string) {
       include: {
         company: true,
         deals: { include: { stage: true } },
-        activities: { orderBy: { createdAt: "desc" } },
         quotes: true,
-        visitorSessions: {
-          include: { pageViews: true },
-          orderBy: { startedAt: "desc" },
-        },
+        activities: { orderBy: { createdAt: "desc" } },
+        visitorSessions: { include: { pageViews: true } },
       },
     });
 
-    if (!contact) throw new Error("Contact not found");
-
-    return contact;
+    if (!contact) return { success: false, error: "Contact not found" };
+    return { success: true, data: JSON.parse(JSON.stringify(contact)) };
   } catch (error) {
-    console.error("Failed to get contact:", error);
-    throw new Error("Failed to get contact");
+    console.error("getContact error:", error);
+    return { success: false, error: "Failed to fetch contact" };
   }
 }
 
@@ -97,25 +74,23 @@ export async function createContact(data: {
   email?: string;
   phone?: string;
   position?: string;
-  linkedinUrl?: string;
   companyId?: string;
-  source?: ContactSource;
+  source?: string;
   tags?: string[];
   notes?: string;
-}) {
-  if (!prisma) throw new Error("Database not available");
+}): Promise<ActionResult> {
+  if (!prisma) return { success: false, error: "Database not available" };
 
   try {
     const contact = await prisma.contact.create({
       data: {
         firstName: data.firstName,
         lastName: data.lastName,
-        email: data.email,
+        email: data.email || undefined,
         phone: data.phone,
         position: data.position,
-        linkedinUrl: data.linkedinUrl,
-        companyId: data.companyId,
-        source: data.source ?? "MANUAL",
+        companyId: data.companyId || undefined,
+        source: (data.source as any) || "MANUAL",
         tags: data.tags ?? [],
         notes: data.notes,
       },
@@ -129,11 +104,11 @@ export async function createContact(data: {
       },
     });
 
-    revalidatePath("/growth-os/contacts");
-    return contact;
+    revalidatePath("/admin/contacts");
+    return { success: true, data: JSON.parse(JSON.stringify(contact)) };
   } catch (error) {
-    console.error("Failed to create contact:", error);
-    throw new Error("Failed to create contact");
+    console.error("createContact error:", error);
+    return { success: false, error: "Failed to create contact" };
   }
 }
 
@@ -146,39 +121,43 @@ export async function updateContact(
     phone?: string;
     position?: string;
     linkedinUrl?: string;
+    avatarUrl?: string;
     companyId?: string | null;
-    source?: ContactSource;
+    source?: string;
     tags?: string[];
     notes?: string;
   }
-) {
-  if (!prisma) throw new Error("Database not available");
+): Promise<ActionResult> {
+  if (!prisma) return { success: false, error: "Database not available" };
 
   try {
     const contact = await prisma.contact.update({
       where: { id },
-      data,
+      data: {
+        ...data,
+        source: data.source ? (data.source as any) : undefined,
+        email: data.email || undefined,
+      },
     });
 
-    revalidatePath("/growth-os/contacts");
-    revalidatePath(`/growth-os/contacts/${id}`);
-    return contact;
+    revalidatePath("/admin/contacts");
+    revalidatePath(`/admin/contacts/${id}`);
+    return { success: true, data: JSON.parse(JSON.stringify(contact)) };
   } catch (error) {
-    console.error("Failed to update contact:", error);
-    throw new Error("Failed to update contact");
+    console.error("updateContact error:", error);
+    return { success: false, error: "Failed to update contact" };
   }
 }
 
-export async function deleteContact(id: string) {
-  if (!prisma) throw new Error("Database not available");
+export async function deleteContact(id: string): Promise<ActionResult> {
+  if (!prisma) return { success: false, error: "Database not available" };
 
   try {
     await prisma.contact.delete({ where: { id } });
-
-    revalidatePath("/growth-os/contacts");
-    return { success: true };
+    revalidatePath("/admin/contacts");
+    return { success: true, data: null };
   } catch (error) {
-    console.error("Failed to delete contact:", error);
-    throw new Error("Failed to delete contact");
+    console.error("deleteContact error:", error);
+    return { success: false, error: "Failed to delete contact" };
   }
 }

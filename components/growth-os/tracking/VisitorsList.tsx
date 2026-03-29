@@ -1,22 +1,21 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
 import {
-  Globe,
-  User,
+  ChevronDown,
+  ChevronRight,
   Monitor,
   Smartphone,
   Tablet,
-  ChevronDown,
-  ChevronRight,
+  Globe,
+  User,
   Clock,
-  ExternalLink,
+  Eye,
 } from "lucide-react";
-import { cn } from "@/lib/utils/cn";
-import { formatRelativeTime } from "@/lib/growth-os/utils/format";
+import { Badge } from "@/components/growth-os/shared/Badge";
+import { RelativeTime } from "@/components/growth-os/shared/RelativeTime";
 
-interface PageViewData {
+interface PageView {
   id: string;
   path: string;
   title: string | null;
@@ -25,7 +24,7 @@ interface PageViewData {
   viewedAt: string;
 }
 
-interface SessionData {
+interface Session {
   id: string;
   visitorId: string;
   deviceType: string | null;
@@ -33,246 +32,232 @@ interface SessionData {
   utmSource: string | null;
   country: string | null;
   city: string | null;
+  pageCount: number;
   startedAt: string;
-  lastActivityAt: string;
-  contactId: string | null;
-  contactName: string | null;
-  pageViews: PageViewData[];
+  endedAt: string | null;
+  contact: {
+    id: string;
+    firstName: string;
+    lastName: string | null;
+  } | null;
+  pageViews: PageView[];
 }
 
 interface VisitorsListProps {
-  sessions: SessionData[];
+  sessions: Session[];
 }
 
-function getDeviceIcon(deviceType: string | null) {
-  switch (deviceType?.toLowerCase()) {
-    case "mobile":
-      return Smartphone;
-    case "tablet":
-      return Tablet;
-    default:
-      return Monitor;
-  }
-}
+const deviceIcons: Record<string, typeof Monitor> = {
+  desktop: Monitor,
+  mobile: Smartphone,
+  tablet: Tablet,
+};
 
 function formatDuration(seconds: number | null): string {
-  if (!seconds || seconds <= 0) return "0s";
+  if (seconds === null || seconds === 0) return "-";
   if (seconds < 60) return `${seconds}s`;
   const mins = Math.floor(seconds / 60);
   const secs = seconds % 60;
-  if (mins < 60) return secs > 0 ? `${mins}m ${secs}s` : `${mins}m`;
-  const hrs = Math.floor(mins / 60);
-  const remainMins = mins % 60;
-  return `${hrs}h ${remainMins}m`;
+  return secs > 0 ? `${mins}m ${secs}s` : `${mins}m`;
 }
 
-function getSessionDuration(session: SessionData): number {
+function getSessionDuration(session: Session): number | null {
+  if (!session.endedAt) return null;
   const start = new Date(session.startedAt).getTime();
-  const end = new Date(session.lastActivityAt).getTime();
+  const end = new Date(session.endedAt).getTime();
   return Math.round((end - start) / 1000);
 }
 
-function getReferrerDomain(referrer: string | null): string | null {
-  if (!referrer) return null;
-  try {
-    return new URL(referrer).hostname.replace("www.", "");
-  } catch {
-    return referrer;
+function getSourceLabel(session: Session): string {
+  if (session.utmSource) return session.utmSource;
+  if (session.referrer) {
+    try {
+      return new URL(session.referrer).hostname;
+    } catch {
+      return session.referrer;
+    }
   }
+  return "Directo";
 }
 
 export function VisitorsList({ sessions }: VisitorsListProps) {
-  const [expandedIds, setExpandedIds] = useState<Set<string>>(new Set());
-
-  function toggleExpanded(id: string) {
-    setExpandedIds((prev) => {
-      const next = new Set(prev);
-      if (next.has(id)) {
-        next.delete(id);
-      } else {
-        next.add(id);
-      }
-      return next;
-    });
-  }
+  const [expandedId, setExpandedId] = useState<string | null>(null);
 
   if (sessions.length === 0) {
     return (
-      <div className="flex flex-col items-center justify-center py-16 px-4 text-center">
-        <div className="flex items-center justify-center w-12 h-12 rounded-full bg-zinc-100 dark:bg-zinc-800 mb-4">
-          <Globe className="w-6 h-6 text-zinc-400 dark:text-zinc-500" />
+      <div className="flex flex-col items-center justify-center rounded-lg border border-gray-200 bg-white px-6 py-16 text-center">
+        <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-gray-100">
+          <Eye className="h-6 w-6 text-gray-400" />
         </div>
-        <h3 className="text-sm font-semibold text-zinc-900 dark:text-zinc-100 mb-1">
+        <h3 className="text-sm font-semibold text-gray-900">
           Sin sesiones recientes
         </h3>
-        <p className="text-sm text-zinc-500 dark:text-zinc-400 max-w-sm">
-          Las sesiones de visitantes aparecerán aquí cuando se detecten visitas.
+        <p className="mt-1 max-w-sm text-sm text-gray-500">
+          Las sesiones de visitantes apareceran aqui cuando el pixel de tracking
+          este activo.
         </p>
       </div>
     );
   }
 
   return (
-    <div className="divide-y divide-zinc-100 dark:divide-zinc-800">
-      {sessions.map((session) => {
-        const isExpanded = expandedIds.has(session.id);
-        const DeviceIcon = getDeviceIcon(session.deviceType);
-        const duration = getSessionDuration(session);
-        const source = session.utmSource || getReferrerDomain(session.referrer);
+    <div className="overflow-hidden rounded-lg border border-gray-200 bg-white">
+      <div className="overflow-x-auto">
+        <table className="min-w-full divide-y divide-gray-200">
+          <thead className="bg-gray-50">
+            <tr>
+              <th className="w-8 px-4 py-3" />
+              <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
+                Visitante
+              </th>
+              <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
+                Paginas
+              </th>
+              <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
+                Duracion
+              </th>
+              <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
+                Dispositivo
+              </th>
+              <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
+                Fuente
+              </th>
+              <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
+                Pais
+              </th>
+              <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
+                Fecha
+              </th>
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-gray-200">
+            {sessions.map((session) => {
+              const isExpanded = expandedId === session.id;
+              const DeviceIcon =
+                deviceIcons[session.deviceType ?? "desktop"] ?? Monitor;
 
-        return (
-          <div key={session.id}>
-            {/* Session row */}
-            <button
-              type="button"
-              onClick={() => toggleExpanded(session.id)}
-              className="w-full flex items-center gap-4 px-4 py-3 hover:bg-zinc-50 dark:hover:bg-zinc-800/50 transition-colors text-left"
+              return (
+                <SessionRow
+                  key={session.id}
+                  session={session}
+                  isExpanded={isExpanded}
+                  DeviceIcon={DeviceIcon}
+                  onToggle={() =>
+                    setExpandedId(isExpanded ? null : session.id)
+                  }
+                />
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+}
+
+function SessionRow({
+  session,
+  isExpanded,
+  DeviceIcon,
+  onToggle,
+}: {
+  session: Session;
+  isExpanded: boolean;
+  DeviceIcon: typeof Monitor;
+  onToggle: () => void;
+}) {
+  const duration = getSessionDuration(session);
+
+  return (
+    <>
+      <tr
+        onClick={onToggle}
+        className="cursor-pointer transition-colors hover:bg-gray-50"
+      >
+        <td className="px-4 py-3 text-gray-400">
+          {isExpanded ? (
+            <ChevronDown className="h-4 w-4" />
+          ) : (
+            <ChevronRight className="h-4 w-4" />
+          )}
+        </td>
+        <td className="whitespace-nowrap px-4 py-3 text-sm">
+          {session.contact ? (
+            <a
+              href={`/admin/contacts/${session.contact.id}`}
+              onClick={(e) => e.stopPropagation()}
+              className="font-medium text-blue-600 hover:underline"
             >
-              {/* Expand icon */}
-              <div className="flex-shrink-0 text-zinc-400">
-                {isExpanded ? (
-                  <ChevronDown className="w-4 h-4" />
-                ) : (
-                  <ChevronRight className="w-4 h-4" />
-                )}
-              </div>
+              <User className="mr-1 inline h-3.5 w-3.5" />
+              {session.contact.firstName}{" "}
+              {session.contact.lastName ?? ""}
+            </a>
+          ) : (
+            <span className="font-mono text-xs text-gray-500">
+              {session.visitorId.slice(0, 12)}...
+            </span>
+          )}
+        </td>
+        <td className="whitespace-nowrap px-4 py-3 text-sm text-gray-700">
+          {session.pageCount}
+        </td>
+        <td className="whitespace-nowrap px-4 py-3 text-sm text-gray-700">
+          {formatDuration(duration)}
+        </td>
+        <td className="whitespace-nowrap px-4 py-3 text-sm text-gray-700">
+          <DeviceIcon className="inline h-4 w-4 text-gray-400" />
+          <span className="ml-1 capitalize">
+            {session.deviceType ?? "desktop"}
+          </span>
+        </td>
+        <td className="whitespace-nowrap px-4 py-3 text-sm text-gray-700">
+          <Globe className="mr-1 inline h-3.5 w-3.5 text-gray-400" />
+          {getSourceLabel(session)}
+        </td>
+        <td className="whitespace-nowrap px-4 py-3 text-sm text-gray-700">
+          {session.country ?? "-"}
+          {session.city ? `, ${session.city}` : ""}
+        </td>
+        <td className="whitespace-nowrap px-4 py-3 text-sm">
+          <RelativeTime date={session.startedAt} />
+        </td>
+      </tr>
 
-              {/* Avatar */}
-              <div
-                className={cn(
-                  "flex-shrink-0 w-9 h-9 rounded-full flex items-center justify-center",
-                  session.contactId
-                    ? "bg-blue-50 dark:bg-blue-950"
-                    : "bg-zinc-100 dark:bg-zinc-800"
-                )}
-              >
-                {session.contactId ? (
-                  <User className="w-4 h-4 text-blue-500 dark:text-blue-400" />
-                ) : (
-                  <Globe className="w-4 h-4 text-zinc-400 dark:text-zinc-500" />
-                )}
-              </div>
-
-              {/* Name / ID */}
-              <div className="flex-1 min-w-0">
-                <div className="flex items-center gap-2">
-                  <span className="text-sm font-medium text-zinc-900 dark:text-zinc-100 truncate">
-                    {session.contactName || "Visitante anónimo"}
+      {isExpanded && session.pageViews.length > 0 && (
+        <tr>
+          <td colSpan={8} className="bg-gray-50 px-8 py-4">
+            <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-gray-500">
+              Paginas vistas
+            </p>
+            <div className="space-y-1">
+              {session.pageViews.map((pv) => (
+                <div
+                  key={pv.id}
+                  className="flex items-center gap-4 rounded px-3 py-1.5 text-sm text-gray-700 odd:bg-white"
+                >
+                  <span className="min-w-[200px] font-mono text-xs text-gray-500">
+                    {pv.path}
                   </span>
-                  {!session.contactName && (
-                    <span className="text-xs text-zinc-400 dark:text-zinc-500 font-mono">
-                      {session.visitorId.slice(0, 8)}...
-                    </span>
+                  <span className="min-w-[140px] truncate text-gray-600">
+                    {pv.title ?? "-"}
+                  </span>
+                  <span className="flex items-center gap-1 text-xs text-gray-500">
+                    <Clock className="h-3 w-3" />
+                    {formatDuration(pv.duration)}
+                  </span>
+                  {pv.scrollDepth !== null && (
+                    <Badge
+                      label={`${pv.scrollDepth}% scroll`}
+                      color="blue"
+                      size="sm"
+                    />
                   )}
                 </div>
-                {session.contactId && (
-                  <Link
-                    href={`/admin/contacts/${session.contactId}`}
-                    onClick={(e) => e.stopPropagation()}
-                    className="text-xs text-blue-500 hover:text-blue-600 dark:text-blue-400 inline-flex items-center gap-0.5"
-                  >
-                    Ver contacto
-                    <ExternalLink className="w-3 h-3" />
-                  </Link>
-                )}
-              </div>
-
-              {/* Pages count */}
-              <div className="hidden sm:flex items-center gap-1.5 text-sm text-zinc-500 dark:text-zinc-400 min-w-[80px]">
-                <span className="font-medium text-zinc-700 dark:text-zinc-300">
-                  {session.pageViews.length}
-                </span>
-                <span>
-                  {session.pageViews.length === 1 ? "página" : "páginas"}
-                </span>
-              </div>
-
-              {/* Duration */}
-              <div className="hidden sm:flex items-center gap-1 text-sm text-zinc-500 dark:text-zinc-400 min-w-[70px]">
-                <Clock className="w-3.5 h-3.5" />
-                {formatDuration(duration)}
-              </div>
-
-              {/* Device */}
-              <div className="hidden md:flex items-center text-zinc-400 dark:text-zinc-500 min-w-[30px] justify-center">
-                <DeviceIcon className="w-4 h-4" />
-              </div>
-
-              {/* Source */}
-              <div className="hidden lg:block text-sm text-zinc-500 dark:text-zinc-400 min-w-[100px] truncate">
-                {source || "Directo"}
-              </div>
-
-              {/* Country */}
-              <div className="hidden lg:block text-sm text-zinc-500 dark:text-zinc-400 min-w-[40px] text-center">
-                {session.country || "—"}
-              </div>
-
-              {/* Time */}
-              <div className="text-xs text-zinc-400 dark:text-zinc-500 min-w-[90px] text-right">
-                {formatRelativeTime(session.startedAt)}
-              </div>
-            </button>
-
-            {/* Expanded: page views */}
-            {isExpanded && (
-              <div className="bg-zinc-50/50 dark:bg-zinc-800/30 border-t border-zinc-100 dark:border-zinc-800">
-                <div className="px-4 py-2 ml-[52px]">
-                  <h4 className="text-xs font-medium text-zinc-500 dark:text-zinc-400 uppercase tracking-wider mb-2">
-                    Páginas visitadas
-                  </h4>
-                  <div className="space-y-1">
-                    {session.pageViews.map((pv) => (
-                      <div
-                        key={pv.id}
-                        className="flex items-center gap-3 py-1.5 text-sm"
-                      >
-                        {/* Path */}
-                        <span className="font-mono text-xs text-zinc-700 dark:text-zinc-300 min-w-[200px] truncate">
-                          {pv.path}
-                        </span>
-
-                        {/* Title */}
-                        <span className="text-zinc-500 dark:text-zinc-400 flex-1 truncate text-xs">
-                          {pv.title || "—"}
-                        </span>
-
-                        {/* Duration */}
-                        <span className="text-xs text-zinc-400 dark:text-zinc-500 min-w-[50px] text-right">
-                          {pv.duration ? formatDuration(pv.duration) : "—"}
-                        </span>
-
-                        {/* Scroll depth */}
-                        <div className="min-w-[80px] flex items-center gap-1.5">
-                          {pv.scrollDepth !== null ? (
-                            <>
-                              <div className="flex-1 h-1.5 bg-zinc-200 dark:bg-zinc-700 rounded-full overflow-hidden">
-                                <div
-                                  className="h-full bg-blue-500 dark:bg-blue-400 rounded-full transition-all"
-                                  style={{
-                                    width: `${Math.min(pv.scrollDepth, 100)}%`,
-                                  }}
-                                />
-                              </div>
-                              <span className="text-xs text-zinc-400 dark:text-zinc-500 tabular-nums">
-                                {pv.scrollDepth}%
-                              </span>
-                            </>
-                          ) : (
-                            <span className="text-xs text-zinc-400 dark:text-zinc-500">
-                              —
-                            </span>
-                          )}
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            )}
-          </div>
-        );
-      })}
-    </div>
+              ))}
+            </div>
+          </td>
+        </tr>
+      )}
+    </>
   );
 }

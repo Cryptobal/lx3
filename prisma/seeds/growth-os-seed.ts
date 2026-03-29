@@ -1,14 +1,17 @@
 import { PrismaClient } from "../../lib/generated/prisma/client";
 import { PrismaPg } from "@prisma/adapter-pg";
-import { hash } from "bcryptjs";
+import bcrypt from "bcryptjs";
 
 const connectionString = process.env.DATABASE_URL;
-if (!connectionString) throw new Error("DATABASE_URL not set");
+if (!connectionString) {
+  throw new Error("DATABASE_URL is required");
+}
+
 const adapter = new PrismaPg({ connectionString });
 const prisma = new PrismaClient({ adapter });
 
 async function main() {
-  // Create default pipeline stages
+  // Create pipeline stages
   const stages = [
     { name: "Prospecto", order: 1, color: "#6B7280", isDefault: true },
     { name: "Contactado", order: 2, color: "#3B82F6" },
@@ -23,30 +26,24 @@ async function main() {
     await prisma.pipelineStage.upsert({
       where: { id: `stage-${stage.order}` },
       update: stage,
-      create: {
-        id: `stage-${stage.order}`,
-        ...stage,
-      },
+      create: { id: `stage-${stage.order}`, ...stage },
     });
   }
-
-  console.log("✅ Pipeline stages created");
+  console.log("Pipeline stages created");
 
   // Create admin user
-  const hashedPassword = await hash("admin123", 12);
-
+  const hashedPassword = await bcrypt.hash("admin123", 12);
   await prisma.user.upsert({
-    where: { email: "carlos.irigoyen@lx3.ai" },
+    where: { email: "carlos.irigoyen@gmail.com" },
     update: {},
     create: {
       name: "Carlos Irigoyen",
-      email: "carlos.irigoyen@lx3.ai",
+      email: "carlos.irigoyen@gmail.com",
       password: hashedPassword,
       role: "ADMIN",
     },
   });
-
-  console.log("✅ Admin user created");
+  console.log("Admin user created");
 }
 
 main()

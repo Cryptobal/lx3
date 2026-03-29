@@ -2,19 +2,20 @@
 
 import { prisma } from "@/lib/db";
 import { revalidatePath } from "next/cache";
-import type { EmailStatus } from "@/lib/generated/prisma/client";
 
-export async function getEmailLogs(params: {
+type ActionResult<T = unknown> = { success: true; data: T } | { success: false; error: string };
+
+export async function getEmailLogs(params?: {
   search?: string;
   status?: string;
+  contactId?: string;
   page?: number;
   pageSize?: number;
 }) {
-  if (!prisma) throw new Error("Database not available");
-
-  const { search, status, page = 1, pageSize = 20 } = params;
+  if (!prisma) return { data: [], total: 0 };
 
   try {
+    const { search, status, contactId, page = 1, pageSize = 20 } = params ?? {};
     const where: Record<string, unknown> = {};
 
     if (search) {
@@ -23,17 +24,15 @@ export async function getEmailLogs(params: {
         { subject: { contains: search, mode: "insensitive" } },
       ];
     }
-
-    if (status) {
-      where.status = status;
-    }
+    if (status) where.status = status;
+    if (contactId) where.contactId = contactId;
 
     const [data, total] = await Promise.all([
       prisma.emailLog.findMany({
         where,
         include: {
-          contact: true,
-          sentBy: true,
+          contact: { select: { id: true, firstName: true, lastName: true, email: true } },
+          sentBy: { select: { id: true, name: true } },
         },
         orderBy: { createdAt: "desc" },
         skip: (page - 1) * pageSize,
@@ -42,16 +41,10 @@ export async function getEmailLogs(params: {
       prisma.emailLog.count({ where }),
     ]);
 
-    return {
-      data,
-      total,
-      page,
-      pageSize,
-      totalPages: Math.ceil(total / pageSize),
-    };
+    return { data: JSON.parse(JSON.stringify(data)), total };
   } catch (error) {
-    console.error("Failed to get email logs:", error);
-    throw new Error("Failed to get email logs");
+    console.error("getEmailLogs error:", error);
+    return { data: [], total: 0 };
   }
 }
 
@@ -59,30 +52,30 @@ export async function createEmailLog(data: {
   to: string;
   subject: string;
   body?: string;
-  status?: EmailStatus;
+  status?: string;
   resendId?: string;
   contactId?: string;
   sentById?: string;
-}) {
-  if (!prisma) throw new Error("Database not available");
+}): Promise<ActionResult> {
+  if (!prisma) return { success: false, error: "Database not available" };
 
   try {
-    const emailLog = await prisma.emailLog.create({
+    const log = await prisma.emailLog.create({
       data: {
         to: data.to,
         subject: data.subject,
         body: data.body,
-        status: data.status ?? "QUEUED",
+        status: (data.status as any) || "QUEUED",
         resendId: data.resendId,
-        contactId: data.contactId,
-        sentById: data.sentById,
+        contactId: data.contactId || undefined,
+        sentById: data.sentById || undefined,
       },
     });
 
-    revalidatePath("/growth-os/emails");
-    return emailLog;
+    revalidatePath("/admin/emails");
+    return { success: true, data: JSON.parse(JSON.stringify(log)) };
   } catch (error) {
-    console.error("Failed to create email log:", error);
-    throw new Error("Failed to create email log");
+    console.error("createEmailLog error:", error);
+    return { success: false, error: "Failed to create email log" };
   }
 }

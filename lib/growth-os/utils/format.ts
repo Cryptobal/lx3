@@ -1,70 +1,88 @@
-import { format, formatDistanceToNow, parseISO } from "date-fns";
-import { es } from "date-fns/locale";
-
-function toDate(date: Date | string): Date {
-  if (typeof date === "string") return parseISO(date);
-  return date;
+/**
+ * Format a monetary amount for display.
+ */
+export function formatMoney(amount: number, currency: string): string {
+  return new Intl.NumberFormat("es-CL", {
+    style: "currency",
+    currency,
+    minimumFractionDigits: currency === "CLP" ? 0 : 2,
+    maximumFractionDigits: currency === "CLP" ? 0 : 2,
+  }).format(amount);
 }
 
-function toNumber(amount: number | { toNumber(): number }): number {
-  if (typeof amount === "number") return amount;
-  return amount.toNumber();
+/**
+ * Generate a formatted quote number like "LX3-2026-001".
+ */
+export function formatQuoteNumber(year: number, seq: number): string {
+  return `LX3-${year}-${String(seq).padStart(3, "0")}`;
 }
 
-export function formatMoney(
-  amount: number | { toNumber(): number },
-  currency: string = "CLP"
-): string {
-  const num = toNumber(amount);
-
-  if (currency === "CLP") {
-    const rounded = Math.round(num);
-    const formatted = rounded
-      .toString()
-      .replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-    return `$${formatted}`;
-  }
-
-  if (currency === "USD") {
-    return `$${num.toLocaleString("en-US", {
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 2,
-    })}`;
-  }
-
-  return `${currency} ${num.toLocaleString()}`;
+/**
+ * Extract initials from a full name (up to 2 characters).
+ */
+export function getInitials(name: string): string {
+  return name
+    .split(" ")
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((w) => w[0].toUpperCase())
+    .join("");
 }
 
-export function formatDate(date: Date | string): string {
-  return format(toDate(date), "d MMM yyyy", { locale: es });
+/**
+ * Human-readable Spanish label for contact sources.
+ */
+export function getSourceLabel(source: string): string {
+  const map: Record<string, string> = {
+    MANUAL: "Manual",
+    WEBSITE_FORM: "Formulario web",
+    COTIZADOR: "Cotizador",
+    CHATBOT: "Chatbot",
+    APOLLO: "Apollo",
+    IMPORT: "Importado",
+    REFERRAL: "Referido",
+  };
+  return map[source] ?? source;
 }
 
-export function formatDateTime(date: Date | string): string {
-  return format(toDate(date), "d MMM yyyy, HH:mm", { locale: es });
+/**
+ * Human-readable Spanish label for statuses (quotes, deals, etc.).
+ */
+export function getStatusLabel(status: string): string {
+  const map: Record<string, string> = {
+    DRAFT: "Borrador",
+    SENT: "Enviada",
+    VIEWED: "Vista",
+    ACCEPTED: "Aceptada",
+    REJECTED: "Rechazada",
+    EXPIRED: "Expirada",
+    QUEUED: "En cola",
+    DELIVERED: "Entregado",
+    OPENED: "Abierto",
+    CLICKED: "Clic",
+    BOUNCED: "Rebotado",
+    FAILED: "Fallido",
+  };
+  return map[status] ?? status;
 }
 
-export function formatRelativeTime(date: Date | string): string {
-  return formatDistanceToNow(toDate(date), { addSuffix: true, locale: es });
-}
-
-export function formatPhoneNumber(phone: string): string {
-  const digits = phone.replace(/\D/g, "");
-
-  if (digits.startsWith("56") && digits.length === 11) {
-    return `+56 ${digits.slice(2, 3)} ${digits.slice(3, 7)} ${digits.slice(7)}`;
-  }
-
-  if (digits.length === 9 && digits.startsWith("9")) {
-    return `+56 ${digits.slice(0, 1)} ${digits.slice(1, 5)} ${digits.slice(5)}`;
-  }
-
-  if (digits.startsWith("1") && digits.length === 11) {
-    return `+1 (${digits.slice(1, 4)}) ${digits.slice(4, 7)}-${digits.slice(7)}`;
-  }
-
-  if (digits.length === 10) {
-    return `(${digits.slice(0, 3)}) ${digits.slice(3, 6)}-${digits.slice(6)}`;
-  }
-
-  return phone;
+/**
+ * Color associated with a status for badges.
+ */
+export function getStatusColor(status: string): string {
+  const map: Record<string, string> = {
+    DRAFT: "#6B7280",
+    SENT: "#3B82F6",
+    VIEWED: "#8B5CF6",
+    ACCEPTED: "#10B981",
+    REJECTED: "#EF4444",
+    EXPIRED: "#F59E0B",
+    QUEUED: "#6B7280",
+    DELIVERED: "#3B82F6",
+    OPENED: "#8B5CF6",
+    CLICKED: "#10B981",
+    BOUNCED: "#F59E0B",
+    FAILED: "#EF4444",
+  };
+  return map[status] ?? "#6B7280";
 }

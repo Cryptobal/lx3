@@ -1,18 +1,9 @@
-(function () {
+(function() {
   "use strict";
 
   var ENDPOINT = "/api/growth-os/tracking/event";
   var COOKIE_NAME = "lx3_visitor_id";
   var COOKIE_DAYS = 365;
-
-  function generateId() {
-    var chars = "abcdefghijklmnopqrstuvwxyz0123456789";
-    var id = "";
-    for (var i = 0; i < 20; i++) {
-      id += chars.charAt(Math.floor(Math.random() * chars.length));
-    }
-    return "v_" + Date.now().toString(36) + "_" + id;
-  }
 
   function getCookie(name) {
     var match = document.cookie.match(new RegExp("(^| )" + name + "=([^;]+)"));
@@ -21,32 +12,23 @@
 
   function setCookie(name, value, days) {
     var d = new Date();
-    d.setTime(d.getTime() + days * 24 * 60 * 60 * 1000);
-    document.cookie =
-      name +
-      "=" +
-      value +
-      ";expires=" +
-      d.toUTCString() +
-      ";path=/;SameSite=Lax";
+    d.setTime(d.getTime() + days * 86400000);
+    document.cookie = name + "=" + value + ";path=/;expires=" + d.toUTCString() + ";SameSite=Lax";
+  }
+
+  function generateId() {
+    return "lx3_" + Date.now().toString(36) + Math.random().toString(36).substr(2, 9);
   }
 
   function getUTMParams() {
-    var params = {};
-    var search = window.location.search;
-    var utmKeys = ["utm_source", "utm_medium", "utm_campaign", "utm_term", "utm_content"];
-    utmKeys.forEach(function (key) {
-      var match = search.match(new RegExp("[?&]" + key + "=([^&]*)"));
-      if (match) params[key] = decodeURIComponent(match[1]);
-    });
-    return params;
-  }
-
-  function getDeviceType() {
-    var w = window.innerWidth;
-    if (w < 768) return "mobile";
-    if (w < 1024) return "tablet";
-    return "desktop";
+    var params = new URLSearchParams(window.location.search);
+    return {
+      utmSource: params.get("utm_source"),
+      utmMedium: params.get("utm_medium"),
+      utmCampaign: params.get("utm_campaign"),
+      utmTerm: params.get("utm_term"),
+      utmContent: params.get("utm_content")
+    };
   }
 
   // Get or create visitor ID
@@ -56,95 +38,67 @@
     setCookie(COOKIE_NAME, visitorId, COOKIE_DAYS);
   }
 
-  var pageEntryTime = Date.now();
-  var maxScrollDepth = 0;
-  var sessionPageViewId = null;
+  // Make visitorId available globally for forms
+  window.__lx3_visitor_id = visitorId;
+
+  var startTime = Date.now();
+  var maxScroll = 0;
 
   // Track scroll depth
-  function onScroll() {
-    var scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-    var docHeight = document.documentElement.scrollHeight - window.innerHeight;
-    if (docHeight > 0) {
-      var depth = Math.round((scrollTop / docHeight) * 100);
-      if (depth > maxScrollDepth) maxScrollDepth = depth;
-    }
-  }
-
-  window.addEventListener("scroll", onScroll, { passive: true });
+  window.addEventListener("scroll", function() {
+    var h = document.documentElement;
+    var scrollPercent = Math.round((window.scrollY / (h.scrollHeight - h.clientHeight)) * 100);
+    if (scrollPercent > maxScroll) maxScroll = scrollPercent;
+  }, { passive: true });
 
   // Send page view
   var utm = getUTMParams();
   var payload = {
-    type: "pageview",
     visitorId: visitorId,
     path: window.location.pathname,
     title: document.title,
     referrer: document.referrer || null,
-    utmSource: utm.utm_source || null,
-    utmMedium: utm.utm_medium || null,
-    utmCampaign: utm.utm_campaign || null,
-    utmTerm: utm.utm_term || null,
-    utmContent: utm.utm_content || null,
-    screenWidth: window.innerWidth,
-    screenHeight: window.innerHeight,
-    deviceType: getDeviceType(),
+    utmSource: utm.utmSource,
+    utmMedium: utm.utmMedium,
+    utmCampaign: utm.utmCampaign,
+    utmTerm: utm.utmTerm,
+    utmContent: utm.utmContent,
+    userAgent: navigator.userAgent,
+    screenWidth: window.innerWidth
   };
 
-  try {
-    fetch(ENDPOINT, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload),
-      keepalive: true,
-    })
-      .then(function (r) {
-        return r.json();
-      })
-      .then(function (data) {
-        if (data && data.pageViewId) {
-          sessionPageViewId = data.pageViewId;
-        }
-      })
-      .catch(function () {});
-  } catch (e) {
-    // Silent fail
-  }
+  // Send initial page view
+  fetch(ENDPOINT, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload),
+    keepalive: true
+  }).catch(function() {});
 
-  // Send engagement data on page unload
-  function sendEngagement() {
-    var duration = Math.round((Date.now() - pageEntryTime) / 1000);
-    if (duration < 1) return;
-
-    var data = JSON.stringify({
-      type: "engagement",
+  // Send duration + scroll on page leave
+  function sendExitData() {
+    var duration = Math.round((Date.now() - startTime) / 1000);
+    var exitPayload = {
       visitorId: visitorId,
-      pageViewId: sessionPageViewId,
-      duration: duration,
-      scrollDepth: maxScrollDepth,
       path: window.location.pathname,
-    });
+      duration: duration,
+      scrollDepth: maxScroll,
+      type: "exit"
+    };
 
     if (navigator.sendBeacon) {
-      navigator.sendBeacon(ENDPOINT, new Blob([data], { type: "application/json" }));
+      navigator.sendBeacon(ENDPOINT, JSON.stringify(exitPayload));
     } else {
-      try {
-        fetch(ENDPOINT, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: data,
-          keepalive: true,
-        });
-      } catch (e) {
-        // Silent fail
-      }
+      fetch(ENDPOINT, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(exitPayload),
+        keepalive: true
+      }).catch(function() {});
     }
   }
 
-  window.addEventListener("beforeunload", sendEngagement);
-  document.addEventListener("visibilitychange", function () {
-    if (document.visibilityState === "hidden") sendEngagement();
+  document.addEventListener("visibilitychange", function() {
+    if (document.visibilityState === "hidden") sendExitData();
   });
-
-  // Expose visitorId for forms
-  window.__lx3 = { visitorId: visitorId };
 })();

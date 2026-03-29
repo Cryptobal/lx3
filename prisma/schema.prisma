@@ -41,8 +41,6 @@ model LeadSent {
 // GROWTH OS — MODELOS
 // ============================================
 
-// --- AUTENTICACIÓN Y USUARIOS ---
-
 model User {
   id            String    @id @default(cuid())
   name          String
@@ -102,8 +100,6 @@ enum UserRole {
   VIEWER
 }
 
-// --- CONTACTOS ---
-
 model Contact {
   id          String        @id @default(cuid())
   firstName   String
@@ -142,8 +138,6 @@ enum ContactSource {
   REFERRAL
 }
 
-// --- EMPRESAS ---
-
 model Company {
   id          String   @id @default(cuid())
   name        String
@@ -167,8 +161,6 @@ model Company {
   enrichedAt      DateTime?
   enrichmentData  Json?
 }
-
-// --- PIPELINE Y DEALS ---
 
 model PipelineStage {
   id          String   @id @default(cuid())
@@ -211,8 +203,6 @@ model Deal {
   quotes        Quote[]
   activities    Activity[]
 }
-
-// --- COTIZACIONES ---
 
 model Quote {
   id            String      @id @default(cuid())
@@ -285,8 +275,6 @@ enum QuoteStatus {
   EXPIRED
 }
 
-// --- ACTIVIDADES (TIMELINE) ---
-
 model Activity {
   id          String       @id @default(cuid())
   type        ActivityType
@@ -322,8 +310,6 @@ enum ActivityType {
   WEBSITE_VISIT
   CHATBOT_CONVERSATION
 }
-
-// --- VISITOR TRACKING ---
 
 model VisitorSession {
   id            String   @id @default(cuid())
@@ -362,8 +348,6 @@ model PageView {
   sessionId   String
   session     VisitorSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
 }
-
-// --- EMAIL LOGS ---
 
 model EmailLog {
   id          String        @id @default(cuid())

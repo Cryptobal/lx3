@@ -1,121 +1,176 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
-import { auth } from "@/lib/auth";
+import {
+  enrichContact,
+  enrichCompany,
+} from "@/lib/growth-os/services/apollo";
 
-const APOLLO_API_URL = "https://api.apollo.io/api/v1";
-
-export async function POST(request: NextRequest) {
-  const session = await auth();
-  if (!session?.user) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  }
-
+export async function POST(req: NextRequest) {
   if (!prisma) {
-    return NextResponse.json({ error: "DB not available" }, { status: 500 });
-  }
-
-  const apiKey = process.env.APOLLO_API_KEY;
-  if (!apiKey) {
     return NextResponse.json(
-      { error: "Apollo API key not configured" },
-      { status: 400 }
+      { error: "Database not available" },
+      { status: 503 }
     );
   }
 
   try {
-    const { type, contactId, companyId } = await request.json();
+    const body = await req.json();
+    const { contactId, companyId } = body as {
+      contactId?: string;
+      companyId?: string;
+    };
 
-    if (type === "contact" && contactId) {
-      const contact = await prisma.contact.findUnique({ where: { id: contactId } });
-      if (!contact?.email) {
-        return NextResponse.json({ error: "Contact has no email" }, { status: 400 });
-      }
-
-      const res = await fetch(`${APOLLO_API_URL}/people/match`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ api_key: apiKey, email: contact.email }),
-      });
-
-      const data = await res.json();
-      const person = data.person;
-
-      if (person) {
-        await prisma.contact.update({
-          where: { id: contactId },
-          data: {
-            firstName: person.first_name || contact.firstName,
-            lastName: person.last_name || contact.lastName,
-            position: person.title || contact.position,
-            linkedinUrl: person.linkedin_url || contact.linkedinUrl,
-            phone: person.phone_numbers?.[0]?.sanitized_number || contact.phone,
-            avatarUrl: person.photo_url || contact.avatarUrl,
-            enrichedAt: new Date(),
-            enrichmentData: data,
-          },
-        });
-
-        await prisma.activity.create({
-          data: {
-            type: "NOTE",
-            title: "Contacto enriquecido con Apollo",
-            contactId,
-            userId: session.user.id,
-            metadata: { source: "apollo", enrichedFields: Object.keys(person) },
-          },
-        });
-      }
-
-      return NextResponse.json({ ok: true, enriched: !!person });
+    if (!contactId && !companyId) {
+      return NextResponse.json(
+        { error: "contactId or companyId is required" },
+        { status: 400 }
+      );
     }
 
-    if (type === "company" && companyId) {
-      const company = await prisma.company.findUnique({ where: { id: companyId } });
-      if (!company?.domain) {
-        return NextResponse.json({ error: "Company has no domain" }, { status: 400 });
-      }
-
-      const res = await fetch(`${APOLLO_API_URL}/organizations/enrich`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ api_key: apiKey, domain: company.domain }),
+    // ---- Contact enrichment ----
+    if (contactId) {
+      const contact = await prisma.contact.findUnique({
+        where: { id: contactId },
       });
 
-      const data = await res.json();
-      const org = data.organization;
-
-      if (org) {
-        const employeeCount = org.estimated_num_employees || 0;
-        let size = null;
-        if (employeeCount <= 10) size = "1-10";
-        else if (employeeCount <= 50) size = "11-50";
-        else if (employeeCount <= 200) size = "51-200";
-        else if (employeeCount <= 500) size = "201-500";
-        else size = "500+";
-
-        await prisma.company.update({
-          where: { id: companyId },
-          data: {
-            industry: org.industry || company.industry,
-            size: size || company.size,
-            country: org.country || company.country,
-            city: org.city || company.city,
-            website: org.website_url || company.website,
-            linkedinUrl: org.linkedin_url || company.linkedinUrl,
-            logoUrl: org.logo_url || company.logoUrl,
-            description: org.short_description || company.description,
-            enrichedAt: new Date(),
-            enrichmentData: data,
-          },
-        });
+      if (!contact) {
+        return NextResponse.json(
+          { error: "Contact not found" },
+          { status: 404 }
+        );
       }
 
-      return NextResponse.json({ ok: true, enriched: !!org });
+      if (!contact.email) {
+        return NextResponse.json(
+          { error: "Contact has no email for enrichment" },
+          { status: 400 }
+        );
+      }
+
+      const enriched = await enrichContact(contact.email);
+
+      if (!enriched) {
+        return NextResponse.json(
+          { error: "No enrichment data found" },
+          { status: 404 }
+        );
+      }
+
+      const updatedContact = await prisma.contact.update({
+        where: { id: contactId },
+        data: {
+          ...(enriched.firstName && !contact.firstName
+            ? { firstName: enriched.firstName }
+            : {}),
+          ...(enriched.lastName && !contact.lastName
+            ? { lastName: enriched.lastName }
+            : {}),
+          ...(enriched.title && !contact.position
+            ? { position: enriched.title }
+            : {}),
+          ...(enriched.phone && !contact.phone
+            ? { phone: enriched.phone }
+            : {}),
+          ...(enriched.linkedinUrl && !contact.linkedinUrl
+            ? { linkedinUrl: enriched.linkedinUrl }
+            : {}),
+        },
+      });
+
+      // Create or link company if enrichment returned company data
+      if (enriched.companyDomain && !contact.companyId) {
+        let company = await prisma.company.findFirst({
+          where: { domain: enriched.companyDomain },
+        });
+
+        if (!company && enriched.companyName) {
+          company = await prisma.company.create({
+            data: {
+              name: enriched.companyName,
+              domain: enriched.companyDomain,
+            },
+          });
+        }
+
+        if (company) {
+          await prisma.contact.update({
+            where: { id: contactId },
+            data: { companyId: company.id },
+          });
+        }
+      }
+
+      return NextResponse.json({
+        ok: true,
+        type: "contact",
+        data: JSON.parse(JSON.stringify(updatedContact)),
+        enriched,
+      });
     }
 
-    return NextResponse.json({ error: "Invalid request" }, { status: 400 });
+    // ---- Company enrichment ----
+    if (companyId) {
+      const company = await prisma.company.findUnique({
+        where: { id: companyId },
+      });
+
+      if (!company) {
+        return NextResponse.json(
+          { error: "Company not found" },
+          { status: 404 }
+        );
+      }
+
+      if (!company.domain) {
+        return NextResponse.json(
+          { error: "Company has no domain for enrichment" },
+          { status: 400 }
+        );
+      }
+
+      const enriched = await enrichCompany(company.domain);
+
+      if (!enriched) {
+        return NextResponse.json(
+          { error: "No enrichment data found" },
+          { status: 404 }
+        );
+      }
+
+      const updatedCompany = await prisma.company.update({
+        where: { id: companyId },
+        data: {
+          ...(enriched.industry && !company.industry
+            ? { industry: enriched.industry }
+            : {}),
+          ...(enriched.size && !company.size ? { size: enriched.size } : {}),
+          ...(enriched.linkedinUrl && !company.linkedinUrl
+            ? { linkedinUrl: enriched.linkedinUrl }
+            : {}),
+          ...(enriched.country && !company.country
+            ? { country: enriched.country }
+            : {}),
+          ...(enriched.city && !company.city ? { city: enriched.city } : {}),
+          ...(enriched.description && !company.description
+            ? { description: enriched.description }
+            : {}),
+        },
+      });
+
+      return NextResponse.json({
+        ok: true,
+        type: "company",
+        data: JSON.parse(JSON.stringify(updatedCompany)),
+        enriched,
+      });
+    }
+
+    return NextResponse.json({ error: "Unexpected" }, { status: 400 });
   } catch (error) {
-    console.error("Enrichment error:", error);
-    return NextResponse.json({ error: "Internal error" }, { status: 500 });
+    console.error("[Enrich] Error:", error);
+    return NextResponse.json(
+      { error: "Failed to enrich" },
+      { status: 500 }
+    );
   }
 }

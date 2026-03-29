@@ -1,6 +1,4 @@
-import Link from "next/link";
 import type { LucideIcon } from "lucide-react";
-import { cn } from "@/lib/utils/cn";
 
 interface EmptyStateProps {
   icon: LucideIcon;
@@ -8,9 +6,8 @@ interface EmptyStateProps {
   description: string;
   action?: {
     label: string;
-    href: string;
+    onClick: () => void;
   };
-  className?: string;
 }
 
 export function EmptyState({
@@ -18,31 +15,21 @@ export function EmptyState({
   title,
   description,
   action,
-  className,
 }: EmptyStateProps) {
   return (
-    <div
-      className={cn(
-        "flex flex-col items-center justify-center py-16 px-4 text-center",
-        className
-      )}
-    >
-      <div className="flex items-center justify-center w-12 h-12 rounded-full bg-zinc-100 dark:bg-zinc-800 mb-4">
-        <Icon className="w-6 h-6 text-zinc-400 dark:text-zinc-500" />
+    <div className="flex flex-col items-center justify-center rounded-lg border border-gray-200 bg-white px-6 py-16 text-center">
+      <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-gray-100">
+        <Icon className="h-6 w-6 text-gray-400" />
       </div>
-      <h3 className="text-sm font-semibold text-zinc-900 dark:text-zinc-100 mb-1">
-        {title}
-      </h3>
-      <p className="text-sm text-zinc-500 dark:text-zinc-400 max-w-sm mb-4">
-        {description}
-      </p>
+      <h3 className="text-sm font-semibold text-gray-900">{title}</h3>
+      <p className="mt-1 max-w-sm text-sm text-gray-500">{description}</p>
       {action && (
-        <Link
-          href={action.href}
-          className="inline-flex items-center px-3 py-1.5 text-sm font-medium rounded-md bg-zinc-900 text-white hover:bg-zinc-800 dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-zinc-200 transition-colors"
+        <button
+          onClick={action.onClick}
+          className="mt-4 rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-blue-700"
         >
           {action.label}
-        </Link>
+        </button>
       )}
     </div>
   );

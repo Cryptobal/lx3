@@ -1,6 +1,10 @@
 import { prisma } from "@/lib/db";
 
-export async function recordPageView(data: {
+// ---------------------------------------------------------------------------
+// Types
+// ---------------------------------------------------------------------------
+
+interface TrackingEventData {
   visitorId: string;
   path: string;
   title?: string;
@@ -11,59 +15,93 @@ export async function recordPageView(data: {
   utmTerm?: string;
   utmContent?: string;
   userAgent?: string;
-  ipAddress?: string;
+  screenWidth?: number;
+  ip?: string;
   country?: string;
   city?: string;
-  deviceType?: string;
-}) {
-  if (!prisma) throw new Error("Database not available");
+  duration?: number;
+  scrollDepth?: number;
+}
 
-  const {
-    visitorId,
-    path,
-    title,
-    referrer,
-    utmSource,
-    utmMedium,
-    utmCampaign,
-    utmTerm,
-    utmContent,
-    userAgent,
-    ipAddress,
-    country,
-    city,
-    deviceType,
-  } = data;
+// ---------------------------------------------------------------------------
+// Main tracking handler
+// ---------------------------------------------------------------------------
 
-  // Find an active session for this visitor (last activity within 30 minutes)
-  const thirtyMinutesAgo = new Date(Date.now() - 30 * 60 * 1000);
+export async function processTrackingEvent(data: TrackingEventData) {
+  if (!prisma) return { type: "no_db" };
+
+  const deviceType = data.userAgent ? resolveDeviceType(data.userAgent) : "desktop";
+
+  // Find or create visitor session (one session per visitorId per day)
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
 
   let session = await prisma.visitorSession.findFirst({
     where: {
-      visitorId,
-      lastActivityAt: { gte: thirtyMinutesAgo },
+      visitorId: data.visitorId,
+      startedAt: { gte: today },
     },
-    orderBy: { lastActivityAt: "desc" },
+    orderBy: { startedAt: "desc" },
   });
 
   if (!session) {
     session = await prisma.visitorSession.create({
       data: {
-        visitorId,
-        ipAddress,
-        userAgent,
-        referrer,
-        utmSource,
-        utmMedium,
-        utmCampaign,
-        utmTerm,
-        utmContent,
-        country,
-        city,
+        visitorId: data.visitorId,
         deviceType,
+        userAgent: data.userAgent ?? null,
+        ipAddress: data.ip ?? null,
+        country: data.country ?? null,
+        city: data.city ?? null,
+        referrer: data.referrer ?? null,
+        utmSource: data.utmSource ?? null,
+        utmMedium: data.utmMedium ?? null,
+        utmCampaign: data.utmCampaign ?? null,
+        utmTerm: data.utmTerm ?? null,
+        utmContent: data.utmContent ?? null,
+        startedAt: new Date(),
       },
     });
   }
+
+  // If this is an exit event, update the most recent page view with duration/scroll
+  if (data.duration !== undefined || data.scrollDepth !== undefined) {
+    const lastPageView = await prisma.pageView.findFirst({
+      where: {
+        sessionId: session.id,
+        path: data.path,
+      },
+      orderBy: { viewedAt: "desc" },
+    });
+
+    if (lastPageView) {
+      await prisma.pageView.update({
+        where: { id: lastPageView.id },
+        data: {
+          ...(data.duration !== undefined && { duration: data.duration }),
+          ...(data.scrollDepth !== undefined && { scrollDepth: data.scrollDepth }),
+        },
+      });
+    }
+
+    // Update session last activity
+    await prisma.visitorSession.update({
+      where: { id: session.id },
+      data: { lastActivityAt: new Date() },
+    });
+
+    return { sessionId: session.id, type: "exit_update" };
+  }
+
+  // Create page view
+  const pageView = await prisma.pageView.create({
+    data: {
+      sessionId: session.id,
+      path: data.path,
+      title: data.title ?? null,
+      viewedAt: new Date(),
+    },
+  });
 
   // Update session last activity
   await prisma.visitorSession.update({
@@ -71,76 +109,34 @@ export async function recordPageView(data: {
     data: { lastActivityAt: new Date() },
   });
 
-  // Create the page view
-  const pageView = await prisma.pageView.create({
-    data: {
-      path,
-      title,
-      sessionId: session.id,
-    },
-  });
-
-  return { session, pageView };
+  return { sessionId: session.id, pageViewId: pageView.id, type: "page_view" };
 }
 
-export async function updatePageViewMetrics(
-  sessionId: string,
-  pageViewId: string,
-  data: {
-    duration?: number;
-    scrollDepth?: number;
-  }
-) {
-  if (!prisma) throw new Error("Database not available");
+// ---------------------------------------------------------------------------
+// Device type resolution
+// ---------------------------------------------------------------------------
 
-  const pageView = await prisma.pageView.findFirst({
-    where: {
-      id: pageViewId,
-      sessionId,
-    },
-  });
+export function resolveDeviceType(userAgent: string): "mobile" | "desktop" | "tablet" {
+  const ua = userAgent.toLowerCase();
 
-  if (!pageView) {
-    throw new Error("PageView not found for the given session");
-  }
+  if (/ipad|tablet|playbook|silk/.test(ua)) return "tablet";
+  if (/android(?!.*mobile)/.test(ua)) return "tablet";
+  if (/mobile|iphone|ipod|android|blackberry|opera mini|iemobile|wpdesktop/.test(ua)) return "mobile";
 
-  const updatedPageView = await prisma.pageView.update({
-    where: { id: pageViewId },
-    data: {
-      duration: data.duration ?? pageView.duration,
-      scrollDepth: data.scrollDepth ?? pageView.scrollDepth,
-    },
-  });
-
-  // Also update session last activity
-  await prisma.visitorSession.update({
-    where: { id: sessionId },
-    data: { lastActivityAt: new Date() },
-  });
-
-  return updatedPageView;
+  return "desktop";
 }
 
-export async function linkVisitorToContact(
-  visitorId: string,
-  contactId: string
-) {
-  if (!prisma) throw new Error("Database not available");
+// ---------------------------------------------------------------------------
+// Link visitor sessions to a known contact
+// ---------------------------------------------------------------------------
 
-  // Verify the contact exists
-  const contact = await prisma.contact.findUnique({
-    where: { id: contactId },
-  });
+export async function linkVisitorSessions(visitorId: string, contactId: string) {
+  if (!prisma) return { updated: 0 };
 
-  if (!contact) {
-    throw new Error(`Contact with id ${contactId} not found`);
-  }
-
-  // Link all sessions with this visitorId to the contact
   const result = await prisma.visitorSession.updateMany({
     where: { visitorId },
     data: { contactId },
   });
 
-  return { linkedSessions: result.count };
+  return { updated: result.count };
 }

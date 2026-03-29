@@ -3,16 +3,18 @@
 import { prisma } from "@/lib/db";
 import { revalidatePath } from "next/cache";
 
-export async function getCompanies(params: {
+type ActionResult<T = unknown> = { success: true; data: T } | { success: false; error: string };
+
+export async function getCompanies(params?: {
   search?: string;
+  industry?: string;
   page?: number;
   pageSize?: number;
 }) {
-  if (!prisma) throw new Error("Database not available");
-
-  const { search, page = 1, pageSize = 20 } = params;
+  if (!prisma) return { data: [], total: 0 };
 
   try {
+    const { search, industry, page = 1, pageSize = 20 } = params ?? {};
     const where: Record<string, unknown> = {};
 
     if (search) {
@@ -22,18 +24,12 @@ export async function getCompanies(params: {
         { industry: { contains: search, mode: "insensitive" } },
       ];
     }
+    if (industry) where.industry = industry;
 
     const [data, total] = await Promise.all([
       prisma.company.findMany({
         where,
-        include: {
-          _count: {
-            select: {
-              contacts: true,
-              deals: true,
-            },
-          },
-        },
+        include: { _count: { select: { contacts: true, deals: true } } },
         orderBy: { createdAt: "desc" },
         skip: (page - 1) * pageSize,
         take: pageSize,
@@ -41,37 +37,30 @@ export async function getCompanies(params: {
       prisma.company.count({ where }),
     ]);
 
-    return {
-      data,
-      total,
-      page,
-      pageSize,
-      totalPages: Math.ceil(total / pageSize),
-    };
+    return { data: JSON.parse(JSON.stringify(data)), total };
   } catch (error) {
-    console.error("Failed to get companies:", error);
-    throw new Error("Failed to get companies");
+    console.error("getCompanies error:", error);
+    return { data: [], total: 0 };
   }
 }
 
-export async function getCompany(id: string) {
-  if (!prisma) throw new Error("Database not available");
+export async function getCompany(id: string): Promise<ActionResult> {
+  if (!prisma) return { success: false, error: "Database not available" };
 
   try {
     const company = await prisma.company.findUnique({
       where: { id },
       include: {
         contacts: true,
-        deals: { include: { stage: true } },
+        deals: { include: { stage: true, contact: true } },
       },
     });
 
-    if (!company) throw new Error("Company not found");
-
-    return company;
+    if (!company) return { success: false, error: "Company not found" };
+    return { success: true, data: JSON.parse(JSON.stringify(company)) };
   } catch (error) {
-    console.error("Failed to get company:", error);
-    throw new Error("Failed to get company");
+    console.error("getCompany error:", error);
+    return { success: false, error: "Failed to fetch company" };
   }
 }
 
@@ -84,34 +73,36 @@ export async function createCompany(data: {
   city?: string;
   website?: string;
   linkedinUrl?: string;
+  logoUrl?: string;
   phone?: string;
   description?: string;
   tags?: string[];
-}) {
-  if (!prisma) throw new Error("Database not available");
+}): Promise<ActionResult> {
+  if (!prisma) return { success: false, error: "Database not available" };
 
   try {
     const company = await prisma.company.create({
       data: {
         name: data.name,
-        domain: data.domain,
+        domain: data.domain || undefined,
         industry: data.industry,
         size: data.size,
         country: data.country,
         city: data.city,
         website: data.website,
         linkedinUrl: data.linkedinUrl,
+        logoUrl: data.logoUrl,
         phone: data.phone,
         description: data.description,
         tags: data.tags ?? [],
       },
     });
 
-    revalidatePath("/growth-os/companies");
-    return company;
+    revalidatePath("/admin/companies");
+    return { success: true, data: JSON.parse(JSON.stringify(company)) };
   } catch (error) {
-    console.error("Failed to create company:", error);
-    throw new Error("Failed to create company");
+    console.error("createCompany error:", error);
+    return { success: false, error: "Failed to create company" };
   }
 }
 
@@ -119,45 +110,48 @@ export async function updateCompany(
   id: string,
   data: {
     name?: string;
-    domain?: string;
+    domain?: string | null;
     industry?: string;
     size?: string;
     country?: string;
     city?: string;
     website?: string;
     linkedinUrl?: string;
+    logoUrl?: string;
     phone?: string;
     description?: string;
     tags?: string[];
   }
-) {
-  if (!prisma) throw new Error("Database not available");
+): Promise<ActionResult> {
+  if (!prisma) return { success: false, error: "Database not available" };
 
   try {
     const company = await prisma.company.update({
       where: { id },
-      data,
+      data: {
+        ...data,
+        domain: data.domain || undefined,
+      },
     });
 
-    revalidatePath("/growth-os/companies");
-    revalidatePath(`/growth-os/companies/${id}`);
-    return company;
+    revalidatePath("/admin/companies");
+    revalidatePath(`/admin/companies/${id}`);
+    return { success: true, data: JSON.parse(JSON.stringify(company)) };
   } catch (error) {
-    console.error("Failed to update company:", error);
-    throw new Error("Failed to update company");
+    console.error("updateCompany error:", error);
+    return { success: false, error: "Failed to update company" };
   }
 }
 
-export async function deleteCompany(id: string) {
-  if (!prisma) throw new Error("Database not available");
+export async function deleteCompany(id: string): Promise<ActionResult> {
+  if (!prisma) return { success: false, error: "Database not available" };
 
   try {
     await prisma.company.delete({ where: { id } });
-
-    revalidatePath("/growth-os/companies");
-    return { success: true };
+    revalidatePath("/admin/companies");
+    return { success: true, data: null };
   } catch (error) {
-    console.error("Failed to delete company:", error);
-    throw new Error("Failed to delete company");
+    console.error("deleteCompany error:", error);
+    return { success: false, error: "Failed to delete company" };
   }
 }

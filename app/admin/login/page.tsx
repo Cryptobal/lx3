@@ -1,37 +1,110 @@
-import { Suspense } from "react";
-import { LoginForm } from "./LoginForm";
+"use client";
 
-export default function AdminLoginPage() {
+import { useState } from "react";
+import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
+
+export default function LoginPage() {
+  const router = useRouter();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    setError("");
+    setLoading(true);
+
+    try {
+      const result = await signIn("credentials", {
+        email,
+        password,
+        redirect: false,
+      });
+
+      if (result?.error) {
+        setError("Credenciales incorrectas. Intenta nuevamente.");
+      } else {
+        router.push("/admin");
+        router.refresh();
+      }
+    } catch {
+      setError("Error al iniciar sesion. Intenta nuevamente.");
+    } finally {
+      setLoading(false);
+    }
+  }
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-zinc-950 relative overflow-hidden">
-      {/* Subtle background gradient */}
-      <div className="absolute inset-0 bg-gradient-to-br from-blue-600/5 via-transparent to-purple-600/5" />
-      <div className="absolute top-1/4 -left-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl" />
-      <div className="absolute bottom-1/4 -right-1/4 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl" />
-
-      <div className="w-full max-w-sm px-4 relative z-10">
-        <div className="bg-zinc-900/80 backdrop-blur-xl rounded-2xl border border-zinc-800 p-8 shadow-2xl shadow-black/20">
-          <div className="text-center mb-8">
-            <div className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-blue-600 mb-4">
-              <span className="text-lg font-bold text-white">LX3</span>
-            </div>
-            <h1 className="text-xl font-bold text-zinc-100">Growth OS</h1>
-            <p className="text-sm text-zinc-500 mt-1">Ingresa a tu cuenta</p>
+    <div className="flex min-h-screen items-center justify-center bg-gray-950 px-4">
+      <div className="w-full max-w-sm">
+        <div className="rounded-2xl border border-gray-800 bg-gray-900 p-8 shadow-2xl">
+          {/* Logo */}
+          <div className="mb-8 text-center">
+            <h1 className="text-3xl font-bold text-white">LX3</h1>
+            <p className="mt-1 text-sm text-gray-400">Growth OS</p>
           </div>
-          <Suspense
-            fallback={
-              <div className="space-y-4 animate-pulse">
-                <div className="h-10 bg-zinc-800 rounded-lg" />
-                <div className="h-10 bg-zinc-800 rounded-lg" />
-                <div className="h-10 bg-zinc-800 rounded-lg" />
-              </div>
-            }
-          >
-            <LoginForm />
-          </Suspense>
+
+          {/* Error */}
+          {error && (
+            <div className="mb-4 rounded-lg border border-red-500/30 bg-red-500/10 px-4 py-3 text-sm text-red-400">
+              {error}
+            </div>
+          )}
+
+          {/* Form */}
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div>
+              <label
+                htmlFor="email"
+                className="mb-1 block text-sm font-medium text-gray-300"
+              >
+                Email
+              </label>
+              <input
+                id="email"
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+                placeholder="tu@email.com"
+                className="w-full rounded-lg border border-gray-700 bg-gray-800 px-3 py-2.5 text-sm text-white placeholder-gray-500 transition-colors focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                disabled={loading}
+              />
+            </div>
+
+            <div>
+              <label
+                htmlFor="password"
+                className="mb-1 block text-sm font-medium text-gray-300"
+              >
+                Contrasena
+              </label>
+              <input
+                id="password"
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+                placeholder="Tu contrasena"
+                className="w-full rounded-lg border border-gray-700 bg-gray-800 px-3 py-2.5 text-sm text-white placeholder-gray-500 transition-colors focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                disabled={loading}
+              />
+            </div>
+
+            <button
+              type="submit"
+              disabled={loading}
+              className="mt-2 w-full rounded-lg bg-blue-600 px-4 py-2.5 text-sm font-medium text-white transition-colors hover:bg-blue-700 disabled:opacity-50"
+            >
+              {loading ? "Iniciando sesion..." : "Iniciar Sesion"}
+            </button>
+          </form>
         </div>
-        <p className="text-center text-xs text-zinc-600 mt-6">
-          Plataforma de gestión comercial by LX3
+
+        <p className="mt-6 text-center text-xs text-gray-600">
+          LX3 Growth OS &mdash; Plataforma de gestion comercial
         </p>
       </div>
     </div>

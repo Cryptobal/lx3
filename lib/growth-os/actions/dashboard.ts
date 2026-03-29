@@ -3,132 +3,116 @@
 import { prisma } from "@/lib/db";
 
 export async function getDashboardStats() {
-  if (!prisma) throw new Error("Database not available");
+  if (!prisma) return { data: { totalContacts: 0, activeDeals: 0, pipelineValue: 0, pendingQuotes: 0 } };
 
   try {
-    const [totalContacts, activeDeals, pipelineValue, pendingQuotes] =
-      await Promise.all([
-        prisma.contact.count(),
-        prisma.deal.count({
-          where: {
-            stage: {
-              isWon: false,
-              isLost: false,
-            },
-          },
-        }),
-        prisma.deal.aggregate({
-          _sum: { value: true },
-          where: {
-            stage: {
-              isWon: false,
-              isLost: false,
-            },
-          },
-        }),
-        prisma.quote.count({
-          where: {
-            status: { in: ["SENT", "VIEWED"] },
-          },
-        }),
-      ]);
+    const [totalContacts, activeDeals, pendingQuotes, pipelineAgg] = await Promise.all([
+      prisma.contact.count(),
+      prisma.deal.count({
+        where: { stage: { isWon: false, isLost: false } },
+      }),
+      prisma.quote.count({
+        where: { status: { in: ["DRAFT", "SENT", "VIEWED"] } },
+      }),
+      prisma.deal.aggregate({
+        where: { stage: { isWon: false, isLost: false } },
+        _sum: { value: true },
+      }),
+    ]);
+
+    const pipelineValue = pipelineAgg._sum.value ? Number(pipelineAgg._sum.value) : 0;
 
     return {
-      totalContacts,
-      activeDeals,
-      pipelineValue: pipelineValue._sum.value?.toNumber() ?? 0,
-      pendingQuotes,
+      data: { totalContacts, activeDeals, pipelineValue, pendingQuotes },
     };
   } catch (error) {
-    console.error("Failed to get dashboard stats:", error);
-    throw new Error("Failed to get dashboard stats");
+    console.error("getDashboardStats error:", error);
+    return { data: { totalContacts: 0, activeDeals: 0, pipelineValue: 0, pendingQuotes: 0 } };
+  }
+}
+
+export async function getRecentActivities(limit = 20) {
+  if (!prisma) return { data: [] };
+
+  try {
+    const activities = await prisma.activity.findMany({
+      orderBy: { createdAt: "desc" },
+      take: limit,
+      include: {
+        user: { select: { id: true, name: true, image: true } },
+        contact: { select: { id: true, firstName: true, lastName: true } },
+        deal: { select: { id: true, title: true } },
+      },
+    });
+
+    return { data: JSON.parse(JSON.stringify(activities)) };
+  } catch (error) {
+    console.error("getRecentActivities error:", error);
+    return { data: [] };
   }
 }
 
 export async function getPipelineSummary() {
-  if (!prisma) throw new Error("Database not available");
+  if (!prisma) return { data: [] };
 
   try {
     const stages = await prisma.pipelineStage.findMany({
-      include: {
-        deals: {
-          select: { value: true },
-        },
-      },
       orderBy: { order: "asc" },
+      include: {
+        deals: { select: { value: true } },
+      },
     });
 
-    return stages.map((stage) => ({
-      stageName: stage.name,
-      color: stage.color,
+    const summary = stages.map((stage) => ({
+      id: stage.id,
+      name: stage.name,
+      color: stage.color ?? "#6B7280",
+      order: stage.order,
+      isWon: stage.isWon,
+      isLost: stage.isLost,
       count: stage.deals.length,
       totalValue: stage.deals.reduce(
-        (sum, deal) => sum + (deal.value?.toNumber() ?? 0),
+        (sum, d) => sum + (d.value ? Number(d.value) : 0),
         0
       ),
     }));
+
+    return { data: summary };
   } catch (error) {
-    console.error("Failed to get pipeline summary:", error);
-    throw new Error("Failed to get pipeline summary");
+    console.error("getPipelineSummary error:", error);
+    return { data: [] };
   }
 }
 
-export async function getRecentActivities(limit: number = 10) {
-  if (!prisma) throw new Error("Database not available");
+export async function getLeadSourceBreakdown() {
+  if (!prisma) return { data: [] };
 
   try {
-    const activities = await prisma.activity.findMany({
-      include: {
-        user: true,
-        contact: true,
-      },
-      orderBy: { createdAt: "desc" },
-      take: limit,
-    });
-
-    return activities;
-  } catch (error) {
-    console.error("Failed to get recent activities:", error);
-    throw new Error("Failed to get recent activities");
-  }
-}
-
-export async function getLeadSourceStats() {
-  if (!prisma) throw new Error("Database not available");
-
-  try {
-    const stats = await prisma.contact.groupBy({
+    const result = await prisma.contact.groupBy({
       by: ["source"],
       _count: { source: true },
       orderBy: { _count: { source: "desc" } },
     });
 
-    return stats.map((stat) => ({
-      source: stat.source,
-      count: stat._count.source,
+    const sourceColors: Record<string, string> = {
+      MANUAL: "#6B7280",
+      WEBSITE_FORM: "#3B82F6",
+      COTIZADOR: "#10B981",
+      CHATBOT: "#8B5CF6",
+      APOLLO: "#F59E0B",
+      IMPORT: "#EC4899",
+      REFERRAL: "#14B8A6",
+    };
+
+    const data = result.map((r) => ({
+      source: r.source,
+      count: r._count.source,
+      color: sourceColors[r.source] ?? "#6B7280",
     }));
+
+    return { data };
   } catch (error) {
-    console.error("Failed to get lead source stats:", error);
-    throw new Error("Failed to get lead source stats");
-  }
-}
-
-export async function getRecentVisitors(limit: number = 10) {
-  if (!prisma) throw new Error("Database not available");
-
-  try {
-    const visitors = await prisma.visitorSession.findMany({
-      include: {
-        pageViews: true,
-        contact: true,
-      },
-      orderBy: { startedAt: "desc" },
-      take: limit,
-    });
-
-    return visitors;
-  } catch (error) {
-    console.error("Failed to get recent visitors:", error);
-    throw new Error("Failed to get recent visitors");
+    console.error("getLeadSourceBreakdown error:", error);
+    return { data: [] };
   }
 }

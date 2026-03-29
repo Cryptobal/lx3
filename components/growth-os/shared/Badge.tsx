@@ -1,45 +1,44 @@
-import { cn } from "@/lib/utils/cn";
-
-type BadgeVariant = "default" | "success" | "warning" | "danger" | "info" | "purple";
-type BadgeSize = "sm" | "md";
+const presetColors: Record<string, { bg: string; text: string }> = {
+  blue: { bg: "bg-blue-100", text: "text-blue-700" },
+  green: { bg: "bg-green-100", text: "text-green-700" },
+  red: { bg: "bg-red-100", text: "text-red-700" },
+  yellow: { bg: "bg-yellow-100", text: "text-yellow-700" },
+  gray: { bg: "bg-gray-100", text: "text-gray-700" },
+};
 
 interface BadgeProps {
-  children: React.ReactNode;
-  variant?: BadgeVariant;
-  size?: BadgeSize;
-  className?: string;
+  label: string;
+  color?: "blue" | "green" | "red" | "yellow" | "gray" | (string & {});
+  size?: "sm" | "md";
 }
 
-const variantStyles: Record<BadgeVariant, string> = {
-  default: "bg-zinc-100 text-zinc-700 dark:bg-zinc-800 dark:text-zinc-300",
-  success: "bg-emerald-50 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300",
-  warning: "bg-amber-50 text-amber-700 dark:bg-amber-950 dark:text-amber-300",
-  danger: "bg-red-50 text-red-700 dark:bg-red-950 dark:text-red-300",
-  info: "bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300",
-  purple: "bg-purple-50 text-purple-700 dark:bg-purple-950 dark:text-purple-300",
-};
+export function Badge({ label, color = "gray", size = "sm" }: BadgeProps) {
+  const preset = presetColors[color];
 
-const sizeStyles: Record<BadgeSize, string> = {
-  sm: "px-1.5 py-0.5 text-xs",
-  md: "px-2 py-0.5 text-sm",
-};
+  if (preset) {
+    return (
+      <span
+        className={`inline-flex items-center rounded-full font-medium ${preset.bg} ${preset.text} ${
+          size === "sm" ? "px-2 py-0.5 text-xs" : "px-2.5 py-1 text-sm"
+        }`}
+      >
+        {label}
+      </span>
+    );
+  }
 
-export function Badge({
-  children,
-  variant = "default",
-  size = "sm",
-  className,
-}: BadgeProps) {
+  // Custom hex color
   return (
     <span
-      className={cn(
-        "inline-flex items-center font-medium rounded-full whitespace-nowrap",
-        variantStyles[variant],
-        sizeStyles[size],
-        className
-      )}
+      className={`inline-flex items-center rounded-full font-medium ${
+        size === "sm" ? "px-2 py-0.5 text-xs" : "px-2.5 py-1 text-sm"
+      }`}
+      style={{
+        backgroundColor: `${color}20`,
+        color: color,
+      }}
     >
-      {children}
+      {label}
     </span>
   );
 }

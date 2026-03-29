@@ -1,112 +1,150 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
+import { linkVisitorSessions } from "@/lib/growth-os/services/tracking-service";
+import { sendNewLeadNotification } from "@/lib/growth-os/services/email-service";
 
-export async function POST(request: NextRequest) {
+interface FormSubmissionPayload {
+  name: string;
+  email?: string;
+  phone?: string;
+  company?: string;
+  service?: string;
+  visitorId?: string;
+  source?: string;
+}
+
+export async function POST(req: NextRequest) {
   if (!prisma) {
-    return NextResponse.json({ error: "DB not available" }, { status: 500 });
+    return NextResponse.json(
+      { error: "Database not available" },
+      { status: 503 }
+    );
   }
 
   try {
-    const body = await request.json();
-    const {
-      visitorId,
-      firstName,
-      lastName,
-      email,
-      phone,
-      company: companyName,
-      position,
-      message,
-      source = "WEBSITE_FORM",
-    } = body;
+    const body: FormSubmissionPayload = await req.json();
 
-    // Create or find contact
-    let contact = email
-      ? await prisma.contact.findUnique({ where: { email } })
-      : null;
+    if (!body.name) {
+      return NextResponse.json(
+        { error: "Name is required" },
+        { status: 400 }
+      );
+    }
+
+    // Parse name into first/last
+    const nameParts = body.name.trim().split(/\s+/);
+    const firstName = nameParts[0];
+    const lastName = nameParts.length > 1 ? nameParts.slice(1).join(" ") : null;
+
+    // Determine contact source
+    const contactSource =
+      body.source === "cotizador" ? "COTIZADOR" : "WEBSITE_FORM";
+
+    // Find or create contact
+    let contact;
+    if (body.email) {
+      contact = await prisma.contact.findFirst({
+        where: { email: body.email },
+      });
+    }
 
     if (!contact) {
       contact = await prisma.contact.create({
         data: {
-          firstName: firstName || "Sin nombre",
+          firstName,
           lastName,
-          email,
-          phone,
-          position,
-          source: source as "WEBSITE_FORM" | "COTIZADOR" | "CHATBOT",
-          notes: message,
-        },
-      });
-
-      // Create activity
-      await prisma.activity.create({
-        data: {
-          type: "CONTACT_CREATED",
-          title: `Nuevo contacto desde ${source === "COTIZADOR" ? "cotizador" : source === "CHATBOT" ? "chatbot" : "formulario web"}`,
-          contactId: contact.id,
-          metadata: { source, message },
+          email: body.email ?? undefined,
+          phone: body.phone ?? undefined,
+          source: contactSource,
+          tags: body.service ? [body.service] : [],
         },
       });
     }
 
-    // Create form submission activity
-    await prisma.activity.create({
-      data: {
-        type: "FORM_SUBMISSION",
-        title: `Formulario recibido: ${firstName || ""} ${lastName || ""}`.trim(),
-        description: message,
-        contactId: contact.id,
-        metadata: { source, companyName, visitorId },
-      },
-    });
+    // Link visitor sessions if visitorId provided
+    if (body.visitorId) {
+      await linkVisitorSessions(body.visitorId, contact.id);
+    }
 
-    // Link company if provided
-    if (companyName && !contact.companyId) {
+    // Create or find company if provided
+    if (body.company) {
       let company = await prisma.company.findFirst({
-        where: { name: { equals: companyName, mode: "insensitive" } },
+        where: { name: { equals: body.company, mode: "insensitive" } },
       });
 
       if (!company) {
         company = await prisma.company.create({
-          data: { name: companyName },
+          data: { name: body.company },
         });
       }
 
-      await prisma.contact.update({
-        where: { id: contact.id },
-        data: { companyId: company.id },
-      });
+      if (!contact.companyId) {
+        await prisma.contact.update({
+          where: { id: contact.id },
+          data: { companyId: company.id },
+        });
+      }
     }
 
-    // Link visitor sessions to contact
-    if (visitorId) {
-      await prisma.visitorSession.updateMany({
-        where: { visitorId, contactId: null },
-        data: { contactId: contact.id },
-      });
-    }
+    // Create activity
+    await prisma.activity.create({
+      data: {
+        type: "FORM_SUBMISSION",
+        title: `Formulario recibido: ${body.name}${body.service ? ` (${body.service})` : ""}`,
+        contactId: contact.id,
+        metadata: {
+          source: body.source ?? "website",
+          service: body.service ?? null,
+          visitorId: body.visitorId ?? null,
+        },
+      },
+    });
 
-    // If source is COTIZADOR, create a deal
-    if (source === "COTIZADOR") {
+    // If source is "cotizador", create a Deal in default stage
+    if (body.source === "cotizador") {
       const defaultStage = await prisma.pipelineStage.findFirst({
         where: { isDefault: true },
       });
 
       if (defaultStage) {
-        await prisma.deal.create({
+        const deal = await prisma.deal.create({
           data: {
-            title: `Cotización - ${firstName || ""} ${lastName || ""}`.trim(),
+            title: `Cotizacion: ${body.name}${body.service ? ` - ${body.service}` : ""}`,
             stageId: defaultStage.id,
             contactId: contact.id,
-            companyId: contact.companyId,
+            companyId: contact.companyId ?? undefined,
+          },
+        });
+
+        await prisma.activity.create({
+          data: {
+            type: "DEAL_STAGE_CHANGED",
+            title: `Deal creado desde cotizador: ${deal.title}`,
+            dealId: deal.id,
+            contactId: contact.id,
           },
         });
       }
     }
 
-    return NextResponse.json({ ok: true, contactId: contact.id });
+    // Send new lead notification email (fire and forget)
+    sendNewLeadNotification({
+      contactName: body.name,
+      email: body.email,
+      source: contactSource,
+    }).catch((err) =>
+      console.error("[FormSubmission] Notification error:", err)
+    );
+
+    return NextResponse.json({
+      ok: true,
+      contactId: contact.id,
+    });
   } catch (error) {
-    console.error("Form submission webhook error:", error);
-    return NextResponse.json({ error: "Internal error" }, { status: 500 });
+    console.error("[FormSubmission] Error:", error);
+    return NextResponse.json(
+      { error: "Failed to process form submission" },
+      { status: 500 }
+    );
   }
 }

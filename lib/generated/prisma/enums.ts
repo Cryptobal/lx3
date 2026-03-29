@@ -9,7 +9,69 @@
 * 🟢 You can import this file directly.
 */
 
+export const UserRole = {
+  ADMIN: 'ADMIN',
+  MEMBER: 'MEMBER',
+  VIEWER: 'VIEWER'
+} as const
+
+export type UserRole = (typeof UserRole)[keyof typeof UserRole]
 
 
-// This file is empty because there are no enums in the schema.
-export {}
+export const ContactSource = {
+  MANUAL: 'MANUAL',
+  WEBSITE_FORM: 'WEBSITE_FORM',
+  COTIZADOR: 'COTIZADOR',
+  CHATBOT: 'CHATBOT',
+  APOLLO: 'APOLLO',
+  IMPORT: 'IMPORT',
+  REFERRAL: 'REFERRAL'
+} as const
+
+export type ContactSource = (typeof ContactSource)[keyof typeof ContactSource]
+
+
+export const QuoteStatus = {
+  DRAFT: 'DRAFT',
+  SENT: 'SENT',
+  VIEWED: 'VIEWED',
+  ACCEPTED: 'ACCEPTED',
+  REJECTED: 'REJECTED',
+  EXPIRED: 'EXPIRED'
+} as const
+
+export type QuoteStatus = (typeof QuoteStatus)[keyof typeof QuoteStatus]
+
+
+export const ActivityType = {
+  NOTE: 'NOTE',
+  EMAIL_SENT: 'EMAIL_SENT',
+  EMAIL_OPENED: 'EMAIL_OPENED',
+  EMAIL_CLICKED: 'EMAIL_CLICKED',
+  CALL: 'CALL',
+  MEETING: 'MEETING',
+  QUOTE_SENT: 'QUOTE_SENT',
+  QUOTE_VIEWED: 'QUOTE_VIEWED',
+  QUOTE_ACCEPTED: 'QUOTE_ACCEPTED',
+  QUOTE_REJECTED: 'QUOTE_REJECTED',
+  DEAL_STAGE_CHANGED: 'DEAL_STAGE_CHANGED',
+  CONTACT_CREATED: 'CONTACT_CREATED',
+  FORM_SUBMISSION: 'FORM_SUBMISSION',
+  WEBSITE_VISIT: 'WEBSITE_VISIT',
+  CHATBOT_CONVERSATION: 'CHATBOT_CONVERSATION'
+} as const
+
+export type ActivityType = (typeof ActivityType)[keyof typeof ActivityType]
+
+
+export const EmailStatus = {
+  QUEUED: 'QUEUED',
+  SENT: 'SENT',
+  DELIVERED: 'DELIVERED',
+  OPENED: 'OPENED',
+  CLICKED: 'CLICKED',
+  BOUNCED: 'BOUNCED',
+  FAILED: 'FAILED'
+} as const
+
+export type EmailStatus = (typeof EmailStatus)[keyof typeof EmailStatus]

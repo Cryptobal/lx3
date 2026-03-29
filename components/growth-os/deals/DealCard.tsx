@@ -4,18 +4,20 @@ import Link from "next/link";
 import { Building2, User, Clock } from "lucide-react";
 import { formatMoney } from "@/lib/growth-os/utils/format";
 
-interface Deal {
+export interface DealCardData {
   id: string;
   title: string;
   value: number | null;
   currency: string;
   probability: number | null;
   createdAt: string;
-  updatedAt: string;
+  updatedAt?: string;
   stageId: string;
-  contact?: { firstName: string; lastName?: string } | null;
-  company?: { name: string } | null;
+  contact?: { id?: string; firstName: string; lastName?: string | null } | null;
+  company?: { id?: string; name: string } | null;
 }
+
+type Deal = DealCardData;
 
 interface DealCardProps {
   deal: Deal;
@@ -24,7 +26,7 @@ interface DealCardProps {
 
 export function DealCard({ deal, isOverlay = false }: DealCardProps) {
   const daysSinceUpdate = Math.floor(
-    (Date.now() - new Date(deal.updatedAt).getTime()) / (1000 * 60 * 60 * 24)
+    (Date.now() - new Date(deal.updatedAt ?? deal.createdAt).getTime()) / (1000 * 60 * 60 * 24)
   );
 
   const probabilityColor =

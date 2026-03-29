@@ -53,7 +53,7 @@ function PipelineBarTooltip({ active, payload }: { active?: boolean; payload?: A
     <div className="bg-white dark:bg-zinc-800 rounded-lg shadow-lg border border-zinc-200 dark:border-zinc-700 px-3 py-2 text-sm">
       <p className="font-medium text-zinc-900 dark:text-zinc-100">{data.stageName}</p>
       <p className="text-zinc-500 dark:text-zinc-400">
-        {data.count} deals - {formatMoney(data.totalValue)}
+        {data.count} deals - {formatMoney(data.totalValue, "CLP")}
       </p>
     </div>
   );
@@ -86,7 +86,7 @@ export function PipelineChart({ data }: { data: PipelineStageData[] }) {
               tick={{ fontSize: 12, fill: "#71717a" }}
               axisLine={false}
               tickLine={false}
-              tickFormatter={(v) => formatMoney(v)}
+              tickFormatter={(v) => formatMoney(v, "CLP")}
             />
             <Tooltip content={<PipelineBarTooltip />} />
             <Bar dataKey="totalValue" radius={[6, 6, 0, 0]}>

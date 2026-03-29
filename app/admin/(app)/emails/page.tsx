@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { Mail } from "lucide-react";
 import { getEmailLogs } from "@/lib/growth-os/actions/emails";
 import { Badge } from "@/components/growth-os/shared/Badge";

@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { AdminSidebar } from "./AdminSidebar";
 import { AdminTopbar } from "./AdminTopbar";
 
-export function AdminShell({ children }: { children: React.ReactNode }) {
+export function AdminShell({ children }: { children: React.ReactNode; user?: { name?: string | null; email?: string | null; image?: string | null } }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (

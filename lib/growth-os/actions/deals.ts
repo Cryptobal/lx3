@@ -76,6 +76,31 @@ export async function getDeals() {
   }
 }
 
+export async function getDealsByStage() {
+  if (!prisma) return [];
+
+  try {
+    const stages = await prisma.pipelineStage.findMany({
+      orderBy: { order: "asc" },
+      include: {
+        deals: {
+          include: {
+            contact: true,
+            company: true,
+            assignedTo: true,
+          },
+          orderBy: { updatedAt: "desc" },
+        },
+      },
+    });
+
+    return stages;
+  } catch (error) {
+    console.error("getDealsByStage error:", error);
+    return [];
+  }
+}
+
 export async function getDeal(id: string): Promise<ActionResult> {
   if (!prisma) return { success: false, error: "Database not available" };
 

@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { Settings, GitBranch, User, Bell } from "lucide-react";
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/db";

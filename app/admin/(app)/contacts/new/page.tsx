@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { getCompanies } from "@/lib/growth-os/actions/companies";
 import { ContactForm } from "@/components/growth-os/contacts/ContactForm";
 

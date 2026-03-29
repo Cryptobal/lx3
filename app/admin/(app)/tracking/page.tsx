@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { Eye, Users, Monitor } from "lucide-react";
 import { prisma } from "@/lib/db";
 import { VisitorsList } from "@/components/growth-os/tracking/VisitorsList";

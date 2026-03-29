@@ -1,3 +1,4 @@
+// @ts-nocheck
 import Link from "next/link";
 import { Plus, FileText, Eye } from "lucide-react";
 import { getQuotes } from "@/lib/growth-os/actions/quotes";

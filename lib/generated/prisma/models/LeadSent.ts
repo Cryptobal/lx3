@@ -206,7 +206,7 @@ export type LeadSentGroupByOutputType = {
   _max: LeadSentMaxAggregateOutputType | null
 }
 
-type GetLeadSentGroupByPayload<T extends LeadSentGroupByArgs> = Prisma.PrismaPromise<
+export type GetLeadSentGroupByPayload<T extends LeadSentGroupByArgs> = Prisma.PrismaPromise<
   Array<
     Prisma.PickEnumerable<LeadSentGroupByOutputType, T['by']> &
       {

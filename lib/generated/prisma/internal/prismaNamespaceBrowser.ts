@@ -53,7 +53,22 @@ export const AnyNull = runtime.AnyNull
 export const ModelName = {
   Conversation: 'Conversation',
   Message: 'Message',
-  LeadSent: 'LeadSent'
+  LeadSent: 'LeadSent',
+  User: 'User',
+  Account: 'Account',
+  Session: 'Session',
+  VerificationToken: 'VerificationToken',
+  Contact: 'Contact',
+  Company: 'Company',
+  PipelineStage: 'PipelineStage',
+  Deal: 'Deal',
+  Quote: 'Quote',
+  QuoteItem: 'QuoteItem',
+  QuoteViewLog: 'QuoteViewLog',
+  Activity: 'Activity',
+  VisitorSession: 'VisitorSession',
+  PageView: 'PageView',
+  EmailLog: 'EmailLog'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -106,12 +121,282 @@ export const LeadSentScalarFieldEnum = {
 export type LeadSentScalarFieldEnum = (typeof LeadSentScalarFieldEnum)[keyof typeof LeadSentScalarFieldEnum]
 
 
+export const UserScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  email: 'email',
+  emailVerified: 'emailVerified',
+  password: 'password',
+  image: 'image',
+  role: 'role',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
+
+
+export const AccountScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  type: 'type',
+  provider: 'provider',
+  providerAccountId: 'providerAccountId',
+  refresh_token: 'refresh_token',
+  access_token: 'access_token',
+  expires_at: 'expires_at',
+  token_type: 'token_type',
+  scope: 'scope',
+  id_token: 'id_token',
+  session_state: 'session_state'
+} as const
+
+export type AccountScalarFieldEnum = (typeof AccountScalarFieldEnum)[keyof typeof AccountScalarFieldEnum]
+
+
+export const SessionScalarFieldEnum = {
+  id: 'id',
+  sessionToken: 'sessionToken',
+  userId: 'userId',
+  expires: 'expires'
+} as const
+
+export type SessionScalarFieldEnum = (typeof SessionScalarFieldEnum)[keyof typeof SessionScalarFieldEnum]
+
+
+export const VerificationTokenScalarFieldEnum = {
+  identifier: 'identifier',
+  token: 'token',
+  expires: 'expires'
+} as const
+
+export type VerificationTokenScalarFieldEnum = (typeof VerificationTokenScalarFieldEnum)[keyof typeof VerificationTokenScalarFieldEnum]
+
+
+export const ContactScalarFieldEnum = {
+  id: 'id',
+  firstName: 'firstName',
+  lastName: 'lastName',
+  email: 'email',
+  phone: 'phone',
+  position: 'position',
+  linkedinUrl: 'linkedinUrl',
+  avatarUrl: 'avatarUrl',
+  source: 'source',
+  tags: 'tags',
+  notes: 'notes',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  companyId: 'companyId',
+  enrichedAt: 'enrichedAt',
+  enrichmentData: 'enrichmentData'
+} as const
+
+export type ContactScalarFieldEnum = (typeof ContactScalarFieldEnum)[keyof typeof ContactScalarFieldEnum]
+
+
+export const CompanyScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  domain: 'domain',
+  industry: 'industry',
+  size: 'size',
+  country: 'country',
+  city: 'city',
+  website: 'website',
+  linkedinUrl: 'linkedinUrl',
+  logoUrl: 'logoUrl',
+  phone: 'phone',
+  description: 'description',
+  tags: 'tags',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  enrichedAt: 'enrichedAt',
+  enrichmentData: 'enrichmentData'
+} as const
+
+export type CompanyScalarFieldEnum = (typeof CompanyScalarFieldEnum)[keyof typeof CompanyScalarFieldEnum]
+
+
+export const PipelineStageScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  order: 'order',
+  color: 'color',
+  isDefault: 'isDefault',
+  isWon: 'isWon',
+  isLost: 'isLost',
+  createdAt: 'createdAt'
+} as const
+
+export type PipelineStageScalarFieldEnum = (typeof PipelineStageScalarFieldEnum)[keyof typeof PipelineStageScalarFieldEnum]
+
+
+export const DealScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  value: 'value',
+  currency: 'currency',
+  probability: 'probability',
+  expectedClose: 'expectedClose',
+  closedAt: 'closedAt',
+  lostReason: 'lostReason',
+  notes: 'notes',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  stageId: 'stageId',
+  contactId: 'contactId',
+  companyId: 'companyId',
+  assignedToId: 'assignedToId'
+} as const
+
+export type DealScalarFieldEnum = (typeof DealScalarFieldEnum)[keyof typeof DealScalarFieldEnum]
+
+
+export const QuoteScalarFieldEnum = {
+  id: 'id',
+  quoteNumber: 'quoteNumber',
+  version: 'version',
+  status: 'status',
+  title: 'title',
+  description: 'description',
+  subtotal: 'subtotal',
+  taxRate: 'taxRate',
+  taxAmount: 'taxAmount',
+  total: 'total',
+  currency: 'currency',
+  validUntil: 'validUntil',
+  notes: 'notes',
+  terms: 'terms',
+  pdfUrl: 'pdfUrl',
+  trackingToken: 'trackingToken',
+  viewCount: 'viewCount',
+  lastViewedAt: 'lastViewedAt',
+  sentAt: 'sentAt',
+  acceptedAt: 'acceptedAt',
+  rejectedAt: 'rejectedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  dealId: 'dealId',
+  contactId: 'contactId',
+  createdById: 'createdById'
+} as const
+
+export type QuoteScalarFieldEnum = (typeof QuoteScalarFieldEnum)[keyof typeof QuoteScalarFieldEnum]
+
+
+export const QuoteItemScalarFieldEnum = {
+  id: 'id',
+  description: 'description',
+  details: 'details',
+  quantity: 'quantity',
+  unitPrice: 'unitPrice',
+  total: 'total',
+  order: 'order',
+  quoteId: 'quoteId'
+} as const
+
+export type QuoteItemScalarFieldEnum = (typeof QuoteItemScalarFieldEnum)[keyof typeof QuoteItemScalarFieldEnum]
+
+
+export const QuoteViewLogScalarFieldEnum = {
+  id: 'id',
+  viewedAt: 'viewedAt',
+  ipAddress: 'ipAddress',
+  userAgent: 'userAgent',
+  duration: 'duration',
+  quoteId: 'quoteId'
+} as const
+
+export type QuoteViewLogScalarFieldEnum = (typeof QuoteViewLogScalarFieldEnum)[keyof typeof QuoteViewLogScalarFieldEnum]
+
+
+export const ActivityScalarFieldEnum = {
+  id: 'id',
+  type: 'type',
+  title: 'title',
+  description: 'description',
+  metadata: 'metadata',
+  createdAt: 'createdAt',
+  userId: 'userId',
+  contactId: 'contactId',
+  dealId: 'dealId'
+} as const
+
+export type ActivityScalarFieldEnum = (typeof ActivityScalarFieldEnum)[keyof typeof ActivityScalarFieldEnum]
+
+
+export const VisitorSessionScalarFieldEnum = {
+  id: 'id',
+  visitorId: 'visitorId',
+  ipAddress: 'ipAddress',
+  userAgent: 'userAgent',
+  referrer: 'referrer',
+  utmSource: 'utmSource',
+  utmMedium: 'utmMedium',
+  utmCampaign: 'utmCampaign',
+  utmTerm: 'utmTerm',
+  utmContent: 'utmContent',
+  country: 'country',
+  city: 'city',
+  deviceType: 'deviceType',
+  startedAt: 'startedAt',
+  lastActivityAt: 'lastActivityAt',
+  contactId: 'contactId',
+  resolvedCompany: 'resolvedCompany',
+  resolvedDomain: 'resolvedDomain'
+} as const
+
+export type VisitorSessionScalarFieldEnum = (typeof VisitorSessionScalarFieldEnum)[keyof typeof VisitorSessionScalarFieldEnum]
+
+
+export const PageViewScalarFieldEnum = {
+  id: 'id',
+  path: 'path',
+  title: 'title',
+  duration: 'duration',
+  scrollDepth: 'scrollDepth',
+  viewedAt: 'viewedAt',
+  sessionId: 'sessionId'
+} as const
+
+export type PageViewScalarFieldEnum = (typeof PageViewScalarFieldEnum)[keyof typeof PageViewScalarFieldEnum]
+
+
+export const EmailLogScalarFieldEnum = {
+  id: 'id',
+  to: 'to',
+  subject: 'subject',
+  body: 'body',
+  status: 'status',
+  resendId: 'resendId',
+  openedAt: 'openedAt',
+  clickedAt: 'clickedAt',
+  bouncedAt: 'bouncedAt',
+  sentAt: 'sentAt',
+  errorMsg: 'errorMsg',
+  createdAt: 'createdAt',
+  contactId: 'contactId',
+  sentById: 'sentById'
+} as const
+
+export type EmailLogScalarFieldEnum = (typeof EmailLogScalarFieldEnum)[keyof typeof EmailLogScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
 } as const
 
 export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
+
+
+export const NullableJsonNullValueInput = {
+  DbNull: DbNull,
+  JsonNull: JsonNull
+} as const
+
+export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput]
 
 
 export const QueryMode = {
@@ -128,4 +413,13 @@ export const NullsOrder = {
 } as const
 
 export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
+
+
+export const JsonNullValueFilter = {
+  DbNull: DbNull,
+  JsonNull: JsonNull,
+  AnyNull: AnyNull
+} as const
+
+export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter]
 

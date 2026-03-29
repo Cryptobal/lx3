@@ -50,9 +50,9 @@ function PipelineBarTooltip({ active, payload }: { active?: boolean; payload?: A
   if (!active || !payload?.length) return null;
   const data = payload[0].payload;
   return (
-    <div className="bg-white dark:bg-zinc-800 rounded-lg shadow-lg border border-zinc-200 dark:border-zinc-700 px-3 py-2 text-sm">
-      <p className="font-medium text-zinc-900 dark:text-zinc-100">{data.stageName}</p>
-      <p className="text-zinc-500 dark:text-zinc-400">
+    <div className="rounded-lg bg-zinc-800 shadow-lg border border-zinc-700 px-3 py-2 text-sm">
+      <p className="font-medium text-zinc-100">{data.stageName}</p>
+      <p className="text-zinc-400">
         {data.count} deals - {formatMoney(data.totalValue, "CLP")}
       </p>
     </div>
@@ -69,11 +69,11 @@ export function PipelineChart({ data }: { data: PipelineStageData[] }) {
   }
 
   return (
-    <div className="bg-white dark:bg-zinc-900 rounded-xl p-6 shadow-sm border border-zinc-100 dark:border-zinc-800">
-      <h3 className="text-base font-semibold text-zinc-900 dark:text-zinc-100 mb-4">
+    <div className="bg-zinc-900 rounded-xl p-6 border border-zinc-800">
+      <h3 className="text-base font-semibold text-zinc-100 mb-4">
         Resumen Pipeline
       </h3>
-      <div className="h-64">
+      <div className="h-64" style={{ minHeight: 200, minWidth: 0 }}>
         <ResponsiveContainer width="100%" height="100%">
           <BarChart data={data} margin={{ top: 5, right: 20, left: 10, bottom: 5 }}>
             <XAxis
@@ -105,11 +105,11 @@ function LeadSourceTooltip({ active, payload }: { active?: boolean; payload?: Ar
   if (!active || !payload?.length) return null;
   const data = payload[0].payload;
   return (
-    <div className="bg-white dark:bg-zinc-800 rounded-lg shadow-lg border border-zinc-200 dark:border-zinc-700 px-3 py-2 text-sm">
-      <p className="font-medium text-zinc-900 dark:text-zinc-100">
+    <div className="rounded-lg bg-zinc-800 shadow-lg border border-zinc-700 px-3 py-2 text-sm">
+      <p className="font-medium text-zinc-100">
         {SOURCE_LABELS[data.source] || data.source}
       </p>
-      <p className="text-zinc-500 dark:text-zinc-400">{data.count} contactos</p>
+      <p className="text-zinc-400">{data.count} contactos</p>
     </div>
   );
 }
@@ -124,11 +124,11 @@ export function LeadSourceChart({ data }: { data: LeadSourceData[] }) {
   }
 
   return (
-    <div className="bg-white dark:bg-zinc-900 rounded-xl p-6 shadow-sm border border-zinc-100 dark:border-zinc-800">
-      <h3 className="text-base font-semibold text-zinc-900 dark:text-zinc-100 mb-4">
+    <div className="bg-zinc-900 rounded-xl p-6 border border-zinc-800">
+      <h3 className="text-base font-semibold text-zinc-100 mb-4">
         Fuentes de Leads
       </h3>
-      <div className="h-64">
+      <div className="h-64" style={{ minHeight: 200, minWidth: 0 }}>
         <ResponsiveContainer width="100%" height="100%">
           <PieChart>
             <Pie

@@ -59,11 +59,15 @@ export default async function TrackingPage() {
     utmSource: session.utmSource,
     country: session.country,
     city: session.city,
+    pageCount: session.pageViews.length,
     startedAt: session.startedAt.toISOString(),
-    lastActivityAt: session.lastActivityAt.toISOString(),
-    contactId: session.contactId,
-    contactName: session.contact
-      ? `${session.contact.firstName} ${session.contact.lastName}`.trim()
+    endedAt: null as string | null,
+    contact: session.contact
+      ? {
+          id: session.contact.id,
+          firstName: session.contact.firstName,
+          lastName: session.contact.lastName,
+        }
       : null,
     pageViews: session.pageViews.map((pv) => ({
       id: pv.id,
@@ -97,10 +101,10 @@ export default async function TrackingPage() {
     <div className="space-y-6">
       {/* Header */}
       <div>
-        <h1 className="text-2xl font-bold text-zinc-900 dark:text-zinc-100">
+        <h1 className="text-2xl font-bold text-zinc-100">
           Tracking de Visitantes
         </h1>
-        <p className="mt-1 text-sm text-zinc-500 dark:text-zinc-400">
+        <p className="mt-1 text-sm text-zinc-400">
           Monitorea visitas y actividad en tu sitio web
         </p>
       </div>
@@ -112,17 +116,17 @@ export default async function TrackingPage() {
           return (
             <div
               key={stat.label}
-              className="bg-white dark:bg-zinc-900 rounded-xl border border-zinc-200 dark:border-zinc-800 p-5"
+              className="bg-zinc-900 rounded-xl border border-zinc-800 p-5"
             >
               <div className="flex items-center gap-3">
-                <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-zinc-100 dark:bg-zinc-800">
-                  <Icon className="w-5 h-5 text-zinc-500 dark:text-zinc-400" />
+                <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-zinc-800">
+                  <Icon className="w-5 h-5 text-zinc-400" />
                 </div>
                 <div>
-                  <p className="text-2xl font-bold text-zinc-900 dark:text-zinc-100">
+                  <p className="text-2xl font-bold text-zinc-100">
                     {stat.value}
                   </p>
-                  <p className="text-sm text-zinc-500 dark:text-zinc-400">
+                  <p className="text-sm text-zinc-400">
                     {stat.label}
                   </p>
                 </div>
@@ -133,9 +137,9 @@ export default async function TrackingPage() {
       </div>
 
       {/* Sessions list */}
-      <div className="bg-white dark:bg-zinc-900 rounded-xl border border-zinc-200 dark:border-zinc-800 overflow-hidden">
-        <div className="px-4 py-3 border-b border-zinc-200 dark:border-zinc-700">
-          <h2 className="text-sm font-semibold text-zinc-900 dark:text-zinc-100">
+      <div className="bg-zinc-900 rounded-xl border border-zinc-800 overflow-hidden">
+        <div className="px-4 py-3 border-b border-zinc-800">
+          <h2 className="text-sm font-semibold text-zinc-100">
             Sesiones recientes
           </h2>
         </div>

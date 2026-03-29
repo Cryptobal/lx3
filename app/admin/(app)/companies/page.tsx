@@ -31,16 +31,16 @@ export default async function CompaniesPage({
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-zinc-900 dark:text-zinc-100">
+          <h1 className="text-2xl font-bold text-zinc-100">
             Empresas
           </h1>
-          <p className="mt-1 text-sm text-zinc-500 dark:text-zinc-400">
+          <p className="mt-1 text-sm text-zinc-400">
             {total} empresa{total !== 1 ? "s" : ""} registrada{total !== 1 ? "s" : ""}
           </p>
         </div>
         <Link
           href="/admin/companies/new"
-          className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg bg-zinc-900 text-white hover:bg-zinc-800 dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-zinc-200 transition-colors"
+          className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg bg-blue-600 text-white hover:bg-blue-500 transition-colors"
         >
           <Plus className="w-4 h-4" />
           Nueva empresa
@@ -55,7 +55,7 @@ export default async function CompaniesPage({
           name="search"
           defaultValue={search}
           placeholder="Buscar por nombre o dominio..."
-          className="w-full pl-10 pr-4 py-2 text-sm rounded-lg border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-900/10 dark:focus:ring-zinc-100/10"
+          className="w-full pl-10 pr-4 py-2 text-sm rounded-lg border border-zinc-700 bg-zinc-900 text-zinc-100 placeholder:text-zinc-500 focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500"
         />
       </form>
 
@@ -76,26 +76,26 @@ export default async function CompaniesPage({
           }
         />
       ) : (
-        <div className="overflow-x-auto rounded-lg border border-zinc-200 dark:border-zinc-800">
+        <div className="overflow-x-auto rounded-lg border border-zinc-800 bg-zinc-900">
           <table className="w-full text-sm">
             <thead>
-              <tr className="border-b border-zinc-200 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800/50">
-                <th className="px-4 py-2.5 text-left text-xs font-medium text-zinc-500 dark:text-zinc-400 uppercase tracking-wider">
+              <tr className="border-b border-zinc-800 bg-zinc-800/50">
+                <th className="px-4 py-2.5 text-left text-xs font-medium text-zinc-400 uppercase tracking-wider">
                   Nombre
                 </th>
-                <th className="px-4 py-2.5 text-left text-xs font-medium text-zinc-500 dark:text-zinc-400 uppercase tracking-wider">
+                <th className="px-4 py-2.5 text-left text-xs font-medium text-zinc-400 uppercase tracking-wider">
                   Dominio
                 </th>
-                <th className="px-4 py-2.5 text-left text-xs font-medium text-zinc-500 dark:text-zinc-400 uppercase tracking-wider">
+                <th className="px-4 py-2.5 text-left text-xs font-medium text-zinc-400 uppercase tracking-wider">
                   Industria
                 </th>
-                <th className="px-4 py-2.5 text-left text-xs font-medium text-zinc-500 dark:text-zinc-400 uppercase tracking-wider">
+                <th className="px-4 py-2.5 text-left text-xs font-medium text-zinc-400 uppercase tracking-wider">
                   Tamano
                 </th>
-                <th className="px-4 py-2.5 text-left text-xs font-medium text-zinc-500 dark:text-zinc-400 uppercase tracking-wider">
+                <th className="px-4 py-2.5 text-left text-xs font-medium text-zinc-400 uppercase tracking-wider">
                   Contactos
                 </th>
-                <th className="px-4 py-2.5 text-left text-xs font-medium text-zinc-500 dark:text-zinc-400 uppercase tracking-wider">
+                <th className="px-4 py-2.5 text-left text-xs font-medium text-zinc-400 uppercase tracking-wider">
                   Deals
                 </th>
               </tr>
@@ -104,34 +104,34 @@ export default async function CompaniesPage({
               {companies.map((company) => (
                 <tr
                   key={company.id}
-                  className="border-b border-zinc-100 dark:border-zinc-800 hover:bg-zinc-50 dark:hover:bg-zinc-800/50 transition-colors"
+                  className="border-b border-zinc-800 hover:bg-zinc-800/50 transition-colors"
                 >
                   <td className="px-4 py-3">
                     <Link
                       href={`/admin/companies/${company.id}`}
                       className="flex items-center gap-3 group"
                     >
-                      <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-zinc-100 dark:bg-zinc-800 text-zinc-500 dark:text-zinc-400 text-xs font-bold uppercase shrink-0">
+                      <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-zinc-800 text-zinc-400 text-xs font-bold uppercase shrink-0">
                         {company.name.slice(0, 2)}
                       </div>
-                      <span className="font-medium text-zinc-900 dark:text-zinc-100 group-hover:underline">
+                      <span className="font-medium text-zinc-100 group-hover:underline">
                         {company.name}
                       </span>
                     </Link>
                   </td>
-                  <td className="px-4 py-3 text-zinc-600 dark:text-zinc-400">
+                  <td className="px-4 py-3 text-zinc-400">
                     {company.domain ?? "—"}
                   </td>
-                  <td className="px-4 py-3 text-zinc-600 dark:text-zinc-400">
+                  <td className="px-4 py-3 text-zinc-400">
                     {company.industry ?? "—"}
                   </td>
-                  <td className="px-4 py-3 text-zinc-600 dark:text-zinc-400">
+                  <td className="px-4 py-3 text-zinc-400">
                     {company.size ?? "—"}
                   </td>
-                  <td className="px-4 py-3 text-zinc-600 dark:text-zinc-400">
+                  <td className="px-4 py-3 text-zinc-400">
                     {company._count.contacts}
                   </td>
-                  <td className="px-4 py-3 text-zinc-600 dark:text-zinc-400">
+                  <td className="px-4 py-3 text-zinc-400">
                     {company._count.deals}
                   </td>
                 </tr>
@@ -144,14 +144,14 @@ export default async function CompaniesPage({
       {/* Pagination */}
       {totalPages > 1 && (
         <div className="flex items-center justify-between pt-2">
-          <p className="text-sm text-zinc-500 dark:text-zinc-400">
+          <p className="text-sm text-zinc-400">
             Pagina {page} de {totalPages}
           </p>
           <div className="flex gap-2">
             {page > 1 && (
               <Link
                 href={`/admin/companies?page=${page - 1}${search ? `&search=${search}` : ""}`}
-                className="px-3 py-1.5 text-sm rounded-md border border-zinc-200 dark:border-zinc-700 hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-colors"
+                className="px-3 py-1.5 text-sm rounded-md border border-zinc-700 hover:bg-zinc-800 transition-colors"
               >
                 Anterior
               </Link>
@@ -159,7 +159,7 @@ export default async function CompaniesPage({
             {page < totalPages && (
               <Link
                 href={`/admin/companies?page=${page + 1}${search ? `&search=${search}` : ""}`}
-                className="px-3 py-1.5 text-sm rounded-md border border-zinc-200 dark:border-zinc-700 hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-colors"
+                className="px-3 py-1.5 text-sm rounded-md border border-zinc-700 hover:bg-zinc-800 transition-colors"
               >
                 Siguiente
               </Link>

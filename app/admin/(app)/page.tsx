@@ -38,10 +38,10 @@ export default async function AdminDashboardPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-zinc-900 dark:text-zinc-100">
+        <h1 className="text-2xl font-bold text-zinc-100">
           Dashboard
         </h1>
-        <p className="mt-1 text-sm text-zinc-500 dark:text-zinc-400">
+        <p className="mt-1 text-sm text-zinc-400">
           Resumen general de Growth OS
         </p>
       </div>
@@ -54,7 +54,7 @@ export default async function AdminDashboardPage() {
       />
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <PipelineChart data={pipelineData} />
+        <PipelineChart data={pipelineData.map((s) => ({ stageName: s.name, color: s.color, count: s.count, totalValue: s.totalValue }))} />
         <LeadSourceChart data={leadSources} />
       </div>
 

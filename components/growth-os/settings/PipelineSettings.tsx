@@ -18,10 +18,10 @@ interface Stage {
   name: string;
   order: number;
   color: string | null;
-  isDefault: boolean;
+  isDefault?: boolean;
   isWon: boolean;
   isLost: boolean;
-  _count: { deals: number };
+  _count?: { deals: number };
 }
 
 interface PipelineSettingsProps {
@@ -150,46 +150,47 @@ export function PipelineSettings({ initialStages }: PipelineSettingsProps) {
     });
   }
 
+  const dealCount = (stage: Stage) => stage._count?.deals ?? 0;
+
   return (
     <div>
-      {/* Pipeline Stages Section */}
-      <div className="rounded-lg border border-gray-200 bg-white">
-        <div className="flex items-center justify-between border-b border-gray-200 px-6 py-4">
+      <div className="rounded-lg border border-zinc-800 bg-zinc-900">
+        <div className="flex items-center justify-between border-b border-zinc-800 px-6 py-4">
           <div>
-            <h2 className="text-lg font-semibold text-gray-900">
+            <h2 className="text-lg font-semibold text-zinc-100">
               Etapas del Pipeline
             </h2>
-            <p className="mt-0.5 text-sm text-gray-500">
+            <p className="mt-0.5 text-sm text-zinc-400">
               Configura las etapas por las que pasan los negocios
             </p>
           </div>
           <button
             onClick={openAddModal}
-            className="inline-flex items-center gap-1.5 rounded-lg bg-blue-600 px-3 py-2 text-sm font-medium text-white transition-colors hover:bg-blue-700"
+            className="inline-flex items-center gap-1.5 rounded-lg bg-blue-600 px-3 py-2 text-sm font-medium text-white transition-colors hover:bg-blue-500"
           >
             <Plus className="h-4 w-4" />
             Agregar etapa
           </button>
         </div>
 
-        <div className="divide-y divide-gray-100">
+        <div className="divide-y divide-zinc-800">
           {stages.map((stage) => (
             <div
               key={stage.id}
-              className="flex items-center gap-4 px-6 py-3 transition-colors hover:bg-gray-50"
+              className="flex items-center gap-4 px-6 py-3 transition-colors hover:bg-zinc-800/50"
             >
-              <GripVertical className="h-4 w-4 shrink-0 text-gray-300" />
+              <GripVertical className="h-4 w-4 shrink-0 text-zinc-600" />
 
               <span
                 className="h-3 w-3 shrink-0 rounded-full"
                 style={{ backgroundColor: stage.color ?? "#6B7280" }}
               />
 
-              <span className="min-w-[140px] font-medium text-gray-900">
+              <span className="min-w-[140px] font-medium text-zinc-100">
                 {stage.name}
               </span>
 
-              <span className="text-xs text-gray-400">#{stage.order}</span>
+              <span className="text-xs text-zinc-500">#{stage.order}</span>
 
               <div className="flex items-center gap-1.5">
                 {stage.isWon && (
@@ -203,24 +204,24 @@ export function PipelineSettings({ initialStages }: PipelineSettingsProps) {
                 )}
               </div>
 
-              <span className="ml-auto text-xs text-gray-400">
-                {stage._count.deals} negocios
+              <span className="ml-auto text-xs text-zinc-500">
+                {dealCount(stage)} negocios
               </span>
 
               <div className="flex items-center gap-1">
                 <button
                   onClick={() => openEditModal(stage)}
-                  className="rounded p-1 text-gray-400 transition-colors hover:bg-gray-100 hover:text-gray-600"
+                  className="rounded p-1 text-zinc-500 transition-colors hover:bg-zinc-700 hover:text-zinc-300"
                   title="Editar"
                 >
                   <Pencil className="h-4 w-4" />
                 </button>
                 <button
                   onClick={() => setDeleteConfirm(stage.id)}
-                  disabled={stage._count.deals > 0}
-                  className="rounded p-1 text-gray-400 transition-colors hover:bg-red-50 hover:text-red-600 disabled:cursor-not-allowed disabled:opacity-30"
+                  disabled={dealCount(stage) > 0}
+                  className="rounded p-1 text-zinc-500 transition-colors hover:bg-red-500/10 hover:text-red-400 disabled:cursor-not-allowed disabled:opacity-30"
                   title={
-                    stage._count.deals > 0
+                    dealCount(stage) > 0
                       ? "No se puede eliminar: tiene negocios asociados"
                       : "Eliminar"
                   }
@@ -232,7 +233,7 @@ export function PipelineSettings({ initialStages }: PipelineSettingsProps) {
           ))}
 
           {stages.length === 0 && (
-            <div className="px-6 py-8 text-center text-sm text-gray-500">
+            <div className="px-6 py-8 text-center text-sm text-zinc-500">
               No hay etapas configuradas. Agrega una para comenzar.
             </div>
           )}
@@ -241,26 +242,26 @@ export function PipelineSettings({ initialStages }: PipelineSettingsProps) {
 
       {/* Delete Confirmation */}
       {deleteConfirm && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
-          <div className="w-full max-w-sm rounded-lg bg-white p-6 shadow-xl">
-            <h3 className="text-lg font-semibold text-gray-900">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm">
+          <div className="w-full max-w-sm rounded-xl border border-zinc-800 bg-zinc-900 p-6 shadow-xl">
+            <h3 className="text-lg font-semibold text-zinc-100">
               Eliminar etapa
             </h3>
-            <p className="mt-2 text-sm text-gray-500">
+            <p className="mt-2 text-sm text-zinc-400">
               Esta accion no se puede deshacer. La etapa sera eliminada
               permanentemente.
             </p>
             <div className="mt-4 flex justify-end gap-2">
               <button
                 onClick={() => setDeleteConfirm(null)}
-                className="rounded-lg border border-gray-300 px-3 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50"
+                className="rounded-lg border border-zinc-700 px-3 py-2 text-sm font-medium text-zinc-300 transition-colors hover:bg-zinc-800"
               >
                 Cancelar
               </button>
               <button
                 onClick={() => handleDelete(deleteConfirm)}
                 disabled={isPending}
-                className="rounded-lg bg-red-600 px-3 py-2 text-sm font-medium text-white transition-colors hover:bg-red-700 disabled:opacity-50"
+                className="rounded-lg bg-red-600 px-3 py-2 text-sm font-medium text-white transition-colors hover:bg-red-500 disabled:opacity-50"
               >
                 {isPending ? "Eliminando..." : "Eliminar"}
               </button>
@@ -271,24 +272,23 @@ export function PipelineSettings({ initialStages }: PipelineSettingsProps) {
 
       {/* Add / Edit Modal */}
       {showModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
-          <div className="w-full max-w-md rounded-lg bg-white p-6 shadow-xl">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm">
+          <div className="w-full max-w-md rounded-xl border border-zinc-800 bg-zinc-900 p-6 shadow-xl">
             <div className="mb-4 flex items-center justify-between">
-              <h3 className="text-lg font-semibold text-gray-900">
+              <h3 className="text-lg font-semibold text-zinc-100">
                 {editingStage ? "Editar etapa" : "Nueva etapa"}
               </h3>
               <button
                 onClick={() => setShowModal(false)}
-                className="rounded p-1 text-gray-400 hover:bg-gray-100 hover:text-gray-600"
+                className="rounded p-1 text-zinc-500 hover:bg-zinc-800 hover:text-zinc-300"
               >
                 <X className="h-5 w-5" />
               </button>
             </div>
 
             <div className="space-y-4">
-              {/* Name */}
               <div>
-                <label className="mb-1 block text-sm font-medium text-gray-700">
+                <label className="mb-1 block text-sm font-medium text-zinc-300">
                   Nombre
                 </label>
                 <input
@@ -297,14 +297,13 @@ export function PipelineSettings({ initialStages }: PipelineSettingsProps) {
                   onChange={(e) =>
                     setForm((prev) => ({ ...prev, name: e.target.value }))
                   }
-                  className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                  className="w-full rounded-lg border border-zinc-700 bg-zinc-800 px-3 py-2 text-sm text-zinc-100 placeholder-zinc-500 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
                   placeholder="Ej: Negociacion"
                 />
               </div>
 
-              {/* Color */}
               <div>
-                <label className="mb-1 block text-sm font-medium text-gray-700">
+                <label className="mb-1 block text-sm font-medium text-zinc-300">
                   Color
                 </label>
                 <div className="flex flex-wrap gap-2">
@@ -314,7 +313,7 @@ export function PipelineSettings({ initialStages }: PipelineSettingsProps) {
                       onClick={() => setForm((prev) => ({ ...prev, color: c }))}
                       className={`h-8 w-8 rounded-full border-2 transition-all ${
                         form.color === c
-                          ? "border-gray-900 scale-110"
+                          ? "border-zinc-100 scale-110"
                           : "border-transparent"
                       }`}
                       style={{ backgroundColor: c }}
@@ -323,9 +322,8 @@ export function PipelineSettings({ initialStages }: PipelineSettingsProps) {
                 </div>
               </div>
 
-              {/* Flags */}
               <div className="flex gap-6">
-                <label className="flex items-center gap-2 text-sm text-gray-700">
+                <label className="flex items-center gap-2 text-sm text-zinc-300">
                   <input
                     type="checkbox"
                     checked={form.isWon}
@@ -336,12 +334,12 @@ export function PipelineSettings({ initialStages }: PipelineSettingsProps) {
                         isLost: e.target.checked ? false : prev.isLost,
                       }))
                     }
-                    className="rounded border-gray-300"
+                    className="rounded border-zinc-600 bg-zinc-800"
                   />
-                  <Trophy className="h-4 w-4 text-green-500" />
+                  <Trophy className="h-4 w-4 text-green-400" />
                   Etapa ganada
                 </label>
-                <label className="flex items-center gap-2 text-sm text-gray-700">
+                <label className="flex items-center gap-2 text-sm text-zinc-300">
                   <input
                     type="checkbox"
                     checked={form.isLost}
@@ -352,9 +350,9 @@ export function PipelineSettings({ initialStages }: PipelineSettingsProps) {
                         isWon: e.target.checked ? false : prev.isWon,
                       }))
                     }
-                    className="rounded border-gray-300"
+                    className="rounded border-zinc-600 bg-zinc-800"
                   />
-                  <XCircle className="h-4 w-4 text-red-500" />
+                  <XCircle className="h-4 w-4 text-red-400" />
                   Etapa perdida
                 </label>
               </div>
@@ -363,14 +361,14 @@ export function PipelineSettings({ initialStages }: PipelineSettingsProps) {
             <div className="mt-6 flex justify-end gap-2">
               <button
                 onClick={() => setShowModal(false)}
-                className="rounded-lg border border-gray-300 px-3 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50"
+                className="rounded-lg border border-zinc-700 px-3 py-2 text-sm font-medium text-zinc-300 transition-colors hover:bg-zinc-800"
               >
                 Cancelar
               </button>
               <button
                 onClick={handleSave}
                 disabled={isPending}
-                className="rounded-lg bg-blue-600 px-3 py-2 text-sm font-medium text-white transition-colors hover:bg-blue-700 disabled:opacity-50"
+                className="rounded-lg bg-blue-600 px-3 py-2 text-sm font-medium text-white transition-colors hover:bg-blue-500 disabled:opacity-50"
               >
                 {isPending ? "Guardando..." : "Guardar"}
               </button>

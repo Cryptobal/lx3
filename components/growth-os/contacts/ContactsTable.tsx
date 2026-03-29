@@ -12,11 +12,14 @@ interface Contact {
   firstName: string;
   lastName: string | null;
   email: string | null;
+  phone?: string | null;
   position: string | null;
   source: string;
-  tags: string[];
+  avatarUrl?: string | null;
+  tags?: string[];
   createdAt: string;
-  company: { id: string; name: string } | null;
+  company?: { id: string; name: string } | null;
+  companyName?: string | null;
 }
 
 interface ContactsTableProps {
@@ -24,8 +27,11 @@ interface ContactsTableProps {
   total: number;
   page: number;
   pageSize: number;
-  search: string;
-  source: string;
+  totalPages?: number;
+  search?: string;
+  source?: string;
+  currentSearch?: string;
+  currentSource?: string;
 }
 
 const SOURCES = [
@@ -54,9 +60,13 @@ export function ContactsTable({
   total,
   page,
   pageSize,
-  search: initialSearch,
-  source: initialSource,
+  search: searchProp,
+  source: sourceProp,
+  currentSearch,
+  currentSource,
 }: ContactsTableProps) {
+  const initialSearch = searchProp ?? currentSearch ?? "";
+  const initialSource = sourceProp ?? currentSource ?? "";
   const router = useRouter();
   const searchParams = useSearchParams();
   const [isPending, startTransition] = useTransition();
@@ -73,7 +83,6 @@ export function ContactsTable({
         params.delete(key);
       }
     }
-    // Reset to page 1 on filter change
     if (!updates.page) params.delete("page");
     startTransition(() => {
       router.push(`/admin/contacts?${params.toString()}`);
@@ -90,21 +99,21 @@ export function ContactsTable({
       {/* Filters */}
       <div className="mb-4 flex flex-col gap-3 sm:flex-row">
         <form onSubmit={handleSearchSubmit} className="relative flex-1">
-          <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
+          <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-zinc-500" />
           <input
             type="text"
             placeholder="Buscar por nombre, email o empresa..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full rounded-lg border border-gray-300 bg-white py-2 pl-9 pr-3 text-sm text-gray-700 placeholder-gray-400 transition-colors focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+            className="w-full rounded-lg border border-zinc-700 bg-zinc-900 py-2 pl-9 pr-3 text-sm text-zinc-100 placeholder-zinc-500 transition-colors focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
           />
         </form>
         <div className="relative">
-          <Filter className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
+          <Filter className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-zinc-500" />
           <select
             value={initialSource}
             onChange={(e) => updateParams({ source: e.target.value })}
-            className="appearance-none rounded-lg border border-gray-300 bg-white py-2 pl-9 pr-8 text-sm text-gray-700 transition-colors focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+            className="appearance-none rounded-lg border border-zinc-700 bg-zinc-900 py-2 pl-9 pr-8 text-sm text-zinc-100 transition-colors focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
           >
             {SOURCES.map((s) => (
               <option key={s.value} value={s.value}>
@@ -117,63 +126,63 @@ export function ContactsTable({
 
       {/* Table */}
       <div
-        className={`overflow-hidden rounded-lg border border-gray-200 bg-white transition-opacity ${
+        className={`overflow-hidden rounded-lg border border-zinc-800 bg-zinc-900 transition-opacity ${
           isPending ? "opacity-60" : ""
         }`}
       >
         {contacts.length === 0 ? (
           <div className="flex items-center justify-center py-16">
-            <p className="text-sm text-gray-500">
+            <p className="text-sm text-zinc-500">
               No se encontraron contactos
             </p>
           </div>
         ) : (
           <div className="overflow-x-auto">
-            <table className="min-w-full divide-y divide-gray-200">
-              <thead className="bg-gray-50">
+            <table className="min-w-full divide-y divide-zinc-800">
+              <thead className="bg-zinc-800/50">
                 <tr>
-                  <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
+                  <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-zinc-400">
                     Nombre
                   </th>
-                  <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
+                  <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-zinc-400">
                     Email
                   </th>
-                  <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
+                  <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-zinc-400">
                     Empresa
                   </th>
-                  <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
+                  <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-zinc-400">
                     Cargo
                   </th>
-                  <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
+                  <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-zinc-400">
                     Fuente
                   </th>
-                  <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
+                  <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-zinc-400">
                     Tags
                   </th>
-                  <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
+                  <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-zinc-400">
                     Fecha
                   </th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-gray-200">
+              <tbody className="divide-y divide-zinc-800">
                 {contacts.map((contact) => (
                   <tr
                     key={contact.id}
                     onClick={() =>
                       router.push(`/admin/contacts/${contact.id}`)
                     }
-                    className="cursor-pointer transition-colors hover:bg-gray-50"
+                    className="cursor-pointer transition-colors hover:bg-zinc-800/50"
                   >
-                    <td className="whitespace-nowrap px-4 py-3 text-sm font-medium text-gray-900">
+                    <td className="whitespace-nowrap px-4 py-3 text-sm font-medium text-zinc-100">
                       {contact.firstName} {contact.lastName ?? ""}
                     </td>
-                    <td className="whitespace-nowrap px-4 py-3 text-sm text-gray-600">
+                    <td className="whitespace-nowrap px-4 py-3 text-sm text-zinc-400">
                       {contact.email ?? "-"}
                     </td>
-                    <td className="whitespace-nowrap px-4 py-3 text-sm text-gray-600">
-                      {contact.company?.name ?? "-"}
+                    <td className="whitespace-nowrap px-4 py-3 text-sm text-zinc-400">
+                      {contact.companyName ?? contact.company?.name ?? "-"}
                     </td>
-                    <td className="whitespace-nowrap px-4 py-3 text-sm text-gray-600">
+                    <td className="whitespace-nowrap px-4 py-3 text-sm text-zinc-400">
                       {contact.position ?? "-"}
                     </td>
                     <td className="whitespace-nowrap px-4 py-3">
@@ -184,14 +193,14 @@ export function ContactsTable({
                     </td>
                     <td className="px-4 py-3">
                       <div className="flex flex-wrap gap-1">
-                        {contact.tags.length > 0
-                          ? contact.tags.slice(0, 3).map((tag) => (
+                        {(contact.tags ?? []).length > 0
+                          ? (contact.tags ?? []).slice(0, 3).map((tag: string) => (
                               <Badge key={tag} label={tag} color="blue" size="sm" />
                             ))
                           : "-"}
                       </div>
                     </td>
-                    <td className="whitespace-nowrap px-4 py-3 text-xs">
+                    <td className="whitespace-nowrap px-4 py-3 text-xs text-zinc-500">
                       <RelativeTime date={contact.createdAt} />
                     </td>
                   </tr>
@@ -205,7 +214,7 @@ export function ContactsTable({
       {/* Pagination */}
       {totalPages > 1 && (
         <div className="mt-4 flex items-center justify-between">
-          <p className="text-sm text-gray-500">
+          <p className="text-sm text-zinc-500">
             {total} contacto{total !== 1 ? "s" : ""} en total
           </p>
           <div className="flex gap-1">
@@ -216,7 +225,7 @@ export function ContactsTable({
                 className={`rounded-md px-3 py-1.5 text-sm font-medium transition-colors ${
                   p === page
                     ? "bg-blue-600 text-white"
-                    : "bg-white text-gray-600 hover:bg-gray-100"
+                    : "text-zinc-400 hover:bg-zinc-800 hover:text-zinc-200"
                 }`}
               >
                 {p}

@@ -167,7 +167,7 @@ export function AdminSidebar({
       <div className={cn("border-t border-zinc-800 py-3 space-y-1", collapsed ? "px-2" : "px-3")}>
         {/* Theme toggle */}
         <div className={cn("flex", collapsed ? "justify-center" : "px-1 mb-1")}>
-          <ThemeToggle />
+          <ThemeToggle collapsed={collapsed} />
         </div>
 
         {/* Settings */}

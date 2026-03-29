@@ -1,35 +1,26 @@
 import createIntlMiddleware from "next-intl/middleware";
+import NextAuth from "next-auth";
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { routing } from "@/lib/i18n/routing";
-import { auth } from "@/lib/auth";
+import { authConfig } from "@/lib/auth.config";
 
 const intlMiddleware = createIntlMiddleware(routing);
-
-const publicPaths = [
-  "/admin/login",
-  "/q/",
-  "/api/auth",
-  "/api/growth-os/tracking",
-  "/api/growth-os/webhook",
-  "/api/growth-os/quotes/track",
-];
-
-function isPublicPath(pathname: string) {
-  return publicPaths.some((p) => pathname.startsWith(p));
-}
+const { auth } = NextAuth(authConfig);
 
 export default auth((request) => {
   const { pathname } = request.nextUrl;
 
   // Admin routes: check auth (except login and public paths)
   if (pathname.startsWith("/admin")) {
-    if (!isPublicPath(pathname) && !request.auth?.user) {
+    if (
+      !pathname.startsWith("/admin/login") &&
+      !request.auth?.user
+    ) {
       const loginUrl = new URL("/admin/login", request.url);
       loginUrl.searchParams.set("callbackUrl", pathname);
       return NextResponse.redirect(loginUrl);
     }
-    // Admin routes don't use i18n - just pass through
     return NextResponse.next();
   }
 

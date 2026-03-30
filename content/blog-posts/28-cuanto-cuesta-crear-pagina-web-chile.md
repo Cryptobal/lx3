@@ -10,8 +10,8 @@ category: "Desarrollo Web"
 tags: ["cuánto cuesta página web Chile", "cotizar página web", "precio diseño web Chile", "crear página web profesional", "cotizador página web"]
 readingTime: "15 min"
 featured: true
-ogImage: "/blog/cuanto-cuesta-pagina-web-chile-thumb.webp"
-heroImage: "/blog/cuanto-cuesta-pagina-web-chile-hero.webp"
+ogImage: "/images/blog/cuanto-cuesta-pagina-web-chile-hero.webp"
+heroImage: "/images/blog/cuanto-cuesta-pagina-web-chile-hero.webp"
 ---
 
 <!-- EN -->

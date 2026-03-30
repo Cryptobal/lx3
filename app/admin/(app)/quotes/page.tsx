@@ -64,7 +64,7 @@ export default async function QuotesPage({ searchParams }: QuotesPageProps) {
         </div>
         <Link
           href="/admin/quotes/new"
-          className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg bg-zinc-900 text-white hover:bg-zinc-800 dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-zinc-200 transition-colors"
+          className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition-colors"
         >
           <Plus className="w-4 h-4" />
           Nueva cotización

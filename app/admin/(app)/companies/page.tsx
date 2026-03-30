@@ -31,7 +31,7 @@ export default async function CompaniesPage({
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-zinc-100">
+          <h1 className="text-2xl font-bold text-zinc-900 dark:text-zinc-100">
             Empresas
           </h1>
           <p className="mt-1 text-sm text-zinc-400">
@@ -40,7 +40,7 @@ export default async function CompaniesPage({
         </div>
         <Link
           href="/admin/companies/new"
-          className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg bg-blue-600 text-white hover:bg-blue-500 transition-colors"
+          className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition-colors"
         >
           <Plus className="w-4 h-4" />
           Nueva empresa

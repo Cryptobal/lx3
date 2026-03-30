@@ -69,6 +69,16 @@ interface ContactDetailProps {
       status: QuoteStatus;
       createdAt: string;
     }>;
+    emails?: Array<{
+      id: string;
+      type: "sent" | "gmail";
+      subject: string;
+      from?: string;
+      to?: string;
+      direction?: string;
+      snippet?: string;
+      date: string;
+    }>;
   };
 }
 
@@ -135,6 +145,7 @@ export function ContactDetail({ contact }: ContactDetailProps) {
           <ContactTabs
             activities={contact.activities}
             deals={contact.deals}
+            emails={contact.emails}
             quotes={contact.quotes}
           />
         </div>

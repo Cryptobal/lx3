@@ -1,10 +1,12 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
+import { ArrowDownLeft, ArrowUpRight } from "lucide-react";
 import { cn } from "@/lib/utils/cn";
 import { ContactTimeline } from "./ContactTimeline";
 import { Badge } from "@/components/growth-os/shared/Badge";
-import { formatMoney } from "@/lib/growth-os/utils/format";
+import { formatMoney, formatRelativeTime } from "@/lib/growth-os/utils/format";
 import type { ActivityType, QuoteStatus } from "@/lib/generated/prisma/client";
 
 const QUOTE_STATUS_LABELS: Record<string, string> = {
@@ -24,6 +26,17 @@ const QUOTE_STATUS_VARIANTS: Record<string, "default" | "success" | "warning" | 
   REJECTED: "danger",
   EXPIRED: "warning",
 };
+
+interface EmailItem {
+  id: string;
+  type: "sent" | "gmail";
+  subject: string;
+  from?: string;
+  to?: string;
+  direction?: string;
+  snippet?: string;
+  date: string;
+}
 
 interface ContactTabsProps {
   activities: Array<{
@@ -50,53 +63,47 @@ interface ContactTabsProps {
     status: QuoteStatus;
     createdAt: string;
   }>;
+  emails?: EmailItem[];
 }
 
-type TabKey = "timeline" | "deals" | "quotes";
+type TabKey = "timeline" | "deals" | "quotes" | "emails";
 
-const TABS: { key: TabKey; label: string }[] = [
-  { key: "timeline", label: "Timeline" },
-  { key: "deals", label: "Deals" },
-  { key: "quotes", label: "Cotizaciones" },
-];
-
-export function ContactTabs({ activities, deals, quotes }: ContactTabsProps) {
+export function ContactTabs({ activities, deals, quotes, emails = [] }: ContactTabsProps) {
   const [activeTab, setActiveTab] = useState<TabKey>("timeline");
+
+  const tabs: { key: TabKey; label: string; count: number }[] = [
+    { key: "timeline", label: "Timeline", count: activities.length },
+    { key: "deals", label: "Deals", count: deals.length },
+    { key: "quotes", label: "Cotizaciones", count: quotes.length },
+    { key: "emails", label: "Emails", count: emails.length },
+  ];
 
   return (
     <div className="bg-white dark:bg-zinc-900 rounded-xl shadow-sm border border-zinc-100 dark:border-zinc-800">
       {/* Tab headers */}
-      <div className="flex border-b border-zinc-200 dark:border-zinc-700 px-6">
-        {TABS.map((tab) => {
-          const count =
-            tab.key === "timeline"
-              ? activities.length
-              : tab.key === "deals"
-                ? deals.length
-                : quotes.length;
-          return (
-            <button
-              key={tab.key}
-              onClick={() => setActiveTab(tab.key)}
-              className={cn(
-                "relative px-4 py-3 text-sm font-medium transition-colors",
-                activeTab === tab.key
-                  ? "text-zinc-900 dark:text-zinc-100"
-                  : "text-zinc-500 dark:text-zinc-400 hover:text-zinc-700 dark:hover:text-zinc-300"
-              )}
-            >
-              {tab.label}
-              {count > 0 && (
-                <span className="ml-1.5 text-xs text-zinc-400 dark:text-zinc-500">
-                  ({count})
-                </span>
-              )}
-              {activeTab === tab.key && (
-                <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-zinc-900 dark:bg-zinc-100 rounded-full" />
-              )}
-            </button>
-          );
-        })}
+      <div className="flex border-b border-zinc-200 dark:border-zinc-700 px-6 overflow-x-auto">
+        {tabs.map((tab) => (
+          <button
+            key={tab.key}
+            onClick={() => setActiveTab(tab.key)}
+            className={cn(
+              "relative px-4 py-3 text-sm font-medium transition-colors whitespace-nowrap",
+              activeTab === tab.key
+                ? "text-zinc-900 dark:text-zinc-100"
+                : "text-zinc-500 dark:text-zinc-400 hover:text-zinc-700 dark:hover:text-zinc-300"
+            )}
+          >
+            {tab.label}
+            {tab.count > 0 && (
+              <span className="ml-1.5 text-xs text-zinc-400 dark:text-zinc-500">
+                ({tab.count})
+              </span>
+            )}
+            {activeTab === tab.key && (
+              <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-zinc-900 dark:bg-zinc-100 rounded-full" />
+            )}
+          </button>
+        ))}
       </div>
 
       {/* Tab content */}
@@ -112,8 +119,9 @@ export function ContactTabs({ activities, deals, quotes }: ContactTabsProps) {
             ) : (
               <div className="space-y-3">
                 {deals.map((deal) => (
-                  <div
+                  <Link
                     key={deal.id}
+                    href={`/admin/deals/${deal.id}`}
                     className="flex items-center justify-between p-3 rounded-lg border border-zinc-100 dark:border-zinc-800 hover:bg-zinc-50 dark:hover:bg-zinc-800/50 transition-colors"
                   >
                     <div className="flex items-center gap-3">
@@ -137,7 +145,7 @@ export function ContactTabs({ activities, deals, quotes }: ContactTabsProps) {
                         {formatMoney(deal.value, deal.currency)}
                       </span>
                     )}
-                  </div>
+                  </Link>
                 ))}
               </div>
             )}
@@ -153,8 +161,9 @@ export function ContactTabs({ activities, deals, quotes }: ContactTabsProps) {
             ) : (
               <div className="space-y-3">
                 {quotes.map((quote) => (
-                  <div
+                  <Link
                     key={quote.id}
+                    href={`/admin/quotes/${quote.id}`}
                     className="flex items-center justify-between p-3 rounded-lg border border-zinc-100 dark:border-zinc-800 hover:bg-zinc-50 dark:hover:bg-zinc-800/50 transition-colors"
                   >
                     <div>
@@ -174,6 +183,56 @@ export function ContactTabs({ activities, deals, quotes }: ContactTabsProps) {
                       <span className="text-sm font-medium text-zinc-900 dark:text-zinc-100 tabular-nums">
                         {formatMoney(quote.total, quote.currency)}
                       </span>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            )}
+          </div>
+        )}
+
+        {activeTab === "emails" && (
+          <div>
+            {emails.length === 0 ? (
+              <p className="text-sm text-zinc-500 dark:text-zinc-400 text-center py-8">
+                No hay emails asociados. Conecta Gmail en Configuracion para sincronizar.
+              </p>
+            ) : (
+              <div className="space-y-2">
+                {emails.map((email) => (
+                  <div
+                    key={email.id}
+                    className="flex items-start gap-3 p-3 rounded-lg border border-zinc-100 dark:border-zinc-800 hover:bg-zinc-50 dark:hover:bg-zinc-800/50 transition-colors"
+                  >
+                    <div className="mt-0.5">
+                      {email.direction === "INBOUND" ? (
+                        <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-blue-50 dark:bg-blue-900/20">
+                          <ArrowDownLeft className="h-3.5 w-3.5 text-blue-500" />
+                        </span>
+                      ) : (
+                        <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-emerald-50 dark:bg-emerald-900/20">
+                          <ArrowUpRight className="h-3.5 w-3.5 text-emerald-500" />
+                        </span>
+                      )}
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-medium text-zinc-900 dark:text-zinc-100 truncate">
+                        {email.subject}
+                      </p>
+                      {email.snippet && (
+                        <p className="text-xs text-zinc-500 dark:text-zinc-400 truncate mt-0.5">
+                          {email.snippet}
+                        </p>
+                      )}
+                      <p className="text-xs text-zinc-400 dark:text-zinc-500 mt-1">
+                        {formatRelativeTime(email.date)}
+                        {email.type === "sent" && (
+                          <span className="ml-2 text-zinc-300 dark:text-zinc-600">via Resend</span>
+                        )}
+                        {email.type === "gmail" && (
+                          <span className="ml-2 text-zinc-300 dark:text-zinc-600">via Gmail</span>
+                        )}
+                      </p>
                     </div>
                   </div>
                 ))}

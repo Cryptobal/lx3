@@ -1,8 +1,10 @@
 // @ts-nocheck
-import { Settings, GitBranch, User, Bell } from "lucide-react";
+import { Settings, GitBranch, User, Bell, Mail } from "lucide-react";
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/db";
 import { PipelineSettings } from "@/components/growth-os/settings/PipelineSettings";
+import { GmailSettings } from "@/components/growth-os/settings/GmailSettings";
+import { getGmailSyncStatus } from "@/lib/growth-os/actions/emails";
 
 async function getPipelineStagesData() {
   if (!prisma) return [];
@@ -34,11 +36,15 @@ export default async function SettingsPage() {
     getPipelineStagesData().catch(() => []),
   ]);
 
+  const gmailStatus = session?.user?.id
+    ? await getGmailSyncStatus(session.user.id).catch(() => null)
+    : null;
+
   return (
     <div className="space-y-8">
       {/* Header */}
       <div>
-        <h1 className="text-2xl font-bold text-zinc-100">
+        <h1 className="text-2xl font-bold text-zinc-900 dark:text-zinc-100">
           Configuración
         </h1>
         <p className="mt-1 text-sm text-zinc-400">
@@ -47,7 +53,7 @@ export default async function SettingsPage() {
       </div>
 
       {/* Pipeline Stages */}
-      <section className="bg-zinc-900 rounded-xl border border-zinc-800 overflow-hidden">
+      <section className="bg-white dark:bg-zinc-900 rounded-xl border border-zinc-200 dark:border-zinc-800 overflow-hidden">
         <div className="px-6 py-4 border-b border-zinc-800 flex items-center gap-3">
           <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-blue-500/10">
             <GitBranch className="w-4 h-4 text-blue-400" />
@@ -66,8 +72,28 @@ export default async function SettingsPage() {
         </div>
       </section>
 
+      {/* Gmail Integration */}
+      <section className="bg-white dark:bg-zinc-900 rounded-xl border border-zinc-200 dark:border-zinc-800 overflow-hidden">
+        <div className="px-6 py-4 border-b border-zinc-200 dark:border-zinc-800 flex items-center gap-3">
+          <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-green-500/10">
+            <Mail className="w-4 h-4 text-green-500" />
+          </div>
+          <div>
+            <h2 className="text-base font-semibold text-zinc-900 dark:text-zinc-100">
+              Integracion Gmail
+            </h2>
+            <p className="text-sm text-zinc-500 dark:text-zinc-400">
+              Sincroniza emails de tu cuenta de Gmail con el CRM
+            </p>
+          </div>
+        </div>
+        <div className="p-6">
+          <GmailSettings syncStatus={gmailStatus} />
+        </div>
+      </section>
+
       {/* Profile */}
-      <section className="bg-zinc-900 rounded-xl border border-zinc-800 overflow-hidden">
+      <section className="bg-white dark:bg-zinc-900 rounded-xl border border-zinc-200 dark:border-zinc-800 overflow-hidden">
         <div className="px-6 py-4 border-b border-zinc-800 flex items-center gap-3">
           <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-purple-500/10">
             <User className="w-4 h-4 text-purple-400" />

@@ -1,6 +1,7 @@
 // @ts-nocheck
 import { notFound } from "next/navigation";
 import { getContact } from "@/lib/growth-os/actions/contacts";
+import { getContactEmails } from "@/lib/growth-os/actions/emails";
 import { ContactDetail } from "@/components/growth-os/contacts/ContactDetail";
 
 interface ContactDetailPageProps {
@@ -19,6 +20,40 @@ export default async function ContactDetailPage({ params }: ContactDetailPagePro
     contact = result.data;
   } catch {
     notFound();
+  }
+
+  // Fetch email history for this contact
+  let emailItems: any[] = [];
+  try {
+    const { sent, gmail } = await getContactEmails(id);
+
+    const sentMapped = sent.map((e: any) => ({
+      id: e.id,
+      type: "sent" as const,
+      subject: e.subject,
+      from: "growth@lx3.ai",
+      to: e.to,
+      direction: "OUTBOUND",
+      snippet: null,
+      date: e.sentAt || e.createdAt,
+    }));
+
+    const gmailMapped = gmail.map((e: any) => ({
+      id: e.id,
+      type: "gmail" as const,
+      subject: e.subject,
+      from: e.from,
+      to: e.to?.[0],
+      direction: e.direction,
+      snippet: e.snippet,
+      date: e.receivedAt,
+    }));
+
+    emailItems = [...sentMapped, ...gmailMapped].sort(
+      (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+    );
+  } catch {
+    // Emails will remain empty
   }
 
   const serialized = {
@@ -63,6 +98,7 @@ export default async function ContactDetailPage({ params }: ContactDetailPagePro
       status: q.status,
       createdAt: q.createdAt.toISOString(),
     })),
+    emails: emailItems,
   };
 
   return <ContactDetail contact={serialized} />;

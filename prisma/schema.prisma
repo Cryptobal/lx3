@@ -58,6 +58,7 @@ model User {
   assignedDeals Deal[]    @relation("AssignedDeals")
   quotes        Quote[]
   emailsSent    EmailLog[]
+  gmailSyncState GmailSyncState?
 }
 
 model Account {
@@ -122,6 +123,7 @@ model Contact {
   activities  Activity[]
   quotes      Quote[]
   emailLogs   EmailLog[]
+  gmailEmails GmailEmail[]
   visitorSessions VisitorSession[]
 
   enrichedAt      DateTime?
@@ -202,6 +204,7 @@ model Deal {
 
   quotes        Quote[]
   activities    Activity[]
+  gmailEmails   GmailEmail[]
 }
 
 model Quote {
@@ -296,6 +299,7 @@ model Activity {
 enum ActivityType {
   NOTE
   EMAIL_SENT
+  EMAIL_RECEIVED
   EMAIL_OPENED
   EMAIL_CLICKED
   CALL
@@ -378,4 +382,45 @@ enum EmailStatus {
   CLICKED
   BOUNCED
   FAILED
+}
+
+// Gmail Sync Models
+
+enum EmailDirection {
+  INBOUND
+  OUTBOUND
+}
+
+model GmailEmail {
+  id          String         @id @default(cuid())
+  gmailId     String         @unique
+  threadId    String
+  from        String
+  to          String[]
+  cc          String[]
+  subject     String
+  snippet     String?
+  body        String?        @db.Text
+  direction   EmailDirection
+  receivedAt  DateTime
+  syncedAt    DateTime       @default(now())
+
+  contactId   String?
+  contact     Contact?       @relation(fields: [contactId], references: [id])
+
+  dealId      String?
+  deal        Deal?          @relation(fields: [dealId], references: [id])
+
+  @@index([contactId])
+  @@index([threadId])
+  @@index([receivedAt])
+}
+
+model GmailSyncState {
+  id           String   @id @default(cuid())
+  userId       String   @unique
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  emailAddress String
+  historyId    String
+  lastSyncAt   DateTime @default(now())
 }

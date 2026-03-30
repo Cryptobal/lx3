@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import { setRequestLocale } from "next-intl/server";
 import { Link } from "@/lib/i18n/routing";
 import { CotizadorWrapper } from "@/components/cotizador/CotizadorWrapper";
@@ -102,7 +103,9 @@ export default async function CotizaPage({
 
       {/* Main content */}
       <main className="py-8 sm:py-12">
-        <CotizadorWrapper />
+        <Suspense>
+          <CotizadorWrapper />
+        </Suspense>
       </main>
 
       {/* Mini footer */}

@@ -76,7 +76,7 @@ export function Header() {
 
         {/* ---- Right Side ---- */}
         <div className="flex items-center gap-3">
-          {/* Quote CTA - Desktop */}
+          {/* Quote Web CTA - Desktop */}
           <Link
             href="/cotiza"
             className="hidden rounded-full bg-gradient-to-r from-[var(--coral)] to-[#f97316] px-5 py-2.5 text-sm font-semibold text-[#06080E] transition-all duration-300 hover:shadow-[0_0_20px_var(--coral-glow)] md:inline-flex"
@@ -84,12 +84,12 @@ export function Header() {
             {t("cotizaTuWeb")}
           </Link>
 
-          {/* Contact CTA - Desktop */}
+          {/* Software CTA - Desktop */}
           <Link
-            href="/contacto"
+            href={{ pathname: "/cotiza", query: { tab: "software" } }}
             className="hidden rounded-[11px] bg-[var(--accent)] px-5 py-2.5 text-sm font-medium text-white transition-all duration-300 hover:bg-[var(--accent-hover)] hover:shadow-[0_0_20px_var(--accent-glow)] md:inline-flex"
           >
-            {t("cta")}
+            {t("ctaSoftware")}
           </Link>
 
           {/* Mobile Hamburger */}
@@ -128,7 +128,7 @@ export function Header() {
             </Link>
           ))}
 
-          {/* Mobile Quote CTA */}
+          {/* Mobile Quote Web CTA */}
           <Link
             href="/cotiza"
             onClick={closeMobile}
@@ -137,13 +137,13 @@ export function Header() {
             {t("cotizaTuWeb")}
           </Link>
 
-          {/* Mobile CTA */}
+          {/* Mobile Software CTA */}
           <Link
-            href="/contacto"
+            href={{ pathname: "/cotiza", query: { tab: "software" } }}
             onClick={closeMobile}
             className="w-full max-w-xs rounded-[11px] bg-[var(--accent)] px-6 py-3 text-center text-sm font-medium text-white transition-all duration-300 hover:bg-[var(--accent-hover)] hover:shadow-[0_0_20px_var(--accent-glow)]"
           >
-            {t("cta")}
+            {t("ctaSoftware")}
           </Link>
         </nav>
       </div>

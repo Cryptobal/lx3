@@ -43,10 +43,10 @@ function initialState(): CotizadorState {
   };
 }
 
-export function Cotizador() {
+export function Cotizador({ initialTab = "web" }: { initialTab?: ActiveTab }) {
   const t = useTranslations("cotizadorPage");
 
-  const [activeTab, setActiveTab] = useState<ActiveTab>("web");
+  const [activeTab, setActiveTab] = useState<ActiveTab>(initialTab);
   const [state, setState] = useState<CotizadorState>(initialState);
   const [direction, setDirection] = useState(1);
   const [submitting, setSubmitting] = useState(false);

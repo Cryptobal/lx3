@@ -10,8 +10,9 @@
     "blog": "Blog",
     "about": "About",
     "contact": "Contact",
-    "cta": "Let's talk",
-    "cotizaTuWeb": "Dynamic quote tools"
+    "cta": "Quote your website",
+    "ctaSoftware": "Need software?",
+    "cotizaTuWeb": "Quote your website"
   },
   "hero": {
     "tag": "Software Studio · Santiago, Chile",
@@ -315,8 +316,8 @@
   },
   "cotizadorPage": {
     "tabs": {
-      "web": "Dynamic quote tools",
-      "software": "Need software?"
+      "web": "Website",
+      "software": "Custom software"
     },
     "steps": {
       "package": "Package",
@@ -519,7 +520,7 @@
     "nav": {
       "back": "Back",
       "next": "Next",
-      "cotizaTuWeb": "Dynamic quote tools"
+      "cotizaTuWeb": "Quote your website"
     },
     "success": {
       "title": "Quote sent!",

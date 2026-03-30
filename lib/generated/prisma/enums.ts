@@ -46,6 +46,7 @@ export type QuoteStatus = (typeof QuoteStatus)[keyof typeof QuoteStatus]
 export const ActivityType = {
   NOTE: 'NOTE',
   EMAIL_SENT: 'EMAIL_SENT',
+  EMAIL_RECEIVED: 'EMAIL_RECEIVED',
   EMAIL_OPENED: 'EMAIL_OPENED',
   EMAIL_CLICKED: 'EMAIL_CLICKED',
   CALL: 'CALL',
@@ -75,3 +76,11 @@ export const EmailStatus = {
 } as const
 
 export type EmailStatus = (typeof EmailStatus)[keyof typeof EmailStatus]
+
+
+export const EmailDirection = {
+  INBOUND: 'INBOUND',
+  OUTBOUND: 'OUTBOUND'
+} as const
+
+export type EmailDirection = (typeof EmailDirection)[keyof typeof EmailDirection]

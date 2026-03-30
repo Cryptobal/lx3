@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(find /Users/caco/Desktop/Cursor/lx3 -type f \\\\\\(-name *quote* -o -name *cotizaci* \\\\\\) ! -path */node_modules/* ! -path */.next/* -ls)",
+      "Read(//Users/caco/Downloads/files 2/**)"
+    ]
+  }
+}

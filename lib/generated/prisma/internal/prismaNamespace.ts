@@ -401,7 +401,9 @@ export const ModelName = {
   Activity: 'Activity',
   VisitorSession: 'VisitorSession',
   PageView: 'PageView',
-  EmailLog: 'EmailLog'
+  EmailLog: 'EmailLog',
+  GmailEmail: 'GmailEmail',
+  GmailSyncState: 'GmailSyncState'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -417,7 +419,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "conversation" | "message" | "leadSent" | "user" | "account" | "session" | "verificationToken" | "contact" | "company" | "pipelineStage" | "deal" | "quote" | "quoteItem" | "quoteViewLog" | "activity" | "visitorSession" | "pageView" | "emailLog"
+    modelProps: "conversation" | "message" | "leadSent" | "user" | "account" | "session" | "verificationToken" | "contact" | "company" | "pipelineStage" | "deal" | "quote" | "quoteItem" | "quoteViewLog" | "activity" | "visitorSession" | "pageView" | "emailLog" | "gmailEmail" | "gmailSyncState"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1753,6 +1755,154 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    GmailEmail: {
+      payload: Prisma.$GmailEmailPayload<ExtArgs>
+      fields: Prisma.GmailEmailFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.GmailEmailFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$GmailEmailPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.GmailEmailFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$GmailEmailPayload>
+        }
+        findFirst: {
+          args: Prisma.GmailEmailFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$GmailEmailPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.GmailEmailFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$GmailEmailPayload>
+        }
+        findMany: {
+          args: Prisma.GmailEmailFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$GmailEmailPayload>[]
+        }
+        create: {
+          args: Prisma.GmailEmailCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$GmailEmailPayload>
+        }
+        createMany: {
+          args: Prisma.GmailEmailCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.GmailEmailCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$GmailEmailPayload>[]
+        }
+        delete: {
+          args: Prisma.GmailEmailDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$GmailEmailPayload>
+        }
+        update: {
+          args: Prisma.GmailEmailUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$GmailEmailPayload>
+        }
+        deleteMany: {
+          args: Prisma.GmailEmailDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.GmailEmailUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.GmailEmailUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$GmailEmailPayload>[]
+        }
+        upsert: {
+          args: Prisma.GmailEmailUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$GmailEmailPayload>
+        }
+        aggregate: {
+          args: Prisma.GmailEmailAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateGmailEmail>
+        }
+        groupBy: {
+          args: Prisma.GmailEmailGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.GmailEmailGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.GmailEmailCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.GmailEmailCountAggregateOutputType> | number
+        }
+      }
+    }
+    GmailSyncState: {
+      payload: Prisma.$GmailSyncStatePayload<ExtArgs>
+      fields: Prisma.GmailSyncStateFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.GmailSyncStateFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$GmailSyncStatePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.GmailSyncStateFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$GmailSyncStatePayload>
+        }
+        findFirst: {
+          args: Prisma.GmailSyncStateFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$GmailSyncStatePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.GmailSyncStateFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$GmailSyncStatePayload>
+        }
+        findMany: {
+          args: Prisma.GmailSyncStateFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$GmailSyncStatePayload>[]
+        }
+        create: {
+          args: Prisma.GmailSyncStateCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$GmailSyncStatePayload>
+        }
+        createMany: {
+          args: Prisma.GmailSyncStateCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.GmailSyncStateCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$GmailSyncStatePayload>[]
+        }
+        delete: {
+          args: Prisma.GmailSyncStateDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$GmailSyncStatePayload>
+        }
+        update: {
+          args: Prisma.GmailSyncStateUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$GmailSyncStatePayload>
+        }
+        deleteMany: {
+          args: Prisma.GmailSyncStateDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.GmailSyncStateUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.GmailSyncStateUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$GmailSyncStatePayload>[]
+        }
+        upsert: {
+          args: Prisma.GmailSyncStateUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$GmailSyncStatePayload>
+        }
+        aggregate: {
+          args: Prisma.GmailSyncStateAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateGmailSyncState>
+        }
+        groupBy: {
+          args: Prisma.GmailSyncStateGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.GmailSyncStateGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.GmailSyncStateCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.GmailSyncStateCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -2088,6 +2238,37 @@ export const EmailLogScalarFieldEnum = {
 export type EmailLogScalarFieldEnum = (typeof EmailLogScalarFieldEnum)[keyof typeof EmailLogScalarFieldEnum]
 
 
+export const GmailEmailScalarFieldEnum = {
+  id: 'id',
+  gmailId: 'gmailId',
+  threadId: 'threadId',
+  from: 'from',
+  to: 'to',
+  cc: 'cc',
+  subject: 'subject',
+  snippet: 'snippet',
+  body: 'body',
+  direction: 'direction',
+  receivedAt: 'receivedAt',
+  syncedAt: 'syncedAt',
+  contactId: 'contactId',
+  dealId: 'dealId'
+} as const
+
+export type GmailEmailScalarFieldEnum = (typeof GmailEmailScalarFieldEnum)[keyof typeof GmailEmailScalarFieldEnum]
+
+
+export const GmailSyncStateScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  emailAddress: 'emailAddress',
+  historyId: 'historyId',
+  lastSyncAt: 'lastSyncAt'
+} as const
+
+export type GmailSyncStateScalarFieldEnum = (typeof GmailSyncStateScalarFieldEnum)[keyof typeof GmailSyncStateScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -2283,6 +2464,20 @@ export type ListEnumEmailStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$
 
 
 /**
+ * Reference to a field of type 'EmailDirection'
+ */
+export type EnumEmailDirectionFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'EmailDirection'>
+    
+
+
+/**
+ * Reference to a field of type 'EmailDirection[]'
+ */
+export type ListEnumEmailDirectionFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'EmailDirection[]'>
+    
+
+
+/**
  * Reference to a field of type 'Float'
  */
 export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
@@ -2408,6 +2603,8 @@ export type GlobalOmitConfig = {
   visitorSession?: Prisma.VisitorSessionOmit
   pageView?: Prisma.PageViewOmit
   emailLog?: Prisma.EmailLogOmit
+  gmailEmail?: Prisma.GmailEmailOmit
+  gmailSyncState?: Prisma.GmailSyncStateOmit
 }
 
 /* Types for Logging */

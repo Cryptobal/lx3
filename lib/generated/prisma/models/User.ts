@@ -220,6 +220,7 @@ export type UserWhereInput = {
   assignedDeals?: Prisma.DealListRelationFilter
   quotes?: Prisma.QuoteListRelationFilter
   emailsSent?: Prisma.EmailLogListRelationFilter
+  gmailSyncState?: Prisma.XOR<Prisma.GmailSyncStateNullableScalarRelationFilter, Prisma.GmailSyncStateWhereInput> | null
 }
 
 export type UserOrderByWithRelationInput = {
@@ -238,6 +239,7 @@ export type UserOrderByWithRelationInput = {
   assignedDeals?: Prisma.DealOrderByRelationAggregateInput
   quotes?: Prisma.QuoteOrderByRelationAggregateInput
   emailsSent?: Prisma.EmailLogOrderByRelationAggregateInput
+  gmailSyncState?: Prisma.GmailSyncStateOrderByWithRelationInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -259,6 +261,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   assignedDeals?: Prisma.DealListRelationFilter
   quotes?: Prisma.QuoteListRelationFilter
   emailsSent?: Prisma.EmailLogListRelationFilter
+  gmailSyncState?: Prisma.XOR<Prisma.GmailSyncStateNullableScalarRelationFilter, Prisma.GmailSyncStateWhereInput> | null
 }, "id" | "email">
 
 export type UserOrderByWithAggregationInput = {
@@ -307,6 +310,7 @@ export type UserCreateInput = {
   assignedDeals?: Prisma.DealCreateNestedManyWithoutAssignedToInput
   quotes?: Prisma.QuoteCreateNestedManyWithoutCreatedByInput
   emailsSent?: Prisma.EmailLogCreateNestedManyWithoutSentByInput
+  gmailSyncState?: Prisma.GmailSyncStateCreateNestedOneWithoutUserInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -325,6 +329,7 @@ export type UserUncheckedCreateInput = {
   assignedDeals?: Prisma.DealUncheckedCreateNestedManyWithoutAssignedToInput
   quotes?: Prisma.QuoteUncheckedCreateNestedManyWithoutCreatedByInput
   emailsSent?: Prisma.EmailLogUncheckedCreateNestedManyWithoutSentByInput
+  gmailSyncState?: Prisma.GmailSyncStateUncheckedCreateNestedOneWithoutUserInput
 }
 
 export type UserUpdateInput = {
@@ -343,6 +348,7 @@ export type UserUpdateInput = {
   assignedDeals?: Prisma.DealUpdateManyWithoutAssignedToNestedInput
   quotes?: Prisma.QuoteUpdateManyWithoutCreatedByNestedInput
   emailsSent?: Prisma.EmailLogUpdateManyWithoutSentByNestedInput
+  gmailSyncState?: Prisma.GmailSyncStateUpdateOneWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -361,6 +367,7 @@ export type UserUncheckedUpdateInput = {
   assignedDeals?: Prisma.DealUncheckedUpdateManyWithoutAssignedToNestedInput
   quotes?: Prisma.QuoteUncheckedUpdateManyWithoutCreatedByNestedInput
   emailsSent?: Prisma.EmailLogUncheckedUpdateManyWithoutSentByNestedInput
+  gmailSyncState?: Prisma.GmailSyncStateUncheckedUpdateOneWithoutUserNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -545,6 +552,20 @@ export type UserUpdateOneWithoutEmailsSentNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutEmailsSentInput, Prisma.UserUpdateWithoutEmailsSentInput>, Prisma.UserUncheckedUpdateWithoutEmailsSentInput>
 }
 
+export type UserCreateNestedOneWithoutGmailSyncStateInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutGmailSyncStateInput, Prisma.UserUncheckedCreateWithoutGmailSyncStateInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutGmailSyncStateInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutGmailSyncStateNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutGmailSyncStateInput, Prisma.UserUncheckedCreateWithoutGmailSyncStateInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutGmailSyncStateInput
+  upsert?: Prisma.UserUpsertWithoutGmailSyncStateInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutGmailSyncStateInput, Prisma.UserUpdateWithoutGmailSyncStateInput>, Prisma.UserUncheckedUpdateWithoutGmailSyncStateInput>
+}
+
 export type UserCreateWithoutAccountsInput = {
   id?: string
   name: string
@@ -560,6 +581,7 @@ export type UserCreateWithoutAccountsInput = {
   assignedDeals?: Prisma.DealCreateNestedManyWithoutAssignedToInput
   quotes?: Prisma.QuoteCreateNestedManyWithoutCreatedByInput
   emailsSent?: Prisma.EmailLogCreateNestedManyWithoutSentByInput
+  gmailSyncState?: Prisma.GmailSyncStateCreateNestedOneWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutAccountsInput = {
@@ -577,6 +599,7 @@ export type UserUncheckedCreateWithoutAccountsInput = {
   assignedDeals?: Prisma.DealUncheckedCreateNestedManyWithoutAssignedToInput
   quotes?: Prisma.QuoteUncheckedCreateNestedManyWithoutCreatedByInput
   emailsSent?: Prisma.EmailLogUncheckedCreateNestedManyWithoutSentByInput
+  gmailSyncState?: Prisma.GmailSyncStateUncheckedCreateNestedOneWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutAccountsInput = {
@@ -610,6 +633,7 @@ export type UserUpdateWithoutAccountsInput = {
   assignedDeals?: Prisma.DealUpdateManyWithoutAssignedToNestedInput
   quotes?: Prisma.QuoteUpdateManyWithoutCreatedByNestedInput
   emailsSent?: Prisma.EmailLogUpdateManyWithoutSentByNestedInput
+  gmailSyncState?: Prisma.GmailSyncStateUpdateOneWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutAccountsInput = {
@@ -627,6 +651,7 @@ export type UserUncheckedUpdateWithoutAccountsInput = {
   assignedDeals?: Prisma.DealUncheckedUpdateManyWithoutAssignedToNestedInput
   quotes?: Prisma.QuoteUncheckedUpdateManyWithoutCreatedByNestedInput
   emailsSent?: Prisma.EmailLogUncheckedUpdateManyWithoutSentByNestedInput
+  gmailSyncState?: Prisma.GmailSyncStateUncheckedUpdateOneWithoutUserNestedInput
 }
 
 export type UserCreateWithoutSessionsInput = {
@@ -644,6 +669,7 @@ export type UserCreateWithoutSessionsInput = {
   assignedDeals?: Prisma.DealCreateNestedManyWithoutAssignedToInput
   quotes?: Prisma.QuoteCreateNestedManyWithoutCreatedByInput
   emailsSent?: Prisma.EmailLogCreateNestedManyWithoutSentByInput
+  gmailSyncState?: Prisma.GmailSyncStateCreateNestedOneWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutSessionsInput = {
@@ -661,6 +687,7 @@ export type UserUncheckedCreateWithoutSessionsInput = {
   assignedDeals?: Prisma.DealUncheckedCreateNestedManyWithoutAssignedToInput
   quotes?: Prisma.QuoteUncheckedCreateNestedManyWithoutCreatedByInput
   emailsSent?: Prisma.EmailLogUncheckedCreateNestedManyWithoutSentByInput
+  gmailSyncState?: Prisma.GmailSyncStateUncheckedCreateNestedOneWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutSessionsInput = {
@@ -694,6 +721,7 @@ export type UserUpdateWithoutSessionsInput = {
   assignedDeals?: Prisma.DealUpdateManyWithoutAssignedToNestedInput
   quotes?: Prisma.QuoteUpdateManyWithoutCreatedByNestedInput
   emailsSent?: Prisma.EmailLogUpdateManyWithoutSentByNestedInput
+  gmailSyncState?: Prisma.GmailSyncStateUpdateOneWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutSessionsInput = {
@@ -711,6 +739,7 @@ export type UserUncheckedUpdateWithoutSessionsInput = {
   assignedDeals?: Prisma.DealUncheckedUpdateManyWithoutAssignedToNestedInput
   quotes?: Prisma.QuoteUncheckedUpdateManyWithoutCreatedByNestedInput
   emailsSent?: Prisma.EmailLogUncheckedUpdateManyWithoutSentByNestedInput
+  gmailSyncState?: Prisma.GmailSyncStateUncheckedUpdateOneWithoutUserNestedInput
 }
 
 export type UserCreateWithoutAssignedDealsInput = {
@@ -728,6 +757,7 @@ export type UserCreateWithoutAssignedDealsInput = {
   activities?: Prisma.ActivityCreateNestedManyWithoutUserInput
   quotes?: Prisma.QuoteCreateNestedManyWithoutCreatedByInput
   emailsSent?: Prisma.EmailLogCreateNestedManyWithoutSentByInput
+  gmailSyncState?: Prisma.GmailSyncStateCreateNestedOneWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutAssignedDealsInput = {
@@ -745,6 +775,7 @@ export type UserUncheckedCreateWithoutAssignedDealsInput = {
   activities?: Prisma.ActivityUncheckedCreateNestedManyWithoutUserInput
   quotes?: Prisma.QuoteUncheckedCreateNestedManyWithoutCreatedByInput
   emailsSent?: Prisma.EmailLogUncheckedCreateNestedManyWithoutSentByInput
+  gmailSyncState?: Prisma.GmailSyncStateUncheckedCreateNestedOneWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutAssignedDealsInput = {
@@ -778,6 +809,7 @@ export type UserUpdateWithoutAssignedDealsInput = {
   activities?: Prisma.ActivityUpdateManyWithoutUserNestedInput
   quotes?: Prisma.QuoteUpdateManyWithoutCreatedByNestedInput
   emailsSent?: Prisma.EmailLogUpdateManyWithoutSentByNestedInput
+  gmailSyncState?: Prisma.GmailSyncStateUpdateOneWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutAssignedDealsInput = {
@@ -795,6 +827,7 @@ export type UserUncheckedUpdateWithoutAssignedDealsInput = {
   activities?: Prisma.ActivityUncheckedUpdateManyWithoutUserNestedInput
   quotes?: Prisma.QuoteUncheckedUpdateManyWithoutCreatedByNestedInput
   emailsSent?: Prisma.EmailLogUncheckedUpdateManyWithoutSentByNestedInput
+  gmailSyncState?: Prisma.GmailSyncStateUncheckedUpdateOneWithoutUserNestedInput
 }
 
 export type UserCreateWithoutQuotesInput = {
@@ -812,6 +845,7 @@ export type UserCreateWithoutQuotesInput = {
   activities?: Prisma.ActivityCreateNestedManyWithoutUserInput
   assignedDeals?: Prisma.DealCreateNestedManyWithoutAssignedToInput
   emailsSent?: Prisma.EmailLogCreateNestedManyWithoutSentByInput
+  gmailSyncState?: Prisma.GmailSyncStateCreateNestedOneWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutQuotesInput = {
@@ -829,6 +863,7 @@ export type UserUncheckedCreateWithoutQuotesInput = {
   activities?: Prisma.ActivityUncheckedCreateNestedManyWithoutUserInput
   assignedDeals?: Prisma.DealUncheckedCreateNestedManyWithoutAssignedToInput
   emailsSent?: Prisma.EmailLogUncheckedCreateNestedManyWithoutSentByInput
+  gmailSyncState?: Prisma.GmailSyncStateUncheckedCreateNestedOneWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutQuotesInput = {
@@ -862,6 +897,7 @@ export type UserUpdateWithoutQuotesInput = {
   activities?: Prisma.ActivityUpdateManyWithoutUserNestedInput
   assignedDeals?: Prisma.DealUpdateManyWithoutAssignedToNestedInput
   emailsSent?: Prisma.EmailLogUpdateManyWithoutSentByNestedInput
+  gmailSyncState?: Prisma.GmailSyncStateUpdateOneWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutQuotesInput = {
@@ -879,6 +915,7 @@ export type UserUncheckedUpdateWithoutQuotesInput = {
   activities?: Prisma.ActivityUncheckedUpdateManyWithoutUserNestedInput
   assignedDeals?: Prisma.DealUncheckedUpdateManyWithoutAssignedToNestedInput
   emailsSent?: Prisma.EmailLogUncheckedUpdateManyWithoutSentByNestedInput
+  gmailSyncState?: Prisma.GmailSyncStateUncheckedUpdateOneWithoutUserNestedInput
 }
 
 export type UserCreateWithoutActivitiesInput = {
@@ -896,6 +933,7 @@ export type UserCreateWithoutActivitiesInput = {
   assignedDeals?: Prisma.DealCreateNestedManyWithoutAssignedToInput
   quotes?: Prisma.QuoteCreateNestedManyWithoutCreatedByInput
   emailsSent?: Prisma.EmailLogCreateNestedManyWithoutSentByInput
+  gmailSyncState?: Prisma.GmailSyncStateCreateNestedOneWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutActivitiesInput = {
@@ -913,6 +951,7 @@ export type UserUncheckedCreateWithoutActivitiesInput = {
   assignedDeals?: Prisma.DealUncheckedCreateNestedManyWithoutAssignedToInput
   quotes?: Prisma.QuoteUncheckedCreateNestedManyWithoutCreatedByInput
   emailsSent?: Prisma.EmailLogUncheckedCreateNestedManyWithoutSentByInput
+  gmailSyncState?: Prisma.GmailSyncStateUncheckedCreateNestedOneWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutActivitiesInput = {
@@ -946,6 +985,7 @@ export type UserUpdateWithoutActivitiesInput = {
   assignedDeals?: Prisma.DealUpdateManyWithoutAssignedToNestedInput
   quotes?: Prisma.QuoteUpdateManyWithoutCreatedByNestedInput
   emailsSent?: Prisma.EmailLogUpdateManyWithoutSentByNestedInput
+  gmailSyncState?: Prisma.GmailSyncStateUpdateOneWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutActivitiesInput = {
@@ -963,6 +1003,7 @@ export type UserUncheckedUpdateWithoutActivitiesInput = {
   assignedDeals?: Prisma.DealUncheckedUpdateManyWithoutAssignedToNestedInput
   quotes?: Prisma.QuoteUncheckedUpdateManyWithoutCreatedByNestedInput
   emailsSent?: Prisma.EmailLogUncheckedUpdateManyWithoutSentByNestedInput
+  gmailSyncState?: Prisma.GmailSyncStateUncheckedUpdateOneWithoutUserNestedInput
 }
 
 export type UserCreateWithoutEmailsSentInput = {
@@ -980,6 +1021,7 @@ export type UserCreateWithoutEmailsSentInput = {
   activities?: Prisma.ActivityCreateNestedManyWithoutUserInput
   assignedDeals?: Prisma.DealCreateNestedManyWithoutAssignedToInput
   quotes?: Prisma.QuoteCreateNestedManyWithoutCreatedByInput
+  gmailSyncState?: Prisma.GmailSyncStateCreateNestedOneWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutEmailsSentInput = {
@@ -997,6 +1039,7 @@ export type UserUncheckedCreateWithoutEmailsSentInput = {
   activities?: Prisma.ActivityUncheckedCreateNestedManyWithoutUserInput
   assignedDeals?: Prisma.DealUncheckedCreateNestedManyWithoutAssignedToInput
   quotes?: Prisma.QuoteUncheckedCreateNestedManyWithoutCreatedByInput
+  gmailSyncState?: Prisma.GmailSyncStateUncheckedCreateNestedOneWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutEmailsSentInput = {
@@ -1030,6 +1073,7 @@ export type UserUpdateWithoutEmailsSentInput = {
   activities?: Prisma.ActivityUpdateManyWithoutUserNestedInput
   assignedDeals?: Prisma.DealUpdateManyWithoutAssignedToNestedInput
   quotes?: Prisma.QuoteUpdateManyWithoutCreatedByNestedInput
+  gmailSyncState?: Prisma.GmailSyncStateUpdateOneWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutEmailsSentInput = {
@@ -1047,6 +1091,95 @@ export type UserUncheckedUpdateWithoutEmailsSentInput = {
   activities?: Prisma.ActivityUncheckedUpdateManyWithoutUserNestedInput
   assignedDeals?: Prisma.DealUncheckedUpdateManyWithoutAssignedToNestedInput
   quotes?: Prisma.QuoteUncheckedUpdateManyWithoutCreatedByNestedInput
+  gmailSyncState?: Prisma.GmailSyncStateUncheckedUpdateOneWithoutUserNestedInput
+}
+
+export type UserCreateWithoutGmailSyncStateInput = {
+  id?: string
+  name: string
+  email: string
+  emailVerified?: Date | string | null
+  password?: string | null
+  image?: string | null
+  role?: $Enums.UserRole
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
+  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  activities?: Prisma.ActivityCreateNestedManyWithoutUserInput
+  assignedDeals?: Prisma.DealCreateNestedManyWithoutAssignedToInput
+  quotes?: Prisma.QuoteCreateNestedManyWithoutCreatedByInput
+  emailsSent?: Prisma.EmailLogCreateNestedManyWithoutSentByInput
+}
+
+export type UserUncheckedCreateWithoutGmailSyncStateInput = {
+  id?: string
+  name: string
+  email: string
+  emailVerified?: Date | string | null
+  password?: string | null
+  image?: string | null
+  role?: $Enums.UserRole
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
+  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  activities?: Prisma.ActivityUncheckedCreateNestedManyWithoutUserInput
+  assignedDeals?: Prisma.DealUncheckedCreateNestedManyWithoutAssignedToInput
+  quotes?: Prisma.QuoteUncheckedCreateNestedManyWithoutCreatedByInput
+  emailsSent?: Prisma.EmailLogUncheckedCreateNestedManyWithoutSentByInput
+}
+
+export type UserCreateOrConnectWithoutGmailSyncStateInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutGmailSyncStateInput, Prisma.UserUncheckedCreateWithoutGmailSyncStateInput>
+}
+
+export type UserUpsertWithoutGmailSyncStateInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutGmailSyncStateInput, Prisma.UserUncheckedUpdateWithoutGmailSyncStateInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutGmailSyncStateInput, Prisma.UserUncheckedCreateWithoutGmailSyncStateInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutGmailSyncStateInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutGmailSyncStateInput, Prisma.UserUncheckedUpdateWithoutGmailSyncStateInput>
+}
+
+export type UserUpdateWithoutGmailSyncStateInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerified?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
+  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  activities?: Prisma.ActivityUpdateManyWithoutUserNestedInput
+  assignedDeals?: Prisma.DealUpdateManyWithoutAssignedToNestedInput
+  quotes?: Prisma.QuoteUpdateManyWithoutCreatedByNestedInput
+  emailsSent?: Prisma.EmailLogUpdateManyWithoutSentByNestedInput
+}
+
+export type UserUncheckedUpdateWithoutGmailSyncStateInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerified?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
+  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  activities?: Prisma.ActivityUncheckedUpdateManyWithoutUserNestedInput
+  assignedDeals?: Prisma.DealUncheckedUpdateManyWithoutAssignedToNestedInput
+  quotes?: Prisma.QuoteUncheckedUpdateManyWithoutCreatedByNestedInput
+  emailsSent?: Prisma.EmailLogUncheckedUpdateManyWithoutSentByNestedInput
 }
 
 
@@ -1141,6 +1274,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   assignedDeals?: boolean | Prisma.User$assignedDealsArgs<ExtArgs>
   quotes?: boolean | Prisma.User$quotesArgs<ExtArgs>
   emailsSent?: boolean | Prisma.User$emailsSentArgs<ExtArgs>
+  gmailSyncState?: boolean | Prisma.User$gmailSyncStateArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -1188,6 +1322,7 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   assignedDeals?: boolean | Prisma.User$assignedDealsArgs<ExtArgs>
   quotes?: boolean | Prisma.User$quotesArgs<ExtArgs>
   emailsSent?: boolean | Prisma.User$emailsSentArgs<ExtArgs>
+  gmailSyncState?: boolean | Prisma.User$gmailSyncStateArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -1202,6 +1337,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     assignedDeals: Prisma.$DealPayload<ExtArgs>[]
     quotes: Prisma.$QuotePayload<ExtArgs>[]
     emailsSent: Prisma.$EmailLogPayload<ExtArgs>[]
+    gmailSyncState: Prisma.$GmailSyncStatePayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1613,6 +1749,7 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   assignedDeals<T extends Prisma.User$assignedDealsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$assignedDealsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DealPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   quotes<T extends Prisma.User$quotesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$quotesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$QuotePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   emailsSent<T extends Prisma.User$emailsSentArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$emailsSentArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$EmailLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  gmailSyncState<T extends Prisma.User$gmailSyncStateArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$gmailSyncStateArgs<ExtArgs>>): Prisma.Prisma__GmailSyncStateClient<runtime.Types.Result.GetResult<Prisma.$GmailSyncStatePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2185,6 +2322,25 @@ export type User$emailsSentArgs<ExtArgs extends runtime.Types.Extensions.Interna
   take?: number
   skip?: number
   distinct?: Prisma.EmailLogScalarFieldEnum | Prisma.EmailLogScalarFieldEnum[]
+}
+
+/**
+ * User.gmailSyncState
+ */
+export type User$gmailSyncStateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the GmailSyncState
+   */
+  select?: Prisma.GmailSyncStateSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the GmailSyncState
+   */
+  omit?: Prisma.GmailSyncStateOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.GmailSyncStateInclude<ExtArgs> | null
+  where?: Prisma.GmailSyncStateWhereInput
 }
 
 /**

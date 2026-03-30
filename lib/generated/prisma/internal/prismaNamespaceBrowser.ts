@@ -68,7 +68,9 @@ export const ModelName = {
   Activity: 'Activity',
   VisitorSession: 'VisitorSession',
   PageView: 'PageView',
-  EmailLog: 'EmailLog'
+  EmailLog: 'EmailLog',
+  GmailEmail: 'GmailEmail',
+  GmailSyncState: 'GmailSyncState'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -381,6 +383,37 @@ export const EmailLogScalarFieldEnum = {
 } as const
 
 export type EmailLogScalarFieldEnum = (typeof EmailLogScalarFieldEnum)[keyof typeof EmailLogScalarFieldEnum]
+
+
+export const GmailEmailScalarFieldEnum = {
+  id: 'id',
+  gmailId: 'gmailId',
+  threadId: 'threadId',
+  from: 'from',
+  to: 'to',
+  cc: 'cc',
+  subject: 'subject',
+  snippet: 'snippet',
+  body: 'body',
+  direction: 'direction',
+  receivedAt: 'receivedAt',
+  syncedAt: 'syncedAt',
+  contactId: 'contactId',
+  dealId: 'dealId'
+} as const
+
+export type GmailEmailScalarFieldEnum = (typeof GmailEmailScalarFieldEnum)[keyof typeof GmailEmailScalarFieldEnum]
+
+
+export const GmailSyncStateScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  emailAddress: 'emailAddress',
+  historyId: 'historyId',
+  lastSyncAt: 'lastSyncAt'
+} as const
+
+export type GmailSyncStateScalarFieldEnum = (typeof GmailSyncStateScalarFieldEnum)[keyof typeof GmailSyncStateScalarFieldEnum]
 
 
 export const SortOrder = {

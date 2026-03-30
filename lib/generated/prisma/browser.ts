@@ -107,3 +107,13 @@ export type PageView = Prisma.PageViewModel
  * 
  */
 export type EmailLog = Prisma.EmailLogModel
+/**
+ * Model GmailEmail
+ * 
+ */
+export type GmailEmail = Prisma.GmailEmailModel
+/**
+ * Model GmailSyncState
+ * 
+ */
+export type GmailSyncState = Prisma.GmailSyncStateModel

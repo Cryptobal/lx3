@@ -69,8 +69,8 @@ export function PipelineChart({ data }: { data: PipelineStageData[] }) {
   }
 
   return (
-    <div className="bg-zinc-900 rounded-xl p-6 border border-zinc-800">
-      <h3 className="text-base font-semibold text-zinc-100 mb-4">
+    <div className="bg-white dark:bg-zinc-900 rounded-xl p-6 border border-zinc-200 dark:border-zinc-800">
+      <h3 className="text-base font-semibold text-zinc-900 dark:text-zinc-100 mb-4">
         Resumen Pipeline
       </h3>
       <div className="h-64" style={{ minHeight: 200, minWidth: 0 }}>
@@ -124,8 +124,8 @@ export function LeadSourceChart({ data }: { data: LeadSourceData[] }) {
   }
 
   return (
-    <div className="bg-zinc-900 rounded-xl p-6 border border-zinc-800">
-      <h3 className="text-base font-semibold text-zinc-100 mb-4">
+    <div className="bg-white dark:bg-zinc-900 rounded-xl p-6 border border-zinc-200 dark:border-zinc-800">
+      <h3 className="text-base font-semibold text-zinc-900 dark:text-zinc-100 mb-4">
         Fuentes de Leads
       </h3>
       <div className="h-64" style={{ minHeight: 200, minWidth: 0 }}>

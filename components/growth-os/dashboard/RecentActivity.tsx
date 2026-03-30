@@ -49,8 +49,8 @@ interface RecentActivityProps {
 export function RecentActivity({ activities }: RecentActivityProps) {
   if (activities.length === 0) {
     return (
-      <div className="rounded-xl border border-zinc-800 bg-zinc-900 p-6">
-        <h3 className="text-base font-semibold text-zinc-100 mb-4">Actividad Reciente</h3>
+      <div className="rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 p-6">
+        <h3 className="text-base font-semibold text-zinc-900 dark:text-zinc-100 mb-4">Actividad Reciente</h3>
         <div className="flex h-32 items-center justify-center text-sm text-zinc-500">
           Sin actividad reciente
         </div>
@@ -61,7 +61,7 @@ export function RecentActivity({ activities }: RecentActivityProps) {
   return (
     <div className="rounded-xl border border-zinc-800 bg-zinc-900 p-6">
       <h3 className="text-base font-semibold text-zinc-100 mb-4">Actividad Reciente</h3>
-      <ul className="divide-y divide-zinc-800">
+      <ul className="divide-y divide-zinc-100 dark:divide-zinc-800">
         {activities.map((activity) => {
           const config = typeIcons[activity.type] ?? typeIcons.NOTE;
           const Icon = config.icon;
@@ -73,7 +73,7 @@ export function RecentActivity({ activities }: RecentActivityProps) {
                 <Icon className="h-4 w-4" />
               </div>
               <div className="min-w-0 flex-1">
-                <p className="truncate text-sm text-zinc-200">{activity.title}</p>
+                <p className="truncate text-sm text-zinc-700 dark:text-zinc-200">{activity.title}</p>
                 <p className="text-xs text-zinc-500">
                   <RelativeTime date={activity.createdAt} />
                 </p>

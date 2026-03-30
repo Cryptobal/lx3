@@ -84,6 +84,104 @@ export async function getPipelineSummary() {
   }
 }
 
+export async function getConversionFunnel() {
+  if (!prisma) return { data: [] };
+
+  try {
+    const stages = await prisma.pipelineStage.findMany({
+      orderBy: { order: "asc" },
+      select: {
+        name: true,
+        color: true,
+        order: true,
+        isWon: true,
+        isLost: true,
+        _count: { select: { deals: true } },
+      },
+    });
+
+    // Include all deals ever (including won/lost) for the funnel
+    const allDealsCount = await prisma.deal.count();
+    const data = stages.map((s) => ({
+      name: s.name,
+      color: s.color ?? "#6B7280",
+      count: s._count.deals,
+      percentage: allDealsCount > 0 ? Math.round((s._count.deals / allDealsCount) * 100) : 0,
+      isWon: s.isWon,
+      isLost: s.isLost,
+    }));
+
+    return { data };
+  } catch (error) {
+    console.error("getConversionFunnel error:", error);
+    return { data: [] };
+  }
+}
+
+export async function getRevenueMetrics() {
+  if (!prisma) return { data: { wonRevenue: 0, forecastRevenue: 0, avgDealSize: 0, avgDaysToClose: 0, dealsWonThisMonth: 0, quotesAccepted: 0 } };
+
+  try {
+    const now = new Date();
+    const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+
+    const [wonDeals, activeDealsAgg, activeDeals, quotesAccepted] = await Promise.all([
+      prisma.deal.findMany({
+        where: { stage: { isWon: true } },
+        select: { value: true, createdAt: true, closedAt: true },
+      }),
+      prisma.deal.aggregate({
+        where: { stage: { isWon: false, isLost: false } },
+        _sum: { value: true },
+        _avg: { probability: true },
+      }),
+      prisma.deal.findMany({
+        where: { stage: { isWon: false, isLost: false } },
+        select: { value: true, probability: true },
+      }),
+      prisma.quote.count({
+        where: { status: "ACCEPTED", acceptedAt: { gte: startOfMonth } },
+      }),
+    ]);
+
+    const wonRevenue = wonDeals.reduce((sum, d) => sum + (d.value ? Number(d.value) : 0), 0);
+    const dealsWonThisMonth = wonDeals.filter(
+      (d) => d.closedAt && new Date(d.closedAt) >= startOfMonth
+    ).length;
+
+    // Weighted forecast
+    const forecastRevenue = activeDeals.reduce(
+      (sum, d) => sum + (d.value ? Number(d.value) : 0) * ((d.probability ?? 50) / 100),
+      0
+    );
+
+    // Avg deal size (won)
+    const wonWithValue = wonDeals.filter((d) => d.value);
+    const avgDealSize = wonWithValue.length > 0
+      ? wonRevenue / wonWithValue.length
+      : 0;
+
+    // Avg days to close
+    const closedDeals = wonDeals.filter((d) => d.closedAt);
+    const avgDaysToClose = closedDeals.length > 0
+      ? Math.round(
+          closedDeals.reduce((sum, d) => {
+            const created = new Date(d.createdAt).getTime();
+            const closed = new Date(d.closedAt!).getTime();
+            return sum + (closed - created) / (1000 * 60 * 60 * 24);
+          }, 0) / closedDeals.length
+        )
+      : 0;
+
+    return {
+      data: { wonRevenue, forecastRevenue, avgDealSize, avgDaysToClose, dealsWonThisMonth, quotesAccepted },
+    };
+  } catch (error) {
+    console.error("getRevenueMetrics error:", error);
+    return { data: { wonRevenue: 0, forecastRevenue: 0, avgDealSize: 0, avgDaysToClose: 0, dealsWonThisMonth: 0, quotesAccepted: 0 } };
+  }
+}
+
 export async function getLeadSourceBreakdown() {
   if (!prisma) return { data: [] };
 

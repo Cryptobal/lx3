@@ -11,7 +11,9 @@ import {
   ExternalLink,
 } from "lucide-react";
 import { Badge } from "@/components/growth-os/shared/Badge";
+import { LeadScoreBadge } from "@/components/growth-os/shared/LeadScoreBadge";
 import { formatDate } from "@/lib/growth-os/utils/format";
+import { calculateLeadScore } from "@/lib/growth-os/services/lead-scoring";
 import { ContactTimeline } from "./ContactTimeline";
 import { ContactTabs } from "./ContactTabs";
 import type { ContactSource, ActivityType, QuoteStatus } from "@/lib/generated/prisma/client";
@@ -74,6 +76,16 @@ export function ContactDetail({ contact }: ContactDetailProps) {
   const fullName = `${contact.firstName} ${contact.lastName ?? ""}`.trim();
   const initials = `${contact.firstName[0]}${contact.lastName?.[0] ?? ""}`;
 
+  // Calculate lead score
+  const hasFilledForm = contact.activities.some(
+    (a) => a.type === "FORM_SUBMISSION" || a.type === "CONTACT_CREATED"
+  );
+  const { score: leadScore, breakdown: leadBreakdown } = calculateLeadScore({
+    email: contact.email,
+    hasFilledForm,
+    enriched: !!contact.enrichedAt,
+  });
+
   return (
     <div className="space-y-6">
       {/* Back link */}
@@ -95,9 +107,12 @@ export function ContactDetail({ contact }: ContactDetailProps) {
                 {initials}
               </div>
               <div className="flex-1 min-w-0">
-                <h1 className="text-xl font-bold text-zinc-900 dark:text-zinc-100">
-                  {fullName}
-                </h1>
+                <div className="flex items-center gap-2">
+                  <h1 className="text-xl font-bold text-zinc-900 dark:text-zinc-100">
+                    {fullName}
+                  </h1>
+                  <LeadScoreBadge score={leadScore} breakdown={leadBreakdown} size="md" />
+                </div>
                 {contact.position && (
                   <p className="text-sm text-zinc-500 dark:text-zinc-400 mt-0.5">
                     {contact.position}

@@ -3,21 +3,23 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { Send, FileText, Pencil, Loader2 } from "lucide-react";
+import { Send, FileText, Pencil, Loader2, ExternalLink } from "lucide-react";
 import { toast } from "sonner";
 import type { QuoteStatus } from "@/lib/generated/prisma/client";
 
 interface QuoteActionsProps {
   quoteId: string;
   status: QuoteStatus;
+  trackingToken?: string | null;
 }
 
-export function QuoteActions({ quoteId, status }: QuoteActionsProps) {
+export function QuoteActions({ quoteId, status, trackingToken }: QuoteActionsProps) {
   const router = useRouter();
   const [sending, setSending] = useState(false);
+  const [generatingPdf, setGeneratingPdf] = useState(false);
 
   const handleSend = async () => {
-    if (!confirm("¿Enviar esta cotización al cliente por email?")) return;
+    if (!confirm("Enviar esta cotizacion al cliente por email?")) return;
 
     setSending(true);
     try {
@@ -30,14 +32,23 @@ export function QuoteActions({ quoteId, status }: QuoteActionsProps) {
         throw new Error(data.error || "Error al enviar");
       }
 
-      toast.success("Cotización enviada al cliente");
+      toast.success("Cotizacion enviada al cliente");
       router.refresh();
     } catch (error) {
       const message =
-        error instanceof Error ? error.message : "Error al enviar la cotización";
+        error instanceof Error ? error.message : "Error al enviar la cotizacion";
       toast.error(message);
     } finally {
       setSending(false);
+    }
+  };
+
+  const handlePdf = async () => {
+    setGeneratingPdf(true);
+    try {
+      window.open(`/api/growth-os/quotes/${quoteId}/pdf`, "_blank");
+    } finally {
+      setTimeout(() => setGeneratingPdf(false), 1500);
     }
   };
 
@@ -56,6 +67,18 @@ export function QuoteActions({ quoteId, status }: QuoteActionsProps) {
         </Link>
       )}
 
+      {trackingToken && (
+        <a
+          href={`/q/${trackingToken}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-2 px-3 py-2 text-sm font-medium rounded-lg border border-zinc-200 dark:border-zinc-700 text-zinc-700 dark:text-zinc-300 hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-colors"
+        >
+          <ExternalLink className="w-4 h-4" />
+          Preview
+        </a>
+      )}
+
       {canSend && (
         <button
           onClick={handleSend}
@@ -72,11 +95,16 @@ export function QuoteActions({ quoteId, status }: QuoteActionsProps) {
       )}
 
       <button
-        className="inline-flex items-center gap-2 px-3 py-2 text-sm font-medium rounded-lg border border-zinc-200 dark:border-zinc-700 text-zinc-700 dark:text-zinc-300 hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-colors"
-        onClick={() => toast.info("Generación de PDF próximamente")}
+        onClick={handlePdf}
+        disabled={generatingPdf}
+        className="inline-flex items-center gap-2 px-3 py-2 text-sm font-medium rounded-lg border border-zinc-200 dark:border-zinc-700 text-zinc-700 dark:text-zinc-300 hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-colors disabled:opacity-50"
       >
-        <FileText className="w-4 h-4" />
-        Generar PDF
+        {generatingPdf ? (
+          <Loader2 className="w-4 h-4 animate-spin" />
+        ) : (
+          <FileText className="w-4 h-4" />
+        )}
+        Descargar PDF
       </button>
     </div>
   );

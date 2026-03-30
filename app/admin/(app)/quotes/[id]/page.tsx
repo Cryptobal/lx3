@@ -71,7 +71,7 @@ export default async function QuoteDetailPage({ params }: QuoteDetailPageProps) 
           </p>
         </div>
 
-        <QuoteActions quoteId={quote.id} status={quote.status} />
+        <QuoteActions quoteId={quote.id} status={quote.status} trackingToken={quote.trackingToken} />
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">

@@ -3,7 +3,7 @@ import Link from "next/link";
 import { Plus, Kanban } from "lucide-react";
 import { getDealsByStage } from "@/lib/growth-os/actions/deals";
 import { EmptyState } from "@/components/growth-os/shared/EmptyState";
-import { PipelineKanban } from "@/components/growth-os/deals/PipelineKanban";
+import { PipelineView } from "@/components/growth-os/deals/PipelineView";
 import type { DealCardData } from "@/components/growth-os/deals/DealCard";
 
 export default async function DealsPage() {
@@ -57,20 +57,20 @@ export default async function DealsPage() {
             Pipeline
           </h1>
           <p className="mt-1 text-sm text-zinc-500 dark:text-zinc-400">
-            {totalDeals} deal{totalDeals !== 1 ? "s" : ""} en {stages.length} etapa
-            {stages.length !== 1 ? "s" : ""}
+            {totalDeals} deal{totalDeals !== 1 ? "s" : ""} en {stages.length}{" "}
+            etapa{stages.length !== 1 ? "s" : ""}
           </p>
         </div>
         <Link
           href="/admin/deals/new"
-          className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg bg-zinc-900 text-white hover:bg-zinc-800 dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-zinc-200 transition-colors"
+          className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition-colors"
         >
           <Plus className="w-4 h-4" />
           Nuevo deal
         </Link>
       </div>
 
-      {/* Kanban */}
+      {/* Pipeline */}
       {stages.length === 0 ? (
         <EmptyState
           icon={Kanban}
@@ -78,7 +78,7 @@ export default async function DealsPage() {
           description="Configura las etapas de tu pipeline para comenzar a gestionar deals."
         />
       ) : (
-        <PipelineKanban stages={serializedStages} />
+        <PipelineView stages={serializedStages} />
       )}
     </div>
   );

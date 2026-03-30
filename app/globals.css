@@ -1,11 +1,15 @@
 @import "tailwindcss";
 
+/* Tailwind v4 — class-based dark mode */
+@custom-variant dark (&:where(.dark, .dark *));
+
 /* ============================================
    LX3 Software Studio — Midnight Coral
    Design System
    ============================================ */
 
-:root {
+/* --- Dark theme (default) --- */
+:root, .dark {
   /* Fondos — azul-gris oscuro */
   --bg-deep:        #06080E;
   --bg-primary:     #0D1117;
@@ -55,6 +59,45 @@
   --muted: var(--text-tertiary);
   --muted-foreground: var(--text-secondary);
   --accent-secondary: var(--coral);
+
+  color-scheme: dark;
+}
+
+/* --- Light theme --- */
+.light {
+  --bg-deep:        #F8FAFC;
+  --bg-primary:     #FFFFFF;
+  --bg-elevated:    #F1F5F9;
+  --bg-surface:     #E2E8F0;
+  --bg-hover:       #CBD5E1;
+
+  --border-subtle:  #E2E8F0;
+  --border-default: #CBD5E1;
+  --border-strong:  #94A3B8;
+
+  --text-primary:   #0F172A;
+  --text-secondary: #475569;
+  --text-tertiary:  #94A3B8;
+  --text-muted:     #CBD5E1;
+
+  --accent:         #2563EB;
+  --accent-hover:   #1D4ED8;
+  --accent-light:   rgba(37,99,235,0.08);
+  --accent-glow:    rgba(37,99,235,0.15);
+
+  --coral:          #EA580C;
+  --coral-light:    rgba(234,88,12,0.08);
+  --coral-glow:     rgba(234,88,12,0.12);
+
+  --green:          #059669;
+  --green-light:    rgba(5,150,105,0.08);
+  --green-glow:     rgba(5,150,105,0.12);
+
+  --success: #16A34A;
+  --warning: #CA8A04;
+  --error:   #DC2626;
+
+  color-scheme: light;
 }
 
 @theme inline {
@@ -84,7 +127,6 @@
 
 html {
   scroll-behavior: smooth;
-  color-scheme: dark;
 }
 
 body {

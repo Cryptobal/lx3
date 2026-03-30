@@ -2,20 +2,20 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
 import { sendQuoteNotification } from "@/lib/growth-os/services/email-service";
 
-export async function POST(
-  request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
-) {
+export async function POST(request: NextRequest) {
   if (!prisma) {
     return NextResponse.json({ error: "DB not available" }, { status: 500 });
   }
 
   try {
-    const { id } = await params;
-    const { action, message } = await request.json();
+    const { token, action, message } = await request.json();
+
+    if (!token) {
+      return NextResponse.json({ error: "Token required" }, { status: 400 });
+    }
 
     const quote = await prisma.quote.findUnique({
-      where: { id },
+      where: { trackingToken: token },
       include: { contact: true },
     });
 
@@ -26,34 +26,6 @@ export async function POST(
     const contactName = quote.contact
       ? `${quote.contact.firstName} ${quote.contact.lastName || ""}`.trim()
       : "Cliente";
-
-    if (action === "accept") {
-      await prisma.quote.update({
-        where: { id },
-        data: { status: "ACCEPTED", acceptedAt: new Date() },
-      });
-
-      await prisma.activity.create({
-        data: {
-          type: "QUOTE_ACCEPTED",
-          title: `Cotizacion ${quote.quoteNumber} aceptada por ${contactName}`,
-          contactId: quote.contactId,
-          dealId: quote.dealId,
-          metadata: { quoteId: id },
-        },
-      });
-
-      // Send notification to admins
-      sendQuoteNotification({
-        type: "accepted",
-        quoteNumber: quote.quoteNumber,
-        contactName,
-      }).catch((err) =>
-        console.error("[Quote] Failed to send accept notification:", err)
-      );
-
-      return NextResponse.json({ ok: true, status: "ACCEPTED" });
-    }
 
     if (action === "request_changes") {
       if (!message?.trim()) {
@@ -71,13 +43,12 @@ export async function POST(
           contactId: quote.contactId,
           dealId: quote.dealId,
           metadata: {
-            quoteId: id,
+            quoteId: quote.id,
             changeRequest: message.trim(),
           },
         },
       });
 
-      // Send notification to admins
       sendQuoteNotification({
         type: "rejected",
         quoteNumber: quote.quoteNumber,
@@ -86,12 +57,12 @@ export async function POST(
         console.error("[Quote] Failed to send changes notification:", err)
       );
 
-      return NextResponse.json({ ok: true, status: "CHANGES_REQUESTED" });
+      return NextResponse.json({ ok: true });
     }
 
     return NextResponse.json({ error: "Invalid action" }, { status: 400 });
   } catch (error) {
-    console.error("Quote respond error:", error);
+    console.error("Quote respond-by-token error:", error);
     return NextResponse.json({ error: "Internal error" }, { status: 500 });
   }
 }

@@ -53,180 +53,233 @@ export default async function PublicQuotePage({
     ? `${(contact.firstName as string) ?? ""} ${(contact.lastName as string) ?? ""}`.trim()
     : null;
 
+  const dateFormatted = new Date(quote.createdAt as string).toLocaleDateString(
+    "es-CL",
+    { year: "numeric", month: "long", day: "numeric" }
+  );
+
   return (
-    <div className="mx-auto max-w-3xl px-4 py-8 sm:px-6 lg:px-8">
-      {/* Logo */}
-      <div className="mb-10 text-center">
-        <div className="inline-flex items-center gap-2">
-          <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-blue-600">
-            <span className="text-lg font-bold text-white">L</span>
-          </div>
-          <span className="text-xl font-bold text-gray-900">
-            LX3 <span className="font-normal text-gray-500">Software Studio</span>
-          </span>
-        </div>
-      </div>
-
-      {/* Quote header */}
-      <div className="mb-8">
-        <div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
-          <div>
-            <p className="text-sm font-medium text-blue-600">
-              {quote.quoteNumber as string}
-            </p>
-            <h1 className="mt-1 text-2xl font-bold text-gray-900">
-              {quote.title as string}
-            </h1>
-          </div>
-          <div className="text-sm text-gray-500">
-            {new Date(quote.createdAt as string).toLocaleDateString("es-CL", {
-              year: "numeric",
-              month: "long",
-              day: "numeric",
-            })}
-          </div>
-        </div>
-
-        {(contactName || company) && (
-          <div className="mt-4 rounded-lg bg-gray-50 p-4">
-            <p className="text-xs font-medium uppercase tracking-wider text-gray-400">
-              Preparada para
-            </p>
-            {contactName && (
-              <p className="mt-1 text-lg font-semibold text-gray-900">
-                {contactName}
+    <div className="min-h-screen bg-zinc-50">
+      {/* Header bar */}
+      <div className="bg-slate-900">
+        <div className="mx-auto max-w-4xl px-4 py-8 sm:px-8">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <img
+                src="/logo/LX3_logotipo_dark-bg.svg"
+                alt="LX3"
+                width={96}
+                height={28}
+                className="h-7 w-auto"
+              />
+            </div>
+            <div className="text-right">
+              <p className="text-sm font-semibold text-blue-300">
+                {quote.quoteNumber as string}
               </p>
-            )}
-            {company?.name && (
-              <p className="text-sm text-gray-600">
-                {company.name as string}
-              </p>
-            )}
-          </div>
-        )}
-
-        {quote.description && (
-          <p className="mt-4 text-sm leading-relaxed text-gray-600">
-            {quote.description as string}
-          </p>
-        )}
-      </div>
-
-      {/* Items table */}
-      <div className="mb-8 overflow-hidden rounded-xl border border-gray-200">
-        <table className="w-full">
-          <thead>
-            <tr className="bg-gray-50">
-              <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-500">
-                Descripcion
-              </th>
-              <th className="px-4 py-3 text-right text-xs font-semibold uppercase tracking-wider text-gray-500">
-                Cant.
-              </th>
-              <th className="px-4 py-3 text-right text-xs font-semibold uppercase tracking-wider text-gray-500">
-                Precio
-              </th>
-              <th className="px-4 py-3 text-right text-xs font-semibold uppercase tracking-wider text-gray-500">
-                Total
-              </th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-gray-100">
-            {items.map((item, idx) => (
-              <tr key={idx}>
-                <td className="px-4 py-4">
-                  <p className="text-sm font-medium text-gray-900">
-                    {item.description as string}
-                  </p>
-                  {item.details && (
-                    <p className="mt-0.5 text-xs leading-relaxed text-gray-500">
-                      {item.details as string}
-                    </p>
-                  )}
-                </td>
-                <td className="px-4 py-4 text-right text-sm text-gray-700 tabular-nums">
-                  {item.quantity as number}
-                </td>
-                <td className="px-4 py-4 text-right text-sm text-gray-700 tabular-nums">
-                  {fmt(item.unitPrice as number)}
-                </td>
-                <td className="px-4 py-4 text-right text-sm font-medium text-gray-900 tabular-nums">
-                  {fmt(item.total as number)}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-
-        {/* Totals */}
-        <div className="border-t border-gray-200 bg-gray-50 px-4 py-4">
-          <div className="flex justify-end">
-            <div className="w-64 space-y-2">
-              <div className="flex justify-between text-sm text-gray-600">
-                <span>Subtotal</span>
-                <span className="tabular-nums">{fmt(quote.subtotal as number)}</span>
-              </div>
-              <div className="flex justify-between text-sm text-gray-600">
-                <span>IVA ({quote.taxRate as number ?? 19}%)</span>
-                <span className="tabular-nums">{fmt(quote.taxAmount as number)}</span>
-              </div>
-              <div className="border-t border-gray-300 pt-2">
-                <div className="flex justify-between">
-                  <span className="text-base font-bold text-gray-900">Total</span>
-                  <span className="text-xl font-bold text-blue-600 tabular-nums">
-                    {fmt(quote.total as number)}
-                  </span>
-                </div>
-              </div>
+              <p className="text-xs text-slate-400">{dateFormatted}</p>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Notes */}
-      {quote.notes && (
-        <div className="mb-6 rounded-xl border border-gray-200 p-5">
-          <h3 className="mb-2 text-sm font-semibold text-gray-700">Notas</h3>
-          <p className="whitespace-pre-line text-sm leading-relaxed text-gray-600">
-            {quote.notes as string}
-          </p>
+      {/* Main content */}
+      <div className="mx-auto max-w-4xl px-4 sm:px-8 -mt-1">
+        {/* Title card */}
+        <div className="rounded-xl bg-white shadow-sm border border-zinc-200 overflow-hidden">
+          {/* Blue accent line */}
+          <div className="h-1 bg-gradient-to-r from-blue-600 to-blue-400" />
+
+          <div className="p-6 sm:p-8">
+            <h1 className="text-2xl font-bold text-slate-900 sm:text-3xl">
+              {quote.title as string}
+            </h1>
+
+            {(contactName || company) && (
+              <div className="mt-5 flex items-start gap-4 rounded-lg bg-slate-50 border border-slate-100 p-4">
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-blue-100 text-blue-600 text-sm font-bold">
+                  {contactName
+                    ? contactName
+                        .split(" ")
+                        .map((w: string) => w[0])
+                        .join("")
+                        .slice(0, 2)
+                        .toUpperCase()
+                    : "CL"}
+                </div>
+                <div>
+                  <p className="text-xs font-medium uppercase tracking-wider text-slate-400">
+                    Preparada para
+                  </p>
+                  {contactName && (
+                    <p className="mt-0.5 text-base font-semibold text-slate-900">
+                      {contactName}
+                    </p>
+                  )}
+                  {company?.name && (
+                    <p className="text-sm text-slate-500">
+                      {company.name as string}
+                    </p>
+                  )}
+                </div>
+              </div>
+            )}
+
+            {quote.description && (
+              <p className="mt-5 text-sm leading-relaxed text-slate-600">
+                {quote.description as string}
+              </p>
+            )}
+          </div>
         </div>
-      )}
 
-      {/* Terms */}
-      {quote.terms && (
-        <div className="mb-8 rounded-xl border border-gray-200 p-5">
-          <h3 className="mb-2 text-sm font-semibold text-gray-700">
-            Terminos y condiciones
-          </h3>
-          <p className="whitespace-pre-line text-xs leading-relaxed text-gray-500">
-            {quote.terms as string}
-          </p>
+        {/* Items table */}
+        <div className="mt-6 rounded-xl bg-white shadow-sm border border-zinc-200 overflow-hidden">
+          <div className="px-6 pt-6 sm:px-8 sm:pt-8">
+            <h2 className="text-xs font-semibold uppercase tracking-wider text-slate-400">
+              Detalle de servicios
+            </h2>
+          </div>
+
+          <div className="mt-4 overflow-x-auto">
+            <table className="w-full">
+              <thead>
+                <tr className="border-y border-slate-100 bg-slate-50/50">
+                  <th className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-500 sm:px-8">
+                    Descripcion
+                  </th>
+                  <th className="px-4 py-3 text-right text-xs font-semibold uppercase tracking-wider text-slate-500">
+                    Cant.
+                  </th>
+                  <th className="px-4 py-3 text-right text-xs font-semibold uppercase tracking-wider text-slate-500">
+                    Precio unit.
+                  </th>
+                  <th className="px-6 py-3 text-right text-xs font-semibold uppercase tracking-wider text-slate-500 sm:px-8">
+                    Total
+                  </th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-slate-100">
+                {items.map((item: any, idx: number) => (
+                  <tr key={idx} className={idx % 2 === 1 ? "bg-slate-50/30" : ""}>
+                    <td className="px-6 py-4 sm:px-8">
+                      <p className="text-sm font-medium text-slate-900">
+                        {item.description as string}
+                      </p>
+                      {item.details && (
+                        <p className="mt-0.5 text-xs leading-relaxed text-slate-500">
+                          {item.details as string}
+                        </p>
+                      )}
+                    </td>
+                    <td className="px-4 py-4 text-right text-sm tabular-nums text-slate-700">
+                      {item.quantity as number}
+                    </td>
+                    <td className="px-4 py-4 text-right text-sm tabular-nums text-slate-700">
+                      {fmt(item.unitPrice as number)}
+                    </td>
+                    <td className="px-6 py-4 text-right text-sm font-semibold tabular-nums text-slate-900 sm:px-8">
+                      {fmt(item.total as number)}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          {/* Totals */}
+          <div className="border-t border-slate-200 bg-slate-50 px-6 py-5 sm:px-8">
+            <div className="flex justify-end">
+              <div className="w-72 space-y-2">
+                <div className="flex justify-between text-sm text-slate-600">
+                  <span>Subtotal</span>
+                  <span className="tabular-nums font-medium">
+                    {fmt(quote.subtotal as number)}
+                  </span>
+                </div>
+                {(quote.taxRate as number) > 0 && (
+                  <div className="flex justify-between text-sm text-slate-600">
+                    <span>IVA ({quote.taxRate as number}%)</span>
+                    <span className="tabular-nums font-medium">
+                      {fmt(quote.taxAmount as number)}
+                    </span>
+                  </div>
+                )}
+                <div className="border-t-2 border-slate-300 pt-3">
+                  <div className="flex justify-between items-baseline">
+                    <span className="text-base font-bold text-slate-900">
+                      Total
+                    </span>
+                    <span className="text-2xl font-bold tabular-nums text-blue-600">
+                      {fmt(quote.total as number)}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-      )}
 
-      {/* Actions */}
-      <QuoteActions
-        token={token}
-        status={status}
-        validUntil={quote.validUntil as string | null | undefined}
-      />
-
-      {/* Footer */}
-      <div className="mt-12 border-t border-gray-100 pt-6 text-center">
-        {quote.validUntil && status !== "ACCEPTED" && status !== "EXPIRED" && (
-          <p className="mb-3 text-xs text-gray-400">
-            Esta cotizacion es valida hasta el{" "}
-            {new Date(quote.validUntil as string).toLocaleDateString("es-CL", {
-              year: "numeric",
-              month: "long",
-              day: "numeric",
-            })}
-          </p>
+        {/* Notes & Terms */}
+        {(quote.notes || quote.terms) && (
+          <div className="mt-6 grid gap-6 sm:grid-cols-2">
+            {quote.notes && (
+              <div className="rounded-xl bg-white shadow-sm border border-zinc-200 p-6 sm:p-8">
+                <h3 className="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-3">
+                  Notas
+                </h3>
+                <p className="whitespace-pre-line text-sm leading-relaxed text-slate-600">
+                  {quote.notes as string}
+                </p>
+              </div>
+            )}
+            {quote.terms && (
+              <div className="rounded-xl bg-white shadow-sm border border-zinc-200 p-6 sm:p-8">
+                <h3 className="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-3">
+                  Terminos y condiciones
+                </h3>
+                <p className="whitespace-pre-line text-xs leading-relaxed text-slate-500">
+                  {quote.terms as string}
+                </p>
+              </div>
+            )}
+          </div>
         )}
-        <p className="text-xs text-gray-400">
-          LX3 Software Studio &mdash; Soluciones de software a medida con inteligencia artificial
-        </p>
+
+        {/* Actions */}
+        <div className="mt-8">
+          <QuoteActions
+            token={token}
+            status={status}
+            validUntil={quote.validUntil as string | null | undefined}
+          />
+        </div>
+
+        {/* Footer */}
+        <div className="mt-12 mb-8 border-t border-slate-200 pt-6 text-center">
+          {quote.validUntil && status !== "ACCEPTED" && status !== "EXPIRED" && (
+            <p className="mb-3 text-xs text-slate-400">
+              Esta cotizacion es valida hasta el{" "}
+              {new Date(quote.validUntil as string).toLocaleDateString("es-CL", {
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+              })}
+            </p>
+          )}
+          <div className="flex items-center justify-center gap-2">
+            <img
+              src="/logo/LX3_isotipo.svg"
+              alt="LX3"
+              width={20}
+              height={20}
+              className="h-5 w-5 opacity-40"
+            />
+            <p className="text-xs text-slate-400">
+              LX3 Software Studio &mdash; Software a medida con inteligencia artificial
+            </p>
+          </div>
+        </div>
       </div>
     </div>
   );

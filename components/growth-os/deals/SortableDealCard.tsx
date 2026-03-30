@@ -2,23 +2,10 @@
 
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import { DealCard } from "./DealCard";
-
-interface Deal {
-  id: string;
-  title: string;
-  value: number | null;
-  currency: string;
-  probability: number | null;
-  createdAt: string;
-  updatedAt: string;
-  stageId: string;
-  contact?: { firstName: string; lastName?: string } | null;
-  company?: { name: string } | null;
-}
+import { DealCard, type DealCardData } from "./DealCard";
 
 interface SortableDealCardProps {
-  deal: Deal;
+  deal: DealCardData;
 }
 
 export function SortableDealCard({ deal }: SortableDealCardProps) {

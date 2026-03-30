@@ -77,17 +77,17 @@ function NavLink({
         "group relative flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-all duration-150",
         collapsed && "justify-center px-0",
         active
-          ? "bg-blue-600/10 text-blue-400"
-          : "text-zinc-400 hover:bg-zinc-800 hover:text-zinc-200"
+          ? "bg-blue-600/10 text-blue-600 dark:text-blue-400"
+          : "text-zinc-500 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800 hover:text-zinc-800 dark:hover:text-zinc-200"
       )}
     >
       {active && (
         <span className="absolute left-0 top-1/2 -translate-y-1/2 h-5 w-0.5 rounded-r bg-blue-500" />
       )}
-      <item.icon className={cn("h-5 w-5 shrink-0", active && "text-blue-400")} />
+      <item.icon className={cn("h-5 w-5 shrink-0", active && "text-blue-600 dark:text-blue-400")} />
       {!collapsed && <span className="truncate">{item.label}</span>}
       {collapsed && (
-        <span className="pointer-events-none absolute left-full ml-2 rounded-md bg-zinc-800 px-2 py-1 text-xs font-medium text-zinc-200 opacity-0 shadow-lg transition-opacity group-hover:opacity-100 whitespace-nowrap z-50">
+        <span className="pointer-events-none absolute left-full ml-2 rounded-md bg-zinc-100 dark:bg-zinc-800 px-2 py-1 text-xs font-medium text-zinc-800 dark:text-zinc-200 opacity-0 shadow-lg transition-opacity group-hover:opacity-100 whitespace-nowrap z-50">
           {item.label}
         </span>
       )}
@@ -113,11 +113,11 @@ export function AdminSidebar({
     : "AD";
 
   return (
-    <div className="flex h-full flex-col bg-zinc-900 border-r border-zinc-800">
+    <div className="flex h-full flex-col bg-white dark:bg-zinc-900 border-r border-zinc-200 dark:border-zinc-800">
       {/* Header */}
       <div
         className={cn(
-          "flex h-16 items-center shrink-0 border-b border-zinc-800",
+          "flex h-16 items-center shrink-0 border-b border-zinc-200 dark:border-zinc-800",
           collapsed ? "justify-center px-2" : "justify-between px-4"
         )}
       >
@@ -131,20 +131,29 @@ export function AdminSidebar({
               className="h-7 w-7"
             />
           ) : (
-            <img
-              src="/logo/LX3_logotipo_dark-bg.svg"
-              alt="LX3"
-              width={96}
-              height={28}
-              className="h-7 w-auto"
-            />
+            <>
+              <img
+                src="/logo/LX3_logotipo_dark-bg.svg"
+                alt="LX3"
+                width={96}
+                height={28}
+                className="hidden dark:block h-7 w-auto"
+              />
+              <img
+                src="/logo/LX3_logotipo_light-bg.svg"
+                alt="LX3"
+                width={96}
+                height={28}
+                className="block dark:hidden h-7 w-auto"
+              />
+            </>
           )}
         </Link>
 
         {/* Close button on mobile */}
         <button
           onClick={onClose}
-          className="rounded-md p-1 text-zinc-500 hover:text-zinc-300 lg:hidden"
+          className="rounded-md p-1 text-zinc-400 dark:text-zinc-500 hover:text-zinc-700 dark:hover:text-zinc-300 lg:hidden"
         >
           <X className="h-5 w-5" />
         </button>
@@ -164,7 +173,7 @@ export function AdminSidebar({
       </nav>
 
       {/* Bottom section */}
-      <div className={cn("border-t border-zinc-800 py-3 space-y-1", collapsed ? "px-2" : "px-3")}>
+      <div className={cn("border-t border-zinc-200 dark:border-zinc-800 py-3 space-y-1", collapsed ? "px-2" : "px-3")}>
         {/* Theme toggle */}
         <div className={cn("flex", collapsed ? "justify-center" : "px-1 mb-1")}>
           <ThemeToggle collapsed={collapsed} />
@@ -188,17 +197,17 @@ export function AdminSidebar({
               {initials}
             </div>
             <div className="flex-1 min-w-0">
-              <p className="truncate text-sm font-medium text-zinc-300">
+              <p className="truncate text-sm font-medium text-zinc-700 dark:text-zinc-300">
                 {user.name ?? "Admin"}
               </p>
-              <p className="truncate text-xs text-zinc-500">
+              <p className="truncate text-xs text-zinc-400 dark:text-zinc-500">
                 {user.email}
               </p>
             </div>
             <button
               onClick={() => signOut({ callbackUrl: "/admin/login" })}
-              title="Cerrar sesión"
-              className="rounded-md p-1.5 text-zinc-500 hover:bg-zinc-800 hover:text-zinc-300 transition-colors"
+              title="Cerrar sesion"
+              className="rounded-md p-1.5 text-zinc-400 dark:text-zinc-500 hover:bg-zinc-100 dark:hover:bg-zinc-800 hover:text-zinc-700 dark:hover:text-zinc-300 transition-colors"
             >
               <LogOut className="h-4 w-4" />
             </button>
@@ -208,8 +217,8 @@ export function AdminSidebar({
         {collapsed && (
           <button
             onClick={() => signOut({ callbackUrl: "/admin/login" })}
-            title="Cerrar sesión"
-            className="flex w-full items-center justify-center rounded-lg py-2.5 text-zinc-500 hover:bg-zinc-800 hover:text-zinc-300 transition-colors"
+            title="Cerrar sesion"
+            className="flex w-full items-center justify-center rounded-lg py-2.5 text-zinc-400 dark:text-zinc-500 hover:bg-zinc-100 dark:hover:bg-zinc-800 hover:text-zinc-700 dark:hover:text-zinc-300 transition-colors"
           >
             <LogOut className="h-5 w-5" />
           </button>
@@ -218,7 +227,7 @@ export function AdminSidebar({
         {/* Collapse toggle (desktop only) */}
         <button
           onClick={onToggleCollapse}
-          className="hidden lg:flex w-full items-center justify-center gap-2 rounded-lg py-2 text-zinc-500 hover:bg-zinc-800 hover:text-zinc-300 transition-colors mt-1"
+          className="hidden lg:flex w-full items-center justify-center gap-2 rounded-lg py-2 text-zinc-400 dark:text-zinc-500 hover:bg-zinc-100 dark:hover:bg-zinc-800 hover:text-zinc-700 dark:hover:text-zinc-300 transition-colors mt-1"
           title={collapsed ? "Expandir sidebar" : "Contraer sidebar"}
         >
           {collapsed ? (

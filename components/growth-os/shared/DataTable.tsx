@@ -25,26 +25,26 @@ export function DataTable<T extends Record<string, unknown>>({
 }: DataTableProps<T>) {
   if (loading) {
     return (
-      <div className="overflow-hidden rounded-lg border border-gray-200 bg-white">
-        <table className="min-w-full divide-y divide-gray-200">
-          <thead className="bg-gray-50">
+      <div className="overflow-hidden rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900">
+        <table className="min-w-full divide-y divide-zinc-200 dark:divide-zinc-800">
+          <thead className="bg-zinc-50 dark:bg-zinc-800/50">
             <tr>
               {columns.map((col) => (
                 <th
                   key={col.key}
-                  className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500"
+                  className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-zinc-500 dark:text-zinc-400"
                 >
                   {col.label}
                 </th>
               ))}
             </tr>
           </thead>
-          <tbody className="divide-y divide-gray-200">
+          <tbody className="divide-y divide-zinc-200 dark:divide-zinc-800">
             {Array.from({ length: 5 }).map((_, i) => (
               <tr key={i}>
                 {columns.map((col) => (
                   <td key={col.key} className="px-4 py-3">
-                    <div className="h-4 w-3/4 animate-pulse rounded bg-gray-200" />
+                    <div className="h-4 w-3/4 animate-pulse rounded bg-zinc-200 dark:bg-zinc-700" />
                   </td>
                 ))}
               </tr>
@@ -57,41 +57,41 @@ export function DataTable<T extends Record<string, unknown>>({
 
   if (data.length === 0) {
     return (
-      <div className="flex items-center justify-center rounded-lg border border-gray-200 bg-white py-12">
-        <p className="text-sm text-gray-500">{emptyMessage}</p>
+      <div className="flex items-center justify-center rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 py-12">
+        <p className="text-sm text-zinc-500 dark:text-zinc-400">{emptyMessage}</p>
       </div>
     );
   }
 
   return (
-    <div className="overflow-hidden rounded-lg border border-gray-200 bg-white">
+    <div className="overflow-hidden rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900">
       <div className="overflow-x-auto">
-        <table className="min-w-full divide-y divide-gray-200">
-          <thead className="bg-gray-50">
+        <table className="min-w-full divide-y divide-zinc-200 dark:divide-zinc-800">
+          <thead className="bg-zinc-50 dark:bg-zinc-800/50">
             <tr>
               {columns.map((col) => (
                 <th
                   key={col.key}
-                  className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500"
+                  className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-zinc-500 dark:text-zinc-400"
                 >
                   {col.label}
                 </th>
               ))}
             </tr>
           </thead>
-          <tbody className="divide-y divide-gray-200">
+          <tbody className="divide-y divide-zinc-200 dark:divide-zinc-800">
             {data.map((row, i) => (
               <tr
                 key={i}
                 onClick={() => onRowClick?.(row)}
-                className={`transition-colors hover:bg-gray-50 ${
+                className={`transition-colors hover:bg-zinc-50 dark:hover:bg-zinc-800/50 ${
                   onRowClick ? "cursor-pointer" : ""
                 }`}
               >
                 {columns.map((col) => (
                   <td
                     key={col.key}
-                    className="whitespace-nowrap px-4 py-3 text-sm text-gray-700"
+                    className="whitespace-nowrap px-4 py-3 text-sm text-zinc-700 dark:text-zinc-300"
                   >
                     {col.render
                       ? col.render(row)

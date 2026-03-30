@@ -52,7 +52,7 @@ export function AdminShell({
 
   return (
     <SidebarContext.Provider value={{ collapsed, toggleCollapsed }}>
-      <div className="flex min-h-[100dvh] bg-zinc-50 dark:bg-zinc-950">
+      <div className="flex min-h-[100dvh] bg-zinc-50 dark:bg-[var(--bg-deep)]">
         {/* Desktop sidebar spacer */}
         <div
           className="hidden lg:block shrink-0 transition-[width] duration-300 ease-in-out"

@@ -5,6 +5,14 @@ import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
 import { toast } from "sonner";
 import { createContact } from "@/lib/growth-os/actions/contacts";
+import {
+  inputClass,
+  labelClass,
+  errorClass,
+  errorBannerClass,
+  cancelBtnClass,
+  submitBtnClass,
+} from "@/lib/utils/form-styles";
 
 interface Company {
   id: string;
@@ -90,17 +98,10 @@ export function ContactForm({ companies }: ContactFormProps) {
     });
   }
 
-  const inputClass =
-    "w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm text-gray-700 placeholder-gray-400 transition-colors focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 disabled:opacity-50";
-  const labelClass = "block text-sm font-medium text-gray-700 mb-1";
-  const errorClass = "mt-1 text-xs text-red-500";
-
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
       {serverError && (
-        <div className="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
-          {serverError}
-        </div>
+        <div className={errorBannerClass}>{serverError}</div>
       )}
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
@@ -210,7 +211,7 @@ export function ContactForm({ companies }: ContactFormProps) {
           className={inputClass}
           disabled={isPending}
         />
-        <p className="mt-1 text-xs text-gray-400">
+        <p className="mt-1 text-xs text-zinc-400 dark:text-zinc-500">
           Separa los tags con comas
         </p>
       </div>
@@ -230,7 +231,7 @@ export function ContactForm({ companies }: ContactFormProps) {
         <button
           type="button"
           onClick={() => router.back()}
-          className="rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50"
+          className={cancelBtnClass}
           disabled={isPending}
         >
           Cancelar
@@ -238,7 +239,7 @@ export function ContactForm({ companies }: ContactFormProps) {
         <button
           type="submit"
           disabled={isPending}
-          className="rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-blue-700 disabled:opacity-50"
+          className={submitBtnClass}
         >
           {isPending ? "Guardando..." : "Crear Contacto"}
         </button>

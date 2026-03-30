@@ -1,9 +1,9 @@
 // @ts-nocheck
 import Link from "next/link";
-import { redirect } from "next/navigation";
 import { Building2, Plus, Search } from "lucide-react";
 import { getCompanies } from "@/lib/growth-os/actions/companies";
 import { EmptyState } from "@/components/growth-os/shared/EmptyState";
+import { Pagination } from "@/components/growth-os/shared/Pagination";
 
 export default async function CompaniesPage({
   searchParams,
@@ -142,31 +142,15 @@ export default async function CompaniesPage({
       )}
 
       {/* Pagination */}
-      {totalPages > 1 && (
-        <div className="flex items-center justify-between pt-2">
-          <p className="text-sm text-zinc-400">
-            Pagina {page} de {totalPages}
-          </p>
-          <div className="flex gap-2">
-            {page > 1 && (
-              <Link
-                href={`/admin/companies?page=${page - 1}${search ? `&search=${search}` : ""}`}
-                className="px-3 py-1.5 text-sm rounded-md border border-zinc-700 hover:bg-zinc-800 transition-colors"
-              >
-                Anterior
-              </Link>
-            )}
-            {page < totalPages && (
-              <Link
-                href={`/admin/companies?page=${page + 1}${search ? `&search=${search}` : ""}`}
-                className="px-3 py-1.5 text-sm rounded-md border border-zinc-700 hover:bg-zinc-800 transition-colors"
-              >
-                Siguiente
-              </Link>
-            )}
-          </div>
-        </div>
-      )}
+      <Pagination
+        page={page}
+        totalPages={totalPages}
+        total={total}
+        pageSize={pageSize}
+        basePath="/admin/companies"
+        extraParams={search ? { search } : {}}
+        itemLabel="empresas"
+      />
     </div>
   );
 }

@@ -11,6 +11,7 @@ import {
   FileText,
   MessageSquare,
   Target,
+  Pencil,
 } from "lucide-react";
 import { getDeal } from "@/lib/growth-os/actions/deals";
 import { Badge } from "@/components/growth-os/shared/Badge";
@@ -116,9 +117,18 @@ export default async function DealDetailPage({ params }: DealDetailPageProps) {
       <div className="bg-white dark:bg-zinc-900 rounded-xl shadow-sm border border-zinc-100 dark:border-zinc-800 p-6">
         <div className="flex items-start justify-between gap-4">
           <div>
-            <h1 className="text-2xl font-bold text-zinc-900 dark:text-zinc-100">
-              {deal.title}
-            </h1>
+            <div className="flex items-center gap-3">
+              <h1 className="text-2xl font-bold text-zinc-900 dark:text-zinc-100">
+                {deal.title}
+              </h1>
+              <Link
+                href={`/admin/deals/${deal.id}/edit`}
+                className="inline-flex items-center gap-1.5 rounded-lg border border-zinc-200 dark:border-zinc-700 px-2.5 py-1.5 text-xs font-medium text-zinc-600 dark:text-zinc-400 hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-colors"
+              >
+                <Pencil className="h-3 w-3" />
+                Editar
+              </Link>
+            </div>
             <div className="flex flex-wrap items-center gap-3 mt-2">
               <Badge
                 variant={stageVariant(deal.stage.color)}

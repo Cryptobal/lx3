@@ -5,29 +5,52 @@ import { useRouter } from "next/navigation";
 import { ArrowLeft, Loader2 } from "lucide-react";
 import Link from "next/link";
 import { toast } from "sonner";
-import { createDeal } from "@/lib/growth-os/actions/deals";
+import { createDeal, updateDeal } from "@/lib/growth-os/actions/deals";
+import { Combobox } from "@/components/growth-os/shared/Combobox";
+import {
+  inputClass,
+  labelClass,
+  cardClass,
+  cancelBtnClass,
+  submitBtnClass,
+} from "@/lib/utils/form-styles";
 
 interface DealFormProps {
   stages: { id: string; name: string }[];
   contacts: { id: string; name: string }[];
   companies: { id: string; name: string }[];
   users: { id: string; name: string }[];
+  initialData?: {
+    id: string;
+    title: string;
+    value: string;
+    currency: string;
+    probability: string;
+    expectedClose: string;
+    stageId: string;
+    contactId: string;
+    companyId: string;
+    assignedToId: string;
+    notes: string;
+  };
 }
 
-export function DealForm({ stages, contacts, companies, users }: DealFormProps) {
+export function DealForm({ stages, contacts, companies, users, initialData }: DealFormProps) {
   const router = useRouter();
   const [submitting, setSubmitting] = useState(false);
+  const isEdit = !!initialData;
+
   const [form, setForm] = useState({
-    title: "",
-    value: "",
-    currency: "CLP",
-    probability: "",
-    expectedClose: "",
-    stageId: stages[0]?.id ?? "",
-    contactId: "",
-    companyId: "",
-    assignedToId: "",
-    notes: "",
+    title: initialData?.title ?? "",
+    value: initialData?.value ?? "",
+    currency: initialData?.currency ?? "CLP",
+    probability: initialData?.probability ?? "",
+    expectedClose: initialData?.expectedClose ?? "",
+    stageId: initialData?.stageId ?? stages[0]?.id ?? "",
+    contactId: initialData?.contactId ?? "",
+    companyId: initialData?.companyId ?? "",
+    assignedToId: initialData?.assignedToId ?? "",
+    notes: initialData?.notes ?? "",
   });
 
   const handleChange = (
@@ -59,7 +82,7 @@ export function DealForm({ stages, contacts, companies, users }: DealFormProps) 
         ? parseInt(form.probability, 10)
         : undefined;
 
-      await createDeal({
+      const payload = {
         title: form.title.trim(),
         value: value && !isNaN(value) ? value : undefined,
         currency: form.currency,
@@ -73,22 +96,26 @@ export function DealForm({ stages, contacts, companies, users }: DealFormProps) 
         companyId: form.companyId || undefined,
         assignedToId: form.assignedToId || undefined,
         notes: form.notes.trim() || undefined,
-      });
+      };
 
-      toast.success("Deal creado exitosamente");
+      if (isEdit) {
+        await updateDeal(initialData.id, payload);
+        toast.success("Deal actualizado exitosamente");
+      } else {
+        await createDeal(payload);
+        toast.success("Deal creado exitosamente");
+      }
       router.push("/admin/deals");
     } catch {
-      toast.error("Error al crear el deal");
+      toast.error(isEdit ? "Error al actualizar el deal" : "Error al crear el deal");
     } finally {
       setSubmitting(false);
     }
   };
 
-  const inputClass =
-    "w-full px-3 py-2 text-sm border border-zinc-200 dark:border-zinc-700 rounded-lg bg-white dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-900/10 dark:focus:ring-zinc-100/10";
-
-  const labelClass =
-    "block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-1";
+  const contactOptions = contacts.map((c) => ({ value: c.id, label: c.name }));
+  const companyOptions = companies.map((c) => ({ value: c.id, label: c.name }));
+  const userOptions = users.map((u) => ({ value: u.id, label: u.name }));
 
   return (
     <div>
@@ -100,10 +127,7 @@ export function DealForm({ stages, contacts, companies, users }: DealFormProps) 
         Volver al pipeline
       </Link>
 
-      <form
-        onSubmit={handleSubmit}
-        className="bg-white dark:bg-zinc-900 rounded-xl shadow-sm border border-zinc-100 dark:border-zinc-800 p-6 space-y-5"
-      >
+      <form onSubmit={handleSubmit} className={cardClass}>
         {/* Title */}
         <div>
           <label htmlFor="title" className={labelClass}>
@@ -214,64 +238,37 @@ export function DealForm({ stages, contacts, companies, users }: DealFormProps) 
         {/* Contact & Company */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
-            <label htmlFor="contactId" className={labelClass}>
-              Contacto
-            </label>
-            <select
-              id="contactId"
-              name="contactId"
+            <label className={labelClass}>Contacto</label>
+            <Combobox
+              options={contactOptions}
               value={form.contactId}
-              onChange={handleChange}
-              className={inputClass}
-            >
-              <option value="">Sin contacto</option>
-              {contacts.map((c) => (
-                <option key={c.id} value={c.id}>
-                  {c.name}
-                </option>
-              ))}
-            </select>
+              onChange={(val) => setForm((prev) => ({ ...prev, contactId: val }))}
+              placeholder="Buscar contacto..."
+              emptyLabel="Sin contacto"
+            />
           </div>
           <div>
-            <label htmlFor="companyId" className={labelClass}>
-              Empresa
-            </label>
-            <select
-              id="companyId"
-              name="companyId"
+            <label className={labelClass}>Empresa</label>
+            <Combobox
+              options={companyOptions}
               value={form.companyId}
-              onChange={handleChange}
-              className={inputClass}
-            >
-              <option value="">Sin empresa</option>
-              {companies.map((c) => (
-                <option key={c.id} value={c.id}>
-                  {c.name}
-                </option>
-              ))}
-            </select>
+              onChange={(val) => setForm((prev) => ({ ...prev, companyId: val }))}
+              placeholder="Buscar empresa..."
+              emptyLabel="Sin empresa"
+            />
           </div>
         </div>
 
         {/* Assigned to */}
         <div>
-          <label htmlFor="assignedToId" className={labelClass}>
-            Asignado a
-          </label>
-          <select
-            id="assignedToId"
-            name="assignedToId"
+          <label className={labelClass}>Asignado a</label>
+          <Combobox
+            options={userOptions}
             value={form.assignedToId}
-            onChange={handleChange}
-            className={inputClass}
-          >
-            <option value="">Sin asignar</option>
-            {users.map((u) => (
-              <option key={u.id} value={u.id}>
-                {u.name}
-              </option>
-            ))}
-          </select>
+            onChange={(val) => setForm((prev) => ({ ...prev, assignedToId: val }))}
+            placeholder="Buscar usuario..."
+            emptyLabel="Sin asignar"
+          />
         </div>
 
         {/* Notes */}
@@ -292,19 +289,18 @@ export function DealForm({ stages, contacts, companies, users }: DealFormProps) 
 
         {/* Actions */}
         <div className="flex items-center justify-end gap-3 pt-2">
-          <Link
-            href="/admin/deals"
-            className="px-4 py-2 text-sm font-medium rounded-lg text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
-          >
+          <Link href="/admin/deals" className={cancelBtnClass}>
             Cancelar
           </Link>
           <button
             type="submit"
             disabled={submitting}
-            className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg bg-zinc-900 text-white hover:bg-zinc-800 dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-zinc-200 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+            className={submitBtnClass}
           >
             {submitting && <Loader2 className="w-4 h-4 animate-spin" />}
-            {submitting ? "Creando..." : "Crear deal"}
+            {submitting
+              ? isEdit ? "Actualizando..." : "Creando..."
+              : isEdit ? "Guardar cambios" : "Crear deal"}
           </button>
         </div>
       </form>

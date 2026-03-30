@@ -4,6 +4,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useState, useTransition } from "react";
 import { Search, Filter } from "lucide-react";
 import { Badge } from "@/components/growth-os/shared/Badge";
+import { Pagination } from "@/components/growth-os/shared/Pagination";
 import { RelativeTime } from "@/components/growth-os/shared/RelativeTime";
 import { getSourceLabel } from "@/lib/growth-os/utils/format";
 
@@ -212,28 +213,17 @@ export function ContactsTable({
       </div>
 
       {/* Pagination */}
-      {totalPages > 1 && (
-        <div className="mt-4 flex items-center justify-between">
-          <p className="text-sm text-zinc-500">
-            {total} contacto{total !== 1 ? "s" : ""} en total
-          </p>
-          <div className="flex gap-1">
-            {Array.from({ length: totalPages }, (_, i) => i + 1).map((p) => (
-              <button
-                key={p}
-                onClick={() => updateParams({ page: String(p) })}
-                className={`rounded-md px-3 py-1.5 text-sm font-medium transition-colors ${
-                  p === page
-                    ? "bg-blue-600 text-white"
-                    : "text-zinc-400 hover:bg-zinc-800 hover:text-zinc-200"
-                }`}
-              >
-                {p}
-              </button>
-            ))}
-          </div>
-        </div>
-      )}
+      <Pagination
+        page={page}
+        totalPages={totalPages}
+        total={total}
+        pageSize={pageSize}
+        basePath="/admin/contacts"
+        extraParams={Object.fromEntries(
+          [...searchParams.entries()].filter(([k]) => k !== "page")
+        )}
+        itemLabel="contactos"
+      />
     </div>
   );
 }

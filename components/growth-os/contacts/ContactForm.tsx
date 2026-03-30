@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
 import { toast } from "sonner";
 import { createContact } from "@/lib/growth-os/actions/contacts";
+import { Combobox } from "@/components/growth-os/shared/Combobox";
 import {
   inputClass,
   labelClass,
@@ -53,6 +54,8 @@ export function ContactForm({ companies }: ContactFormProps) {
   const {
     register,
     handleSubmit,
+    setValue,
+    watch,
     formState: { errors },
   } = useForm<FormValues>({
     defaultValues: {
@@ -67,6 +70,8 @@ export function ContactForm({ companies }: ContactFormProps) {
       notes: "",
     },
   });
+
+  const companyId = watch("companyId");
 
   function onSubmit(data: FormValues) {
     setServerError("");
@@ -97,6 +102,11 @@ export function ContactForm({ companies }: ContactFormProps) {
       }
     });
   }
+
+  const companyOptions = companies.map((c) => ({
+    value: c.id,
+    label: c.name,
+  }));
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
@@ -174,18 +184,14 @@ export function ContactForm({ companies }: ContactFormProps) {
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <div>
           <label className={labelClass}>Empresa</label>
-          <select
-            {...register("companyId")}
-            className={inputClass}
+          <Combobox
+            options={companyOptions}
+            value={companyId}
+            onChange={(val) => setValue("companyId", val)}
+            placeholder="Buscar empresa..."
+            emptyLabel="Sin empresa"
             disabled={isPending}
-          >
-            <option value="">Sin empresa</option>
-            {companies.map((c) => (
-              <option key={c.id} value={c.id}>
-                {c.name}
-              </option>
-            ))}
-          </select>
+          />
         </div>
         <div>
           <label className={labelClass}>Fuente</label>

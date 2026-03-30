@@ -3,6 +3,7 @@ import { Mail } from "lucide-react";
 import { getEmailLogs } from "@/lib/growth-os/actions/emails";
 import { Badge } from "@/components/growth-os/shared/Badge";
 import { EmptyState } from "@/components/growth-os/shared/EmptyState";
+import { Pagination } from "@/components/growth-os/shared/Pagination";
 import { formatDate, formatRelativeTime } from "@/lib/growth-os/utils/format";
 import type { EmailStatus } from "@/lib/growth-os/types";
 
@@ -143,33 +144,22 @@ export default async function EmailsPage({ searchParams }: EmailsPageProps) {
         )}
 
         {/* Pagination */}
-        {result.totalPages > 1 && (
-          <div className="flex items-center justify-between px-4 py-3 border-t border-zinc-800">
-            <p className="text-sm text-zinc-400">
-              Mostrando {(result.page - 1) * result.pageSize + 1} a{" "}
-              {Math.min(result.page * result.pageSize, result.total)} de{" "}
-              {result.total} emails
-            </p>
-            <div className="flex items-center gap-2">
-              {result.page > 1 && (
-                <a
-                  href={`/admin/emails?page=${result.page - 1}${search ? `&search=${search}` : ""}${status ? `&status=${status}` : ""}`}
-                  className="px-3 py-1.5 text-sm font-medium rounded-md border border-zinc-700 text-zinc-300 hover:bg-zinc-800 transition-colors"
-                >
-                  Anterior
-                </a>
-              )}
-              {result.page < result.totalPages && (
-                <a
-                  href={`/admin/emails?page=${result.page + 1}${search ? `&search=${search}` : ""}${status ? `&status=${status}` : ""}`}
-                  className="px-3 py-1.5 text-sm font-medium rounded-md border border-zinc-700 text-zinc-300 hover:bg-zinc-800 transition-colors"
-                >
-                  Siguiente
-                </a>
-              )}
-            </div>
-          </div>
-        )}
+        <div className="px-4">
+          <Pagination
+            page={result.page}
+            totalPages={result.totalPages}
+            total={result.total}
+            pageSize={result.pageSize}
+            basePath="/admin/emails"
+            extraParams={Object.fromEntries(
+              [
+                search && ["search", search],
+                status && ["status", status],
+              ].filter(Boolean) as [string, string][]
+            )}
+            itemLabel="emails"
+          />
+        </div>
       </div>
     </div>
   );

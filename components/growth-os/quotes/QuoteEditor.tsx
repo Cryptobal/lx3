@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { Plus, Trash2, Save, Send } from "lucide-react";
 import { createQuote, updateQuote } from "@/lib/growth-os/actions/quotes";
 import { toast } from "sonner";
+import { Combobox } from "@/components/growth-os/shared/Combobox";
 import {
   inputClass,
   labelClass,
@@ -197,33 +198,30 @@ export function QuoteEditor({ initialData, contacts, deals }: QuoteEditorProps) 
           </div>
           <div>
             <label className={labelClass}>Contacto</label>
-            <select
+            <Combobox
+              options={contacts.map((c) => ({
+                value: c.id,
+                label: `${c.firstName} ${c.lastName}`.trim(),
+                sublabel: c.email,
+              }))}
               value={contactId}
-              onChange={(e) => setContactId(e.target.value)}
-              className={inputClass}
-            >
-              <option value="">Seleccionar contacto...</option>
-              {contacts.map((c) => (
-                <option key={c.id} value={c.id}>
-                  {c.firstName} {c.lastName} — {c.email}
-                </option>
-              ))}
-            </select>
+              onChange={setContactId}
+              placeholder="Buscar contacto..."
+              emptyLabel="Sin contacto"
+            />
           </div>
           <div>
             <label className={labelClass}>Deal (opcional)</label>
-            <select
+            <Combobox
+              options={deals.map((d) => ({
+                value: d.id,
+                label: d.title,
+              }))}
               value={dealId}
-              onChange={(e) => setDealId(e.target.value)}
-              className={inputClass}
-            >
-              <option value="">Sin deal asociado</option>
-              {deals.map((d) => (
-                <option key={d.id} value={d.id}>
-                  {d.title}
-                </option>
-              ))}
-            </select>
+              onChange={setDealId}
+              placeholder="Buscar deal..."
+              emptyLabel="Sin deal asociado"
+            />
           </div>
           <div className="sm:col-span-2">
             <label className={labelClass}>Descripcion</label>

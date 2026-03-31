@@ -37,8 +37,8 @@ Estos son los rangos actualizados del mercado chileno. No son inventados — est
 | Tipo de sitio | Rango mercado | Rango LX3 | Tecnología típica | Plazo |
 | --- | --- | --- | --- | --- |
 | Landing page (1 página) | $150.000 - $500.000 | Desde $490.000 | WordPress / Next.js | 1-2 semanas |
-| Web corporativa (5-8 páginas) | $500.000 - $2.000.000 | Desde $990.000 | WordPress / Next.js | 2-4 semanas |
-| Web a medida (diseño + funcionalidades) | $1.500.000 - $5.000.000 | Desde $2.490.000 | Next.js + React | 4-8 semanas |
+| Web corporativa (5-8 páginas) | $500.000 - $2.000.000 | Desde $1.490.000 | WordPress / Next.js | 2-4 semanas |
+| Web a medida (diseño + funcionalidades) | $1.500.000 - $5.000.000 | Desde $2.500.000 | Next.js + React | 4-8 semanas |
 | Tienda online (e-commerce) | $600.000 - $3.000.000 | Consultar | WooCommerce / Shopify | 3-6 semanas |
 
 **¿Por qué los rangos de LX3 son más altos que el piso del mercado?** Porque no usamos plantillas WordPress con plugins genéricos. Cada sitio se construye con Next.js, la misma tecnología que usan Hulu, TikTok y Nike — lo que garantiza velocidad de carga sub-segundo, SEO técnico nativo y cero dependencia de plugins que se rompen con cada actualización.
@@ -176,10 +176,10 @@ No necesitas dar tu teléfono. No te vamos a llamar 5 veces. Solo información t
 ### Landing Pro — desde $490.000 CLP
 Para empresas que necesitan una página profesional rápido. Incluye diseño responsive, SEO básico, formulario de contacto, Google Analytics y hosting del primer año. Ideal para validar una idea o tener presencia web profesional.
 
-### Web Corporativa — desde $990.000 CLP
+### Web Corporativa — desde $1.490.000 CLP
 Para empresas establecidas que necesitan múltiples páginas, blog integrado, formularios inteligentes y SEO on-page completo. Incluye todo lo de Landing Pro más arquitectura de contenidos y optimización de conversión.
 
-### Web a Medida — desde $2.490.000 CLP
+### Web a Medida — desde $2.500.000 CLP
 Para empresas que necesitan funcionalidades específicas: cotizador online, área de clientes, integraciones con sistemas externos, multi-idioma o lógica de negocio personalizada. Diseño 100% custom y desarrollo con Next.js + React.
 
 ### Planes mensuales opcionales
@@ -211,7 +211,7 @@ Somos más caros que el WordPress más barato. También somos más rápidos (vel
 
 ## Conclusión: el precio importa menos que el resultado
 
-Una página web de $200.000 que no aparece en Google y no genera ni una cotización al mes cuesta infinitamente más que una de $990.000 que trae 10 leads mensuales. El verdadero costo de un sitio web no es lo que pagas al inicio — es lo que pierdes cada mes si el sitio no trabaja para ti.
+Una página web de $200.000 que no aparece en Google y no genera ni una cotización al mes cuesta infinitamente más que una de $1.490.000 que trae 10 leads mensuales. El verdadero costo de un sitio web no es lo que pagas al inicio — es lo que pierdes cada mes si el sitio no trabaja para ti.
 
 Si quieres saber exactamente cuánto costaría tu proyecto, usa nuestro cotizador. Si prefieres conversar primero, estamos en WhatsApp.
 

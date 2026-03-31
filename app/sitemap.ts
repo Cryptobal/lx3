@@ -1,5 +1,8 @@
 import type { MetadataRoute } from "next";
 import { articles } from "@/content/blog";
+import { SERVICE_PAGES, INDUSTRY_PAGES, PRICE_PAGES } from "@/data/keywords";
+import { CITIES, GEO_SERVICES } from "@/data/cities";
+import { BLOG_POSTS } from "@/data/blog-posts";
 
 const BASE_URL = "https://www.lx3.ai";
 
@@ -19,9 +22,11 @@ const staticRoutes: { es: string; en: string }[] = [
 ];
 
 export default function sitemap(): MetadataRoute.Sitemap {
+  const now = new Date();
+
   const staticPages: MetadataRoute.Sitemap = staticRoutes.map(({ es, en }) => ({
     url: `${BASE_URL}${es}`,
-    lastModified: new Date(),
+    lastModified: now,
     changeFrequency: "monthly" as const,
     priority: es === "/es" ? 1 : es.includes("/servicios") || es.includes("/casos") ? 0.8 : 0.7,
     alternates: {
@@ -35,7 +40,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   const blogPosts: MetadataRoute.Sitemap = articles.map((article) => ({
     url: `${BASE_URL}/es/blog/${article.slug}`,
-    lastModified: new Date(),
+    lastModified: now,
     changeFrequency: "monthly" as const,
     priority: 0.6,
     alternates: {
@@ -47,5 +52,55 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
   }));
 
-  return [...staticPages, ...blogPosts];
+  // SEO programmatic service pages
+  const serviceRoutes: MetadataRoute.Sitemap = SERVICE_PAGES.map((s) => ({
+    url: `${BASE_URL}/es/servicios/${s.slug}`,
+    lastModified: now,
+    changeFrequency: "monthly" as const,
+    priority: 0.9,
+  }));
+
+  // SEO industry/solution pages
+  const industryRoutes: MetadataRoute.Sitemap = INDUSTRY_PAGES.map((i) => ({
+    url: `${BASE_URL}/es/soluciones/${i.slug}`,
+    lastModified: now,
+    changeFrequency: "monthly" as const,
+    priority: 0.8,
+  }));
+
+  // SEO price pages
+  const priceRoutes: MetadataRoute.Sitemap = PRICE_PAGES.map((p) => ({
+    url: `${BASE_URL}/es/precio/${p.slug}`,
+    lastModified: now,
+    changeFrequency: "monthly" as const,
+    priority: 0.85,
+  }));
+
+  // Geo service pages (city × service combinations)
+  const geoRoutes: MetadataRoute.Sitemap = GEO_SERVICES.flatMap((servicio) =>
+    CITIES.map((city) => ({
+      url: `${BASE_URL}/es/${servicio}/${city.slug}`,
+      lastModified: now,
+      changeFrequency: "monthly" as const,
+      priority: 0.75,
+    }))
+  );
+
+  // SEO programmatic blog posts
+  const seoBlogRoutes: MetadataRoute.Sitemap = BLOG_POSTS.map((p) => ({
+    url: `${BASE_URL}/es/seo-blog/${p.slug}`,
+    lastModified: new Date(p.updatedAt),
+    changeFrequency: "monthly" as const,
+    priority: 0.7,
+  }));
+
+  return [
+    ...staticPages,
+    ...blogPosts,
+    ...serviceRoutes,
+    ...industryRoutes,
+    ...priceRoutes,
+    ...geoRoutes,
+    ...seoBlogRoutes,
+  ];
 }

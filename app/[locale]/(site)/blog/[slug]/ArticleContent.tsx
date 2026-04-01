@@ -124,7 +124,9 @@ export function ArticleContent({
 
           {/* Article header */}
           <AnimateOnScroll delay={0.05}>
-            <header className="mb-12">
+            <div className="relative overflow-hidden rounded-2xl mb-2">
+              <div className="absolute inset-0 mesh-gradient opacity-40" aria-hidden="true" />
+              <header className="relative z-10 mb-12 px-6 pt-8 pb-0">
               {/* Category tag */}
               <span
                 className={`inline-block rounded-full border px-3 py-1 font-mono text-xs uppercase tracking-wider ${getCategoryClasses(article.category)}`}
@@ -154,6 +156,7 @@ export function ArticleContent({
               {/* Divider */}
               <div className="mt-8 border-t border-[var(--border-subtle)]" />
             </header>
+            </div>
           </AnimateOnScroll>
 
           {/* Hero image */}
@@ -240,28 +243,31 @@ export function ArticleContent({
 
           {/* CTA */}
           <AnimateOnScroll>
-            <div className="mt-16 rounded-2xl border border-[var(--border-subtle)] bg-[var(--bg-elevated)] p-8 text-center md:p-12">
-              <h3 className="font-display text-2xl font-bold text-[var(--text-primary)] md:text-3xl">
-                {lang === "es"
-                  ? "¿Quieres hablar sobre esto?"
-                  : "Want to discuss this?"}
-              </h3>
-              <p className="mx-auto mt-3 max-w-md text-[var(--text-secondary)]">
-                {lang === "es"
-                  ? "Nuestro equipo puede ayudarte a evaluar cómo estos conceptos aplican a tu operación."
-                  : "Our team can help you evaluate how these concepts apply to your operation."}
-              </p>
-              <div className="mt-6 flex flex-col items-center justify-center gap-4 sm:flex-row">
-                <CTAButton href="/contacto" variant="primary" size="lg">
+            <div className="relative mt-16 overflow-hidden rounded-2xl border border-[var(--coral)]/20 bg-[var(--bg-elevated)] p-8 text-center md:p-12">
+              <div className="pointer-events-none absolute inset-0 mesh-gradient opacity-20" aria-hidden="true" />
+              <div className="relative z-10">
+                <h3 className="font-display text-2xl font-bold text-[var(--text-primary)] md:text-3xl">
                   {lang === "es"
-                    ? "Conversemos sobre tu proyecto"
-                    : "Schedule a conversation"}
-                </CTAButton>
-                <CTAButton href="/servicios" variant="secondary" size="lg">
+                    ? "¿Quieres hablar sobre esto?"
+                    : "Want to discuss this?"}
+                </h3>
+                <p className="mx-auto mt-3 max-w-md text-[var(--text-secondary)]">
                   {lang === "es"
-                    ? "Ver nuestros servicios"
-                    : "View our services"}
-                </CTAButton>
+                    ? "Nuestro equipo puede ayudarte a evaluar cómo estos conceptos aplican a tu operación."
+                    : "Our team can help you evaluate how these concepts apply to your operation."}
+                </p>
+                <div className="mt-6 flex flex-col items-center justify-center gap-4 sm:flex-row">
+                  <CTAButton href="/contacto" variant="primary" size="lg">
+                    {lang === "es"
+                      ? "Conversemos sobre tu proyecto"
+                      : "Schedule a conversation"}
+                  </CTAButton>
+                  <CTAButton href="/servicios" variant="secondary" size="lg">
+                    {lang === "es"
+                      ? "Ver nuestros servicios"
+                      : "View our services"}
+                  </CTAButton>
+                </div>
               </div>
             </div>
           </AnimateOnScroll>
@@ -280,13 +286,13 @@ export function ArticleContent({
                         key={related.slug}
                         href={`/blog/${related.slug}` as "/blog"}
                       >
-                        <article className="group flex h-full cursor-pointer flex-col rounded-2xl border border-[var(--border-subtle)] bg-[var(--bg-elevated)] p-7 transition-all duration-300 hover:border-[var(--accent)]/20 hover:shadow-[0_0_30px_rgba(58,139,253,0.06)]">
+                        <article className="group flex h-full cursor-pointer flex-col rounded-2xl border border-[var(--border-subtle)] bg-[var(--bg-elevated)] p-7 transition-all duration-300 hover:border-[var(--coral)]/40 hover:shadow-[0_0_30px_var(--coral-glow)]">
                           <span
                             className={`inline-block w-fit rounded-full border px-3 py-1 font-mono text-xs uppercase tracking-wider ${getCategoryClasses(related.category)}`}
                           >
                             {getCategoryLabel(related.category)}
                           </span>
-                          <h4 className="mt-4 font-display text-lg font-semibold leading-snug text-[var(--text-primary)] transition-colors group-hover:text-[var(--accent)]">
+                          <h4 className="mt-4 font-display text-lg font-semibold leading-snug text-[var(--text-primary)] transition-colors group-hover:text-[var(--coral)]">
                             {related.title[lang]}
                           </h4>
                           <p className="mt-3 flex-1 text-sm leading-relaxed text-[var(--text-secondary)]">
@@ -299,7 +305,7 @@ export function ArticleContent({
                                 {related.readTime} {t("readTime")}
                               </span>
                             </div>
-                            <ArrowUpRight className="h-4 w-4 text-[var(--text-tertiary)] transition-all group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-[var(--accent)]" />
+                            <ArrowUpRight className="h-4 w-4 text-[var(--text-tertiary)] transition-all group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-[var(--coral)]" />
                           </div>
                         </article>
                       </Link>

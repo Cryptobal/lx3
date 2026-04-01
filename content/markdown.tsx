@@ -261,7 +261,7 @@ function renderBlock(block: Block): React.ReactNode {
   switch (block.type) {
     case "blockquote":
       return (
-        <blockquote className="mb-6 rounded-2xl border border-[var(--accent)]/20 bg-[var(--accent)]/5 p-5 text-base leading-relaxed text-white/85">
+        <blockquote className="mb-6 rounded-2xl border-l-4 border-[var(--coral)] bg-[var(--coral-light)] px-6 py-4 text-base leading-relaxed text-white/85">
           {renderInline(block.text)}
         </blockquote>
       );

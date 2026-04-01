@@ -45,7 +45,10 @@ export function BlogContent({ articles, locale }: BlogContentProps) {
   };
 
   return (
-    <SectionWrapper className="pt-32 pb-20">
+    <SectionWrapper className="relative pt-32 pb-20">
+      {/* Mesh gradient background */}
+      <div className="pointer-events-none absolute inset-0 mesh-gradient opacity-30" aria-hidden="true" />
+
       {/* Hero */}
       <AnimateOnScroll>
         <div className="max-w-3xl">
@@ -67,8 +70,8 @@ export function BlogContent({ articles, locale }: BlogContentProps) {
               onClick={() => setActiveFilter(filter.key)}
               className={`rounded-full border px-4 py-2 font-mono text-xs uppercase tracking-wider transition-all duration-200 ${
                 activeFilter === filter.key
-                  ? "border-accent/40 bg-accent/10 text-accent"
-                  : "border-[var(--border-default)] bg-[var(--bg-surface)] text-[var(--text-secondary)] hover:border-[var(--border-default)] hover:text-[var(--text-secondary)]"
+                  ? "border-[var(--coral)]/40 bg-[var(--coral-light)] text-[var(--coral)]"
+                  : "border-[var(--border-default)] bg-[var(--bg-surface)] text-[var(--text-secondary)] hover:border-[var(--coral)]/30 hover:text-[var(--text-secondary)]"
               }`}
             >
               {filter.label}
@@ -83,7 +86,7 @@ export function BlogContent({ articles, locale }: BlogContentProps) {
           return (
             <AnimateOnScroll key={article.slug} delay={0.1 + i * 0.05}>
               <Link href={`/blog/${article.slug}` as "/blog"}>
-                <article className="group flex h-full cursor-pointer flex-col overflow-hidden rounded-2xl border border-[var(--border-subtle)] bg-surface-elevated transition-all duration-300 hover:border-accent/20 hover:shadow-[0_0_30px_rgba(6,182,212,0.06)]">
+                <article className="group flex h-full cursor-pointer flex-col overflow-hidden rounded-2xl border border-[var(--border-subtle)] bg-surface-elevated transition-all duration-300 hover:border-[var(--coral)]/40 hover:shadow-[0_0_30px_var(--coral-glow)]">
                   {article.ogImage && (
                     <div className="relative aspect-[16/9] w-full shrink-0 border-b border-[var(--border-subtle)]">
                       <Image
@@ -104,7 +107,7 @@ export function BlogContent({ articles, locale }: BlogContentProps) {
                   </span>
 
                   {/* Title */}
-                  <h2 className="mt-5 font-display text-lg font-semibold leading-snug text-[var(--text-primary)] transition-colors group-hover:text-accent">
+                  <h2 className="mt-5 font-display text-lg font-semibold leading-snug text-[var(--text-primary)] transition-colors group-hover:text-[var(--coral)]">
                     {article.title[lang]}
                   </h2>
 
@@ -116,7 +119,7 @@ export function BlogContent({ articles, locale }: BlogContentProps) {
                   {/* Date + read time + arrow */}
                   <div className="mt-6 flex items-center justify-between border-t border-[var(--border-subtle)] pt-4">
                     <div className="flex items-center gap-4 text-[var(--text-tertiary)]">
-                      <span className="font-mono text-xs">
+                      <span className="font-mono text-xs text-[var(--coral)]">
                         {formatDate(article.date)}
                       </span>
                       <div className="flex items-center gap-1.5">
@@ -126,7 +129,7 @@ export function BlogContent({ articles, locale }: BlogContentProps) {
                         </span>
                       </div>
                     </div>
-                    <ArrowUpRight className="h-4 w-4 text-[var(--text-tertiary)] transition-all group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-accent" />
+                    <ArrowUpRight className="h-4 w-4 text-[var(--text-tertiary)] transition-all group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-[var(--coral)]" />
                   </div>
                   </div>
                 </article>

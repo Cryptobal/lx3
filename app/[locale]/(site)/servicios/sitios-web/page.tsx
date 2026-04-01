@@ -5,8 +5,9 @@ import { SectionWrapper } from "@/components/shared/SectionWrapper";
 import { AnimateOnScroll } from "@/components/shared/AnimateOnScroll";
 import { JsonLd } from "@/components/shared/JsonLd";
 import { ServicePageSections } from "@/components/sections/ServicePageSections";
-import { Link } from "@/lib/i18n/routing";
 import { CheckCircle2 } from "lucide-react";
+import { SEOPageHero } from "@/components/seo-pages/SEOPageHero";
+import { InlineCTA } from "@/components/seo-pages/InlineCTA";
 
 export async function generateMetadata({
   params,
@@ -60,18 +61,10 @@ function WebsitesContent() {
       <JsonLd data={jsonLd} />
 
       {/* Hero */}
-      <SectionWrapper className="pt-32">
-        <div className="max-w-3xl">
-          <AnimateOnScroll>
-            <h1 className="font-display text-4xl font-semibold tracking-tight text-[var(--text-primary)] md:text-5xl">
-              {t("websites.headline")}
-            </h1>
-            <p className="mt-6 text-lg leading-relaxed text-[var(--text-secondary)]">
-              {t("websites.description")}
-            </p>
-          </AnimateOnScroll>
-        </div>
-      </SectionWrapper>
+      <SEOPageHero
+        title={t("websites.headline")}
+        subtitle={t("websites.description")}
+      />
 
       {/* Description + Features */}
       <SectionWrapper className="pt-0">
@@ -103,24 +96,11 @@ function WebsitesContent() {
       </SectionWrapper>
 
       {/* CTA to Cotizador */}
-      <SectionWrapper>
-        <AnimateOnScroll>
-          <div className="rounded-2xl border border-[var(--border-default)] bg-gradient-to-br from-[var(--bg-elevated)] to-[var(--bg-surface)] p-8 text-center sm:p-12">
-            <h2 className="font-display text-2xl font-bold text-[var(--text-primary)] sm:text-3xl">
-              {tCotiza("ctaSection.title")}
-            </h2>
-            <p className="mx-auto mt-3 max-w-md text-base text-[var(--text-secondary)]">
-              {tCotiza("ctaSection.subtitle")}
-            </p>
-            <Link
-              href="/cotiza"
-              className="mt-6 inline-flex rounded-full bg-gradient-to-r from-[var(--coral)] to-[#f97316] px-8 py-3.5 text-sm font-semibold text-[#06080E] transition-all hover:shadow-[0_0_24px_var(--coral-glow)]"
-            >
-              {tCotiza("ctaSection.button")}
-            </Link>
-          </div>
-        </AnimateOnScroll>
-      </SectionWrapper>
+      <InlineCTA
+        title={tCotiza("ctaSection.title")}
+        subtitle={tCotiza("ctaSection.subtitle")}
+        buttonText={tCotiza("ctaSection.button")}
+      />
 
       <ServicePageSections
         serviceKey="websites"

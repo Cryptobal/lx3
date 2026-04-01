@@ -6,6 +6,8 @@ import { AnimateOnScroll } from "@/components/shared/AnimateOnScroll";
 import { JsonLd } from "@/components/shared/JsonLd";
 import { ServicePageSections } from "@/components/sections/ServicePageSections";
 import { CheckCircle2 } from "lucide-react";
+import { SEOPageHero } from "@/components/seo-pages/SEOPageHero";
+import { InlineCTA } from "@/components/seo-pages/InlineCTA";
 
 export async function generateMetadata({
   params,
@@ -38,6 +40,7 @@ export default async function ConsultingPage({
 
 function ConsultingContent() {
   const t = useTranslations("servicesPage");
+  const tCotiza = useTranslations("cotizadorPage");
 
   const features = t.raw("consulting.features") as string[];
 
@@ -58,18 +61,10 @@ function ConsultingContent() {
       <JsonLd data={jsonLd} />
 
       {/* Hero */}
-      <SectionWrapper className="pt-32">
-        <div className="max-w-3xl">
-          <AnimateOnScroll>
-            <h1 className="font-display text-4xl font-semibold tracking-tight text-[var(--text-primary)] md:text-5xl">
-              {t("consulting.headline")}
-            </h1>
-            <p className="mt-6 text-lg leading-relaxed text-[var(--text-secondary)]">
-              {t("consulting.description")}
-            </p>
-          </AnimateOnScroll>
-        </div>
-      </SectionWrapper>
+      <SEOPageHero
+        title={t("consulting.headline")}
+        subtitle={t("consulting.description")}
+      />
 
       {/* Description + Features */}
       <SectionWrapper className="pt-0">
@@ -99,6 +94,13 @@ function ConsultingContent() {
           </div>
         </AnimateOnScroll>
       </SectionWrapper>
+
+      {/* CTA to Cotizador */}
+      <InlineCTA
+        title={tCotiza("ctaSection.title")}
+        subtitle={tCotiza("ctaSection.subtitle")}
+        buttonText={tCotiza("ctaSection.button")}
+      />
 
       <ServicePageSections
         serviceKey="consulting"

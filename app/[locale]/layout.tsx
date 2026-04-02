@@ -64,7 +64,7 @@ export async function generateMetadata({
       locale: locale === "en" ? "en_US" : "es_CL",
       siteName: "LX3",
       images: [
-        { url: "/og-default.jpg", width: 1200, height: 630 },
+        { url: "/opengraph-image", width: 1200, height: 630 },
         { url: "/logo/LX3_logotipo_dark-bg_1400x400.png", width: 1400, height: 400 },
       ],
     },

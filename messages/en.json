@@ -50,6 +50,7 @@
     "metric3Label": "Time to deploy",
     "metric3Value": "12 weeks",
     "cta": "See the full case study",
+    "ctaAll": "See all cases",
     "techStack": "Next.js, TypeScript, PostgreSQL, Claude AI, Vercel"
   },
   "process": {
@@ -243,6 +244,16 @@
       "results": "Significant improvement in page load speed, search engine visibility, and lead generation. The site now serves as a credible digital front door for one of Chile's growing security firms.",
       "featuresTitle": "Project features",
       "features": ["Premium responsive design", "Technical SEO and content optimization", "Contact forms and lead capture", "Analytics and conversion tracking", "Blog and content management"]
+    },
+    "casaOrfebre": {
+      "title": "Casa Orfebre — Jewelry Marketplace Built with AI",
+      "subtitle": "Curated marketplace for artisan jewelry",
+      "description": "Casa Orfebre needed a digital marketplace that conveyed the quality and exclusivity of Chilean artisan jewelry. We built a complete platform from scratch: curated catalog with advanced filters, online payment gateway, inventory management, and a premium shopping experience. All content and curation were powered by AI.",
+      "challenge": "Build an artisan jewelry marketplace from scratch, handling the complexity of a unique-piece catalog, multiple jewelers, secure online payments, and a user experience that reflects the handcrafted quality of the products.",
+      "solution": "We designed and built a complete marketplace with Next.js, a digital catalog with filters by material, technique, and jeweler, integrated payment gateway, and an admin panel for managing products and orders. We used AI to generate product descriptions, optimize SEO content, and curate the browsing experience.",
+      "results": "Marketplace in production with a complete digital catalog. Premium shopping experience that reflects handcrafted quality. Smooth checkout with online payments. Organic search visibility for artisan jewelry terms in Chile.",
+      "featuresTitle": "Project features",
+      "features": ["Curated catalog with advanced filters", "Online payment gateway", "Admin panel for jewelers", "AI-generated and optimized content", "Premium responsive design", "SEO optimized for artisan jewelry"]
     }
   },
   "aboutPage": {

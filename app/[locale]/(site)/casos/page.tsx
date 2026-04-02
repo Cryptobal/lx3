@@ -13,6 +13,10 @@ const cases = [
     href: "/casos/opai-gard-security" as const,
   },
   {
+    key: "casaOrfebre" as const,
+    href: "/casos/casa-orfebre" as "/",
+  },
+  {
     key: "gard" as const,
     href: "/casos/gard-sitio-web" as const,
   },

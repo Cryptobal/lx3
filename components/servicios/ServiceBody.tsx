@@ -32,7 +32,7 @@ const benefits = [
 ]
 
 const differentiators = [
-  { title: 'Precio transparente', desc: 'Cotizás al instante, sin reunión previa' },
+  { title: 'Precio transparente', desc: 'Cotizas al instante, sin reunión previa' },
   { title: 'Stack moderno', desc: 'Next.js, React, TypeScript. No legacy.' },
   { title: 'Código tuyo', desc: 'Entregamos todo el source code' },
   { title: 'Resultados medibles', desc: 'KPIs definidos antes de empezar' },

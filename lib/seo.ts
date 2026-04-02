@@ -1,8 +1,8 @@
 import type { Metadata } from 'next'
 
-const BASE_URL = 'https://lx3.ai'
+const BASE_URL = 'https://www.lx3.ai'
 const SITE_NAME = 'LX3 — Desarrollo Web & Software Chile'
-const DEFAULT_OG_IMAGE = '/og-default.png'
+const DEFAULT_OG_IMAGE = '/opengraph-image'
 
 export function generateServiceMetadata(page: {
   metaTitle: string
@@ -89,8 +89,8 @@ export function generateLocalBusinessSchema() {
     description: 'Software studio especializado en desarrollo web, aplicaciones con IA y software a medida en Chile.',
     url: BASE_URL,
     logo: `${BASE_URL}/logo.png`,
-    image: `${BASE_URL}/og-default.png`,
-    telephone: '+56-9-XXXXXXXX',
+    image: `${BASE_URL}/opengraph-image`,
+    telephone: '+56982307771',
     email: 'contacto@lx3.ai',
     address: {
       '@type': 'PostalAddress',
@@ -116,7 +116,10 @@ export function generateLocalBusinessSchema() {
         closes: '18:00',
       },
     ],
-    sameAs: ['https://www.linkedin.com/company/lx3ai'],
+    sameAs: [
+      'https://www.linkedin.com/company/lx3-ai',
+      'https://www.instagram.com/lx3_ai',
+    ],
   }
 }
 

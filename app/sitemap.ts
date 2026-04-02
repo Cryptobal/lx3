@@ -16,6 +16,7 @@ const staticRoutes: { es: string; en: string; priority?: number }[] = [
   { es: "/es/casos", en: "/en/cases" },
   { es: "/es/casos/opai-gard-security", en: "/en/cases/opai-gard-security" },
   { es: "/es/casos/gard-sitio-web", en: "/en/cases/gard-website" },
+  { es: "/es/casos/casa-orfebre", en: "/en/cases/casa-orfebre" },
   { es: "/es/blog", en: "/en/blog" },
   { es: "/es/sobre-nosotros", en: "/en/about-us" },
   { es: "/es/contacto", en: "/en/contact" },

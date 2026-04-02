@@ -50,6 +50,7 @@
     "metric3Label": "Tiempo de desarrollo",
     "metric3Value": "MVP en 30 días",
     "cta": "Ver caso completo",
+    "ctaAll": "Ver más casos",
     "techStack": "Next.js · React · TypeScript · PostgreSQL · Claude AI · Vercel"
   },
   "process": {
@@ -219,6 +220,16 @@
       "results": "Mejora significativa en velocidad de carga, visibilidad en buscadores y generación de leads. El sitio sirve como puerta de entrada digital creíble para una de las empresas de seguridad en crecimiento de Chile.",
       "featuresTitle": "Características del proyecto",
       "features": ["Diseño responsive y premium", "SEO técnico y optimización de contenido", "Formularios de contacto y captación de leads", "Analytics y seguimiento de conversiones", "Blog y administración de contenido"]
+    },
+    "casaOrfebre": {
+      "title": "Casa Orfebre — Marketplace de joyería construido con IA",
+      "subtitle": "Marketplace curado de joyería de autor",
+      "description": "Casa Orfebre necesitaba un marketplace digital que transmitiera la calidad y exclusividad de la joyería de autor chilena. Construimos una plataforma completa desde cero: catálogo curado con filtros avanzados, pasarela de pagos online, gestión de inventario y una experiencia de compra premium. Todo el contenido y la curación fueron potenciados por IA.",
+      "challenge": "Crear un marketplace de joyería de autor desde cero, con la complejidad de manejar un catálogo de piezas únicas, múltiples orfebres, pagos online seguros, y una experiencia de usuario que reflejara la calidad artesanal de los productos.",
+      "solution": "Diseñamos y construimos un marketplace completo con Next.js, catálogo digital con filtros por material, técnica y orfebre, pasarela de pagos integrada, panel de administración para gestionar productos y pedidos. Utilizamos IA para generar descripciones de producto, optimizar contenido SEO y curar la experiencia de navegación.",
+      "results": "Marketplace en producción con catálogo digital completo. Experiencia de compra premium que refleja la calidad artesanal. Proceso de compra fluido con pagos online. Visibilidad orgánica en buscadores para términos de joyería de autor en Chile.",
+      "featuresTitle": "Características del proyecto",
+      "features": ["Catálogo curado con filtros avanzados", "Pasarela de pagos online", "Panel de administración para orfebres", "Contenido generado y optimizado con IA", "Diseño premium y responsive", "SEO optimizado para joyería artesanal"]
     }
   },
   "aboutPage": {

@@ -121,12 +121,19 @@ export function Showcase() {
             </div>
 
             {/* CTA */}
-            <div className="mt-10">
+            <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-6">
               <Link
                 href={"/casos/opai-gard-security" as "/"}
                 className="inline-flex items-center gap-2 font-medium text-[var(--coral)] transition-colors hover:text-[var(--coral)]/80"
               >
                 <span>{t("cta")}</span>
+                <ArrowRight className="h-4 w-4" />
+              </Link>
+              <Link
+                href={"/casos" as "/"}
+                className="inline-flex items-center gap-2 text-sm font-medium text-[var(--text-tertiary)] transition-colors hover:text-[var(--text-primary)]"
+              >
+                <span>{t("ctaAll")}</span>
                 <ArrowRight className="h-4 w-4" />
               </Link>
             </div>

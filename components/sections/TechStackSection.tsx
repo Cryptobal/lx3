@@ -22,14 +22,17 @@ export function TechStackSection() {
     {
       title: tb("article1Title"),
       category: tb("article1Category"),
+      href: "/blog/inteligencia-artificial-empresas-medianas-guia" as "/",
     },
     {
       title: tb("article2Title"),
       category: tb("article2Category"),
+      href: "/blog/automatizacion-procesos-inteligencia-artificial-empresas" as "/",
     },
     {
       title: tb("article3Title"),
       category: tb("article3Category"),
+      href: "/blog/caso-opai-erp-ia-gard-security" as "/",
     },
   ];
 
@@ -66,9 +69,10 @@ export function TechStackSection() {
 
             <div className="mt-8 space-y-0 divide-y divide-[var(--border-subtle)]">
               {articles.map((article, i) => (
-                <div
+                <Link
                   key={i}
-                  className="group flex cursor-pointer items-start justify-between gap-4 py-5 first:pt-0 last:pb-0"
+                  href={article.href}
+                  className="group flex items-start justify-between gap-4 py-5 first:pt-0 last:pb-0"
                 >
                   <div>
                     <span className="font-mono text-xs uppercase tracking-wider text-[var(--text-tertiary)]">
@@ -79,7 +83,7 @@ export function TechStackSection() {
                     </h3>
                   </div>
                   <ArrowUpRight className="mt-5 h-4 w-4 shrink-0 text-[var(--text-tertiary)] transition-all group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-[var(--accent)]" />
-                </div>
+                </Link>
               ))}
             </div>
 

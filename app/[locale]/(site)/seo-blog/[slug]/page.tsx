@@ -19,7 +19,14 @@ export async function generateMetadata({
     title: post.metaTitle,
     description: post.metaDescription,
     keywords: [post.targetKeyword, ...post.secondaryKeywords],
-    alternates: { canonical: `https://lx3.ai/blog/${post.slug}` },
+    alternates: {
+      canonical: `https://www.lx3.ai/es/seo-blog/${post.slug}`,
+      languages: {
+        es: `https://www.lx3.ai/es/seo-blog/${post.slug}`,
+        en: `https://www.lx3.ai/en/seo-blog/${post.slug}`,
+        'x-default': `https://www.lx3.ai/es/seo-blog/${post.slug}`,
+      },
+    },
     openGraph: {
       title: post.metaTitle,
       description: post.metaDescription,

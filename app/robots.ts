@@ -9,7 +9,7 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: "*",
         allow: "/",
-        disallow: ["/api/", "/_next/"],
+        disallow: ["/api/", "/_next/", "/admin/", "/q/"],
       },
       // Bots de IA — PERMITIR TODOS explícitamente
       { userAgent: "GPTBot", allow: "/" },

@@ -10,12 +10,19 @@ export function generateServiceMetadata(page: {
   slug: string
   keywords: string[]
 }): Metadata {
-  const url = `${BASE_URL}/servicios/${page.slug}`
+  const url = `${BASE_URL}/es/servicios/${page.slug}`
   return {
     title: page.metaTitle,
     description: page.metaDescription,
     keywords: page.keywords,
-    alternates: { canonical: url },
+    alternates: {
+      canonical: url,
+      languages: {
+        es: `${BASE_URL}/es/servicios/${page.slug}`,
+        en: `${BASE_URL}/en/services/${page.slug}`,
+        'x-default': `${BASE_URL}/es/servicios/${page.slug}`,
+      },
+    },
     openGraph: {
       title: page.metaTitle,
       description: page.metaDescription,
@@ -39,12 +46,19 @@ export function generateIndustryMetadata(page: {
   slug: string
   keywords: string[]
 }): Metadata {
-  const url = `${BASE_URL}/soluciones/${page.slug}`
+  const url = `${BASE_URL}/es/soluciones/${page.slug}`
   return {
     title: page.metaTitle,
     description: page.metaDescription,
     keywords: page.keywords,
-    alternates: { canonical: url },
+    alternates: {
+      canonical: url,
+      languages: {
+        es: `${BASE_URL}/es/soluciones/${page.slug}`,
+        en: `${BASE_URL}/en/solutions/${page.slug}`,
+        'x-default': `${BASE_URL}/es/soluciones/${page.slug}`,
+      },
+    },
     openGraph: {
       title: page.metaTitle,
       description: page.metaDescription,
@@ -64,12 +78,19 @@ export function generatePriceMetadata(page: {
   range: string
 }): Metadata {
   const description = `${page.title} en Chile. ${page.range}. Precios transparentes, sin letra chica. Cotiza al instante en lx3.ai.`
-  const url = `${BASE_URL}/precio/${page.slug}`
+  const url = `${BASE_URL}/es/precio/${page.slug}`
   return {
     title: `${page.title} 2026 | Precios Reales — LX3`,
     description,
     keywords: [page.keyword, `precio ${page.slug} Chile`, `cuánto cuesta ${page.slug} Chile`],
-    alternates: { canonical: url },
+    alternates: {
+      canonical: url,
+      languages: {
+        es: `${BASE_URL}/es/precio/${page.slug}`,
+        en: `${BASE_URL}/en/pricing/${page.slug}`,
+        'x-default': `${BASE_URL}/es/precio/${page.slug}`,
+      },
+    },
     openGraph: {
       title: `${page.title} 2026 | Precios Reales — LX3`,
       description,
@@ -142,7 +163,7 @@ export function generateServiceSchema(page: {
       '@type': 'Country',
       name: 'Chile',
     },
-    url: `${BASE_URL}/servicios/${page.slug}`,
+    url: `${BASE_URL}/es/servicios/${page.slug}`,
   }
 }
 

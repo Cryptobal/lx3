@@ -8,7 +8,20 @@ import ServiceCTA from '@/components/servicios/ServiceCTA'
 import ServiceRelated from '@/components/servicios/ServiceRelated'
 
 // Filter out slugs that conflict with existing static directories
-const EXISTING_STATIC_DIRS = ['aplicaciones-internas', 'automatizacion-ia', 'consultoria', 'sitios-web']
+const EXISTING_STATIC_DIRS = [
+  'aplicaciones-internas',
+  'automatizacion-ia',
+  'consultoria',
+  'sitios-web',
+  'crm-personalizado',
+  'desarrollo-fullstack',
+  'desarrollo-web',
+  'ecommerce-medida',
+  'landing-pages',
+  'posicionamiento-web',
+  'sistema-cotizaciones',
+  'tienda-online',
+]
 
 export async function generateStaticParams() {
   return SERVICE_PAGES

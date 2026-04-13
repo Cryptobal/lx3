@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { JsonLd } from "@/components/shared/JsonLd";
 import { PricingPageLayout } from "@/components/seo-pages/PricingPageLayout";
 import { getPricingPageData, getAllPricingSlugs } from "@/data/pricing-pages";
+import { localeAlternates } from "@/lib/seo";
 
 export async function generateStaticParams() {
   return getAllPricingSlugs().map((slug) => ({ slug }));
@@ -21,14 +22,7 @@ export async function generateMetadata({
   return {
     title: `${data.title} | LX3`,
     description: data.subtitle,
-    alternates: {
-      canonical: `https://www.lx3.ai/${locale}/precio/${slug}`,
-      languages: {
-        es: `https://www.lx3.ai/es/precio/${slug}`,
-        en: `https://www.lx3.ai/en/pricing/${slug}`,
-        "x-default": `https://www.lx3.ai/es/precio/${slug}`,
-      },
-    },
+    alternates: localeAlternates(locale, `/es/precio/${slug}`, `/en/pricing/${slug}`),
   };
 }
 

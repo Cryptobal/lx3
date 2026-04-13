@@ -3,30 +3,9 @@ import { articles } from "@/content/blog";
 import { SERVICE_PAGES, INDUSTRY_PAGES, PRICE_PAGES } from "@/data/keywords";
 import { BLOG_POSTS } from "@/data/blog-posts";
 import { getAllGeoSlugs } from "@/data/geo-pages";
+import { SERVICE_EN_SLUGS, GEO_EN_PREFIXES } from "@/lib/seo";
 
 const BASE_URL = "https://www.lx3.ai";
-
-// EN slug mappings for services that have explicit routing translations
-const SERVICE_EN_SLUGS: Record<string, string> = {
-  "desarrollo-web": "web-development",
-  "crm-personalizado": "custom-crm",
-  "tienda-online": "online-store",
-  "posicionamiento-web": "seo",
-  "landing-pages": "landing-pages",
-  "sistema-cotizaciones": "quoting-system",
-  "desarrollo-fullstack": "fullstack-development",
-  "ecommerce-medida": "custom-ecommerce",
-  "aplicaciones-internas": "internal-apps",
-  "automatizacion-ia": "ai-automation",
-  "sitios-web": "websites",
-  "consultoria": "consulting",
-};
-
-const GEO_EN_PREFIXES: Record<string, string> = {
-  "desarrollo-web": "web-development",
-  "software-a-medida": "custom-software",
-  "crm-personalizado": "custom-crm",
-};
 
 function langAlts(es: string, en: string) {
   return {

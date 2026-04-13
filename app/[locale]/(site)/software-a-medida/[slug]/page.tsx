@@ -4,8 +4,10 @@ import { notFound } from "next/navigation";
 import { JsonLd } from "@/components/shared/JsonLd";
 import { GeoPageLayout } from "@/components/seo-pages/GeoPageLayout";
 import { getGeoPageData, getAllGeoSlugs } from "@/data/geo-pages";
+import { localeAlternates } from "@/lib/seo";
 
 const SERVICE_TYPE = "software-a-medida";
+const EN_PREFIX = "custom-software";
 
 export async function generateStaticParams() {
   return getAllGeoSlugs(SERVICE_TYPE).map((slug) => ({ slug }));
@@ -23,14 +25,7 @@ export async function generateMetadata({
   return {
     title: `${data.title} | LX3`,
     description: data.subtitle,
-    alternates: {
-      canonical: `https://www.lx3.ai/${locale}/${SERVICE_TYPE}/${slug}`,
-      languages: {
-        es: `https://www.lx3.ai/es/${SERVICE_TYPE}/${slug}`,
-        en: `https://www.lx3.ai/en/custom-software/${slug}`,
-        "x-default": `https://www.lx3.ai/es/${SERVICE_TYPE}/${slug}`,
-      },
-    },
+    alternates: localeAlternates(locale, `/es/${SERVICE_TYPE}/${slug}`, `/en/${EN_PREFIX}/${slug}`),
   };
 }
 

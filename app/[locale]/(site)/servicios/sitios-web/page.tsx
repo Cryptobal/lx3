@@ -8,6 +8,7 @@ import { ServicePageSections } from "@/components/sections/ServicePageSections";
 import { CheckCircle2 } from "lucide-react";
 import { SEOPageHero } from "@/components/seo-pages/SEOPageHero";
 import { InlineCTA } from "@/components/seo-pages/InlineCTA";
+import { localeAlternates } from "@/lib/seo";
 
 export async function generateMetadata({
   params,
@@ -24,6 +25,7 @@ export async function generateMetadata({
       locale === "en"
         ? "High-performance, SEO-optimized websites and web applications. Designed to convert visitors, communicate your brand, and scale with your growth."
         : "Sitios web rapidos, modernos y optimizados para SEO. Disenados para convertir visitantes en clientes y escalar con tu negocio.",
+    alternates: localeAlternates(locale, "/es/servicios/sitios-web", "/en/services/websites"),
   };
 }
 

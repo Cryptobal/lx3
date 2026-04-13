@@ -10,6 +10,7 @@ import { InlineCTA } from "@/components/seo-pages/InlineCTA";
 import { Link } from "@/lib/i18n/routing";
 import { CheckCircle2 } from "lucide-react";
 import { getServicePageData } from "@/data/service-pages";
+import { localeAlternates, SERVICE_EN_SLUGS } from "@/lib/seo";
 
 const SLUG = "sistema-cotizaciones";
 
@@ -22,12 +23,11 @@ export async function generateMetadata({
   const data = getServicePageData(SLUG);
   if (!data) return {};
 
+  const enSlug = SERVICE_EN_SLUGS[SLUG] ?? SLUG;
   return {
     title: `${data.title} | LX3`,
     description: data.subtitle,
-    alternates: {
-      canonical: `https://www.lx3.ai/${locale}/servicios/${SLUG}`,
-    },
+    alternates: localeAlternates(locale, `/es/servicios/${SLUG}`, `/en/services/${enSlug}`),
   };
 }
 

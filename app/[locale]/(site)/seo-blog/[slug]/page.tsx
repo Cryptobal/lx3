@@ -2,6 +2,7 @@ import { notFound } from 'next/navigation'
 import { BLOG_POSTS } from '@/data/blog-posts'
 import type { Metadata } from 'next'
 import BlogArticle from '@/components/blog/BlogArticle'
+import { localeAlternates } from '@/lib/seo'
 
 export async function generateStaticParams() {
   return BLOG_POSTS.map((p) => ({ slug: p.slug }))
@@ -12,21 +13,14 @@ export async function generateMetadata({
 }: {
   params: Promise<{ locale: string; slug: string }>
 }): Promise<Metadata> {
-  const { slug } = await params
+  const { locale, slug } = await params
   const post = BLOG_POSTS.find((p) => p.slug === slug)
   if (!post) return {}
   return {
     title: post.metaTitle,
     description: post.metaDescription,
     keywords: [post.targetKeyword, ...post.secondaryKeywords],
-    alternates: {
-      canonical: `https://www.lx3.ai/es/seo-blog/${post.slug}`,
-      languages: {
-        es: `https://www.lx3.ai/es/seo-blog/${post.slug}`,
-        en: `https://www.lx3.ai/en/seo-blog/${post.slug}`,
-        'x-default': `https://www.lx3.ai/es/seo-blog/${post.slug}`,
-      },
-    },
+    alternates: localeAlternates(locale, `/es/seo-blog/${post.slug}`, `/en/seo-blog/${post.slug}`),
     openGraph: {
       title: post.metaTitle,
       description: post.metaDescription,

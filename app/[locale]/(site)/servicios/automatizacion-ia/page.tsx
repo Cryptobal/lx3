@@ -8,6 +8,7 @@ import { ServicePageSections } from "@/components/sections/ServicePageSections";
 import { CheckCircle2 } from "lucide-react";
 import { SEOPageHero } from "@/components/seo-pages/SEOPageHero";
 import { InlineCTA } from "@/components/seo-pages/InlineCTA";
+import { localeAlternates } from "@/lib/seo";
 
 export async function generateMetadata({
   params,
@@ -24,6 +25,7 @@ export async function generateMetadata({
       locale === "en"
         ? "AI-powered workflows that automate document processing, decision-making, and data extraction. Built on your data, integrated with your systems."
         : "Automatizacion inteligente con IA: procesamiento de documentos, decisiones automaticas, chatbots especializados e integracion de LLMs en tus flujos de trabajo.",
+    alternates: localeAlternates(locale, "/es/servicios/automatizacion-ia", "/en/services/ai-automation"),
   };
 }
 

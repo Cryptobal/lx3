@@ -29,11 +29,11 @@ export async function generateStaticParams() {
     .map((s) => ({ slug: s.slug }))
 }
 
-export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
-  const { slug } = await params
+export async function generateMetadata({ params }: { params: Promise<{ locale: string; slug: string }> }) {
+  const { locale, slug } = await params
   const page = SERVICE_PAGES.find((s) => s.slug === slug)
   if (!page) return {}
-  return generateServiceMetadata(page)
+  return generateServiceMetadata(page, locale)
 }
 
 export default async function ServicioPage({ params }: { params: Promise<{ slug: string }> }) {

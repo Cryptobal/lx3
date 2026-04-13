@@ -8,6 +8,7 @@ import { ServicePageSections } from "@/components/sections/ServicePageSections";
 import { CheckCircle2 } from "lucide-react";
 import { SEOPageHero } from "@/components/seo-pages/SEOPageHero";
 import { InlineCTA } from "@/components/seo-pages/InlineCTA";
+import { localeAlternates } from "@/lib/seo";
 
 export async function generateMetadata({
   params,
@@ -24,6 +25,7 @@ export async function generateMetadata({
       locale === "en"
         ? "We build tailored internal platforms: ERPs, CRMs, dashboards, and management systems designed around how your business actually operates."
         : "Construimos aplicaciones internas a medida: ERPs, CRMs, dashboards y sistemas de gestion disenados para tu flujo de trabajo especifico.",
+    alternates: localeAlternates(locale, "/es/servicios/aplicaciones-internas", "/en/services/internal-apps"),
   };
 }
 

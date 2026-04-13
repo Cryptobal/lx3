@@ -8,6 +8,7 @@ import { ServicePageSections } from "@/components/sections/ServicePageSections";
 import { CheckCircle2 } from "lucide-react";
 import { SEOPageHero } from "@/components/seo-pages/SEOPageHero";
 import { InlineCTA } from "@/components/seo-pages/InlineCTA";
+import { localeAlternates } from "@/lib/seo";
 
 export async function generateMetadata({
   params,
@@ -24,6 +25,7 @@ export async function generateMetadata({
       locale === "en"
         ? "Strategic advisory on architecture, stack selection, and digital transformation. We help mid-market companies make the right technology decisions."
         : "Consultoria estrategica en arquitectura, seleccion de tecnologia y transformacion digital. Te ayudamos a tomar las decisiones tecnologicas correctas.",
+    alternates: localeAlternates(locale, "/es/servicios/consultoria", "/en/services/consulting"),
   };
 }
 

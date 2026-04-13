@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { JsonLd } from "@/components/shared/JsonLd";
 import { SolutionPageLayout } from "@/components/seo-pages/SolutionPageLayout";
 import { getSolutionPageData, getAllSolutionSlugs } from "@/data/solution-pages";
+import { localeAlternates } from "@/lib/seo";
 
 export async function generateStaticParams() {
   return getAllSolutionSlugs().map((slug) => ({ slug }));
@@ -21,14 +22,7 @@ export async function generateMetadata({
   return {
     title: `${data.title} | LX3`,
     description: data.subtitle,
-    alternates: {
-      canonical: `https://www.lx3.ai/${locale}/soluciones/${slug}`,
-      languages: {
-        es: `https://www.lx3.ai/es/soluciones/${slug}`,
-        en: `https://www.lx3.ai/en/solutions/${slug}`,
-        "x-default": `https://www.lx3.ai/es/soluciones/${slug}`,
-      },
-    },
+    alternates: localeAlternates(locale, `/es/soluciones/${slug}`, `/en/solutions/${slug}`),
   };
 }
 

@@ -15,12 +15,23 @@
     "cotizaTuWeb": "Quote your website"
   },
   "hero": {
-    "tag": "Software Studio · Santiago, Chile",
-    "headline": "We build the software your business needs.",
-    "headlineAccent": "With AI.",
-    "subheadline": "Custom applications, AI automation, and modern websites for mid-market companies that need technology that actually works. From Santiago to the world.",
-    "ctaPrimary": "Let's talk about your project",
-    "ctaSecondary": "See our work"
+    "tag": "Applied AI · Santiago, Chile",
+    "badge": "Applied AI · Santiago, Chile",
+    "headline": "Artificial intelligence that",
+    "headlineAccent": "runs your business",
+    "subheadline": "We don't sell chatbots. We build AI systems that run real operations: they quote, process documents, schedule shifts, and make decisions. Like OPAI, the ERP that runs 500+ guards at Gard Security today.",
+    "ctaPrimary": "Get a quote",
+    "ctaSecondary": "See how OPAI works"
+  },
+  "proofBar": {
+    "m1Value": "500+",
+    "m1Label": "People managed by AI in production",
+    "m2Value": "20+",
+    "m2Label": "AI modules running today",
+    "m3Value": "24/7",
+    "m3Label": "Automated decisions, no human in the loop",
+    "m4Value": "30 days",
+    "m4Label": "From idea to a working system"
   },
   "socialProof": {
     "metric1": "2+ years building software",
@@ -30,14 +41,14 @@
   "services": {
     "title": "What we build",
     "subtitle": "Four capabilities, each executed with depth and precision.",
-    "s1Title": "Custom Internal Apps",
-    "s1Desc": "Tailored platforms that replace spreadsheets and disconnected tools with unified systems built around your actual workflows.",
-    "s2Title": "AI Automation",
-    "s2Desc": "Intelligent workflows that automate repetitive decisions, process documents, and extract insights from your operational data.",
-    "s3Title": "Websites & Digital Platforms",
-    "s3Desc": "High-performance websites and web applications designed to convert visitors, communicate your value, and scale with your business.",
-    "s4Title": "Tech Consulting",
-    "s4Desc": "Strategic guidance on architecture, tooling, and technology decisions. We help you build the right thing before you build the thing right."
+    "s1Title": "AI Automation",
+    "s1Desc": "Agents that run real processes: they quote, classify documents, answer customers, and decide. AI that works, not AI that advises.",
+    "s2Title": "Intelligent custom systems",
+    "s2Desc": "ERPs, CRMs, and platforms with AI built into the core, not bolted on top. Like OPAI.",
+    "s3Title": "Websites that sell",
+    "s3Desc": "Fast, SEO-first, with AI that qualifies leads 24/7. Design that turns visitors into customers.",
+    "s4Title": "AI Consulting",
+    "s4Desc": "What to automate, what not to, and in what order. With prototypes, not slide decks."
   },
   "showcase": {
     "title": "OPAI",

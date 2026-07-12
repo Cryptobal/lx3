@@ -5,6 +5,7 @@ import { Plus_Jakarta_Sans, Inter, JetBrains_Mono } from "next/font/google";
 import { notFound } from "next/navigation";
 import { routing } from "@/lib/i18n/routing";
 import { Analytics } from "@vercel/analytics/next";
+import { MotionConfig } from "framer-motion";
 import { generateLocalBusinessSchema } from "@/lib/seo";
 
 const jakarta = Plus_Jakarta_Sans({
@@ -113,7 +114,7 @@ export default async function LocaleLayout({
         className={`${jakarta.variable} ${inter.variable} ${jetbrains.variable} grain-overlay min-h-screen bg-background font-sans text-foreground antialiased`}
       >
         <NextIntlClientProvider messages={messages}>
-          {children}
+          <MotionConfig reducedMotion="user">{children}</MotionConfig>
         </NextIntlClientProvider>
         <Analytics />
         <script

@@ -2,7 +2,6 @@ import type { Metadata } from 'next'
 
 const BASE_URL = 'https://www.lx3.ai'
 const SITE_NAME = 'LX3 — Desarrollo Web & Software Chile'
-const DEFAULT_OG_IMAGE = '/opengraph-image'
 
 // ── EN slug mappings (shared with sitemap.ts) ──────────────────────────────
 export const SERVICE_EN_SLUGS: Record<string, string> = {
@@ -12,18 +11,10 @@ export const SERVICE_EN_SLUGS: Record<string, string> = {
   'posicionamiento-web': 'seo',
   'landing-pages': 'landing-pages',
   'sistema-cotizaciones': 'quoting-system',
-  'desarrollo-fullstack': 'fullstack-development',
-  'ecommerce-medida': 'custom-ecommerce',
   'aplicaciones-internas': 'internal-apps',
   'automatizacion-ia': 'ai-automation',
   'sitios-web': 'websites',
   'consultoria': 'consulting',
-}
-
-export const GEO_EN_PREFIXES: Record<string, string> = {
-  'desarrollo-web': 'web-development',
-  'software-a-medida': 'custom-software',
-  'crm-personalizado': 'custom-crm',
 }
 
 /** Build self-referencing canonical + hreflang alternates for any page pair */
@@ -104,35 +95,6 @@ export function generateIndustryMetadata(
       locale: locale === 'en' ? 'en_US' : 'es_CL',
       type: 'website',
       images: [{ url: `${BASE_URL}/og/soluciones/${page.slug}.png`, width: 1200, height: 630 }],
-    },
-  }
-}
-
-export function generatePriceMetadata(
-  page: {
-    title: string
-    slug: string
-    keyword: string
-    range: string
-  },
-  locale = 'es',
-): Metadata {
-  const description = `${page.title} en Chile. ${page.range}. Precios transparentes, sin letra chica. Cotiza al instante en lx3.ai.`
-  const esPath = `/es/precio/${page.slug}`
-  const enPath = `/en/pricing/${page.slug}`
-  const alts = localeAlternates(locale, esPath, enPath)
-  return {
-    title: `${page.title} 2026 | Precios Reales — LX3`,
-    description,
-    keywords: [page.keyword, `precio ${page.slug} Chile`, `cuánto cuesta ${page.slug} Chile`],
-    alternates: alts,
-    openGraph: {
-      title: `${page.title} 2026 | Precios Reales — LX3`,
-      description,
-      url: alts.canonical,
-      siteName: SITE_NAME,
-      locale: locale === 'en' ? 'en_US' : 'es_CL',
-      type: 'website',
     },
   }
 }

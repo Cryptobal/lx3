@@ -106,6 +106,7 @@ function InternalAppsContent() {
 
       <ServicePageSections
         serviceKey="internalApps"
+        serviceName="Aplicaciones internas a medida"
         ctaKey="ctaInternalApps"
         relatedLinks={[
           { path: { es: "blog/erp-a-medida-vs-sap-vs-odoo-comparativa", en: "blog/erp-a-medida-vs-sap-vs-odoo-comparativa" }, labelKey: "internalApps.related1Label" },

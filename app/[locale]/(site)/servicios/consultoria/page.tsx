@@ -106,6 +106,7 @@ function ConsultingContent() {
 
       <ServicePageSections
         serviceKey="consulting"
+        serviceName="Consultoría tecnológica"
         ctaKey="ctaConsulting"
         relatedLinks={[
           { path: { es: "blog/software-a-medida-vs-saas-que-conviene", en: "blog/software-a-medida-vs-saas-que-conviene" }, labelKey: "consulting.related1Label" },

@@ -107,6 +107,9 @@ function WebsitesContent() {
       <ServicePageSections
         serviceKey="websites"
         ctaKey="ctaWebsites"
+        serviceName="Sitios web profesionales"
+        showPricing
+        priceRange="Desde $490.000 CLP"
         relatedLinks={[
           { path: { es: "blog/como-elegir-empresa-desarrollo-software", en: "blog/como-elegir-empresa-desarrollo-software" }, labelKey: "websites.related1Label" },
           { path: { es: "casos/gard-sitio-web", en: "cases/gard-website" }, labelKey: "websites.related2Label" },

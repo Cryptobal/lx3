@@ -5,13 +5,11 @@ import { useForm } from "react-hook-form";
 import { useTranslations } from "next-intl";
 import { z } from "zod";
 
+// Low-friction form: only the 3 fields that matter (name, email, the ask).
 const contactSchema = z.object({
   name: z.string().min(1, "Nombre es requerido"),
-  company: z.string().min(1, "Empresa es requerida"),
   email: z.string().email("Email invalido"),
-  phone: z.string().optional(),
   message: z.string().min(1, "Mensaje es requerido"),
-  source: z.string().optional(),
 });
 
 type ContactFormData = z.infer<typeof contactSchema>;
@@ -103,23 +101,6 @@ export function ContactForm() {
         )}
       </div>
 
-      {/* Empresa */}
-      <div>
-        <label htmlFor="company" className="mb-2 block text-sm font-medium text-[var(--text-secondary)]">
-          {t("formCompany")} *
-        </label>
-        <input
-          id="company"
-          type="text"
-          {...register("company", { required: true })}
-          className="w-full rounded-lg border border-[var(--border-default)] bg-[var(--bg-elevated)] px-4 py-3 text-[var(--text-primary)] placeholder-[var(--text-tertiary)] outline-none transition-colors focus:border-[var(--accent)] focus:ring-1 focus:ring-[var(--accent)]"
-          placeholder={t("formCompany")}
-        />
-        {errors.company && (
-          <p className="mt-1 text-sm text-red-400">Campo requerido</p>
-        )}
-      </div>
-
       {/* Email */}
       <div>
         <label htmlFor="email" className="mb-2 block text-sm font-medium text-[var(--text-secondary)]">
@@ -142,21 +123,7 @@ export function ContactForm() {
         )}
       </div>
 
-      {/* Telefono */}
-      <div>
-        <label htmlFor="phone" className="mb-2 block text-sm font-medium text-[var(--text-secondary)]">
-          {t("formPhone")}
-        </label>
-        <input
-          id="phone"
-          type="text"
-          {...register("phone")}
-          className="w-full rounded-lg border border-[var(--border-default)] bg-[var(--bg-elevated)] px-4 py-3 text-[var(--text-primary)] placeholder-[var(--text-tertiary)] outline-none transition-colors focus:border-[var(--accent)] focus:ring-1 focus:ring-[var(--accent)]"
-          placeholder="+56 9 1234 5678"
-        />
-      </div>
-
-      {/* Mensaje */}
+      {/* ¿Qué quieres resolver / automatizar? */}
       <div>
         <label htmlFor="message" className="mb-2 block text-sm font-medium text-[var(--text-secondary)]">
           {t("formMessage")} *
@@ -173,35 +140,6 @@ export function ContactForm() {
         )}
       </div>
 
-      {/* Como nos encontraste */}
-      <div>
-        <label htmlFor="source" className="mb-2 block text-sm font-medium text-[var(--text-secondary)]">
-          {t("formHow")}
-        </label>
-        <select
-          id="source"
-          {...register("source")}
-          className="w-full rounded-lg border border-[var(--border-default)] bg-[var(--bg-elevated)] px-4 py-3 text-[var(--text-primary)] outline-none transition-colors focus:border-[var(--accent)] focus:ring-1 focus:ring-[var(--accent)]"
-          defaultValue=""
-        >
-          <option value="" disabled className="bg-[var(--bg-primary)] text-[var(--text-secondary)]">
-            --
-          </option>
-          <option value="google" className="bg-[var(--bg-primary)]">
-            {t("formHowOptions.google")}
-          </option>
-          <option value="linkedin" className="bg-[var(--bg-primary)]">
-            {t("formHowOptions.linkedin")}
-          </option>
-          <option value="referral" className="bg-[var(--bg-primary)]">
-            {t("formHowOptions.referral")}
-          </option>
-          <option value="other" className="bg-[var(--bg-primary)]">
-            {t("formHowOptions.other")}
-          </option>
-        </select>
-      </div>
-
       {/* Error message */}
       {status === "error" && errorMessage && (
         <div className="rounded-lg border border-red-500/20 bg-red-500/5 px-4 py-3">
@@ -209,11 +147,16 @@ export function ContactForm() {
         </div>
       )}
 
+      {/* Social proof over the CTA */}
+      <p className="text-sm text-[var(--text-tertiary)]">
+        El equipo que construyó OPAI — 500+ guardias gestionados con IA.
+      </p>
+
       {/* Submit */}
       <button
         type="submit"
         disabled={status === "loading"}
-        className="w-full rounded-lg bg-gradient-to-r from-[var(--accent)] to-[var(--coral)] px-6 py-3 text-sm font-medium text-[var(--text-primary)] shadow-lg shadow-[var(--accent-glow)] transition-all duration-200 hover:shadow-xl hover:shadow-[var(--accent-glow)] hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-50"
+        className="w-full rounded-lg bg-gradient-to-r from-[var(--accent)] to-[var(--coral)] px-6 py-3 text-sm font-medium text-[var(--text-primary)] shadow-lg shadow-[var(--accent-glow)] transition-all duration-200 hover:shadow-xl hover:shadow-[var(--accent-glow)] hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg-primary)] disabled:cursor-not-allowed disabled:opacity-50"
       >
         {status === "loading" ? (
           <span className="flex items-center justify-center gap-2">

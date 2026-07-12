@@ -20,9 +20,7 @@ const megaMenuData = {
           { href: "/servicios/sitios-web", label: "Sitios Web" },
           { href: "/servicios/desarrollo-web", label: "Desarrollo Web" },
           { href: "/servicios/landing-pages", label: "Landing Pages" },
-          { href: "/servicios/desarrollo-fullstack", label: "Desarrollo Fullstack" },
           { href: "/servicios/tienda-online", label: "Tienda Online" },
-          { href: "/servicios/ecommerce-medida", label: "E-commerce a Medida" },
         ],
       },
       {
@@ -66,12 +64,12 @@ const megaMenuData = {
       {
         title: "Por servicio",
         links: [
-          { href: "/precio/pagina-web", label: "Página Web" },
-          { href: "/precio/desarrollo-web", label: "Aplicaciones Web" },
-          { href: "/precio/software-empresarial", label: "Software Empresarial" },
-          { href: "/precio/crm", label: "CRM" },
-          { href: "/precio/tienda-online", label: "Tienda Online" },
-          { href: "/precio/seo", label: "SEO Mensual" },
+          { href: "/servicios/sitios-web", label: "Página Web" },
+          { href: "/servicios/desarrollo-web", label: "Aplicaciones Web" },
+          { href: "/servicios/software-a-medida", label: "Software Empresarial" },
+          { href: "/servicios/crm-personalizado", label: "CRM" },
+          { href: "/servicios/tienda-online", label: "Tienda Online" },
+          { href: "/servicios/posicionamiento-web", label: "SEO Mensual" },
         ],
       },
     ],

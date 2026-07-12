@@ -106,6 +106,7 @@ function AiAutomationContent() {
 
       <ServicePageSections
         serviceKey="aiAutomation"
+        serviceName="Automatización con IA"
         ctaKey="ctaAiAutomation"
         relatedLinks={[
           { path: { es: "blog/agentes-de-ia-para-empresas-casos-uso", en: "blog/agentes-de-ia-para-empresas-casos-uso" }, labelKey: "aiAutomation.related1Label" },

@@ -8,8 +8,6 @@ export type ServiceSlug =
   | 'automatizacion-ia'
   | 'landing-pages'
   | 'sistema-cotizaciones'
-  | 'desarrollo-fullstack'
-  | 'ecommerce-medida'
   | 'chatbot-ia'
 
 export type IndustrySlug =
@@ -51,7 +49,7 @@ export const SERVICE_PAGES: ServicePage[] = [
     h1: 'Desarrollo web profesional en Chile',
     keywords: ['desarrollo web Chile', 'empresa de desarrollo web Santiago', 'desarrollo web full stack Chile', 'agencia de desarrollo web Chile'],
     faq: [
-      { q: '¿Cuánto cuesta una página web en Chile?', a: 'El costo varía según complejidad. Una landing page parte desde $390.000 CLP y una aplicación web a medida desde $1.900.000 CLP. Usa nuestro cotizador instantáneo para obtener un precio en menos de 2 minutos.' },
+      { q: '¿Cuánto cuesta una página web en Chile?', a: 'El costo varía según complejidad. Una landing page parte desde $490.000 CLP y una web a medida desde $2.500.000 CLP. Usa nuestro cotizador instantáneo para obtener un precio en menos de 2 minutos.' },
       { q: '¿Cuánto demora el desarrollo web?', a: 'Una página corporativa toma 2-3 semanas. Una aplicación web completa entre 6-12 semanas dependiendo del alcance.' },
       { q: '¿Trabajan con empresas de todas las industrias?', a: 'Sí. Tenemos experiencia en seguridad, salud, logística, retail y pymes. Cada proyecto es personalizado.' },
     ],
@@ -80,7 +78,7 @@ export const SERVICE_PAGES: ServicePage[] = [
     keywords: ['software personalizado para empresas', 'desarrollo de software a medida Chile', 'empresa de software Chile', 'sistema web para empresas Chile', 'software empresarial a medida precio'],
     faq: [
       { q: '¿Qué es el software a medida y por qué lo necesito?', a: 'Es un sistema diseñado específicamente para tus procesos. A diferencia del software genérico (como SAP), se adapta exactamente a cómo opera tu empresa, reduciendo costos de capacitación y errores.' },
-      { q: '¿Cuánto cuesta un sistema a medida en Chile?', a: 'Un sistema web básico parte desde $1.900.000 CLP. Sistemas empresariales complejos se presupuestan tras un diagnóstico.' },
+      { q: '¿Cuánto cuesta un sistema a medida en Chile?', a: 'El software a medida parte desde $3.000.000 CLP. Sistemas empresariales complejos se presupuestan tras un diagnóstico.' },
       { q: '¿Me entregan el código fuente?', a: 'Sí. Tienes propiedad total del código. Puedes modificarlo o darle mantenimiento con cualquier desarrollador.' },
     ],
     relatedSlugs: ['crm-personalizado', 'desarrollo-web', 'sistema-cotizaciones'],
@@ -109,9 +107,9 @@ export const SERVICE_PAGES: ServicePage[] = [
     faq: [
       { q: '¿Incluye integración con Webpay?', a: 'Sí, todas nuestras tiendas online incluyen integración con Transbank Webpay Plus para pagos con tarjeta de crédito, débito y prepago.' },
       { q: '¿Puedo administrar los productos yo mismo?', a: 'Sí. Te entregamos un panel de administración donde puedes agregar, editar y gestionar productos, pedidos e inventario sin saber programar.' },
-      { q: '¿Cuánto cuesta una tienda online en Chile?', a: 'Una tienda online parte desde $890.000 CLP. Incluye diseño, desarrollo, integración Webpay y capacitación.' },
+      { q: '¿Cuánto cuesta una tienda online en Chile?', a: 'Una tienda online parte desde $1.490.000 CLP. Incluye diseño, desarrollo, integración Webpay y capacitación.' },
     ],
-    relatedSlugs: ['desarrollo-web', 'ecommerce-medida', 'aplicaciones-ia'],
+    relatedSlugs: ['desarrollo-web', 'software-a-medida', 'aplicaciones-ia'],
   },
   {
     slug: 'posicionamiento-web',
@@ -179,32 +177,6 @@ export const SERVICE_PAGES: ServicePage[] = [
     ],
     relatedSlugs: ['crm-personalizado', 'software-a-medida'],
   },
-  {
-    slug: 'desarrollo-fullstack',
-    title: 'Desarrollo Full Stack Chile',
-    metaTitle: 'Desarrollo Full Stack Chile | React, Next.js, Node.js — LX3',
-    metaDescription: 'Desarrollo full stack en Chile con React, Next.js, TypeScript y Node.js. Aplicaciones escalables, APIs REST y sistemas en la nube. Equipo senior.',
-    h1: 'Desarrollo full stack en Chile',
-    keywords: ['desarrollo web full stack Chile', 'aplicaciones web con React y Next.js', 'desarrollo Next.js Chile', 'desarrollo React Chile', 'programador Node.js Chile'],
-    faq: [
-      { q: '¿Qué tecnologías usan?', a: 'Next.js, React, TypeScript, Node.js, PostgreSQL (Neon), Tailwind CSS, Prisma ORM y Vercel. Tecnologías modernas y mantenibles.' },
-      { q: '¿Pueden mantener un proyecto existente?', a: 'Sí. También tomamos proyectos legados para modernizarlos o agregarles nuevas funcionalidades.' },
-    ],
-    relatedSlugs: ['desarrollo-web', 'software-a-medida', 'aplicaciones-ia'],
-  },
-  {
-    slug: 'ecommerce-medida',
-    title: 'E-commerce a Medida Chile',
-    metaTitle: 'E-commerce a Medida Chile | Marketplace y Tiendas Avanzadas — LX3',
-    metaDescription: 'Desarrollo de plataformas e-commerce y marketplace a medida en Chile. Multi-vendedor, integraciones logísticas y pagos. Escalable desde el primer día.',
-    h1: 'E-commerce y marketplace a medida en Chile',
-    keywords: ['ecommerce a medida Chile', 'marketplace a medida Chile', 'plataforma de ventas online Chile', 'desarrollo tienda online profesional'],
-    faq: [
-      { q: '¿Pueden hacer un marketplace multi-vendedor?', a: 'Sí. Desarrollamos plataformas donde múltiples vendedores publican sus productos, con gestión de comisiones y pagos separados.' },
-      { q: '¿Qué diferencia un e-commerce a medida de Shopify?', a: 'Total control, sin cobros por transacción, funcionalidades exactas a tu negocio y propiedad del código. Shopify es ideal para comenzar; cuando crecer, necesitas solución propia.' },
-    ],
-    relatedSlugs: ['tienda-online', 'software-a-medida'],
-  },
 ]
 
 export const INDUSTRY_PAGES: IndustryPage[] = [
@@ -231,7 +203,7 @@ export const INDUSTRY_PAGES: IndustryPage[] = [
     metaTitle: 'Software para Empresas de Logística Chile | Sistemas a Medida — LX3',
     metaDescription: 'Sistemas de gestión logística a medida en Chile. Control de flota, rutas, inventario y entregas. Integración con plataformas existentes.',
     h1: 'Software de logística a medida en Chile',
-    keywords: ['software para logística Chile', 'automatización de procesos empresariales Chile'],
+    keywords: ['software para logística Chile', 'sistema de gestión logística Chile', 'control de flota y rutas Chile'],
   },
   {
     slug: 'pymes',
@@ -239,7 +211,7 @@ export const INDUSTRY_PAGES: IndustryPage[] = [
     metaTitle: 'Software y Páginas Web para Pymes Chile | Soluciones Asequibles — LX3',
     metaDescription: 'Soluciones digitales para pymes chilenas. Páginas web, CRM, tiendas online y automatización a precios accesibles. Cotiza al instante.',
     h1: 'Soluciones digitales para pymes en Chile',
-    keywords: ['CRM para pymes Chile', 'SEO para pymes Chile', 'plataforma de ventas para pymes', 'soluciones de IA para pymes'],
+    keywords: ['software para pymes Chile', 'digitalización pymes Chile', 'IA para pymes Chile', 'plataforma de ventas para pymes'],
   },
   {
     slug: 'constructoras',
@@ -263,15 +235,7 @@ export const INDUSTRY_PAGES: IndustryPage[] = [
     metaTitle: 'E-commerce para Retail Chile | Tiendas Online Profesionales — LX3',
     metaDescription: 'Plataformas de venta online para retail en Chile. Webpay, gestión de inventario, despacho integrado. Escala sin límites.',
     h1: 'E-commerce y retail digital en Chile',
-    keywords: ['tienda online con Webpay Chile', 'ecommerce a medida Chile', 'creo tienda virtual Chile'],
+    keywords: ['ecommerce para retail Chile', 'plataforma de venta para retail Chile', 'creo tienda virtual Chile'],
   },
 ]
 
-export const PRICE_PAGES = [
-  { slug: 'pagina-web', title: 'Precio Página Web Chile', keyword: 'precio página web corporativa Chile', range: '$390.000 — $1.490.000 CLP' },
-  { slug: 'desarrollo-web', title: 'Precio Desarrollo Web Chile', keyword: 'cuánto cuesta una página web en Chile', range: '$490.000 — $2.900.000 CLP' },
-  { slug: 'software-empresarial', title: 'Precio Software Empresarial Chile', keyword: 'software empresarial a medida precio', range: '$1.900.000 — $9.900.000 CLP' },
-  { slug: 'crm', title: 'Precio CRM Personalizado Chile', keyword: 'CRM barato para empresas Chile', range: '$1.490.000 — $4.900.000 CLP' },
-  { slug: 'tienda-online', title: 'Precio Tienda Online Chile', keyword: 'tienda online Chile precio', range: '$890.000 — $2.900.000 CLP' },
-  { slug: 'seo', title: 'Precio SEO Chile', keyword: 'agencia SEO Chile precio', range: '$290.000 — $890.000 CLP/mes' },
-]

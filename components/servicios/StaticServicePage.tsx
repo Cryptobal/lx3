@@ -1,47 +1,21 @@
-import type { Metadata } from "next";
-import { setRequestLocale } from "next-intl/server";
-import { notFound } from "next/navigation";
 import { JsonLd } from "@/components/shared/JsonLd";
 import { SectionWrapper } from "@/components/shared/SectionWrapper";
 import { AnimateOnScroll } from "@/components/shared/AnimateOnScroll";
 import { SEOPageHero } from "@/components/seo-pages/SEOPageHero";
 import { FAQSection } from "@/components/seo-pages/FAQSection";
 import { InlineCTA } from "@/components/seo-pages/InlineCTA";
+import { ServicePricing } from "@/components/shared/ServicePricing";
+import { ServiceCoverage } from "@/components/shared/ServiceCoverage";
 import { Link } from "@/lib/i18n/routing";
 import { CheckCircle2 } from "lucide-react";
-import { getServicePageData } from "@/data/service-pages";
-import { localeAlternates, SERVICE_EN_SLUGS } from "@/lib/seo";
+import type { ServicePageData } from "@/data/service-pages";
 
-const SLUG = "ecommerce-medida";
-
-export async function generateMetadata({
-  params,
-}: {
-  params: Promise<{ locale: string }>;
-}): Promise<Metadata> {
-  const { locale } = await params;
-  const data = getServicePageData(SLUG);
-  if (!data) return {};
-
-  const enSlug = SERVICE_EN_SLUGS[SLUG] ?? SLUG;
-  return {
-    title: `${data.title} | LX3`,
-    description: data.subtitle,
-    alternates: localeAlternates(locale, `/es/servicios/${SLUG}`, `/en/services/${enSlug}`),
-  };
-}
-
-export default async function ServicePage({
-  params,
-}: {
-  params: Promise<{ locale: string }>;
-}) {
-  const { locale } = await params;
-  setRequestLocale(locale);
-
-  const data = getServicePageData(SLUG);
-  if (!data) notFound();
-
+/**
+ * Shared layout for the static, content-rich service pages (driven by
+ * data/service-pages.ts). Extracted so every service page carries the same
+ * pricing block and Chile-wide coverage section without per-file duplication.
+ */
+export function StaticServicePage({ data }: { data: ServicePageData }) {
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Service",
@@ -143,8 +117,14 @@ export default async function ServicePage({
         </AnimateOnScroll>
       </SectionWrapper>
 
+      {/* Pricing block (canonical pricing + cotizador CTA) */}
+      <ServicePricing priceRange={data.priceRange} />
+
       {/* FAQs */}
       <FAQSection faqs={data.faqs} />
+
+      {/* Chile-wide coverage + LocalBusiness schema */}
+      <ServiceCoverage service={data.title} />
 
       {/* Related services */}
       <SectionWrapper>

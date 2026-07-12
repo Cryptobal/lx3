@@ -237,8 +237,8 @@ const solutionPages: SolutionPageData[] = [
           "TMS, WMS y sistemas de despacho adaptados a tu operación logística.",
       },
       {
-        href: "/servicios/desarrollo-fullstack",
-        label: "Desarrollo Full-Stack",
+        href: "/servicios/desarrollo-web",
+        label: "Desarrollo Web Full-Stack",
         description:
           "Plataformas completas con backend robusto, APIs y frontends para operadores y clientes.",
       },
@@ -593,10 +593,10 @@ const solutionPages: SolutionPageData[] = [
           "E-commerce profesional con integración Transbank, gestión de inventario y experiencia de compra optimizada.",
       },
       {
-        href: "/servicios/ecommerce-medida",
-        label: "E-commerce a Medida",
+        href: "/servicios/software-a-medida",
+        label: "Software a Medida",
         description:
-          "Plataformas de comercio electrónico con funcionalidades específicas para tu tipo de retail.",
+          "Plataformas de comercio y gestión con funcionalidades específicas para tu tipo de retail.",
       },
       {
         href: "/servicios/crm-personalizado",

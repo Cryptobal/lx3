@@ -5,11 +5,11 @@ import Link from 'next/link'
 const servicesByIndustry: Record<string, string[]> = {
   'empresas-seguridad': ['software-a-medida', 'crm-personalizado', 'sistema-cotizaciones'],
   clinicas: ['desarrollo-web', 'sistema-cotizaciones', 'automatizacion-ia'],
-  logistica: ['software-a-medida', 'automatizacion-ia', 'desarrollo-fullstack'],
+  logistica: ['software-a-medida', 'automatizacion-ia', 'desarrollo-web'],
   pymes: ['crm-personalizado', 'tienda-online', 'posicionamiento-web'],
   constructoras: ['desarrollo-web', 'software-a-medida', 'sistema-cotizaciones'],
   restaurantes: ['desarrollo-web', 'tienda-online', 'landing-pages'],
-  retail: ['tienda-online', 'ecommerce-medida', 'posicionamiento-web'],
+  retail: ['tienda-online', 'software-a-medida', 'posicionamiento-web'],
 }
 
 export default function IndustryServices({ industrySlug }: { industrySlug: string }) {

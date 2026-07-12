@@ -5,6 +5,8 @@ import Link from "next/link";
 import { SectionWrapper } from "@/components/shared/SectionWrapper";
 import { AnimateOnScroll } from "@/components/shared/AnimateOnScroll";
 import { CTAButton } from "@/components/shared/CTAButton";
+import { ServicePricing } from "@/components/shared/ServicePricing";
+import { ServiceCoverage } from "@/components/shared/ServiceCoverage";
 import { CheckCircle2, MessageCircle } from "lucide-react";
 
 type ServiceKey = "internalApps" | "aiAutomation" | "websites" | "consulting";
@@ -18,12 +20,20 @@ interface ServicePageSectionsProps {
   serviceKey: ServiceKey;
   ctaKey: string;
   relatedLinks: RelatedLink[];
+  /** Human-readable service name, used in the coverage schema. */
+  serviceName?: string;
+  /** Render the canonical pricing block (for pages with a price intent). */
+  showPricing?: boolean;
+  priceRange?: string;
 }
 
 export function ServicePageSections({
   serviceKey,
   ctaKey,
   relatedLinks,
+  serviceName,
+  showPricing = false,
+  priceRange,
 }: ServicePageSectionsProps) {
   const t = useTranslations("servicesPage");
   const locale = useLocale() as "es" | "en";
@@ -90,6 +100,12 @@ export function ServicePageSections({
           </div>
         </AnimateOnScroll>
       </SectionWrapper>
+
+      {/* Pricing block (canonical pricing + cotizador CTA) */}
+      {showPricing && <ServicePricing priceRange={priceRange} />}
+
+      {/* Chile-wide coverage + LocalBusiness schema */}
+      <ServiceCoverage service={serviceName ?? "Software y desarrollo a medida"} />
 
       {/* Related links */}
       {relatedLinks.length > 0 && (

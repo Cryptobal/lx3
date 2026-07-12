@@ -1,22 +1,22 @@
 import { useTranslations } from "next-intl";
 import { SectionWrapper } from "@/components/shared/SectionWrapper";
 import { Link } from "@/lib/i18n/routing";
-import { Monitor, Zap, Globe, Compass, ArrowUpRight } from "lucide-react";
+import { Cpu, Zap, Globe, Compass, ArrowUpRight } from "lucide-react";
 
 const cards = [
   {
-    icon: Monitor,
+    icon: Zap,
     titleKey: "s1Title" as const,
     descKey: "s1Desc" as const,
-    link: "/servicios/aplicaciones-internas" as const,
-    accent: "var(--accent)",
-  },
-  {
-    icon: Zap,
-    titleKey: "s2Title" as const,
-    descKey: "s2Desc" as const,
     link: "/servicios/automatizacion-ia" as const,
     accent: "var(--coral)",
+  },
+  {
+    icon: Cpu,
+    titleKey: "s2Title" as const,
+    descKey: "s2Desc" as const,
+    link: "/servicios/software-a-medida" as const,
+    accent: "var(--accent)",
   },
   {
     icon: Globe,
@@ -57,7 +57,7 @@ export function Services() {
             return (
               <Link
                 key={i}
-                href={card.link}
+                href={card.link as "/"}
                 className="group relative rounded-[14px] border border-[var(--border-subtle)] bg-[var(--bg-elevated)] p-8 transition-all duration-300 hover:-translate-y-1"
                 style={
                   {

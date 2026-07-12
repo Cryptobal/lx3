@@ -6,6 +6,8 @@ import ServiceBody from '@/components/servicios/ServiceBody'
 import ServiceFAQ from '@/components/servicios/ServiceFAQ'
 import ServiceCTA from '@/components/servicios/ServiceCTA'
 import ServiceRelated from '@/components/servicios/ServiceRelated'
+import { ServicePricing } from '@/components/shared/ServicePricing'
+import { ServiceCoverage } from '@/components/shared/ServiceCoverage'
 
 // Filter out slugs that conflict with existing static directories
 const EXISTING_STATIC_DIRS = [
@@ -14,9 +16,7 @@ const EXISTING_STATIC_DIRS = [
   'consultoria',
   'sitios-web',
   'crm-personalizado',
-  'desarrollo-fullstack',
   'desarrollo-web',
-  'ecommerce-medida',
   'landing-pages',
   'posicionamiento-web',
   'sistema-cotizaciones',
@@ -50,7 +50,9 @@ export default async function ServicioPage({ params }: { params: Promise<{ slug:
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
       <ServiceHero page={page} />
       <ServiceBody page={page} />
+      <ServicePricing />
       <ServiceFAQ faq={page.faq} />
+      <ServiceCoverage service={page.title} />
       <ServiceCTA slug={page.slug} />
       <ServiceRelated slugs={page.relatedSlugs} />
     </>

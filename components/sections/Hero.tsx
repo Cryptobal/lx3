@@ -27,7 +27,14 @@ const item = {
 
 export function Hero() {
   const t = useTranslations("hero");
-  const tSocial = useTranslations("socialProof");
+  const tProof = useTranslations("proofBar");
+
+  const proofMetrics = [
+    { value: tProof("m1Value"), label: tProof("m1Label"), color: "var(--coral)" },
+    { value: tProof("m2Value"), label: tProof("m2Label"), color: "var(--accent)" },
+    { value: tProof("m3Value"), label: tProof("m3Label"), color: "var(--green)" },
+    { value: tProof("m4Value"), label: tProof("m4Label"), color: "var(--accent)" },
+  ];
 
   return (
     <section className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden">
@@ -52,7 +59,7 @@ export function Hero() {
           <div className="mb-8 inline-flex items-center gap-2.5 rounded-full border border-[var(--coral)]/20 bg-[var(--coral)]/5 px-5 py-2">
             <div className="pulse-dot h-2 w-2 rounded-full bg-[var(--coral)]" />
             <span className="font-mono text-xs font-medium tracking-widest text-[var(--coral)]">
-              Software Studio &middot; Santiago, Chile
+              {t("badge")}
             </span>
           </div>
         </motion.div>
@@ -79,52 +86,32 @@ export function Hero() {
           variants={item}
           className="mt-12 flex flex-col gap-4 sm:flex-row"
         >
-          <CTAButton href="/contacto" variant="primary" size="lg">
+          <CTAButton href="/cotiza" variant="primary" size="lg">
             {t("ctaPrimary")}
           </CTAButton>
-          <CTAButton href="/casos" variant="ghost" size="lg">
+          <CTAButton href="/casos/opai-gard-security" variant="ghost" size="lg">
             {t("ctaSecondary")}
           </CTAButton>
         </motion.div>
 
-        {/* Stats bar */}
+        {/* Proof bar — AI in production */}
         <motion.div
           variants={item}
-          className="mt-16 flex flex-col items-center gap-6 sm:flex-row sm:gap-0"
+          className="mt-16 grid w-full max-w-3xl grid-cols-2 gap-x-8 gap-y-6 sm:grid-cols-4"
         >
-          {/* Metric 1 - blue */}
-          <div className="flex items-center gap-3">
-            <span className="font-mono text-sm font-semibold text-[var(--accent)]">
-              2+ a&ntilde;os
-            </span>
-            <span className="text-sm text-[var(--text-tertiary)]">
-              {tSocial("metric1").replace(/^2\+\s*años\s*/, "")}
-            </span>
-          </div>
-
-          <div className="hidden h-4 w-px bg-[var(--border-default)] sm:mx-10 sm:block" />
-
-          {/* Metric 2 - coral */}
-          <div className="flex items-center gap-3">
-            <span className="font-mono text-sm font-semibold text-[var(--coral)]">
-              20+ m&oacute;dulos
-            </span>
-            <span className="text-sm text-[var(--text-tertiary)]">
-              {tSocial("metric2").replace(/^20\+\s*módulos\s*/, "")}
-            </span>
-          </div>
-
-          <div className="hidden h-4 w-px bg-[var(--border-default)] sm:mx-10 sm:block" />
-
-          {/* Metric 3 - green */}
-          <div className="flex items-center gap-3">
-            <span className="font-mono text-sm font-semibold text-[var(--green)]">
-              30 d&iacute;as
-            </span>
-            <span className="text-sm text-[var(--text-tertiary)]">
-              MVP
-            </span>
-          </div>
+          {proofMetrics.map((m) => (
+            <div key={m.label} className="flex flex-col items-center text-center">
+              <span
+                className="font-mono text-2xl font-bold"
+                style={{ color: m.color }}
+              >
+                {m.value}
+              </span>
+              <span className="mt-1.5 text-xs leading-snug text-[var(--text-tertiary)]">
+                {m.label}
+              </span>
+            </div>
+          ))}
         </motion.div>
       </motion.div>
 

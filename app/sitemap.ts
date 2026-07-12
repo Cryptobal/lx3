@@ -1,9 +1,8 @@
 import type { MetadataRoute } from "next";
 import { articles } from "@/content/blog";
-import { SERVICE_PAGES, INDUSTRY_PAGES, PRICE_PAGES } from "@/data/keywords";
+import { SERVICE_PAGES, INDUSTRY_PAGES } from "@/data/keywords";
 import { BLOG_POSTS } from "@/data/blog-posts";
-import { getAllGeoSlugs } from "@/data/geo-pages";
-import { SERVICE_EN_SLUGS, GEO_EN_PREFIXES } from "@/lib/seo";
+import { SERVICE_EN_SLUGS } from "@/lib/seo";
 
 const BASE_URL = "https://www.lx3.ai";
 
@@ -76,31 +75,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     alternates: langAlts(`/es/soluciones/${i.slug}`, `/en/solutions/${i.slug}`),
   }));
 
-  // ── SEO price pages (/precio/[slug]) ──────────────────────────────────────
-  const priceRoutes: MetadataRoute.Sitemap = PRICE_PAGES.map((p) => ({
-    url: `${BASE_URL}/es/precio/${p.slug}`,
-    lastModified: now,
-    changeFrequency: "monthly" as const,
-    priority: 0.85,
-    alternates: langAlts(`/es/precio/${p.slug}`, `/en/pricing/${p.slug}`),
-  }));
-
-  // ── Geo service pages (from geo-pages data — single source of truth) ──────
-  const geoServiceTypes = ["desarrollo-web", "software-a-medida", "crm-personalizado"] as const;
-  const geoRoutes: MetadataRoute.Sitemap = geoServiceTypes.flatMap((serviceType) => {
-    const enPrefix = GEO_EN_PREFIXES[serviceType] ?? serviceType;
-    return getAllGeoSlugs(serviceType).map((citySlug) => ({
-      url: `${BASE_URL}/es/${serviceType}/${citySlug}`,
-      lastModified: now,
-      changeFrequency: "monthly" as const,
-      priority: 0.75,
-      alternates: langAlts(
-        `/es/${serviceType}/${citySlug}`,
-        `/en/${enPrefix}/${citySlug}`
-      ),
-    }));
-  });
-
   // ── SEO programmatic blog posts (/seo-blog/[slug]) ────────────────────────
   const seoBlogRoutes: MetadataRoute.Sitemap = BLOG_POSTS.map((p) => ({
     url: `${BASE_URL}/es/seo-blog/${p.slug}`,
@@ -115,8 +89,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...blogPosts,
     ...serviceRoutes,
     ...industryRoutes,
-    ...priceRoutes,
-    ...geoRoutes,
     ...seoBlogRoutes,
   ];
 }

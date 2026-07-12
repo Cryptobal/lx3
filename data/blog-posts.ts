@@ -64,7 +64,7 @@ export const BLOG_POSTS: BlogPost[] = [
       ]},
       { type: 'h2', heading: 'Preguntas frecuentes sobre precios de páginas web en Chile' },
       { type: 'faq', question: '¿Por qué hay tanta diferencia de precios entre proveedores?', answer: 'La diferencia refleja distintas metodologías, tecnologías y niveles de calidad. Una web "barata" puede usar templates de $0 y demorarse 2 días. Una web profesional a medida requiere diseño, desarrollo y testing de calidad.' },
-      { type: 'faq', question: '¿Se puede hacer una página web gratis o muy barata en Chile?', answer: 'Con Wix o Squarespace puedes tener presencia desde $0 hasta $30.000/mes. Sin embargo, si necesitas algo profesional, a medida o que venda, la inversión mínima real parte en $390.000 CLP.' },
+      { type: 'faq', question: '¿Se puede hacer una página web gratis o muy barata en Chile?', answer: 'Con Wix o Squarespace puedes tener presencia desde $0 hasta $30.000/mes. Sin embargo, si necesitas algo profesional, a medida o que venda, la inversión mínima real parte en $490.000 CLP.' },
       { type: 'cta', text: 'Cotiza tu página web en 2 minutos' },
     ],
   },
@@ -184,7 +184,7 @@ export const BLOG_POSTS: BlogPost[] = [
         ['HubSpot Starter', '$0', '$540.000', '$27.000'],
         ['HubSpot Pro', '$0', '$2.700.000', '$135.000'],
         ['Salesforce Essentials', '$0', '$810.000', '$27.000'],
-        ['CRM a medida (LX3)', '$1.490.000 — $4.900.000', '$0 — $290.000 (mantención)', 'Sin costo por usuario'],
+        ['CRM a medida (LX3)', 'Desde $1.490.000', '$0 — $290.000 (mantención)', 'Sin costo por usuario'],
       ]},
       { type: 'h2', heading: '¿Cuándo conviene un CRM a medida?' },
       { type: 'list', items: [

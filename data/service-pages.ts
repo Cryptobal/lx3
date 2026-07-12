@@ -25,7 +25,9 @@ export const servicePages: Record<string, ServicePageData> = {
 
 Cada proyecto comienza con un proceso de discovery donde entendemos tus objetivos, audiencia y métricas de éxito. A partir de ahí, diseñamos en Figma con foco en conversión, desarrollamos con Tailwind CSS v4 para un diseño coherente y sin deuda técnica, e integramos las herramientas que ya usas: WhatsApp Business, Google Analytics, CRMs y plataformas de email marketing. El deploy final se realiza en Vercel, con CDN global, SSL automático y tiempos de respuesta sub-50ms.
 
-A diferencia de agencias que usan WordPress o constructores de arrastrar y soltar, nosotros entregamos código limpio, mantenible y escalable. Esto significa que tu sitio puede crecer — agregar un blog, un sistema de cotizaciones, un área de clientes — sin necesitar rehacerlo desde cero. El resultado: un activo digital que trabaja para tu empresa 24/7, con rendimiento medible y costos de mantenimiento predecibles.`,
+A diferencia de agencias que usan WordPress o constructores de arrastrar y soltar, nosotros entregamos código limpio, mantenible y escalable. Esto significa que tu sitio puede crecer — agregar un blog, un sistema de cotizaciones, un área de clientes — sin necesitar rehacerlo desde cero. El resultado: un activo digital que trabaja para tu empresa 24/7, con rendimiento medible y costos de mantenimiento predecibles.
+
+Cuando el proyecto necesita más que un sitio, cubrimos el stack completo: APIs REST con autenticación y roles, dashboards con datos en tiempo real, portales de clientes e integraciones entre sistemas que hoy no se hablan entre sí (ERP con CRM, POS con e-commerce, sistema legacy con plataforma moderna). No tercerizamos el back-end ni el front-end — manejamos ambas capas con el mismo estándar sobre Next.js, TypeScript, PostgreSQL y Prisma.`,
     features: [
       "Performance sub-segundo medido con Lighthouse y Core Web Vitals",
       "SEO técnico nativo: sitemap automático, metadatos dinámicos, schema markup",
@@ -33,6 +35,8 @@ A diferencia de agencias que usan WordPress o constructores de arrastrar y solta
       "Panel de administración para editar contenido sin desarrolladores",
       "Integración con herramientas: WhatsApp Business, CRM, Google Analytics, email marketing",
       "Deploy automático en Vercel con CDN global y SSL incluido",
+      "Desarrollo full-stack: APIs REST, dashboards en tiempo real e integraciones a medida",
+      "Autenticación y roles avanzados (SSO, SAML) con auditoría de accesos y backups",
     ],
     priceRange: "$490.000 — $2.500.000 CLP",
     forWho: [
@@ -74,6 +78,11 @@ A diferencia de agencias que usan WordPress o constructores de arrastrar y solta
         answer:
           "Sí. Integramos botones de WhatsApp Business, formularios que envían leads a tu CRM (HubSpot, Pipedrive, nuestro CRM propio), y notificaciones automáticas por email o Slack cuando llega un contacto.",
       },
+      {
+        question: "¿Hacen desarrollo full-stack, no solo el sitio?",
+        answer:
+          "Sí. Cubrimos el stack completo: APIs REST con autenticación y roles, dashboards interactivos con datos en tiempo real, portales de clientes e integraciones con ERPs, CRMs y pasarelas de pago. Entregamos el código fuente completo en tu repositorio, sin lock-in.",
+      },
     ],
     relatedServices: [
       { href: "/servicios/sitios-web", label: "Sitios Web Corporativos" },
@@ -102,7 +111,7 @@ La principal ventaja del CRM a medida no es solo el ahorro en licencias — es q
       "Reportes y forecasting con proyecciones de cierre y métricas por vendedor",
       "Usuarios ilimitados sin costo adicional por licencia",
     ],
-    priceRange: "$1.490.000 — $4.900.000 CLP",
+    priceRange: "Desde $1.490.000 CLP",
     forWho: [
       "Equipos comerciales de 5+ personas que gastan más en licencias que en desarrollo",
       "Empresas que pagan más de $500.000 CLP/mes en HubSpot, Salesforce o Pipedrive",
@@ -142,7 +151,7 @@ La principal ventaja del CRM a medida no es solo el ahorro en licencias — es q
     relatedServices: [
       { href: "/servicios/automatizacion-ia", label: "Automatización con IA" },
       { href: "/servicios/aplicaciones-internas", label: "Software a Medida" },
-      { href: "/servicios/desarrollo-fullstack", label: "Desarrollo Fullstack" },
+      { href: "/servicios/desarrollo-web", label: "Desarrollo Web Profesional" },
     ],
     ctaTitle: "¿Cansado de pagar licencias por un CRM que no se adapta a tu negocio?",
   },
@@ -157,7 +166,9 @@ La principal ventaja del CRM a medida no es solo el ahorro en licencias — es q
 
 Cada tienda incluye integración nativa con Webpay Plus (Transbank) y MercadoPago para maximizar la tasa de conversión en el mercado chileno, gestión de inventario por producto y variante (talla, color, etc.), cálculo automático de despacho con Starken y Chilexpress, cupones y promociones configurables, carrito y checkout optimizado para mobile y un panel de administración completo para gestionar pedidos, stock y clientes sin necesitar un desarrollador.
 
-El rendimiento también es diferente: nuestras tiendas cargan en menos de 1 segundo, tienen SEO técnico nativo y están diseñadas para aparecer en Google Shopping. Una tienda que carga en 3 segundos pierde el 40% de sus visitas — cada milisegundo importa cuando hay dinero en juego. Además, al construir sobre Next.js, la tienda puede escalar: agregar más productos, variantes, categorías o incluso un marketplace sin necesidad de migrar de plataforma.`,
+El rendimiento también es diferente: nuestras tiendas cargan en menos de 1 segundo, tienen SEO técnico nativo y están diseñadas para aparecer en Google Shopping. Una tienda que carga en 3 segundos pierde el 40% de sus visitas — cada milisegundo importa cuando hay dinero en juego. Además, al construir sobre Next.js, la tienda puede escalar: agregar más productos, variantes, categorías o incluso un marketplace sin necesidad de migrar de plataforma.
+
+E-commerce avanzado y marketplace: cuando la operación supera lo que Shopify puede resolver, construimos plataformas multi-vendedor (cada vendedor gestiona su catálogo, pedidos y comisiones desde su propio panel), gestión de múltiples bodegas con fulfillment automático, e integración directa con tu ERP y facturación electrónica (SII, Bsale, Defontana, SAP Business One). Para retailers con canal físico y online, unificamos el inventario POS-web para que ambos canales consuman el mismo stock.`,
     features: [
       "Webpay Plus (Transbank) y MercadoPago integrados para el mercado chileno",
       "Gestión de inventario por producto, variante y bodega con alertas de stock bajo",
@@ -165,8 +176,10 @@ El rendimiento también es diferente: nuestras tiendas cargan en menos de 1 segu
       "Integración de despacho con Starken y Chilexpress con cotización automática",
       "Carrito y checkout optimizado para conversión en desktop y mobile",
       "Panel admin completo: pedidos, clientes, reportes de venta y exportación",
+      "Marketplace multi-vendedor con dashboards, comisiones y pagos segregados",
+      "Integración ERP y facturación electrónica, con precios por cliente o segmento B2B",
     ],
-    priceRange: "$890.000 — $2.900.000 CLP",
+    priceRange: "Desde $1.490.000 CLP",
     forWho: [
       "Negocios que venden productos físicos y quieren evitar las comisiones de Shopify",
       "Empresas que quieren vender B2B online con precios diferenciados por cliente",
@@ -202,9 +215,14 @@ El rendimiento también es diferente: nuestras tiendas cargan en menos de 1 segu
         answer:
           "Sí. Podemos configurar precios diferenciados por cliente o empresa, órdenes de compra, términos de pago netos y catálogos privados por segmento de cliente.",
       },
+      {
+        question: "¿Pueden hacer un marketplace multi-vendedor o integrar mi ERP?",
+        answer:
+          "Sí. Construimos marketplaces donde cada vendedor gestiona su catálogo, stock y pedidos con comisiones configurables, y conectamos la tienda con tu ERP (SAP Business One, Bsale, Defontana, Nubox) y facturación electrónica del SII. También integramos POS para unificar inventario físico y online.",
+      },
     ],
     relatedServices: [
-      { href: "/servicios/ecommerce-medida", label: "E-commerce a Medida" },
+      { href: "/servicios/software-a-medida", label: "Software a Medida" },
       { href: "/servicios/posicionamiento-web", label: "Posicionamiento Web SEO" },
       { href: "/servicios/desarrollo-web", label: "Desarrollo Web Profesional" },
     ],
@@ -230,7 +248,7 @@ En LX3 hacemos SEO diferente: no vendemos reportes de métricas de vanidad como 
       "Reportes mensuales transparentes: tráfico, posiciones, leads y próximos pasos",
       "Schema markup avanzado: FAQ, artículos, empresas locales y servicios estructurados",
     ],
-    priceRange: "$290.000 — $890.000 CLP/mes",
+    priceRange: "Desde $290.000 CLP/mes",
     forWho: [
       "Empresas que quieren generar leads orgánicos sin depender de Google Ads",
       "Empresas con sitio web existente pero sin tráfico orgánico relevante",
@@ -399,134 +417,6 @@ Para tu empresa, construimos un sistema similar pero adaptado a tu catálogo, tu
       { href: "/servicios/aplicaciones-internas", label: "Software a Medida" },
     ],
     ctaTitle: "¿Cuántas horas a la semana pierdes cotizando manualmente?",
-  },
-
-  "desarrollo-fullstack": {
-    slug: "desarrollo-fullstack",
-    title: "Desarrollo Fullstack a Medida",
-    titleAccent: "Desarrollo Fullstack",
-    subtitle:
-      "APIs, dashboards, integraciones y sistemas completos. Stack moderno con Next.js, PostgreSQL y deploy en Vercel.",
-    description: `El desarrollo fullstack en LX3 cubre el espectro completo: desde el diseño de la base de datos y la construcción de APIs hasta las interfaces de usuario, los dashboards de datos y las integraciones con sistemas externos. No somos una agencia de front-end que terceriza el back-end, ni un equipo de back-end que entrega productos sin interfaz. Manejamos el stack completo con el mismo estándar de calidad en cada capa.
-
-Los tipos de proyectos que desarrollamos incluyen: APIs REST con autenticación JWT y roles granulares, dashboards interactivos con datos en tiempo real usando WebSockets o Server-Sent Events, portales de clientes con gestión de pedidos y facturación, integraciones entre sistemas que no se "hablan" entre sí (ERP con CRM, POS con e-commerce, sistema legacy con plataforma moderna), y herramientas internas que automatizan procesos que hoy hacen personas manualmente.
-
-Nuestro stack — Next.js 16, TypeScript, PostgreSQL, Prisma ORM, Vercel — no es una elección arbitraria. Es la combinación que permite iterar rápido sin sacrificar calidad: TypeScript elimina una categoría entera de bugs en producción, Prisma hace que los cambios de base de datos sean seguros y auditables, y Vercel ofrece deploy instantáneo con rollback en 30 segundos si algo sale mal. Para tu empresa, esto significa menos bugs, entregas más frecuentes y la capacidad de cambiar de dirección sin reescribir todo.`,
-    features: [
-      "APIs REST y webhooks con documentación automática y autenticación robusta",
-      "Dashboards interactivos con datos en tiempo real y visualizaciones configurables",
-      "Integraciones con sistemas existentes: ERPs, CRMs, pasarelas de pago y APIs de terceros",
-      "Base de datos PostgreSQL con Prisma ORM, migraciones versionadas y backups automáticos",
-      "Autenticación y roles avanzados: SSO, SAML, permisos por recurso y auditoría de accesos",
-      "Deploy automático con CI/CD, entornos de staging y rollback instantáneo en producción",
-    ],
-    priceRange: "$1.490.000 — $5.000.000+ CLP",
-    forWho: [
-      "Empresas que necesitan APIs para integraciones entre sistemas o para exponer datos a socios",
-      "CTOs y equipos técnicos que buscan un partner de desarrollo con alto estándar de calidad",
-      "Empresas con sistemas legacy que necesitan modernizar sin interrumpir la operación actual",
-      "Startups y scale-ups que construyen su primer producto y necesitan un equipo completo",
-    ],
-    process: [
-      "Arquitectura y diseño técnico: diagrama de datos, flujos, integraciones y stack definido",
-      "Desarrollo incremental: sprints de 2 semanas con demos y entrega continua en staging",
-      "Integración y pruebas: pruebas unitarias, de integración y QA en entorno de producción",
-      "Lanzamiento y handover: deploy final, documentación técnica y capacitación del equipo",
-    ],
-    techStack:
-      "Next.js 16, TypeScript, PostgreSQL, Prisma ORM, Redis, Vercel, GitHub Actions, Resend",
-    faqs: [
-      {
-        question: "¿Quién es el dueño del código al final del proyecto?",
-        answer:
-          "Tu empresa. Entregamos el código fuente completo en un repositorio privado de tu cuenta de GitHub u organización. No hay lock-in: puedes continuar el desarrollo con tu equipo interno o con cualquier otro proveedor.",
-      },
-      {
-        question: "¿Pueden trabajar con nuestro equipo de desarrollo interno?",
-        answer:
-          "Sí. Nos integramos al flujo de trabajo de tu equipo: usamos tu repositorio, tus convenciones de código y participamos en los rituales de desarrollo que ya tienen (standups, code reviews, sprints). Podemos ser un equipo de refuerzo o hacernos cargo de módulos específicos.",
-      },
-      {
-        question: "¿Cómo manejan la seguridad y los datos sensibles?",
-        answer:
-          "Seguimos las prácticas de OWASP Top 10 como estándar mínimo: variables de entorno encriptadas, HTTPS forzado, validación de inputs, queries parametrizadas (sin SQL injection posible con Prisma), rate limiting y auditoría de accesos.",
-      },
-      {
-        question: "¿Ofrecen contrato de mantención después del lanzamiento?",
-        answer:
-          "Sí. Ofrecemos contratos de mantención mensual que incluyen monitoreo proactivo, actualizaciones de dependencias de seguridad, soporte ante incidentes y horas de desarrollo para nuevas funcionalidades o ajustes.",
-      },
-    ],
-    relatedServices: [
-      { href: "/servicios/aplicaciones-internas", label: "Software a Medida" },
-      { href: "/servicios/automatizacion-ia", label: "Automatización con IA" },
-      { href: "/servicios/crm-personalizado", label: "CRM Personalizado" },
-    ],
-    ctaTitle: "¿Tienes un sistema complejo que construir? Hablemos.",
-  },
-
-  "ecommerce-medida": {
-    slug: "ecommerce-medida",
-    title: "E-commerce a Medida",
-    titleAccent: "E-commerce a Medida",
-    subtitle:
-      "Marketplace, multi-vendedor, integraciones ERP y funcionalidades que Shopify no ofrece. Para operaciones complejas de e-commerce.",
-    description: `Shopify es una excelente plataforma para empezar. Pero cuando tu operación crece — múltiples tiendas, varios vendedores, integración con ERP, facturación electrónica automática, lógica de precios por segmento de cliente — Shopify se convierte en un obstáculo. Cada funcionalidad adicional requiere un plugin de terceros que consume rendimiento, genera dependencia y cobra mensualidades. En un punto, la suma de limitaciones y costos supera el costo de construir algo propio.
-
-El e-commerce a medida de LX3 está diseñado para operaciones complejas que los SaaS genéricos no pueden resolver. Marketplace con múltiples vendedores: cada vendedor gestiona su catálogo, sus pedidos y sus retiros de forma independiente, con comisiones configurables y dashboard propio. Múltiples bodegas: el stock se gestiona por ubicación y la lógica de fulfillment decide automáticamente desde qué bodega despachar según disponibilidad y costo de envío. Integración ERP: los pedidos fluyen automáticamente hacia SAP, Oracle o el ERP que uses, con conciliación contable y facturación electrónica integrada.
-
-Para retailers con operaciones online y offline, construimos la integración POS-web: el inventario es único, la tienda física y la online consumen el mismo stock, y los programas de fidelización funcionan en ambos canales. La diferencia entre un e-commerce a medida y uno genérico no es estética — es operacional. Cada integración que automatizamos es horas-persona que liberas para actividades de mayor valor.`,
-    features: [
-      "Marketplace multi-vendedor con dashboards independientes, comisiones y pagos segregados",
-      "Múltiples bodegas y sucursales con lógica de fulfillment automático por disponibilidad",
-      "Integración ERP y facturación electrónica (SII, Bsale, Defontana, SAP Business One)",
-      "Checkout personalizado con lógica de precios por cliente, volumen y condición de pago",
-      "Programa de fidelización con puntos, niveles y recompensas integrado en todos los canales",
-      "API para integraciones con POS, apps móviles y sistemas de terceros",
-    ],
-    priceRange: "$2.900.000 — $8.000.000+ CLP",
-    forWho: [
-      "Retailers con múltiples tiendas físicas que necesitan integrar inventario online y offline",
-      "Empresas B2B con catálogos complejos y precios diferenciados por cliente o segmento",
-      "Marketplaces con múltiples vendedores que necesitan gestión independiente por vendor",
-      "Empresas que necesitan integrar su e-commerce con POS, ERP o sistemas de facturación",
-    ],
-    process: [
-      "Arquitectura del sistema: flujo de pedidos, integraciones, roles y lógica de negocio mapeados",
-      "Diseño de experiencia: storefront, checkout, dashboards de vendedor y panel de administración",
-      "Desarrollo por módulos: backend, integraciones ERP/facturación, storefront y dashboards",
-      "Migración y lanzamiento: datos desde sistema anterior, pruebas de carga y go-live planificado",
-    ],
-    techStack:
-      "Next.js 16, TypeScript, PostgreSQL, Prisma ORM, Redis, Transbank, MercadoPago, REST APIs ERP, Vercel",
-    faqs: [
-      {
-        question: "¿Cuándo tiene sentido un e-commerce a medida versus Shopify Plus?",
-        answer:
-          "Shopify Plus cuesta desde $2.300 USD/mes (~$2.200.000 CLP/mes) más comisiones. Si necesitas funcionalidades que Shopify no tiene nativamente, el costo de desarrollo se amortiza en 6-12 meses. Hacemos un análisis de costo-beneficio honesto antes de recomendar el enfoque.",
-      },
-      {
-        question: "¿Pueden migrar mi tienda actual de Shopify o Magento?",
-        answer:
-          "Sí. Migramos catálogo, órdenes históricas, clientes, reviews y SEO (URLs y redirecciones). El proceso de migración es planificado para minimizar el tiempo de inactividad — en la mayoría de los casos, el cambio es transparente para los clientes.",
-      },
-      {
-        question: "¿Cómo funciona el marketplace multi-vendedor?",
-        answer:
-          "Cada vendedor tiene su propio panel donde gestiona catálogo, stock, pedidos y retiros. El operador del marketplace configura las comisiones, aprueba productos y gestiona disputas. Los pagos se liquidan automáticamente en la frecuencia acordada.",
-      },
-      {
-        question: "¿Pueden integrar con nuestro ERP actual?",
-        answer:
-          "Sí, si tiene API o exportación de datos estándar. Hemos integrado con SAP Business One, Bsale, Defontana, Nubox y sistemas propietarios. Si tu ERP no tiene API, evaluamos la integración vía archivos o consulta directa a base de datos.",
-      },
-    ],
-    relatedServices: [
-      { href: "/servicios/tienda-online", label: "Tienda Online Profesional" },
-      { href: "/servicios/desarrollo-fullstack", label: "Desarrollo Fullstack" },
-      { href: "/servicios/automatizacion-ia", label: "Automatización con IA" },
-    ],
-    ctaTitle: "¿Tu operación de e-commerce superó lo que Shopify puede ofrecer?",
   },
 };
 

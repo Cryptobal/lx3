@@ -11,7 +11,7 @@ function getResendClient() {
 
 const contactSchema = z.object({
   name: z.string().min(1),
-  company: z.string().min(1),
+  company: z.string().min(1).optional(),
   email: z.string().email(),
   phone: z.string().optional(),
   message: z.string().min(1),
@@ -55,7 +55,7 @@ function buildContactEmailHtml(data: z.infer<typeof contactSchema>): string {
 
     <div style="text-align: center; margin-bottom: 24px;">
       <h1 style="margin: 0; font-size: 20px; color: #1a202c;">Nuevo contacto desde lx3.ai</h1>
-      <p style="margin: 8px 0 0 0; color: #718096; font-size: 14px;">${data.name} de ${data.company}</p>
+      <p style="margin: 8px 0 0 0; color: #718096; font-size: 14px;">${data.name}${data.company ? ` de ${data.company}` : ""}</p>
     </div>
 
     <table style="width: 100%; border-collapse: collapse; margin-bottom: 24px;">
@@ -115,7 +115,7 @@ export async function POST(request: NextRequest) {
       from: "LX3 <contacto@lx3.ai>",
       to: "carlos.irigoyen@gmail.com",
       replyTo: data.email,
-      subject: `Nuevo contacto: ${data.name} — ${data.company}`,
+      subject: `Nuevo contacto: ${data.name}${data.company ? ` — ${data.company}` : ""}`,
       html: buildContactEmailHtml(data),
     });
 

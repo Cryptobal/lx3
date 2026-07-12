@@ -15,12 +15,23 @@
     "cotizaTuWeb": "Cotiza tu web"
   },
   "hero": {
-    "tag": "Software Studio · Santiago, Chile",
-    "headline": "Construimos el software que tu empresa necesita.",
-    "headlineAccent": "Con IA.",
-    "subheadline": "Somos el equipo de tecnología que tu empresa necesita, sin tener que contratarlo. Aplicaciones inteligentes, listas en semanas.",
-    "ctaPrimary": "Conversemos sobre tu proyecto",
-    "ctaSecondary": "Ver nuestro trabajo"
+    "tag": "IA aplicada · Santiago, Chile",
+    "badge": "IA aplicada · Santiago, Chile",
+    "headline": "Inteligencia artificial que",
+    "headlineAccent": "opera tu negocio",
+    "subheadline": "No vendemos chatbots. Construimos sistemas con IA que gestionan operaciones reales: cotizan, procesan documentos, agendan turnos y toman decisiones. Como OPAI, el ERP que hoy opera 500+ guardias en Gard Security.",
+    "ctaPrimary": "Cotiza tu proyecto",
+    "ctaSecondary": "Ver cómo funciona OPAI"
+  },
+  "proofBar": {
+    "m1Value": "500+",
+    "m1Label": "Personas gestionadas por IA en producción",
+    "m2Value": "20+",
+    "m2Label": "Módulos con IA operando hoy",
+    "m3Value": "24/7",
+    "m3Label": "Decisiones automatizadas sin intervención",
+    "m4Value": "30 días",
+    "m4Label": "De la idea al sistema funcionando"
   },
   "socialProof": {
     "metric1": "2+ años construyendo software",
@@ -30,14 +41,14 @@
   "services": {
     "title": "Lo que hacemos",
     "subtitle": "No hacemos de todo. Hacemos cuatro cosas excepcionalmente bien.",
-    "s1Title": "Aplicaciones internas",
-    "s1Desc": "Apps a medida que reemplazan tus Excel, formularios y procesos manuales. ERPs, CRMs, dashboards, portales internos.",
-    "s2Title": "Automatización con IA",
-    "s2Desc": "Integramos inteligencia artificial donde realmente importa: procesamiento de documentos, decisiones automáticas, chatbots especializados.",
-    "s3Title": "Sitios web",
-    "s3Desc": "Sitios rápidos, modernos y optimizados para SEO. Diseño que convierte visitantes en clientes.",
-    "s4Title": "Consultoría tecnológica",
-    "s4Desc": "Te ayudamos a decidir qué construir, con qué tecnología, y en qué orden. Sin PowerPoints — con prototipos."
+    "s1Title": "Automatización con IA",
+    "s1Desc": "Agentes que ejecutan procesos: cotizan, clasifican documentos, responden clientes y deciden. IA que trabaja, no que aconseja.",
+    "s2Title": "Sistemas inteligentes a medida",
+    "s2Desc": "ERPs, CRMs y plataformas con IA integrada en el núcleo, no pegada encima. Como OPAI.",
+    "s3Title": "Sitios web que venden",
+    "s3Desc": "Rápidos, SEO-first y con IA que califica leads 24/7. Diseño que convierte visitantes en clientes.",
+    "s4Title": "Consultoría IA",
+    "s4Desc": "Qué automatizar, qué no, y en qué orden. Con prototipos, no PowerPoints."
   },
   "showcase": {
     "title": "Caso de éxito",

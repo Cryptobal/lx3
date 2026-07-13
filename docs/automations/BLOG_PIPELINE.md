@@ -9,7 +9,6 @@
 
 **Secretos (configurar en el entorno):**
 - `CF_IMAGES_TOKEN` — token de Cloudflare con permisos **Workers AI: Read** (generación) e **Images: Edit** (subida). **Es el mismo token que usa Gard** — misma cuenta.
-- `SLACK_WEBHOOK_URL` — webhook entrante de Slack del canal `#lx3-web-blog`
 - `GSC_SERVICE_ACCOUNT_EMAIL` y `GSC_SERVICE_ACCOUNT_KEY` — credenciales de la service account de Search Console (la SA debe ser Owner de la propiedad). Sin ellas, la fase 1.0 se salta sin fallar.
 
 **Constantes de Cloudflare — ya verificadas, van literales en los curls (NO son variables):**
@@ -155,7 +154,7 @@ heroImage: "<misma URL>"
 
 4.0 **Preflight de red (diagnóstico, no bloqueante):** probar conectividad real y dejar constancia en el reporte/PR de qué dominio respondió y cuál bloqueó el proxy:
 ```bash
-DOMS="api.cloudflare.com hooks.slack.com www.lx3.ai"
+DOMS="api.cloudflare.com www.lx3.ai"
 [ -n "$GSC_SERVICE_ACCOUNT_EMAIL" ] && DOMS="$DOMS oauth2.googleapis.com searchconsole.googleapis.com"
 for d in $DOMS; do
   code=$(curl -s -o /dev/null -w "%{http_code}" --max-time 10 "https://$d" || echo "BLOQUEADO")
@@ -242,17 +241,15 @@ Abrir **Pull Request normal (NO draft — `gh pr create` SIN `--draft`)** hacia 
 
 ## FASE 6 — Notificación a Carlos
 
-- **Vía principal — webhook de Slack al canal `#lx3-web-blog`:**
-```bash
-curl -s -X POST "$SLACK_WEBHOOK_URL" -H 'Content-type: application/json' \
-  --data "{\"text\":\"📝 Nuevo post listo para revisar: *<título>*\n📖 Leer: <link_preview_directo>\n✅ Aprobar (PR): <link_PR>\n🖼️ Imagen: <URL | PENDIENTE | backfill: slugs>\"}"
-```
-  La respuesta del POST debe ser exactamente `ok`; cualquier otra cosa se trata como fallo de vía → usar el fallback y anotarlo en el reporte.
-- Enviar también la notificación push nativa de la sesión con el resumen.
-- Si la corrida NO publicó: mismo canal, motivo exacto (guardrail, tope de backlog o umbral de score).
-- **Fallback** si `$SLACK_WEBHOOK_URL` no existe o el POST falla: mensaje directo a Carlos por el conector de Slack si está disponible.
+- **Vía única — notificación push nativa de la sesión de Claude Code.** Enviar el resumen con:
+  - Título del post
+  - 📖 Link directo para leerlo (preview de Vercel)
+  - ✅ Link del Pull Request para aprobarlo
+  - 🖼️ Estado de la imagen (URL, `PENDIENTE`, o `backfill: <slugs>`)
+- **El Pull Request es el registro permanente.** Toda la información relevante (tema, score, keyword objetivo, enlaces internos, fuentes citadas, estado de imagen, checklist post-merge) va en la descripción del PR — la notificación es solo el aviso; el PR es la fuente de verdad.
+- Si la corrida **NO publicó**: notificar igualmente con el motivo exacto (guardrail bloqueado, tope de backlog alcanzado, o umbral de score no alcanzado). **Nunca terminar en silencio.**
 - Si el preflight 4.0 mostró dominios BLOQUEADOS, la notificación DEBE incluir: "⚠️ Red del entorno bloquea: <dominios> → revisar Acceso a la red del entorno LX3 Web".
-- Prohibido escribir a cualquier otro canal, webhook o persona.
+- **Esta rutina NO tiene canal de Slack ni webhook.** Prohibido escribir a Slack, a cualquier webhook, canal externo, o a persona distinta de Carlos.
 
 ## FASE 7 — Reporte
 

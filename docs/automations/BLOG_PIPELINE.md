@@ -5,6 +5,18 @@
 > **Cierre obligatorio v1:** SIEMPRE terminar en **Pull Request**. Prohibido hacer merge a `main`. (Cuando Carlos apruebe 3 corridas consecutivas, él cambiará esta regla.)
 > **Principio rector:** calidad > cadencia. Un post mediocre daña más que no publicar.
 
+## CONTRATO DE SALIDA (qué debe entregar toda corrida exitosa)
+
+Al terminar, Carlos debe recibir **una notificación cuya PRIMERA línea sea el link para leer el post renderizado**. Ese link es el entregable principal — Carlos revisa el post antes de aprobarlo, y no debe tener que entrar al PR a buscarlo.
+
+```
+📖 LEER EL POST: https://<preview>.vercel.app/es/blog/<slug>
+```
+
+Una corrida que abre un PR pero no entrega un link de lectura funcional **está incompleta**, aunque el post sea perfecto.
+
+Si la corrida decide NO publicar (guardrail, backlog o score bajo), eso también es un resultado válido — pero debe notificarse con el motivo exacto. **Nunca terminar en silencio.**
+
 ## Variables de entorno esperadas (configuradas en el entorno cloud "LX3 Web")
 
 **Secretos (configurar en el entorno):**
@@ -163,7 +175,51 @@ done
 ```
 (Cualquier código HTTP = dominio alcanzable; fallo de CONNECT/timeout = bloqueado por la política de red del entorno.)
 
-4.1 **Estética de marca LX3** (distinta a Gard): 1200×630, fondo oscuro (`#06080E`), acentos azul eléctrico (`#3B82F6`) y coral (`#FF6B5A`), composición geométrica abstracta, grid sutil, estética tech moderna con profundidad y glow. **Sin texto incrustado, sin rostros reconocibles, sin logos de terceros.**
+4.1 **Estética de marca LX3 — 1200×630.**
+
+La imagen debe **representar el tema del post**, no ser un fondo decorativo genérico. Un lector debe poder mirarla y entender de qué trata el artículo.
+
+**Construcción del prompt (3 partes, en este orden):**
+
+```
+<SUJETO del post> , <ESTILO LX3> , <NEGATIVOS>
+```
+
+**a) SUJETO** — derivarlo del tema real del artículo. Debe ser una escena o metáfora visual concreta y de negocio:
+   - Retail + IA → `modern retail store interior with digital inventory overlays, data flowing between shelves and screens`
+   - Logística → `warehouse aisle with routing lines and container data, aerial isometric view`
+   - Clínicas → `medical reception desk with digital scheduling interface, calm professional environment`
+   - Costos/ROI → `business dashboard with ascending charts on a desk, professional office at dusk`
+
+   ❌ Nunca: "abstract shapes", "geometric composition", "floating hexagons", "technology background".
+   Si el sujeto no se puede visualizar, el prompt está mal formulado — reformularlo hasta que sea una escena.
+
+**b) ESTILO LX3** (bloque literal, copiar tal cual):
+```
+professional editorial photography style, cinematic corporate aesthetic,
+deep navy and near-black background (#06080E), lit with soft royal blue
+(#3B82F6) and warm salmon-orange (#FF6B5A) accent lighting,
+muted and sophisticated color palette, subtle depth of field,
+clean modern business environment, restrained and premium
+```
+
+**c) NEGATIVOS** (bloque literal, obligatorio — sin esto FLUX se va a synthwave):
+```
+no text, no words, no letters, no watermark, no logos,
+NOT neon, NOT cyberpunk, NOT synthwave, NOT vaporwave,
+no hot pink, no magenta, no cyan, no glowing wireframes,
+no perspective grid floor, no floating geometric shapes,
+no recognizable faces, no third-party brands
+```
+
+> ⚠️ **Aprendizaje de la corrida del 2026-07-13:** un prompt que pedía "composición geométrica abstracta, grid sutil, glow" produjo hexágonos neón cian y rosa chicle flotando sobre una grilla — estética synthwave, colores fuera de marca, y cero relación con el tema (retail). Los negativos de arriba existen para impedir exactamente eso. **No los omitas ni los resumas.**
+
+4.1.b **Verificación visual obligatoria (antes de subir).** Tras generar `imagen.png`, inspeccionarla y confirmar los 3 criterios:
+   1. ¿Se reconoce el tema del post en la imagen? (si es genérica → regenerar)
+   2. ¿Los colores son azul marino/royal y salmón cálido, SIN rosa neón ni cian eléctrico? (si hay neón → regenerar)
+   3. ¿Está libre de texto, letras o marcas de agua? (si tiene texto → regenerar)
+
+   **Máximo 2 regeneraciones.** Si tras el tercer intento sigue fallando, aplicar el fallback de 4.4 (omitir imagen) y anotar en el PR qué criterio falló, con el prompt usado. **Prohibido subir una imagen que no pasa los 3 criterios** — una imagen fuera de marca daña más que no tener imagen.
 
 4.2 Generar por la primera vía disponible, en este orden:
 
@@ -235,20 +291,43 @@ Abrir **Pull Request normal (NO draft — `gh pr create` SIN `--draft`)** hacia 
 - [ ] Verificar `https://www.lx3.ai/es/blog/<slug>` responde 200 tras el deploy de Vercel
 - [ ] Enviar la URL a la GSC Indexing API (o Inspección de URL → Solicitar indexación)
 
-**Link directo al post renderizado (con tope duro de espera):** tras abrir el PR, usar el conector de Vercel para obtener el Preview Deployment de la rama `content/blog-<slug>`. Polling secuencial cada 60-90 s con **tope máximo de 10 minutos** — prohibido dejar múltiples sleeps en background. Construir el link de lectura: `<url_del_preview>/es/blog/<slug>` (si el preview tiene protección, generar link compartible con la herramienta de Vercel — el link se obtiene por el CONECTOR, no requiere abrir *.vercel.app en la red) y agregarlo al inicio de la descripción del PR como "📖 Leer el post". **Si a los 10 minutos el build no está READY:** no seguir esperando — dejar el link con la nota "(se activa cuando termine el build de Vercel)", programar UN ÚNICO self check-in a ~60 minutos que verifique el estado, actualice el PR y reenvíe la notificación si cambió, y terminar la corrida.
+**Link directo al post renderizado — REQUISITO DE SALIDA, no un extra.**
+
+Carlos revisa el post renderizado antes de aprobarlo. **La corrida no está completa hasta que exista un link donde se pueda leer.** Este es el entregable principal de la rutina.
+
+Tras abrir el PR, usar el **conector de Vercel** (no la red del sandbox) para obtener el Preview Deployment de la rama `content/blog-<slug>`:
+
+1. Localizar el deployment de la rama y hacer polling secuencial cada 60-90 s hasta `READY`. **Tope duro: 10 minutos.** Prohibido dejar múltiples sleeps en background.
+2. Construir el link de lectura: `<url_del_preview>/es/blog/<slug>`
+   > ⚠️ Incluir siempre el prefijo de locale `/es/` — sin él, la ruta no resuelve.
+3. Si el preview tiene protección de acceso, generar el link compartible con la herramienta de Vercel (se obtiene por el CONECTOR — no requiere abrir `*.vercel.app` desde la red del sandbox).
+4. Ponerlo **al inicio** de la descripción del PR como `📖 Leer el post: <link>`.
+
+**Si el estado del deployment es `ERROR` o `CANCELED`:** el post NO es publicable. Reportar el fallo del build con el log de Vercel en el PR, marcarlo como bloqueado, y notificar el motivo. No enviar un link roto.
+
+**Si a los 10 minutos sigue en `BUILDING`:** no seguir esperando. Enviar la notificación igual, con el link y la nota `(se activa en ~2 min, build en curso)`. Programar UN ÚNICO self check-in a ~60 minutos que verifique el estado final, actualice el PR y reenvíe la notificación si cambió. Terminar la corrida.
 
 **NO hacer merge. Terminar la corrida después de abrir el PR y notificar (Fase 6).**
 
 ## FASE 6 — Notificación a Carlos
 
-- **Vía única — notificación push nativa de la sesión de Claude Code.** Enviar el resumen con:
-  - Título del post
-  - 📖 Link directo para leerlo (preview de Vercel)
-  - ✅ Link del Pull Request para aprobarlo
-  - 🖼️ Estado de la imagen (URL, `PENDIENTE`, o `backfill: <slugs>`)
-- **El Pull Request es el registro permanente.** Toda la información relevante (tema, score, keyword objetivo, enlaces internos, fuentes citadas, estado de imagen, checklist post-merge) va en la descripción del PR — la notificación es solo el aviso; el PR es la fuente de verdad.
+> **Regla de oro:** Carlos revisa el post ANTES de aprobarlo. El **link de lectura del preview es el elemento más importante** de la notificación y va SIEMPRE en la primera línea, antes que cualquier otra cosa. Sin ese link, la notificación es inútil — Carlos no debe tener que entrar al PR a buscarlo.
+
+- **Vía única — notificación push nativa de la sesión de Claude Code.** Formato exacto, en este orden:
+
+```
+📖 LEER EL POST: <url_preview>/es/blog/<slug>
+
+📝 <título del post>
+✅ Aprobar (PR): <link_del_PR>
+🖼️ Imagen: <URL | PENDIENTE | backfill: slugs>
+🎯 Keyword: <keyword objetivo>  ·  Score: <N>/10
+```
+
+- **El link de preview es OBLIGATORIO y va primero.** Nunca enviar una notificación sin él. Si el deployment de Vercel aún no está READY tras el tope de 10 minutos, enviar igualmente el link con la nota `(se activa en ~2 min, build en curso)` — pero enviarlo.
+- **El Pull Request es el registro permanente.** Toda la información de respaldo (tema, score, keyword, enlaces internos, fuentes citadas, estado de imagen, checklist post-merge) va en la descripción del PR. La notificación es el aviso; el PR es la fuente de verdad. El link de lectura también va al inicio de la descripción del PR como `📖 Leer el post`.
 - Si la corrida **NO publicó**: notificar igualmente con el motivo exacto (guardrail bloqueado, tope de backlog alcanzado, o umbral de score no alcanzado). **Nunca terminar en silencio.**
-- Si el preflight 4.0 mostró dominios BLOQUEADOS, la notificación DEBE incluir: "⚠️ Red del entorno bloquea: <dominios> → revisar Acceso a la red del entorno LX3 Web".
+- Si el preflight 4.0 mostró dominios BLOQUEADOS, incluir: "⚠️ Red del entorno bloquea: <dominios> → revisar Acceso a la red del entorno LX3 Web".
 - **Esta rutina NO tiene canal de Slack ni webhook.** Prohibido escribir a Slack, a cualquier webhook, canal externo, o a persona distinta de Carlos.
 
 ## FASE 7 — Reporte

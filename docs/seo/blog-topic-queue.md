@@ -1,17 +1,17 @@
 # Cola editorial — Blog LX3
 
 > Libro de estados. Cada corrida del BLOG_PIPELINE reconcilia esta cola contra `content/blog-posts/` y contra los PRs abiertos antes de agregar candidatos nuevos. Máximo 20 en estado `pendiente`.
-> Creado en la primera corrida del pipeline: 2026-07-13. Reconciliado: 2026-07-17.
+> Creado en la primera corrida del pipeline: 2026-07-13. Reconciliado: 2026-07-30.
 
-## Balance de pilares al 2026-07-17 (29 posts publicados en `main`; 1 en-PR sin mergear; este PR agrega el post 30)
+## Balance de pilares al 2026-07-30 (31 posts publicados en `main`)
 
 - IA aplicada: 7 publicados (`de-piloto-a-produccion-ia-empresas-chile` se mergeó el 2026-07-16)
 - Costos y decisión de compra: 7
-- Sistemas por industria: 1 publicado (+1 en-PR PR #14 +1 en este PR → 3 si ambos se mergean) ← pilar más débil, prioridad de densificación
+- Sistemas por industria: 3 publicados (`reducir-ausentismo-citas-medicas-con-ia` vía PR #16 y `prediccion-demanda-ia-retail-chile` vía PR #14, ambos mergeados el 2026-07-30) ← pilar más débil, prioridad de densificación
 - Tecnología: 8
 - Operación y transformación: 6
 
-Últimos 3 `publicado` en `main`: `software-a-medida-vs-saas-empresas-medianas-2026` (Costos), `cuanto-cuesta-crear-pagina-web-chile` (Costos), `de-piloto-a-produccion-ia-empresas-chile` (IA aplicada). El tema de esta corrida (`reducir-ausentismo-citas-medicas-con-ia`, Sistemas por industria) cumple la regla de mix: de la ventana de 3 posts consecutivos (28, 29, 30) hay 0 de Tecnología y al menos 1 de intención de dinero (post 28, Costos, y el propio post 30, Sistemas por industria).
+Últimos 3 `publicado` en `main`: `de-piloto-a-produccion-ia-empresas-chile` (IA aplicada), `reducir-ausentismo-citas-medicas-con-ia` (Sistemas por industria), `prediccion-demanda-ia-retail-chile` (Sistemas por industria).
 
 ## Temas
 
@@ -20,14 +20,14 @@
 - pilar: IA aplicada
 
 ### 2. Predicción de demanda con IA en retail: evita quiebres de stock
-- estado: en-PR (rama `content/blog-prediccion-demanda-ia-retail-chile`, PR #14, abierto desde 2026-07-13 — sigue sin mergear al 2026-07-17)
+- estado: **publicado** (slug `prediccion-demanda-ia-retail-chile`, mergeado a `main` el 2026-07-30 vía PR #14)
 - slug: `prediccion-demanda-ia-retail-chile`
 - pilar: Sistemas por industria
 - keyword objetivo: predicción de demanda con IA en retail
 - score: 8/10
 
 ### 3. Agendamiento inteligente para clínicas: cómo reducir el ausentismo
-- estado: **en-PR** (rama `content/blog-reducir-ausentismo-citas-medicas-con-ia`, 2026-07-17 — esta corrida)
+- estado: **publicado** (slug `reducir-ausentismo-citas-medicas-con-ia`, mergeado a `main` el 2026-07-30 vía PR #16)
 - slug: `reducir-ausentismo-citas-medicas-con-ia`
 - pilar: Sistemas por industria
 - keyword objetivo: reducir ausentismo citas médicas con IA

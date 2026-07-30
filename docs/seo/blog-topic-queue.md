@@ -1,54 +1,52 @@
 # Cola editorial — Blog LX3
 
 > Libro de estados. Cada corrida del BLOG_PIPELINE reconcilia esta cola contra `content/blog-posts/` y contra los PRs abiertos antes de agregar candidatos nuevos. Máximo 20 en estado `pendiente`.
-> Creado en la primera corrida del pipeline: 2026-07-13. Reconciliado: 2026-07-15.
+> Creado en la primera corrida del pipeline: 2026-07-13. Reconciliado: 2026-07-17.
 
-## Balance de pilares al 2026-07-15 (28 posts publicados en `main`; 2 en-PR sin mergear)
+## Balance de pilares al 2026-07-17 (29 posts publicados en `main`; 1 en-PR sin mergear; este PR agrega el post 30)
 
-- IA aplicada: 6 publicados (+1 en-PR → 7 si se mergea este PR)
+- IA aplicada: 7 publicados (`de-piloto-a-produccion-ia-empresas-chile` se mergeó el 2026-07-16)
 - Costos y decisión de compra: 7
-- Sistemas por industria: 1 publicado (+1 en-PR → 2 si se mergea PR #14) ← pilar más débil, prioridad de densificación
+- Sistemas por industria: 1 publicado (+1 en-PR PR #14 +1 en este PR → 3 si ambos se mergean) ← pilar más débil, prioridad de densificación
 - Tecnología: 8
 - Operación y transformación: 6
 
-Últimos 3 `publicado` en `main`: `erp-chile-software-a-medida-vs-estandar` (Costos), `software-a-medida-vs-saas-empresas-medianas-2026` (Costos), `cuanto-cuesta-crear-pagina-web-chile` (Costos). Sin cambios desde la corrida anterior — nada se ha mergeado a `main` todavía.
+Últimos 3 `publicado` en `main`: `software-a-medida-vs-saas-empresas-medianas-2026` (Costos), `cuanto-cuesta-crear-pagina-web-chile` (Costos), `de-piloto-a-produccion-ia-empresas-chile` (IA aplicada). El tema de esta corrida (`reducir-ausentismo-citas-medicas-con-ia`, Sistemas por industria) cumple la regla de mix: de la ventana de 3 posts consecutivos (28, 29, 30) hay 0 de Tecnología y al menos 1 de intención de dinero (post 28, Costos, y el propio post 30, Sistemas por industria).
 
 ## Temas
 
 ### 1. De piloto a producción con IA: por qué tu proyecto no despega
-- estado: en-PR (rama `content/blog-de-piloto-a-produccion-ia-empresas-chile`, 2026-07-15)
-- slug: `de-piloto-a-produccion-ia-empresas-chile`
+- estado: **publicado** (slug `de-piloto-a-produccion-ia-empresas-chile`, post 29, mergeado a `main` el 2026-07-16 vía PR #15)
 - pilar: IA aplicada
-- keyword objetivo: de piloto a producción con IA
-- score: 8/10 (intención 3 + demanda/momentum 2 + gap competitivo 2 + pilar 1)
-- fuentes: estudio "Adopción de IA en las empresas chilenas" — Entel Digital + CENIA (93% impacto positivo, 70% adopción pymes, 40% capacitación como obstáculo principal), corroborado por Diario Concepción.
 
 ### 2. Predicción de demanda con IA en retail: evita quiebres de stock
-- estado: en-PR (rama `content/blog-prediccion-demanda-ia-retail-chile`, PR #14, 2026-07-13 — sigue abierto sin mergear al 2026-07-15)
+- estado: en-PR (rama `content/blog-prediccion-demanda-ia-retail-chile`, PR #14, abierto desde 2026-07-13 — sigue sin mergear al 2026-07-17)
 - slug: `prediccion-demanda-ia-retail-chile`
 - pilar: Sistemas por industria
 - keyword objetivo: predicción de demanda con IA en retail
 - score: 8/10
 
-### 3. Cómo elegir un sistema de gestión de flotas con IA para logística
+### 3. Agendamiento inteligente para clínicas: cómo reducir el ausentismo
+- estado: **en-PR** (rama `content/blog-reducir-ausentismo-citas-medicas-con-ia`, 2026-07-17 — esta corrida)
+- slug: `reducir-ausentismo-citas-medicas-con-ia`
+- pilar: Sistemas por industria
+- keyword objetivo: reducir ausentismo citas médicas con IA
+- score: 9/10 (intención 3 + demanda/momentum 2 + gap competitivo 2 + pilar 2)
+- fuentes: Ministerio de Salud vía [Universidad de Chile / CMM](https://uchile.cl/noticias/188605/inteligencia-artificial-predice-que-pacientes-faltaran-a-citas-medicas) (19% de ausentismo en consultas de especialidad, ~1.400.000 horas médicas/año; modelo de IA bajó el ausentismo de 20,3% a 12,5% en pruebas; llamada telefónica -7,8 pp vs. WhatsApp/SMS -5,4 pp), corroborado por [SaludDigital](https://saluddigital.com/big-data/modelo-de-ia-a-traves-de-chatbot-logra-mejorar-la-agenda-de-citas-medicas-en-chile/).
+- gap competitivo: `zeroq.cl` domina búsquedas de marca/sucursal para clínicas y notarías (confirmado con Semrush `resource_organic` el 2026-07-17: top tráfico son "starken", "servipag", notarías específicas) pero no tiene contenido informacional sobre reducción de ausentismo con IA.
+
+### 4. Cómo elegir un sistema de gestión de flotas con IA para logística
 - estado: pendiente
 - pilar: Sistemas por industria
 - keyword objetivo: sistema de gestión de flotas con IA Chile
 - score estimado: 7/10
 - nota: enlaza a `/es/soluciones/logistica`. Ángulo: qué automatizar primero (ruteo, GPS, mantenimiento predictivo), sin competir con la keyword de la landing. PR #13 (ángulo distinto, "qué automatizar primero" en logística) se cerró sin mergear el 2026-07-13 sin motivo documentado — revisar con Carlos antes de retomar este ángulo si vuelve a competir con el mismo tema.
 
-### 4. Agendamiento inteligente para clínicas: cómo reducir el ausentismo
-- estado: pendiente
-- pilar: Sistemas por industria
-- keyword objetivo: reducir ausentismo citas médicas con IA
-- score estimado: 7/10
-- nota: enlaza a `/es/soluciones/clinicas`. Semrush `cl` no tiene volumen para el long-tail directo (dominio nuevo); zeroq.cl domina búsquedas de marca/sucursal para clínicas pero no contenido informacional sobre reducción de ausentismo con IA — gap confirmado en la corrida del 2026-07-15.
-
 ### 5. Digitaliza tu Pyme 2026: qué significa la alianza CENIA-Subsecretaría para tu empresa
 - estado: pendiente
 - pilar: IA aplicada
 - keyword objetivo: digitalización pymes Chile 2026
-- score estimado: 5/10 (bajado de 6/10 — la alianza es de mayo 2026, ya no es noticia fresca al 2026-07-15; sigue siendo un programa vigente pero pierde puntos de momentum)
+- score estimado: 4/10 (bajado de 5/10 — la alianza sigue perdiendo frescura, mayo 2026 queda cada vez más lejos; además el pilar IA aplicada ya no es el más débil tras el merge del post 29)
 
 ### 6. Mantenimiento predictivo con IA para empresas de servicios profesionales
 - estado: pendiente
@@ -59,7 +57,7 @@
 
 ## Estacionales
 
-- Ninguno dentro de ventana el 2026-07-15. Próxima ventana: planificación y presupuesto 2027 (publicar octubre-noviembre 2026).
+- Ninguno dentro de ventana el 2026-07-17. Próxima ventana: planificación y presupuesto 2027 (publicar octubre-noviembre 2026).
 
 ## Descartados
 

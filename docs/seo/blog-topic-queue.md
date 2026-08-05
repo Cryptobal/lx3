@@ -1,19 +1,19 @@
 # Cola editorial — Blog LX3
 
 > Libro de estados. Cada corrida del BLOG_PIPELINE reconcilia esta cola contra `content/blog-posts/` y contra los PRs abiertos antes de agregar candidatos nuevos. Máximo 20 en estado `pendiente`.
-> Creado en la primera corrida del pipeline: 2026-07-13. Reconciliado: 2026-08-03.
+> Creado en la primera corrida del pipeline: 2026-07-13. Reconciliado: 2026-08-05.
 
-## Balance de pilares al 2026-08-03 (32 posts publicados en `main`, 1 `en-PR`)
+## Balance de pilares al 2026-08-05 (33 posts publicados en `main`, 1 `en-PR`)
 
 - IA aplicada: 7 publicados
-- Costos y decisión de compra: 8 publicados (`retorno-inversion-ia-empresas-chile` se mergeó vía PR #17)
-- Sistemas por industria: 3 publicados + 1 `en-PR` (`control-de-obra-con-ia-constructoras-chile`, tema 8) ← pilar más débil, prioridad de densificación
+- Costos y decisión de compra: 8 publicados
+- Sistemas por industria: 4 publicados (`control-de-obra-con-ia-constructoras-chile` ya mergeado vía PR #18) + 1 `en-PR` (tema 9, corrida 2026-08-05) ← pilar más débil, prioridad de densificación
 - Tecnología: 8
 - Operación y transformación: 6
 
-Últimos 3 `publicado` en `main`: `reducir-ausentismo-citas-medicas-con-ia` (Sistemas por industria), `prediccion-demanda-ia-retail-chile` (Sistemas por industria), `retorno-inversion-ia-empresas-chile` (Costos y decisión de compra).
+Últimos 3 `publicado` en `main`: `control-de-obra-con-ia-constructoras-chile` (Sistemas por industria), `retorno-inversion-ia-empresas-chile` (Costos y decisión de compra), `reducir-ausentismo-citas-medicas-con-ia` (Sistemas por industria).
 
-En `en-PR` (aún no mergeado): `control-de-obra-con-ia-constructoras-chile` (Sistemas por industria) — ver tema 8, corrida 2026-08-03.
+En `en-PR` (aún no mergeado): `ia-seguros-corredoras-automatizar-siniestros-chile` (Sistemas por industria) — ver tema 9, corrida 2026-08-05.
 
 ## Temas
 
@@ -68,7 +68,7 @@ En `en-PR` (aún no mergeado): `control-de-obra-con-ia-constructoras-chile` (Sis
 - imagen: generada en la corrida (Cloudflare Images, ver PR). Backfill del post 31 (`prediccion-demanda-ia-retail-chile`, sin `heroImage`) intentado 2 veces — falló criterio de paleta (iluminación roja/neón) ambas veces, se omitió y quedó documentado en el PR.
 
 ### 8. Control de obra con IA: menos sobrecostos en tu constructora
-- estado: **en-PR** (rama `content/blog-control-de-obra-con-ia-constructoras-chile`, post 33, corrida 2026-08-03)
+- estado: **publicado** (slug `control-de-obra-con-ia-constructoras-chile`, post 33, mergeado a `main` vía PR #18)
 - slug: `control-de-obra-con-ia-constructoras-chile`
 - pilar: Sistemas por industria
 - keyword objetivo: control de obra con IA
@@ -77,6 +77,18 @@ En `en-PR` (aún no mergeado): `control-de-obra-con-ia-constructoras-chile` (Sis
 - gap competitivo: sin post propio ni de competidores chilenos revisados (`kunder.cl`, `wolfsoft.cl` sin datos orgánicos en Semrush `cl` para este ángulo) que ataque "control de obra con IA" para constructoras — verificado con Semrush `resource_organic` y búsqueda web.
 - imagen: generada en la corrida (Cloudflare Images). Requirió 2 regeneraciones — intento 1 falló por texto ilegible en pantalla de tablet simulada, intento 2 falló por estética neón/wireframe brillante (grid azul cian con puntos de luz tipo synthwave); intento 3 (foreman en obra al atardecer, sin pantallas) pasó los 3 criterios.
 - nota de red: preflight 4.0 OK (`api.cloudflare.com` y `www.lx3.ai` respondieron 301). `WebFetch` (herramienta de sesión) devolvió 403 en múltiples dominios no relacionados entre sí (incluido `anthropic.com`), indicando una falla puntual de esa herramienta en esta corrida, no un bloqueo de dominio específico — las fuentes citadas se verificaron con `WebSearch` en su lugar.
+
+### 9. IA en seguros Chile: automatiza cotización y siniestros
+- estado: **en-PR** (rama `content/blog-ia-seguros-corredoras-automatizar-siniestros-chile`, post 34, corrida 2026-08-05)
+- slug: `ia-seguros-corredoras-automatizar-siniestros-chile`
+- pilar: Sistemas por industria
+- keyword objetivo: IA en seguros Chile
+- score: 9/10 (intención 3 + demanda/momentum 2 + gap competitivo 2 + pilar 2)
+- fuentes: [Diario Financiero](https://www.df.cl/df-lab/innovacion-y-startups/chilena-lisa-insurtech-llega-a-mexico-con-su-solucion-para-automatizar-la) (LISA Insurtech, insurtech chilena, procesó 1,2+ millones de siniestros con IA junto a Zurich Chile en 2025), [McKinsey](https://www.mckinsey.com/industries/financial-services/our-insights/the-future-of-ai-in-the-insurance-industry) (caso Aviva: -23 días en evaluación de siniestros complejos, ahorro >£60M en 2024; -20% a -40% en costos de incorporación de clientes con IA aplicada a un dominio), [Diario Financiero — presidenta CMF](https://www.df.cl/mercados/banca-fintech/presidenta-de-la-cmf-pone-foco-en-la-inteligencia-artificial-va-a-agregar) (sin regulación específica de IA en decisiones financieras en Chile aún; IA es uno de 7 frentes regulatorios de la CMF a 18 meses), [Publimetro](https://www.publimetro.cl/tecnologia/2026/07/23/en-chile-8-de-cada-10-empresas-ya-usan-inteligencia-artificial-pero-la-ciberseguridad-emerge-como-el-principal-desafio/) (8/10 empresas chilenas ya usan IA, contexto general reutilizado de la corrida anterior).
+- gap competitivo: ninguna página de servicio/solución de LX3 ni post existente ataca "seguros"/aseguradoras/corredoras (verificado por grep de keywords comerciales y tags de posts) — vertical no cubierta, sin canibalización. Ningún competidor chileno revisado (agencias de desarrollo) publica contenido sobre este ángulo.
+- imagen: generada en la corrida (Cloudflare Images). Intento 1 falló criterio de texto (pantalla de laptop con UI ilegible tipo texto); intento 2 (documentos apilados + timbre + tablet con resplandor azul sin interfaz) pasó los 3 criterios.
+- nota de red: preflight 4.0 OK (`api.cloudflare.com` y `www.lx3.ai` respondieron 301). `WebFetch` devolvió 403 en todos los dominios probados (incluidos no relacionados entre sí) — mismo patrón de falla puntual de la herramienta documentado en la corrida del 2026-08-03; las fuentes se verificaron con `WebSearch` en su lugar.
+- nota GSC: `GSC_SERVICE_ACCOUNT_EMAIL`/`KEY` no configuradas en esta corrida — fase 1.0 se saltó sin fallar, según lo documentado.
 
 ## Estacionales
 

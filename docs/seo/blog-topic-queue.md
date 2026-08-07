@@ -57,6 +57,7 @@ En `en-PR` (aún no mergeado): `mantenimiento-predictivo-flotas-ia-chile` (Siste
 - keyword objetivo: mantenimiento predictivo con IA empresas Chile
 - score estimado: 6/10
 - nota: Semrush `cl` muestra volumen 720 para "mantenimiento predictivo" (genérico, sin modificador IA); con modificador IA el volumen cae a prácticamente cero — validar ángulo con fuentes de prensa antes de escribir.
+- ⚠️ actualización 2026-08-07: el post 35 (`mantenimiento-predictivo-flotas-ia-chile`, tema 10) ya cubre "mantenimiento predictivo con IA" para la vertical de flotas/logística. Si se retoma este tema 6, el ángulo debe quedar claramente diferenciado (otro tipo de activo/equipo, no vehículos de flota) para evitar duplicar la entidad principal — revisar dedup semántico contra el post 35 antes de escribir.
 
 ### 7. Retorno de inversión en IA: por qué solo el 7% lo logra
 - estado: **publicado** (slug `retorno-inversion-ia-empresas-chile`, mergeado a `main` vía PR #17)

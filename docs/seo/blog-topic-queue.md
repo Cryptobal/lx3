@@ -1,19 +1,21 @@
 # Cola editorial — Blog LX3
 
 > Libro de estados. Cada corrida del BLOG_PIPELINE reconcilia esta cola contra `content/blog-posts/` y contra los PRs abiertos antes de agregar candidatos nuevos. Máximo 20 en estado `pendiente`.
-> Creado en la primera corrida del pipeline: 2026-07-13. Reconciliado: 2026-08-05.
+> Creado en la primera corrida del pipeline: 2026-07-13. Reconciliado: 2026-08-10.
 
-## Balance de pilares al 2026-08-05 (33 posts publicados en `main`, 1 `en-PR`)
+## Balance de pilares al 2026-08-10 (34 posts publicados en `main`, 1 `en-PR`, 1 nuevo en esta corrida)
 
 - IA aplicada: 7 publicados
-- Costos y decisión de compra: 8 publicados
-- Sistemas por industria: 4 publicados (`control-de-obra-con-ia-constructoras-chile` ya mergeado vía PR #18) + 1 `en-PR` (tema 9, corrida 2026-08-05) ← pilar más débil, prioridad de densificación
+- Costos y decisión de compra: 8 publicados + 1 nuevo en esta corrida (tema 10, `cuanto-cuesta-implementar-ia-empresa-chile`)
+- Sistemas por industria: 5 publicados (`ia-seguros-corredoras-automatizar-siniestros-chile` mergeado vía PR #19) + 1 `en-PR` (`mantenimiento-predictivo-flotas-ia-chile`, PR #20, corrida 2026-08-07) ← pilar más débil, prioridad de densificación en próximas corridas
 - Tecnología: 8
 - Operación y transformación: 6
 
-Últimos 3 `publicado` en `main`: `control-de-obra-con-ia-constructoras-chile` (Sistemas por industria), `retorno-inversion-ia-empresas-chile` (Costos y decisión de compra), `reducir-ausentismo-citas-medicas-con-ia` (Sistemas por industria).
+Últimos 3 `publicado` en `main`: `ia-seguros-corredoras-automatizar-siniestros-chile` (Sistemas por industria), `control-de-obra-con-ia-constructoras-chile` (Sistemas por industria), `retorno-inversion-ia-empresas-chile` (Costos y decisión de compra).
 
-En `en-PR` (aún no mergeado): `ia-seguros-corredoras-automatizar-siniestros-chile` (Sistemas por industria) — ver tema 9, corrida 2026-08-05.
+En `en-PR` (aún no mergeado): `mantenimiento-predictivo-flotas-ia-chile` (Sistemas por industria, PR #20, corrida 2026-08-07).
+
+**Reconciliación 2026-08-10:** el tema 9 (`ia-seguros-corredoras-automatizar-siniestros-chile`) pasó de `en-PR` a `publicado` (mergeado vía PR #19). Backlog al iniciar esta corrida: 1 PR abierto (#20, `mantenimiento-predictivo-flotas-ia-chile`) — bajo el tope de 2, corrida autorizada a publicar.
 
 ## Temas
 
@@ -79,7 +81,7 @@ En `en-PR` (aún no mergeado): `ia-seguros-corredoras-automatizar-siniestros-chi
 - nota de red: preflight 4.0 OK (`api.cloudflare.com` y `www.lx3.ai` respondieron 301). `WebFetch` (herramienta de sesión) devolvió 403 en múltiples dominios no relacionados entre sí (incluido `anthropic.com`), indicando una falla puntual de esa herramienta en esta corrida, no un bloqueo de dominio específico — las fuentes citadas se verificaron con `WebSearch` en su lugar.
 
 ### 9. IA en seguros Chile: automatiza cotización y siniestros
-- estado: **en-PR** (rama `content/blog-ia-seguros-corredoras-automatizar-siniestros-chile`, post 34, corrida 2026-08-05)
+- estado: **publicado** (slug `ia-seguros-corredoras-automatizar-siniestros-chile`, post 34, mergeado a `main` vía PR #19)
 - slug: `ia-seguros-corredoras-automatizar-siniestros-chile`
 - pilar: Sistemas por industria
 - keyword objetivo: IA en seguros Chile
@@ -88,6 +90,20 @@ En `en-PR` (aún no mergeado): `ia-seguros-corredoras-automatizar-siniestros-chi
 - gap competitivo: ninguna página de servicio/solución de LX3 ni post existente ataca "seguros"/aseguradoras/corredoras (verificado por grep de keywords comerciales y tags de posts) — vertical no cubierta, sin canibalización. Ningún competidor chileno revisado (agencias de desarrollo) publica contenido sobre este ángulo.
 - imagen: generada en la corrida (Cloudflare Images). Intento 1 falló criterio de texto (pantalla de laptop con UI ilegible tipo texto); intento 2 (documentos apilados + timbre + tablet con resplandor azul sin interfaz) pasó los 3 criterios.
 - nota de red: preflight 4.0 OK (`api.cloudflare.com` y `www.lx3.ai` respondieron 301). `WebFetch` devolvió 403 en todos los dominios probados (incluidos no relacionados entre sí) — mismo patrón de falla puntual de la herramienta documentado en la corrida del 2026-08-03; las fuentes se verificaron con `WebSearch` en su lugar.
+- nota GSC: `GSC_SERVICE_ACCOUNT_EMAIL`/`KEY` no configuradas en esta corrida — fase 1.0 se saltó sin fallar, según lo documentado.
+
+### 10. Cuánto cuesta implementar IA en tu empresa en Chile
+- estado: **en-PR** (rama `content/blog-cuanto-cuesta-implementar-ia-empresa-chile`, post 36, corrida 2026-08-10)
+- slug: `cuanto-cuesta-implementar-ia-empresa-chile`
+- pilar: Costos y decisión de compra
+- keyword objetivo: cuánto cuesta implementar IA en mi empresa / cuánto cuesta implementar inteligencia artificial en una empresa
+- score: 8/10 (intención 3 + demanda/momentum 2 + gap competitivo 2 + pilar 1)
+- fuentes: [Portal Innova](https://portalinnova.cl/entre-6-000-y-300-000-usd-cuesta-implementar-inteligencia-artificial-en-una-empresa/) (rango USD 6.000–300.000 según tamaño de empresa y complejidad del proyecto de IA), [MAS Analytics](https://masanalytics.com/estudio-adopcion-de-ia-en-empresas-chilenas/) (encuesta a 160+ ejecutivos chilenos: solo 3,6% ha escalado IA de forma transversal con retornos medibles).
+- gap competitivo: ninguno de los 6 competidores trackeados (`bemobile.cl`, `nisum.com`, `kunder.cl`, `imagemaker.com`, `wolfsoft.cl`, `zeroq.cl`) tiene contenido sobre el ángulo específico de costo/presupuesto de implementar IA — verificado por búsqueda web dirigida (los resultados que sí cubren el ángulo son sitios no trackeados: eigen.cl, villelabs.cl, codelan.cl, kemenystudio.com).
+- dedup: verificado contra post 04 (`inteligencia-artificial-empresas-medianas-guia`, roadmap de adopción, no de costos) y post 32 (`retorno-inversion-ia-empresas-chile`, ROI/adopción, no de rangos de presupuesto) — sin solapamiento de keyword objetivo ni ángulo principal.
+- imagen: generada en la corrida (Cloudflare Images, UUID `02d9c7a2-42ff-4190-6cfe-c38159920800`). Intento 1 (laptop + documentos con gráficos) falló criterio de texto (UI y papel con texto ilegible tipo "Cost Estimate"); intento 2 (escultura de gráfico de barras ascendente en vidrio/metal, sin pantallas ni papeles, skyline al atardecer) pasó los 3 criterios.
+- nota de red: preflight 4.0 OK (`api.cloudflare.com` y `www.lx3.ai` respondieron 301). `WebFetch` (herramienta de sesión) devolvió `EGRESS_BLOCKED` en todos los dominios de prensa probados (gob.cl, revistaemprende.cl, portalinnova.cl) — mismo patrón de falla puntual de la herramienta documentado en corridas anteriores (2026-08-03, 2026-08-05); las fuentes se verificaron con `WebSearch` en su lugar, que sí funcionó con normalidad.
+- nota de descarte: se evaluó como candidato alternativo "Fondos CORFO/Sercotec 2026 para financiar IA en tu PYME" (deadline real 2026-08-27). Se descartó tras investigar el programa vigente (`Red de Asistencia Digital Fortalece Pyme`): el postulante es una entidad operadora, no la PYME directamente, y cubre solo 9 regiones (sin RM) — el ángulo "postula tu empresa" habría sido engañoso. Fondo Crece y Kit Digital de Sercotec (sí eran postulables por PYME directamente) ya cerraron convocatoria en junio 2026. Queda como candidato futuro si Sercotec abre una nueva ventana de postulación directa para PYMEs.
 - nota GSC: `GSC_SERVICE_ACCOUNT_EMAIL`/`KEY` no configuradas en esta corrida — fase 1.0 se saltó sin fallar, según lo documentado.
 
 ## Estacionales
